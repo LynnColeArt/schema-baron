@@ -12,5 +12,7 @@
   "purpose_tldr": "Build a complete early-CodeCharge-Studio-inspired application authoring environment with modern SQLite schema design, application flow visualization, modular TypeScript and Next.js generation, and shared UI and MCP commands.",
   "slug": "schema-baron-studio-01M5W3Q9",
   "target_branch": "feat/schema-baron-studio",
-  "topology": "coord"
+  "topology": "coord",
+  "vcs": "git",
+  "source_description": "Whole-app early Studio baseline confirmed by user in Decision Moment 01M5W3RPA8SWXWP34QEFP0NTNK; user delegated routine planning decisions."
 }
