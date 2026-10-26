@@ -1,7 +1,7 @@
 {
-  "event_count": 9,
-  "last_event_id": "01M5W7XCV2CFG7CD33WX15R15S",
-  "materialized_at": "2026-10-26T13:55:31.810471+00:00",
+  "event_count": 10,
+  "last_event_id": "01M5W7XDZTBY6ZC91JR1H48YBB",
+  "materialized_at": "2026-10-26T13:55:32.986944+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "",
@@ -14,7 +14,7 @@
     "for_review": 0,
     "in_progress": 0,
     "in_review": 0,
-    "planned": 9
+    "planned": 10
   },
   "work_packages": {
     "WP01": {
@@ -79,6 +79,13 @@
       "lane": "planned",
       "last_event_id": "01M5W7XCV2CFG7CD33WX15R15S",
       "last_transition_at": "2026-10-26T13:55:31.810471+00:00"
+    },
+    "WP10": {
+      "actor": "finalize-tasks",
+      "force_count": 0,
+      "lane": "planned",
+      "last_event_id": "01M5W7XDZTBY6ZC91JR1H48YBB",
+      "last_transition_at": "2026-10-26T13:55:32.986944+00:00"
     }
   }
 }
