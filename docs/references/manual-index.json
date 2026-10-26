@@ -1,0 +1,261 @@
+{
+  "source": {
+    "title": "CodeCharge Studio 1.0 Manual (beta-era)",
+    "filename": "586401818-CodeCharge-Studio-Manual-B3.pdf",
+    "sha256": "e03791633bcd06e6a76cef2bddb6c2c4432cac99c7d20b4eea04b8370489be30",
+    "pages": 142,
+    "distribution": "User-supplied reference. Keep PDF, extracted text, screenshots and generated HTML local; only this authored index and conversion script are versioned."
+  },
+  "sections": [
+    {
+      "id": "workspace",
+      "title": "Workspace and selection",
+      "pages": [
+        20,
+        21,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "visualPages": [
+        21,
+        28,
+        29
+      ],
+      "interpretation": "Explorer, document and contextual properties work together; inspect the selected page, form or control."
+    },
+    {
+      "id": "project-settings",
+      "title": "Project setup, connections and security",
+      "pages": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        46
+      ],
+      "visualPages": [
+        39,
+        40
+      ],
+      "interpretation": "Project-wide configuration is separate from page and form editing. Connection setup targets a database; security maps a login source."
+    },
+    {
+      "id": "data-source",
+      "title": "Form data sources and query designer",
+      "pages": [
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68
+      ],
+      "visualPages": [
+        54,
+        62,
+        63
+      ],
+      "interpretation": "The form Data Source property opens a focused editor with tables, joins, parameters, data review and SQL inspection."
+    },
+    {
+      "id": "forms",
+      "title": "Core form vocabulary",
+      "pages": [
+        79,
+        80,
+        81
+      ],
+      "visualPages": [
+        80
+      ],
+      "interpretation": "Pages contain Grid, Record, Search and Login forms. A form is a logical page component, not necessarily an HTML form element."
+    },
+    {
+      "id": "project-wizard",
+      "title": "Power and Page wizards",
+      "pages": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "visualPages": [
+        82
+      ],
+      "interpretation": "Wizards are bounded creation workflows. The Power Wizard starts from New Project and can build multiple pages."
+    },
+    {
+      "id": "grid-wizard",
+      "title": "Grid wizard",
+      "pages": [
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "visualPages": [
+        99,
+        100
+      ],
+      "interpretation": "Choose a connection, source and fields, then configure optional search, sorting, navigation and presentation."
+    },
+    {
+      "id": "record-wizard",
+      "title": "Record wizard",
+      "pages": [
+        107,
+        108,
+        109
+      ],
+      "visualPages": [
+        107
+      ],
+      "interpretation": "Configure record fields, operations and presentation; finish with an editable form."
+    },
+    {
+      "id": "search-wizard",
+      "title": "Search wizard",
+      "pages": [
+        110,
+        111,
+        112,
+        113
+      ],
+      "visualPages": [],
+      "interpretation": "A search form supplies parameters to a grid or record form."
+    },
+    {
+      "id": "login-wizard",
+      "title": "Authentication wizard",
+      "pages": [
+        114,
+        115,
+        116,
+        117
+      ],
+      "visualPages": [
+        114
+      ],
+      "interpretation": "Login is a focused form creation workflow tied to project security settings."
+    },
+    {
+      "id": "grid-record",
+      "title": "Grid and Record wizard",
+      "pages": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125
+      ],
+      "visualPages": [
+        118,
+        121,
+        123
+      ],
+      "interpretation": "The wizard constructs linked grid/record forms, including selected fields, the link field, optional search and allowed write operations."
+    },
+    {
+      "id": "properties",
+      "title": "Object properties",
+      "pages": [
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133
+      ],
+      "visualPages": [],
+      "interpretation": "Properties belong to selected objects; distinguish physical database metadata, form data binding, control settings and HTML formatting."
+    },
+    {
+      "id": "document-modes",
+      "title": "Design, HTML, Code, Preview and Live Page",
+      "pages": [
+        134,
+        135,
+        136,
+        137
+      ],
+      "visualPages": [
+        134
+      ],
+      "interpretation": "All modes address the same page. Preview is static; Live Page executes the generated app. Code ownership and regeneration need deliberate modern guarantees."
+    },
+    {
+      "id": "actions",
+      "title": "Client event actions",
+      "pages": [
+        139,
+        140,
+        141,
+        142
+      ],
+      "visualPages": [],
+      "interpretation": "Events and reusable actions extend objects; retain focus and validation needs without exposing every advanced feature at once."
+    }
+  ],
+  "userAdditions": [
+    {
+      "id": "schema-builder",
+      "title": "Modern SQLite schema authoring",
+      "source": "User requirement; not established as a full early Studio feature in this manual."
+    },
+    {
+      "id": "flow-map",
+      "title": "Canonical application behavior/endpoint flow map",
+      "source": "User recollection and explicit requirement; no endpoint graph found in this manual."
+    },
+    {
+      "id": "modern-output",
+      "title": "Readable TypeScript/Next.js applications on Node.js/SQLite",
+      "source": "User-selected modern output target."
+    },
+    {
+      "id": "mcp",
+      "title": "MCP adapter from the first implementation slice",
+      "source": "User requirement; UI and MCP share the same application commands."
+    }
+  ]
+}

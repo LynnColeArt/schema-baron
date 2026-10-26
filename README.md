@@ -2,7 +2,18 @@
 
 A fresh application builder inspired by the interaction model of CodeCharge Studio 1.0, with a modern SQLite schema designer and TypeScript application output.
 
-Status: baseline captured; implementation has not started. This repository is intentionally separate from the earlier Schemabaron experiment.
+Status: whole-app specification and implementation plan prepared; implementation has not started. This repository is intentionally separate from the earlier Schemabaron experiment.
+
+## Build mission
+
+The active mission is [Schema Baron Studio](kitty-specs/schema-baron-studio-01M5W3Q9/spec.md), on `feat/schema-baron-studio` for a later PR into `main`.
+
+- [Implementation plan](kitty-specs/schema-baron-studio-01M5W3Q9/plan.md)
+- [Acceptance walkthrough](kitty-specs/schema-baron-studio-01M5W3Q9/quickstart.md)
+- [Requirement-to-evidence matrix](kitty-specs/schema-baron-studio-01M5W3Q9/contracts/acceptance-matrix.md)
+- [Manual reading-pack instructions](docs/references/README.md)
+
+The plan is not implemented behavior. Work-package authoring is the next phase.
 
 ## Direction
 
