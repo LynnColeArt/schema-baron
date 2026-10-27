@@ -48,9 +48,10 @@ export class ProjectCore {
    if (command.expectedRevision !== revision) throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');
    accepted = command;
    const effect = this.registry.run(command, project); const outcome: Outcome = { ok: true, revision: effect.candidate?.revision ?? revision, result: effect.result, diagnostics: [] };
+   if (effect.job) { jobSchema.parse(effect.job); if (command.operation !== 'job.cancel' || command.input.jobId !== effect.job.id || effect.candidate) throw new StorageError('VALIDATION_FAILED', 'Job effects must match the cancellation command.'); }
    if (effect.candidate && (effect.candidate.id !== command.projectId || effect.candidate.revision !== revision + 1)) throw new StorageError('VALIDATION_FAILED', 'A mutation must preserve project identity and advance exactly one revision.');
    if (effect.candidate) this.storage.save(effect.candidate, effect.root, { requestId: command.requestId, payloadHash, actor, baseRevision: revision, newRevision: outcome.revision, outcome }, { revision: outcome.revision, kind: 'revision', objectIds: effect.changedIds ?? [command.projectId], diagnostics: [] });
-   else if (project) this.storage.complete(command.projectId, { requestId: command.requestId, payloadHash, actor, baseRevision: revision, outcome }, null);
+   else if (project) this.storage.complete(command.projectId, { requestId: command.requestId, payloadHash, actor, baseRevision: revision, outcome }, null, effect.job);
    return outcome;
   } catch (error) {
    const diagnostics = error instanceof ModelValidationError ? error.diagnostics : [];

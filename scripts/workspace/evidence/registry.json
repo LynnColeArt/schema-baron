@@ -1,7 +1,7 @@
 {
   "observedAt": "2026-10-27T01:43:13.880Z",
   "clientDate": "2026-10-26",
-  "lockSha256": "689bf202ccd400632491fe535dba9b75e80dfd5a67a098ecdedaefcb0f1f2095",
+  "lockSha256": "fda276948d783b22de861d29e3a19dbf21e416a28d0c6bc33b6d15b4c50b6a6f",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
     {
@@ -8112,5 +8112,9 @@
       "lifecycle": {},
       "scriptsDenied": true
     }
-  ]
+  ],
+  "workspaceGraphUpdate": {
+    "observedAt": "2026-10-27T02:26:44.668Z",
+    "reason": "WP04 adds only Studio edges to existing locked workspaces and zod; all third-party artifact records compared unchanged, no lifecycle script execution."
+  }
 }

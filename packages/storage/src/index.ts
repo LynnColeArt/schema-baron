@@ -3,7 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { canonicalJson, parseProject, operationRecordSchema, FORMAT_VERSION } from '@schema-baron/model';
-import type { Project } from '@schema-baron/model';
+import type { Job, Project } from '@schema-baron/model';
 export class StorageError extends Error { constructor(readonly code: string, message: string) { super(message); } }
 export const hash = (value: unknown): string => createHash('sha256').update(canonicalJson(value)).digest('hex');
 function definitionFilename(id: string): string { const encoded = encodeURIComponent(id); return `${encoded.length <= 200 ? encoded : `%long-${hash(id)}`}.json`; }
@@ -89,7 +89,7 @@ export class ProjectStorage {
   this.db.prepare('INSERT OR REPLACE INTO projects VALUES(?,?,?,?)').run(j.id, j.root, j.locator, j.snapshot);
   this.completeRecord(j.id, JSON.parse(j.record) as StoredRecord, JSON.parse(j.event));
  }
- complete(project: string, record: StoredRecord, event: unknown) { this.assertReady(); this.db.transaction(() => this.completeRecord(project, record, event))(); }
+ complete(project: string, record: StoredRecord, event: unknown, job?: Job) { this.assertReady(); this.db.transaction(() => { if (job) this.putJob(project, job.id, job); this.completeRecord(project, record, event); })(); }
  operation(project: string, request: string): unknown { this.snapshot(project); const row = this.db.prepare('SELECT record FROM operations WHERE project=? AND request=?').get(project, request) as { record: string } | undefined; return row && JSON.parse(row.record); }
  readonly recovery: { projectId: string; outcome: 'rolled-forward' }[] = [];
  private recover() {
@@ -101,7 +101,7 @@ export class ProjectStorage {
    this.db.prepare('DELETE FROM journal WHERE id=?').run(j.id); this.recovery.push({ projectId: j.id, outcome: 'rolled-forward' });
   }
  }
- snapshot(id: string): Project { this.assertReady(); const row = this.db.prepare('SELECT * FROM projects WHERE id=?').get(id) as ProjectRow | undefined; if (!row) throw new StorageError('INVALID_INPUT', 'Unknown project.'); const path = this.path(row); this.acquireDefinition(path); const value = JSON.parse(readFileSync(path, 'utf8')) as { formatVersion?: number }; if (value.formatVersion !== FORMAT_VERSION) throw new StorageError('UNSUPPORTED_FORMAT', 'Unsupported definition version; no overwrite performed.'); const project = parseProject(value); if (hash(project) !== hash(JSON.parse(row.snapshot))) throw new StorageError('REVISION_CONFLICT', 'Definition changed externally; reopen or import it.'); return project; }
+ snapshot(id: string): Project { this.assertReady(); const row = this.db.prepare('SELECT * FROM projects WHERE id=?').get(id) as ProjectRow | undefined; if (!row) throw new StorageError('NOT_FOUND', 'Unknown project.'); const path = this.path(row); this.acquireDefinition(path); const value = JSON.parse(readFileSync(path, 'utf8')) as { formatVersion?: number }; if (value.formatVersion !== FORMAT_VERSION) throw new StorageError('UNSUPPORTED_FORMAT', 'Unsupported definition version; no overwrite performed.'); const project = parseProject(value); if (hash(project) !== hash(JSON.parse(row.snapshot))) throw new StorageError('REVISION_CONFLICT', 'Definition changed externally; reopen or import it.'); return project; }
  open(id: string, locator: string): Project {
   this.assertReady();
   if (locator === id) return this.snapshot(id);

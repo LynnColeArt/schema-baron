@@ -1,6 +1,6 @@
 import { commandSchema, operationResultSchemas } from '@schema-baron/model';
-import type { Command, Operation, Project } from '@schema-baron/model';
-export interface CommandEffect { result: unknown; candidate?: Project; root?: string; changedIds?: string[] }
+import type { Command, Job, Operation, Project } from '@schema-baron/model';
+export interface CommandEffect { result: unknown; candidate?: Project; root?: string; changedIds?: string[]; job?: Job }
 export type CommandHandler = (command: Command, snapshot: Project | undefined) => CommandEffect;
 /** Input and result validators come exclusively from the canonical model package. */
 export class CommandRegistry {

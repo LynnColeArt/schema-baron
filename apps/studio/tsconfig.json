@@ -4,10 +4,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "lib": [
-      "ES2023",
+      "ES2024",
       "DOM",
       "DOM.Iterable"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
