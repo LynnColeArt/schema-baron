@@ -27,7 +27,7 @@ export function returnTarget(text:string) {
  const fields=page.parameters;
  if(Object.keys(params).some(key=>!fields.some(f=>f.parameter===key)))throw new AccessError(400,'Undeclared return parameter.');
  const normalized=context(params,fields);
- for(const field of fields)if(field.kind==='mode'&&params[field.parameter]!==undefined&&params[field.parameter]!=='new')throw new AccessError(400,'Invalid record mode.');
+ for(const field of fields)if(field.kind==='mode'&&!fields.some(input=>input.kind==='query'&&input.parameter===field.parameter.slice(0,-5))&&params[field.parameter]!==undefined&&params[field.parameter]!=='new')throw new AccessError(400,'Invalid record mode.');
  // Context validation normalizes optional blank searches; all typed keys survive.
  return page.path+(Object.keys(normalized).length?'?'+new URLSearchParams(normalized):'');
 }
