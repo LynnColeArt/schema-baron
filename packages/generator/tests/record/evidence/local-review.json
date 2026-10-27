@@ -1,0 +1,8 @@
+{
+  "reviewUrl": "http://127.0.0.1:36575/catalog",
+  "reviewApp": "/tmp/wp12-wizard-RnVib9/output/app",
+  "latestWizardRoot": "/tmp/wp12-wizard-AGymOk",
+  "latestRuntimeRoot": "/tmp/wp12-record-runtime-QYV3Dw",
+  "reviewDataIsDisposable": true,
+  "studioOwnerConfig": "Stored privately under wizard root; excluded from Git."
+}

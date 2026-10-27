@@ -1,0 +1,36 @@
+import 'server-only';
+import Decimal from 'decimal.js';
+import { z } from 'zod';
+export type Scalar = { readonly kind:string; readonly encoding?:string; readonly scale?:number; readonly precision?:number };
+export type Field = { readonly id:string; readonly name:string; readonly type:Scalar; readonly nullable:boolean; readonly generated?:boolean; readonly hasDefault?:boolean };
+export type Input = Record<string,string>;
+export type Binding = string | number | bigint | null;
+export type Parameters = Record<string,string|string[]|undefined>;
+export function one(parameters:Parameters,key:string):string|undefined {
+ const value=parameters[key]; if(Array.isArray(value)) throw Error('Use one value for each parameter.'); return value;
+}
+export function value(field:Field,text:string):Binding {
+ if(text.length>10000) throw Error('Enter at most 10000 characters.');
+ if(text==='') { if(field.nullable) return null; if(field.type.kind!=='text') throw Error('Enter a value.'); }
+ switch(field.type.kind) {
+  case 'integer': if(!/^-?\d+$/.test(text)) throw Error('Enter an integer.'); return z.bigint().min(-9223372036854775808n).max(9223372036854775807n).parse(BigInt(text));
+  case 'real': if(!text.trim()) throw Error('Enter a number.'); return z.coerce.number().finite().parse(text);
+  case 'boolean': return z.enum(['0','1']).transform(Number).parse(text);
+  case 'date': return z.iso.date().parse(text);
+  case 'datetime': return z.iso.datetime().parse(text);
+  case 'decimal': {
+   if(!/^-?\d+(?:\.\d+)?$/.test(text)) throw Error('Enter a decimal number.');
+   const amount=new Decimal(text), scale=field.type.scale??0, precision=field.type.precision??38;
+   if(amount.decimalPlaces()>scale || amount.abs().gte(new Decimal(10).pow(precision-scale))) throw Error('Amount exceeds configured precision or scale.');
+   return field.type.encoding==='scaled-integer' ? z.bigint().min(-9223372036854775808n).max(9223372036854775807n).parse(BigInt(amount.times(new Decimal(10).pow(scale)).toFixed(0))) : amount.toFixed(scale);
+  }
+  case 'text': return text;
+  default: throw Error('This field cannot be entered.');
+ }
+}
+export function entered(field:Field,input:unknown):string {
+ if(input===null||input===undefined) return '';
+ if(field.type.kind==='decimal'&&field.type.encoding==='scaled-integer') return new Decimal(String(input)).div(new Decimal(10).pow(field.type.scale??0)).toFixed(field.type.scale??0);
+ return String(input);
+}
+export function message(error:unknown):string { return error instanceof z.ZodError ? 'Enter a valid value for this field.' : error instanceof Error ? error.message : 'Enter a valid value.'; }
