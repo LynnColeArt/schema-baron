@@ -227,11 +227,11 @@
     {
       "criterion_id": "FR-023",
       "description": "Verify FR-023 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-023; docs/evidence/usability/report.md; tests/e2e/usability/workflow.spec.ts; tests/e2e/document-modes/workflow.spec.ts; scripts/release/evidence/report.md. All five modes keyboard-completed at normal/native200; Design/HTML stable shared draft, Code owned/generated source and executed authored validator, sandbox Preview differs from running output, corresponding Live route and runtime diagnostics. Reviewed against mission spec FR-023; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:53.340762+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
