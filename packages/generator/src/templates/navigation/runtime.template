@@ -3,12 +3,15 @@ import { one, value, entered, type Field, type Parameters } from './record-valid
 export type Expression = { readonly kind:'field'; readonly fieldId:string } | { readonly kind:'parameter'; readonly parameterId:string } | { readonly kind:'literal'; readonly value:string|number|boolean|null };
 export type Mapping = { readonly parameter:string; readonly field:Field; readonly expression:Expression };
 export type Destination = { readonly path:string; readonly mappings:readonly Mapping[]; readonly newForms:readonly string[] };
-export type ContextField = { readonly parameter:string; readonly field?:Field; readonly kind?:'page'|'sort'|'direction'; readonly allowed?:readonly string[] };
+export type ContextField = { readonly parameter:string; readonly field?:Field; readonly kind?:'page'|'sort'|'direction'|'search'|'key'; readonly allowed?:readonly string[] };
 export function context(parameters:Parameters, allowed:readonly ContextField[]):Record<string,string> {
  const result:Record<string,string>={};
  for(const item of allowed) {
   const text=one(parameters,item.parameter); if(text===undefined) continue;
-  if(item.field) value(item.field,text);
+  // An empty optional Search input means no predicate, exactly as list GETs.
+  // Parent/Record keys do not share that optional-search normalization.
+  if(item.kind==='search'&&text==='') continue;
+  if(item.field) {const parsed=value(item.field,text);if(item.kind==='key'&&parsed===null) throw Error('Enter a parent key value.');}
   if(item.kind==='page'&&!/^[1-9]\d{0,4}$/.test(text)) throw Error('Invalid page.');
   if(item.kind==='direction'&&!['asc','desc'].includes(text)) throw Error('Invalid direction.');
   if(item.kind==='sort'&&text!==''&&!item.allowed?.includes(text)) throw Error('Invalid sort field.');

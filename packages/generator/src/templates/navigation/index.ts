@@ -3,10 +3,10 @@ import type { ContextIR, DestinationIR, NavigationExpressionIR, SourceIR } from 
 export function contextFields(project:Project,sources:SourceIR[]):ContextIR[] {
  return project.forms.filter(f=>f.kind==='Grid'||f.kind==='Search').flatMap(form=>{
   const source=sources.find(s=>s.id===form.sourceRef?.id); if(!source) return [];
-  return [{parameter:form.id+':page',kind:'page'},{parameter:form.id+':sort',kind:'sort',allowed:[...new Set([...project.controls.filter(c=>form.controlIds.includes(c.id)).flatMap(c=>c.binding?.kind==='stored'?[c.binding.fieldId]:[]),...form.sorting.map(s=>s.fieldId)])]},{parameter:form.id+':direction',kind:'direction'},...form.keyMapping.filter(k=>k.expression.kind==='parameter').map(k=>({parameter:keyParameter(form,k.targetFieldId),field:source.fields.find(f=>f.id===k.targetFieldId)!})),...form.search.map(s=>({parameter:form.id+':filter:'+s.fieldId,field:source.fields.find(f=>f.id===s.fieldId)!}))];
+  return [{parameter:form.id+':page',kind:'page'},{parameter:form.id+':sort',kind:'sort',allowed:[...new Set([...project.controls.filter(c=>form.controlIds.includes(c.id)).flatMap(c=>c.binding?.kind==='stored'?[c.binding.fieldId]:[]),...form.sorting.map(s=>s.fieldId)])]},{parameter:form.id+':direction',kind:'direction'},...form.keyMapping.map(k=>({parameter:keyParameter(form,k.targetFieldId),kind:'key' as const,field:source.fields.find(f=>f.id===k.targetFieldId)!})),...form.search.map(s=>({parameter:form.id+':filter:'+s.fieldId,kind:'search' as const,field:source.fields.find(f=>f.id===s.fieldId)!}))];
  });
 }
-export function keyParameter(form:Form,fieldId:string) {
+export function keyParameter(form:{id:string;keyMapping:Form['keyMapping']},fieldId:string) {
  const expression=form.keyMapping.find(k=>k.targetFieldId===fieldId)?.expression;
  return expression?.kind==='parameter'?expression.parameterId:form.id+':key:'+fieldId;
 }
