@@ -147,11 +147,11 @@
     {
       "criterion_id": "FR-015",
       "description": "Verify FR-015 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-015; docs/evidence/equipment/report.md T107; docs/evidence/generality/report.md; scripts/release/evidence/report.md; packages/core/tests/identity/behavior.test.ts. Visible managed identity configuration/provisioning/header/login/logout and project-isolated salted hashes; independent exported managed provisioning via protected stdin/browser proven twice. Mapped operator provisioning adapter and mapped include-data export remain unsupported/refused. Reviewed against mission spec FR-015; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:26.963746+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
