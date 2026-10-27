@@ -20,7 +20,14 @@ SQLite indexes and actual join multiplicity inside the same read snapshot. Decim
 normalization, native affinity, and collation can equate physically distinct key values;
 a physical index alone is not a semantic uniqueness proof. Each inferred nonexpanding
 join uses its exact compiled source subqueries, bindings, operand order and ON condition
-to look for a second match before result execution. These full-relation checks are
+to look for a second matching source entity before result execution. Reverse checks
+for one-to-one/one-to-many group prior join appearances by the declared left alias's
+complete proven raw key tuple with BINARY collation, preserving physically different
+decimal/collated keys while counting repetitions of the same entity once. Grouped
+source queries use their grain tuple; a global aggregate is one entity. A nullable
+unique tuple is used only when every component is a required direct equality in ON,
+so matching tuples cannot contain NULL. Without that proof, compilation fails closed.
+These full-relation checks are
 independent of the 200-row sample and share its worker scan budget/deadline/cancellation.
 Checks conservatively cover the join relation before the containing query's WHERE;
 source-subquery filters and parameters are preserved. A collision returns

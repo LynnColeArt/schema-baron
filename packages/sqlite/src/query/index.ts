@@ -48,7 +48,7 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
   // Prove right-side uniqueness from equality conjunctions and declared schema keys.
   // Physical keys are provisional: normalization, affinity or collation can change
   // equality. The worker checks actual ON multiplicity before relying on this proof.
-  const joinProofs=new Map<Query['joins'][number],{rightUnique:boolean;leftUnique:boolean}>();
+  const joinProofs=new Map<Query['joins'][number],{rightUnique:boolean;leftIdentity:string[]|undefined}>();
   let expansions=0;
   for(const j of q.joins) {
    const equalities: Extract<Expression,{kind:'binary'}>[]=[];
@@ -56,9 +56,9 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    collect(j.on);
    function joinedKeys(alias:string,otherAlias:string): Set<string> {const keys=new Set<string>();for(const e of equalities)if(e.left.kind==='field' && e.right.kind==='field'){if(e.left.alias===alias && e.right.alias===otherAlias)keys.add(e.left.fieldId);if(e.right.alias===alias && e.left.alias===otherAlias)keys.add(e.right.fieldId);}return keys;}
    const right=joinedKeys(j.rightAlias,j.leftAlias),left=joinedKeys(j.leftAlias,j.rightAlias);
-   const isUnique=(alias:string,keys:Set<string>)=>uniqueKeys(alias).some(k=>k.every(id=>keys.has(id)));
-   const rightUnique=isUnique(j.rightAlias,right),leftUnique=isUnique(j.leftAlias,left);
-   joinProofs.set(j,{rightUnique,leftUnique});
+   const identity=(alias:string,keys:Set<string>)=>uniqueKeys(alias).find(k=>k.every(id=>keys.has(id)));
+   const rightUnique=identity(j.rightAlias,right)!==undefined,leftIdentity=identity(j.leftAlias,left),leftUnique=leftIdentity!==undefined;
+   joinProofs.set(j,{rightUnique,leftIdentity});
    if((['many-to-one','one-to-one'].includes(j.cardinality) && !rightUnique) || (['one-to-many','one-to-one'].includes(j.cardinality) && !leftUnique))throw new QueryError('INVALID_QUERY_GRAIN','Join cardinality requires equality on a complete unique key, including composite grain keys.');
    if(!rightUnique)expansions++;
   }
@@ -105,7 +105,15 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    // ON expression used below. They scan the full relation, independent of the
    // preview LIMIT, and stop counting each candidate after a second match.
    if(proof.rightUnique)grainChecks.push(`SELECT 1${prefix} WHERE (SELECT count(*) FROM (SELECT 1 FROM ${rightSource} WHERE ${on} LIMIT 2)) > 1 LIMIT 1`);
-   if(proof.leftUnique && ['one-to-one','one-to-many'].includes(join.cardinality))grainChecks.push(`SELECT 1 FROM ${rightSource} WHERE (SELECT count(*) FROM (SELECT 1${prefix} WHERE ${on} LIMIT 2)) > 1 LIMIT 1`);
+   if(proof.leftIdentity!==undefined && ['one-to-one','one-to-many'].includes(join.cardinality)) {
+    // Cardinality belongs to the declared alias, not its repeated appearances
+    // after previous expansions. Group by its complete proven key in raw BINARY
+    // representation: decimal/collated keys that compare equal in ON must still
+    // identify distinct physical entities. Required direct equality conjuncts
+    // exclude NULL key components from matches; a global aggregate has one entity.
+    const identity=proof.leftIdentity.map(id=>field({kind:'field',alias:join.leftAlias,fieldId:id as Query['grain']['keys'][number]}).sql+' COLLATE BINARY').join(',') || '1';
+    grainChecks.push(`SELECT 1 FROM ${rightSource} WHERE (SELECT count(*) FROM (SELECT 1${prefix} WHERE ${on} GROUP BY ${identity} LIMIT 2)) > 1 LIMIT 1`);
+   }
    prefix+=` ${join.kind==='left'?'LEFT':'INNER'} JOIN ${rightSource} ON ${on}`;
   }
   let sql='SELECT '+select.join(',')+prefix;

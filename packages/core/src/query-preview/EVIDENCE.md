@@ -128,3 +128,70 @@ Existing future generator/ui implementation notices remain explicit; no generate
 or UI numeric acceptance is claimed. The known Python coverage-authority advisory is not
 product verification. The repair adds only query proof/runtime checks, behavior tests,
 API explanation, this evidence, and the two approved shared diagnostic transport lines.
+
+## Review cycle 2 — pairwise left-alias identity repair
+
+Read the renewed full execution prompt, re-resolved Node Norris, and read canonical
+`review-cycle-2.md` plus `/tmp/wp15-cycle2-review-feedback-renata.md`. Rejection event
+`01M5XVAK5SBM2JPNZPQ52Z3VNB` identifies one P2 regression: the reverse-side uniqueness
+check counted repeated prefix appearances of the same declared leftAlias entity after
+an earlier valid expansion, rejecting p→detail one-to-many followed by p→lookup
+one-to-one (and the analogous later one-to-many case).
+
+The unchanged package/public valid-chain probes reproduced `INVALID_QUERY_GRAIN` before
+the repair (`/tmp/wp15-cycle3-before-chain.jsonl`,
+`/tmp/wp15-cycle3-before-public.jsonl`). Test-first desired behavior produced eight
+failures for valid chains/grouped/composite/nullable cases, while two real semantic
+collision controls already passed. No existing reviewer scripts or expectations changed.
+
+The compiler now retains the specific complete key tuple establishing left uniqueness.
+Reverse checks group matching prefix appearances by that declared alias's raw key tuple,
+with explicit BINARY collation, before counting source entities. They do not group by
+normalized decimal identity, the whole prefix, or an unrelated nullable unique key.
+Grouped query sources use their declared grain tuple; a global aggregate has one entity.
+Every nullable identity component must be a required direct ON equality, so NULL tuples
+cannot match; an expression such as coalesce(NULL,0) without a direct complete key proof
+is rejected rather than guessed. Tuple components remain separate SQL expressions.
+
+Full source subqueries, actual ON operand order/normalization/collation, bindings,
+pre-LIMIT checks, and the same read transaction/cost/deadline/cancellation remain intact.
+No result SQL, aggregate semantics, worker registration/lifecycle, dependencies, shared
+files or WP07 code changed. In particular, no monetary SUM DISTINCT workaround exists.
+
+Eleven new real-SQLite cases now pass: earlier expansion followed by one-to-one or
+one-to-many, full composite identity, grouped/global source identity, nullable unique
+matching/nonproof behavior, real decimal, composite-second-component and collated distinct-entity collisions after
+prior appearances, and saved/draft HTTP plus fresh/replayed MCP parity for both valid
+chain shapes. Results equal independent raw SQL; app database bytes remain unchanged.
+All thirteen prior semantic grain regressions also pass.
+
+The unchanged valid-chain reviewer probes now return detail IDs 101/102 through package,
+saved/draft HTTP and fresh/replayed MCP. Outputs:
+`/tmp/wp15-cycle3-after-chain.jsonl`, `/tmp/wp15-cycle3-after-public.jsonl`.
+`sha256sum --check /tmp/wp15-cycle3-probe-checksums.txt` passed for those scripts, the
+snapshot script, and the original wrong-money package/public scripts. The latter still
+return `INVALID_QUERY_GRAIN` (`/tmp/wp15-cycle3-original-probe.txt`,
+`/tmp/wp15-cycle3-original-public.jsonl`). Independent arithmetic composition/empty
+behavior and all 36 decimal.js oracle comparisons still pass
+(`/tmp/wp15-cycle3-arithmetic.jsonl`).
+
+The unchanged concurrent WAL snapshot probe also passed: its external write committed
+before the approximately 1948 ms preview returned the original `10.00` sample with
+truncated:true; the next preview rejected the new collision (`INVALID_QUERY_GRAIN`).
+Output `/tmp/wp15-cycle3-snapshot.jsonl`. No timing budget was relaxed.
+
+Cycle 2 repair final verification (pinned Node 24.22.1 / npm 11.19.1):
+
+- `npm run verify` — exit 0: native SQLite 3.53.4 smoke, strict workspace typechecks,
+  diff lint, all production builds including Next, credential heuristic scan,
+  22 suites / 192 tests passed, unchanged 258-artifact dependency verification.
+- `node scripts/workspace/verify.mjs module packages/sqlite/tests/query` — exit 0,
+  including the final complete-composite-identity collision control.
+- `node scripts/workspace/verify.mjs module packages/sqlite/src/query` — exit 0.
+- `node scripts/workspace/verify.mjs module packages/sqlite/tests/decimal` — exit 0.
+- `npm audit --ignore-scripts --json` — exit 0, zero vulnerabilities; output
+  `/tmp/wp15-cycle3-audit.json`. No dependency/lock/evidence refresh was needed.
+
+The existing future generator/ui notices remain explicit. No later UI/report/generated
+runtime acceptance or Python coverage-authority pass is claimed. The repair touches
+only the owned compiler, chain tests, README and this chronological evidence.
