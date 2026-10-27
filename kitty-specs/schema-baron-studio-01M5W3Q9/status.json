@@ -166,7 +166,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: compact real-owner Studio workspace; 126 tests and two real UI/MCP workflows pass; axe zero; save success/rejection preserves focus/caret; evidence and explicit zoom/scale limits in workspace/EVIDENCE.md",
-        "Independent review rejected: P1 invalid draft or undo history silently deletes all project drafts on switch. Source 523c17b; reproduction and eight-item checklist in review feedback; 126 tests and two real owner/MCP E2E cases pass but miss invalid recovery. No product edits."
+        "Independent review rejected: P1 invalid draft or undo history silently deletes all project drafts on switch. Source 523c17b; reproduction and eight-item checklist in review feedback; 126 tests and two real owner/MCP E2E cases pass but miss invalid recovery. No product edits.",
+        "Cycle1 P1 repaired: incomplete current/past/future drafts survive switch/reload; malformed entries isolated with bounded protected backup and visible warnings; server validation unchanged; 133 tests and four real browser workflows pass; evidence in workspace/EVIDENCE.md"
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
