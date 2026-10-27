@@ -404,7 +404,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: generated Search and transactional Record lifecycle; 269 workspace tests, 6 focused generated-runtime tests, real wizard-to-production browser CRUD, strict output builds and SQLite assertions. Commit 2207735; evidence in packages/generator/tests/record/EVIDENCE.md.",
-        "Independent review source2207735/baseab00032: P1 key-based child returns fail generated production HTTP; P1 empty typed filters disable Record navigation. Eight checklist items in feedback. Shared integration explicitly authorized and reviewed."
+        "Independent review source2207735/baseab00032: P1 key-based child returns fail generated production HTTP; P1 empty typed filters disable Record navigation. Eight checklist items in feedback. Shared integration explicitly authorized and reviewed.",
+        "Review cycle 1 repaired in 6f2186b: declared parent/composite key predicates and optional typed Search context agree across generated navigation; no silent # or dropped-context fallback. 270 workspace tests, new failed-before/pass-after production navigation regression, original real wizard production E2E passed; evidence packages/generator/tests/record/CYCLE1.md."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
