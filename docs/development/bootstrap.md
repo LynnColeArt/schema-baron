@@ -103,7 +103,16 @@ The child writes to `SCHEMA_BARON_TEST_OUTPUT`. For an actual independently gene
 app, use `npm run check:generated -- /absolute/path/to/output`. This refuses workspace
 paths/dependencies, copies source to fresh OS temporary storage, rejects symlinks and
 nonregistry lock entries, omits installed/build output, and performs offline `npm ci`,
-`typecheck`, `test`, `build` there. It cleans its temporary copy even on failure.
+`typecheck`, `test`, `build` there. Isolated children use the selected runtime's npm CLI
+through an absolute Node path, a temporary Node/npm-only bin directory plus system OS
+bins, an allowlisted environment, and empty npm user/global configuration. Workspace
+PATH, NODE_OPTIONS, npm execution context and NODE_PATH do not propagate. An existing
+ancestor `node_modules/.bin` under the temporary root blocks the check; choose a clean
+`TMPDIR` instead. This prevents npm's automatic ancestor-bin injection from borrowing
+ambient package tools. Required package executables must come from the standalone
+installation rather than this checkout. System OS tool directories remain trusted; this
+is a dependency-environment check, not a sandbox for untrusted application scripts. Both
+source and toolchain temporary directories are removed on failure.
 A temporary empty package is used only to prove this harness propagates failure; it is
 not generated-app behavior evidence. There is no generated application yet.
 
@@ -176,3 +185,36 @@ projects, databases, journals, backups and secrets; keep output separately selec
 `.local` is ignored for private reading/reference artifacts. Do not copy archived demo
 credentials, data or the copyrighted manual into source, fixtures or public evidence.
 No unpublished service or manual PDF is required to reproduce this harness.
+
+## Review cycle 1 repair evidence
+
+R1 identified an executable-resolution leak through the documented npm entry point:
+parent `npm run` injected workspace/ancestor `.bin` paths, so a dependency-free package's
+`tsc --version` scripts incorrectly exited 0. The original direct-helper regression did
+not exercise that caller environment. The repair replaces inherited child execution
+context with the controlled environment described above; staging/path/symlink/lockfile
+protections and denied lifecycle execution remain active.
+
+Observed red/green command on pinned Node/npm:
+
+```sh
+npm test -- --testNamePattern='public npm generated'
+```
+
+Before the repair, the missing-tool assertion failed because all three scripts borrowed
+workspace TypeScript and the public command exited 0. After the repair, that same
+public command fails for undeclared `tsc`. A second standalone package explicitly
+installs reviewed TypeScript 7.0.2 and its platform dependencies from the warm cache,
+strictly checks and compiles a temporary module, and succeeds through the public command.
+Its script verifies the child PATH excludes this checkout, NODE_PATH is empty,
+NODE_OPTIONS was removed, and INIT_CWD identifies the isolated application. These are
+harness probes, not generated-product acceptance. The suite now contains eleven tests.
+
+
+Repair validation: `SCHEMA_BARON_LINT_BASE=HEAD npm run verify` passed before the
+repair commit: eleven tests, strict harness/config typecheck, three-file diff lint,
+native SQLite/hash smoke, credential heuristic and offline installed metadata match
+(182 present / 76 optional absent). Node 24.22.1/npm 11.19.1, Linux x64 only.
+A wider historical lint base encountered absent runtime-managed status snapshots;
+that unrelated coordination surface is outside the scoped repair diff. Other-platform
+execution and actual generated product acceptance remain unexecuted.

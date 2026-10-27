@@ -1,6 +1,6 @@
-import { cpSync, existsSync, mkdtempSync, lstatSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, lstatSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join, relative, resolve, sep } from 'node:path';
+import { delimiter, dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
@@ -51,6 +51,44 @@ function cleanOutput(command, args) {
   try { run(command, args, { env: { ...process.env, SCHEMA_BARON_TEST_OUTPUT: output } }); }
   finally { rmSync(output, { recursive: true, force: true }); console.log('Temporary output removed'); }
 }
+function standaloneEnvironment(directory, toolchain) {
+  // npm run adds ancestor .bin paths itself. Refuse an ambient ancestor tool tree.
+  for (let ancestor = dirname(directory); ; ancestor = dirname(ancestor)) {
+    if (existsSync(join(ancestor, 'node_modules', '.bin'))) fail(`Standalone ancestor has package executables: ${ancestor}; use a clean temporary root`);
+    if (dirname(ancestor) === ancestor) break;
+  }
+  const windows = process.platform === 'win32';
+  const npmCli = realpathSync(join(dirname(process.execPath), windows ? 'node_modules/npm/bin/npm-cli.js' : '../lib/node_modules/npm/bin/npm-cli.js'));
+  const bin = join(toolchain, 'bin');
+  mkdirSync(bin);
+  if (windows) {
+    copyFileSync(process.execPath, join(bin, 'node.exe'));
+    writeFileSync(join(bin, 'npm.cmd'), `@"${process.execPath}" "${npmCli}" %*\r\n`);
+  } else {
+    symlinkSync(process.execPath, join(bin, 'node'));
+    symlinkSync(npmCli, join(bin, 'npm'));
+  }
+  const env = {};
+  for (const key of ['HOME', 'USERPROFILE', 'LOCALAPPDATA', 'APPDATA', 'SystemRoot', 'WINDIR', 'TEMP', 'TMP', 'TMPDIR', 'LANG', 'LC_ALL', 'CI', 'TERM']) {
+    if (process.env[key] !== undefined) env[key] = process.env[key];
+  }
+  const systemRoot = process.env.SystemRoot ?? 'C:/Windows';
+  const systemBins = windows ? [join(systemRoot, 'System32'), systemRoot] : ['/usr/bin', '/bin', '/usr/sbin', '/sbin'];
+  env.PATH = [bin, ...systemBins].join(delimiter);
+  env.NODE_PATH = '';
+  env.npm_config_userconfig = join(toolchain, 'user.npmrc');
+  env.npm_config_globalconfig = join(toolchain, 'global.npmrc');
+  writeFileSync(env.npm_config_userconfig, '');
+  writeFileSync(env.npm_config_globalconfig, '');
+  // Preserve only the selected artifact cache, never npm's inherited execution context.
+  if (process.env.npm_config_cache) env.npm_config_cache = process.env.npm_config_cache;
+  env.npm_config_prefix = directory;
+  env.npm_config_ignore_scripts = 'true';
+  env.npm_config_registry = 'https://registry.npmjs.org/';
+  env.npm_config_workspaces = 'false';
+  env.npm_config_script_shell = windows ? join(systemRoot, 'System32', 'cmd.exe') : '/bin/sh';
+  return { env, npmCli };
+}
 function generated(path) {
   if (!path) fail('generated requires a standalone output directory; no generated application exists at bootstrap');
   path = realpathSync(resolve(path));
@@ -65,7 +103,9 @@ function generated(path) {
   if (!existsSync(join(path, 'package-lock.json'))) fail('Generated output lacks its standalone package-lock.json');
   for (const script of ['typecheck', 'test', 'build']) if (!manifest.scripts?.[script]) fail(`Generated output lacks ${script} script`);
   const isolated = mkdtempSync(join(tmpdir(), 'schema-baron-standalone-'));
+  let toolchain;
   try {
+    toolchain = mkdtempSync(join(tmpdir(), 'schema-baron-toolchain-'));
     cpSync(path, isolated, { recursive: true, filter: (source) => {
       const name = source.split(sep).at(-1);
       if (['node_modules', '.git', '.next', 'dist', 'coverage'].includes(name)) return false;
@@ -76,9 +116,13 @@ function generated(path) {
     for (const [name, entry] of Object.entries(lock.packages ?? {})) {
       if (entry.link || (entry.resolved && !entry.resolved.startsWith('https://registry.npmjs.org/'))) fail(`Non-registry generated lock entry: ${name}`);
     }
-    run('npm', ['ci', '--ignore-scripts', '--offline'], { cwd: isolated, env: { ...process.env, NODE_PATH: '' } });
-    for (const script of ['typecheck', 'test', 'build']) run('npm', ['run', script], { cwd: isolated, env: { ...process.env, NODE_PATH: '' } });
-  } finally { rmSync(isolated, { recursive: true, force: true }); }
+    const { env, npmCli } = standaloneEnvironment(isolated, toolchain);
+    run(process.execPath, [npmCli, 'ci', '--ignore-scripts', '--offline'], { cwd: isolated, env });
+    for (const script of ['typecheck', 'test', 'build']) run(process.execPath, [npmCli, 'run', script], { cwd: isolated, env });
+  } finally {
+    rmSync(isolated, { recursive: true, force: true });
+    if (toolchain) rmSync(toolchain, { recursive: true, force: true });
+  }
 }
 function credentials(path) {
   let candidates;

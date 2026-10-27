@@ -1,5 +1,5 @@
 import { afterEach, expect, test } from 'vitest';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -77,4 +77,35 @@ test('generated checks reject misleading dot-prefixed workspace children', () =>
   const result = run('generated', path);
   expect(result.status).not.toBe(0);
   expect(result.stderr).toContain('outside workspace resolution');
+});
+
+test('public npm generated check cannot borrow undeclared workspace executables', () => {
+  const path = directory();
+  const scripts = { typecheck: 'tsc --version', test: 'tsc --version', build: 'tsc --version' };
+  writeFileSync(join(path, 'package.json'), JSON.stringify({ name: 'isolated-tool-probe', version: '1.0.0', scripts }));
+  writeFileSync(join(path, 'package-lock.json'), JSON.stringify({ name: 'isolated-tool-probe', version: '1.0.0', lockfileVersion: 3, packages: { '': { name: 'isolated-tool-probe', version: '1.0.0' } } }));
+  const result = spawnSync('npm', ['run', 'check:generated', '--', path], { encoding: 'utf8' });
+  expect(result.status).not.toBe(0);
+  expect(result.stdout).not.toContain('Version 7.0.2');
+  expect(result.stderr).toMatch(/tsc.*(?:not found|not recognized)/i);
+});
+
+test('public npm generated check installs and uses its own declared compiler offline', () => {
+  const path = directory();
+  const scripts = { typecheck: 'tsc --strict --noEmit --skipLibCheck index.ts', test: 'node environment.mjs && tsc --version', build: 'tsc --outDir dist --skipLibCheck index.ts' };
+  writeFileSync(join(path, 'environment.mjs'), `
+    import assert from 'node:assert/strict';
+    assert.ok(!process.env.PATH.includes(${JSON.stringify(resolve('.'))}));
+    assert.equal(process.env.NODE_PATH, '');
+    assert.equal(process.env.NODE_OPTIONS, undefined);
+    assert.equal(process.env.INIT_CWD, process.cwd());
+  `);
+  const dependency = { typescript: '7.0.2' };
+  const workspaceLock = JSON.parse(readFileSync(resolve('package-lock.json'), 'utf8'));
+  writeFileSync(join(path, 'index.ts'), 'export const answer: number = 42;');
+  writeFileSync(join(path, 'package.json'), JSON.stringify({ name: 'independent-tool-probe', version: '1.0.0', scripts, devDependencies: dependency }));
+  writeFileSync(join(path, 'package-lock.json'), JSON.stringify({ name: 'independent-tool-probe', version: '1.0.0', lockfileVersion: 3, packages: { '': { name: 'independent-tool-probe', version: '1.0.0', devDependencies: dependency }, ...Object.fromEntries(Object.entries(workspaceLock.packages).filter(([name]) => name === 'node_modules/typescript' || name.startsWith('node_modules/@typescript/'))) } }));
+  const result = spawnSync('npm', ['run', 'check:generated', '--', path], { encoding: 'utf8', env: { ...process.env, NODE_PATH: resolve('node_modules'), NODE_OPTIONS: '--no-warnings' } });
+  expect(result.status, result.stdout + result.stderr).toBe(0);
+  expect(result.stdout).toContain('Version 7.0.2');
 });
