@@ -12,6 +12,9 @@ requirement_refs:
 planning_base_branch: feat/schema-baron-studio
 merge_target_branch: feat/schema-baron-studio
 branch_strategy: Planning artifacts for this mission were generated on feat/schema-baron-studio. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/schema-baron-studio unless the human explicitly redirects the landing branch.
+base_branch: kitty/mission-schema-baron-studio-01M5W3Q9
+base_commit: 8d38831441c59c81fa55a7fb273cb55439c0654e
+created_at: '2026-10-27T03:34:50.902651+00:00'
 subtasks:
 - T026
 - T027
