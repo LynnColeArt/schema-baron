@@ -160,7 +160,7 @@ export function DocumentModes({ project, model, page, editor, setEditor, selecte
   const previewForms = parsed.ok ? model.forms.map(f => ({ ...f, controlIds: parsed.controlOrders[f.id] ?? f.controlIds })) : model.forms;
   const preview = previewDocument(parsed.ok ? parsed.document : page.document, previewForms, model.controls);
   return <>
-    <div className="document-surface document-mode-surface" role="tabpanel" aria-label={`${mode} document`}>
+    <div className="document-surface document-mode-surface" style={mode==='Live Page'?{flex:'0 0 auto'}:undefined} role="tabpanel" aria-label={`${mode} document`}>
       <div className="document-breadcrumb">Page / {page.title} <span>{page.route}</span></div>
       {pending && mode !== 'HTML' && <p className="mode-notice">{parsed.ok ? 'Pending HTML draft. Preview shows current HTML; apply it in HTML mode to update Design and Save.' : 'Invalid HTML retained. Design and Preview fallback show the last valid model draft.'} <button onClick={() => setMode('HTML')}>Review HTML</button></p>}
       <div hidden={mode !== 'Design'}>

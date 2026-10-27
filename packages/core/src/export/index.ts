@@ -137,6 +137,8 @@ export function registerExport(registry: CommandRegistry, options: {
         }
       }
       if (closed) throw new StorageError('RECOVERY_REQUIRED', 'Owner closed during export; no destination was published.');
+      const canonical=storage.snapshot(project.id);
+      if(canonical.revision!==project.revision||hash(canonical)!==hash(project))throw new StorageError('REVISION_CONFLICT','Project changed during export. Review current generated output and retry to a new destination.');
       // Revalidate both source and approved parent immediately before publication.
       const current = outputAuthority(storage, project.id, options.approvedRoots);
       if (current.identity !== output.identity || current.scan.fingerprint !== output.scan.fingerprint) throw new StorageError('OUTPUT_CONFLICT', 'Output source changed during export.');

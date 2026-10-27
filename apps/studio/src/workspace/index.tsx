@@ -1,4 +1,5 @@
 "use client";
+import {reconcileRuntimeMessages} from '../runtime-ui/diagnostics.js';
 import {RuntimeControls} from '../runtime-ui/index.js';
 import {SourceEditor} from '../source-editor/index.js';
 import { useEffect, useRef, useState } from "react";
@@ -52,6 +53,7 @@ type Modal =
   | "close"
   | null;
 type Message = {
+  path?:string|undefined;
   code: string;
   message: string;
   objectId?: string | undefined;
@@ -169,6 +171,7 @@ export default function Workspace() {
     setEditor((current) => reconcile(current, snapshot));
     setProject(snapshot);
   }
+  const recoveredRuntime=useRef(new Set<string>());
   async function refresh() {
     const current = state.current.project;
     if (!current || refreshing.current) return;
@@ -181,7 +184,7 @@ export default function Workspace() {
       const snapshot = await client.snapshot(current.id);
       if (mounted.current && state.current.project?.id === current.id) {
         cursors.current[current.id] = replay.lastSequence;
-        if (replay.diagnostics.length) setMessages(replay.diagnostics);
+        setMessages(messages=>reconcileRuntimeMessages(messages,replay.diagnostics,current.id,recoveredRuntime.current.has(current.id)));
         if (snapshot.revision > state.current.project.revision) {
           acceptSnapshot(snapshot);
           notice(
@@ -1123,7 +1126,7 @@ export default function Workspace() {
                 <DocumentModes
                   key={project.id + ":" + activePage.id}
                   project={project} model={model} page={activePage}
-                  capabilities={{sourceEditor:<SourceEditor project={project} client={client} onChanged={refresh}/>,runtimeControls:<RuntimeControls project={project} pageId={activePage.id} client={client} hasDrafts={Object.keys(editor.drafts).length>0||Object.values(editor.documents??{}).some(buffer=>buffer.text!==buffer.appliedText)} live={view.documentModes?.[activePage.id]==="Live Page"}/>}}
+                  capabilities={{sourceEditor:<SourceEditor project={project} client={client} onChanged={refresh}/>,runtimeControls:<RuntimeControls project={project} pageId={activePage.id} client={client} onStatusRecovered={recovered=>{if(state.current.project?.id!==project.id)return;if(recovered)recoveredRuntime.current.add(project.id);else recoveredRuntime.current.delete(project.id);if(recovered)setMessages(messages=>reconcileRuntimeMessages(messages,[],project.id,true));}} hasDrafts={Object.keys(editor.drafts).length>0||Object.values(editor.documents??{}).some(buffer=>buffer.text!==buffer.appliedText)} live={view.documentModes?.[activePage.id]==="Live Page"}/>}}
                   editor={editor} setEditor={setEditor}
                   selected={view.selected} select={select}
                   mode={view.documentModes?.[activePage.id] ?? "Design"}

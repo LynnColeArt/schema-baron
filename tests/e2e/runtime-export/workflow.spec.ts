@@ -245,9 +245,19 @@ test('UI/MCP authoring, managed commands and selected route share authority; exp
       name: 'Close',
       exact: true
     }).click();
-    await page.getByRole('tablist',{name:'Document modes',exact:true}).getByRole('tab',{name:'HTML',exact:true}).click();
-    const html=page.getByLabel('HTML source');const draft=(await html.inputValue())+'<p>Unapplied current draft</p>';await html.fill(draft);
-    await expect(page.getByRole('region',{name:'Managed generated runtime'})).toContainText('unsaved draft retained');
+    await page.getByRole('tablist', {
+      name: 'Document modes',
+      exact: true
+    }).getByRole('tab', {
+      name: 'HTML',
+      exact: true
+    }).click();
+    const html = page.getByLabel('HTML source');
+    const draft = (await html.inputValue()) + '<p>Unapplied current draft</p>';
+    await html.fill(draft);
+    await expect(page.getByRole('region', {
+      name: 'Managed generated runtime'
+    })).toContainText('unsaved draft retained');
     const npm = '/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
     expect(spawnSync(process.execPath, [npm, 'ci', '--ignore-scripts', '--offline'], {
       cwd: join(root, 'output/app'),
@@ -292,21 +302,27 @@ test('UI/MCP authoring, managed commands and selected route share authority; exp
     }).click();
     const form = project.forms.find(f => f.kind === 'Record')!,
       key = form.id + ':key:' + table.primaryKey[0];
-    await page.getByLabel('Live Page parameters').fill(JSON.stringify({
-      [key]: 'A'
-    }));
-    await page.getByRole('button', {
-      name: 'Resolve selected Live Page',
+    const descriptors = await command('runtime.context', {
+      generatedRevision: 1,
+      pageId: record.id
+    });
+    const descriptor = descriptors.fields.find((field: any) => field.parameter === key);
+    expect(descriptor.label).toBe('Runtime record · code');
+    await expect(page.getByRole('region', {
+      name: 'Diagnostic messages'
+    })).not.toContainText('Generate the application');
+    await page.getByLabel('Runtime record · code', {
       exact: true
-    }).click();
-    const link = page.getByRole('link', {
+    }).fill('A');
+    const visitor = page.waitForEvent('popup');
+    await page.getByRole('button', {
       name: 'Open selected generated page',
       exact: true
-    });
-    await expect(link).toHaveAttribute('href', new RegExp('/record\\?'));
-    const route = await link.getAttribute('href');
-    const live = await page.context().newPage();
-    await live.goto(route!);
+    }).click();
+    const live = await visitor;
+    await live.waitForURL(/\/record\?/);
+    const route = live.url();
+    expect(route).toContain('/record?');
     await expect(live.getByLabel('caption', {
       exact: true
     })).toHaveValue('Independent row');
@@ -314,6 +330,26 @@ test('UI/MCP authoring, managed commands and selected route share authority; exp
     await expect(live.locator('body')).not.toContainText('Unapplied current draft');
     expect(await html.inputValue()).toBe(draft);
     await live.close();
+    await page.getByLabel('Runtime record · record mode', {
+      exact: true
+    }).selectOption('new');
+    await expect(page.getByLabel('Runtime record · code', {
+      exact: true
+    })).toBeDisabled();
+    const newVisitor = page.waitForEvent('popup');
+    await page.getByRole('button', {
+      name: 'Open selected generated page',
+      exact: true
+    }).click();
+    const creating = await newVisitor;
+    await creating.waitForURL(/mode=new/);
+    await expect(creating.getByLabel('caption', {
+      exact: true
+    })).toHaveValue('');
+    await creating.close();
+    await page.getByLabel('Runtime record · record mode', {
+      exact: true
+    }).selectOption('existing');
     await page.screenshot({
       path: info.outputPath('runtime-live-page.png')
     });

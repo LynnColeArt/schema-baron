@@ -1,8 +1,8 @@
 import { isLiteralValue } from '@schema-baron/model';
 import type { ContextIR, GenerationIR, RouteIR } from '@schema-baron/generator';
 import { StorageError } from '@schema-baron/storage';
-export function routeParameters(ir: GenerationIR, route: RouteIR, parameters: Record<string, string | number | boolean | null>) {
-  const fields: ContextIR[] = [...ir.contexts, ...route.records.flatMap(r => [...(r.config.keyParameters as string[]).map((parameter, i) => ({
+export function routeFields(ir: GenerationIR, route: RouteIR): ContextIR[] {
+  return [...ir.contexts, ...route.records.flatMap(r => [...(r.config.keyParameters as string[]).map((parameter, i) => ({
     parameter,
     kind: 'key' as const,
     field: r.source.fields.find(f => f.id === r.source.keys[i])!
@@ -10,6 +10,9 @@ export function routeParameters(ir: GenerationIR, route: RouteIR, parameters: Re
     parameter: r.id + ':mode',
     kind: 'mode' as const
   }])];
+}
+export function routeParameters(ir: GenerationIR, route: RouteIR, parameters: Record<string, string | number | boolean | null>) {
+  const fields = routeFields(ir, route);
   const fail = () => {
     throw new StorageError('INVALID_INPUT', 'Live Page context must match the declared typed key/filter inputs.');
   };
@@ -49,9 +52,9 @@ export function routeParameters(ir: GenerationIR, route: RouteIR, parameters: Re
     query.set(key, text);
   }
   for (const record of route.records) {
-    if (parameters[record.id+':mode']==='new') continue;
-    const missing=(record.config.keyParameters as string[]).filter(key=>!(key in parameters)||parameters[key]===null);
-    if(missing.length)throw new StorageError('INVALID_INPUT',`Enter the complete declared Record key (${missing.join(', ')}) or use ${record.id}:mode=new for a new record.`);
+    if (parameters[record.id + ':mode'] === 'new') continue;
+    const missing = (record.config.keyParameters as string[]).filter(key => !(key in parameters) || parameters[key] === null);
+    if (missing.length) throw new StorageError('INVALID_INPUT', `Enter the complete declared Record key (${missing.join(', ')}) or use ${record.id}:mode=new for a new record.`);
   }
   return query;
 }

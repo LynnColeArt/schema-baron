@@ -19,7 +19,7 @@ import { constructForm } from '../form-construction/index.js';
 import { PlanRepository } from '../plans/index.js';
 export interface CoreOptions extends StorageOptions { ownerId: string; runtimeSecrets?:string[]; runtimeFault?:(point:'after-port-probe')=>void; runtimeLifecycle?:RuntimeLifecyclePort; generationFault?: (phase:string)=>void; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
 export type Outcome = { ok: true; revision: number; result: unknown; diagnostics: Diagnostic[]; jobId?:string } | { ok: false; revision: number; error: { code: string; message: string; retryable: boolean }; diagnostics: Diagnostic[] };
-interface PendingCommand { operation: string; payloadHash: string; outcome: Promise<Outcome> }
+interface PendingCommand { projectId:string; operation: string; payloadHash: string; outcome: Promise<Outcome> }
 const collection = { connection: 'connections', table: 'tables', query: 'queries', page: 'pages', form: 'forms', control: 'controls', action: 'actions', policy: 'policies', extension: 'extensionContracts' } as const;
 export function stageBatch(project: Project, operations: EntityBatchOperation[]): Project {
  const candidate = structuredClone(project);
@@ -50,7 +50,7 @@ export class ProjectCore {
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
-  this.runtime=new RuntimeManager(options,this.storage);this.runtime.register(this.registry);
+  this.runtime=new RuntimeManager({...options,isPromoting:id=>[...this.pending.values()].some(p=>p.projectId===id&&p.operation==='generation.apply')},this.storage);this.runtime.register(this.registry);
   this.closeExport=registerExport(this.registry,options,this.storage);
   registerIdentity(this.registry,options,id=>this.storage.snapshot(id),(id,c)=>this.storage.hasInspectedConnection(id,c));
   registerExtensions(this.registry,options,this.storage);
@@ -92,7 +92,7 @@ export class ProjectCore {
    project = this.storage.snapshot(command.projectId);
    if (command.expectedRevision !== project.revision) return this.execute(actor, command);
   } catch { return this.execute(actor, input); }
-  const reservation: PendingCommand = { operation: command.operation, payloadHash, outcome: Promise.resolve().then(async () => {
+  const reservation: PendingCommand = { projectId:command.projectId, operation: command.operation, payloadHash, outcome: Promise.resolve().then(async () => {
    // Deferral lets us publish the reservation before any handler code executes.
    if (this.closed) return this.executePrepared(actor, command, undefined, reservation);
    try {
@@ -123,7 +123,7 @@ export class ProjectCore {
    }
    this.migration.guard(command.projectId, command.operation);
    const project = command.operation === 'project.create' || command.operation === 'project.list' ? undefined : command.operation === 'project.open' ? this.storage.open(command.projectId, command.input.locator) : this.storage.snapshot(command.projectId); revision = project?.revision ?? 0;
-   if (command.expectedRevision !== revision) throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');
+   if (command.expectedRevision !== revision) {if(reservation&&command.operation==='project.export')accepted=command;throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');}
    if(command.operation==='identity.provision'&&!project?.identity)throw new StorageError('INVALID_INPUT','Configure identity before provisioning.');
    accepted = command;
    const effect = prepared ? prepared() : this.registry.run(command, project); const outcome: Outcome = { ok: true, revision: effect.candidate?.revision ?? revision, result: effect.result, diagnostics: [], ...(command.operation==='runtime.start'&&effect.result&&typeof effect.result==='object'&&'jobId' in effect.result&&typeof effect.result.jobId==='string'?{jobId:effect.result.jobId}:{}) };
@@ -134,7 +134,7 @@ export class ProjectCore {
    return outcome;
   } catch (error) {
    if (error instanceof CommittedMigrationError) return { ok: true, revision, result: error.result, diagnostics: [] };
-   const diagnostics = error instanceof GenerationError || error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : accepted?.operation.startsWith('runtime.')&&error instanceof StorageError&&diagnosticCodeSchema.safeParse(error.code).success?[{code:diagnosticCodeSchema.parse(error.code),severity:'error' as const,objectId:idSchema.parse(accepted.operation==='runtime.route'?accepted.input.pageId:accepted.projectId),field:accepted.operation==='runtime.route'?'parameters':'runtime',message:error.message}]:[];
+   const diagnostics = error instanceof GenerationError || error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : accepted?.operation.startsWith('runtime.')&&error instanceof StorageError&&diagnosticCodeSchema.safeParse(error.code).success?[{code:diagnosticCodeSchema.parse(error.code),severity:'error' as const,objectId:idSchema.parse(accepted.operation==='runtime.route'?accepted.input.pageId:accepted.projectId),field:accepted.operation==='runtime.route'?'parameters':'runtime',path:accepted.operation,message:error.message}]:[];
    const outcome: Outcome = { ok: false, revision, error: { code: error instanceof StorageError ? error.code : error instanceof ModelValidationError || error instanceof GenerationError ? 'VALIDATION_FAILED' : 'RECOVERY_REQUIRED', message: error instanceof StorageError ? error.message : error instanceof ModelValidationError || error instanceof GenerationError ? error.message : 'Operation failed; inspect recovery before retrying.', retryable: error instanceof StorageError && ['PROJECT_BUSY', 'RECOVERY_REQUIRED'].includes(error.code) }, diagnostics };
    if (accepted && payloadHash && revision > 0 && !(error instanceof StorageError && error.code === 'RECOVERY_REQUIRED')) { try { this.storage.complete(accepted.projectId, { requestId: accepted.requestId, payloadHash, actor, baseRevision: revision, outcome }, { revision, kind: 'diagnostic', objectIds: diagnostics.flatMap(d => d.objectId ? [d.objectId] : []), diagnostics }); } catch { return { ok: false, revision, error: { code: 'RECOVERY_REQUIRED', message: 'Outcome could not be recorded; restart before retrying.', retryable: true }, diagnostics: [] }; } }
    return outcome;
@@ -145,11 +145,12 @@ export class ProjectCore {
  close() {
   if (this.closed) return this.closing??Promise.resolve();
   this.closed = true;
-  const active = this.migration.active || this.queryPreview.hasActive() || this.runtime.hasActive() || [...this.pending.values()].some(p=>p.operation==='project.export');
+  const ownedPending=[...this.pending.values()].filter(p=>['schema.apply','schema.restoreApply','project.export','runtime.start','runtime.stop','job.cancel'].includes(p.operation));
+  const active = this.migration.active || this.queryPreview.hasActive() || this.runtime.hasActive() || ownedPending.length>0;
   const settling = Promise.all([this.migration.close(), this.closeConnections(), this.closeSchemaPreview(), this.closeGeneration(), this.queryPreview.close(), this.runtime.close(), this.closeExport()]);
   if (!active) { this.storage.close(); return this.closing=settling.then(() => {}); }
   return this.closing=settling.then(async () => {
-   await Promise.all([...this.pending.values()].map(p => p.outcome));
+   await Promise.all(ownedPending.map(p=>p.outcome));
    this.storage.close();
   });
  }

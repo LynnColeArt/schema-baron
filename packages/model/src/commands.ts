@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
+import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, scalarTypeSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
 import { diagnosticSchema, outcomeSchema } from './diagnostics.js';
 import type { Diagnostic } from './diagnostics.js';
 
@@ -39,6 +39,7 @@ export const operationInputSchemas = {
   'generation.preview': z.strictObject({ target: targetSchema, outputRoot: text, projectRevision: revisionSchema }),
   'generation.apply': applyInput,
   'runtime.start': z.strictObject({ generatedRevision: revisionSchema, intent: z.enum(['build', 'run']), port: z.number().int().min(1024).max(65535).optional() }),
+  'runtime.context': z.strictObject({generatedRevision:revisionSchema,pageId:idSchema}),
   'runtime.route': z.strictObject({ generatedRevision: revisionSchema, pageId: idSchema, parameters: z.record(text, scalar) }),
   'runtime.stop': z.strictObject({ generatedRevision: revisionSchema }),
   'runtime.status': z.strictObject({ generatedRevision: revisionSchema.optional() }),
@@ -87,6 +88,7 @@ export type ViewState = z.infer<typeof viewStateSchema>;
 export type Job = z.infer<typeof jobSchema>;
 
 const changedResult = z.strictObject({ changedIds: ids });
+export const runtimeContextSchema=z.strictObject({generatedRevision:revisionSchema,modelRevision:revisionSchema,pageId:idSchema,title:text,route:text,fields:z.array(z.strictObject({parameter:text,label:text,kind:z.enum(['key','search','query','page','sort','direction','record-mode']),type:scalarTypeSchema.optional(),nullable:z.boolean(),required:z.boolean(),choices:z.array(z.strictObject({value:text,label:text})).optional(),recordId:text.optional(),modeParameter:text.optional(),defaultAvailable:z.boolean().optional()}))});
 export const runtimeResultSchema = z.strictObject({ status: z.enum(['stopped', 'building', 'starting', 'running', 'failed']), generatedRevision: revisionSchema, modelRevision: revisionSchema, runningRevision: revisionSchema.optional(), jobId: idSchema.optional(), port: z.number().int().min(1).max(65535).optional(), executable: text, arguments: z.array(z.string()), cwd: text, intent: z.enum(['build','run']).optional(), message: z.string().optional() });
 const runtimeResult=runtimeResultSchema;
 /** A registry's implementation must satisfy its result schema as well as its input. */
@@ -117,6 +119,7 @@ export const operationResultSchemas = {
   'flow.inspect': z.strictObject({ nodes: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, kind: text })), edges: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, fromId: idSchema, toId: idSchema, kind: text })) }),
   'generation.preview': reviewedPlanSchema,
   'generation.apply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), manifest: generationManifestSchema }),
+  'runtime.context':runtimeContextSchema,
   'runtime.route': z.strictObject({url:text,generatedRevision:revisionSchema,pageId:idSchema}),
   'runtime.start': runtimeResult,
   'runtime.stop': runtimeResult,
