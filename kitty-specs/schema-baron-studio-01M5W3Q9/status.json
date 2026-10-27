@@ -402,6 +402,9 @@
       "last_event_id": "01M5Y8FSA79C12WFQAXFYE1996",
       "last_transition_at": "2026-10-27T08:44:03.271218+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: generated Search and transactional Record lifecycle; 269 workspace tests, 6 focused generated-runtime tests, real wizard-to-production browser CRUD, strict output builds and SQLite assertions. Commit 2207735; evidence in packages/generator/tests/record/EVIDENCE.md."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
