@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3';
 import { createHash, randomUUID } from 'node:crypto';
-import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
+import { closeSync, constants, fstatSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { canonicalJson, parseProject, operationRecordSchema, FORMAT_VERSION } from '@schema-baron/model';
 import type { Command, Connection, Job, MigrationHistory, Project } from '@schema-baron/model';
@@ -132,7 +132,16 @@ export class ProjectStorage {
   try { this.options.fault?.('intent'); this.db.transaction(() => this.installMetadata(j))(); this.options.fault?.('metadata'); replace(path, `${JSON.stringify(project, null, 2)}\n`); this.options.fault?.('replacement'); this.options.fault?.('cleanup'); this.db.prepare('DELETE FROM journal WHERE id=?').run(j.id); }
   catch (error) { this.blocked = true; throw new StorageError('RECOVERY_REQUIRED', 'Save interrupted; restart to reconcile the durable journal.'); }
  }
- export(id: string, rootId: string, locator: string) { const p = this.snapshot(id); const root = this.roots[rootId]; if (!root) throw new StorageError('PATH_OUTSIDE_ROOT', 'Unknown approved root.'); const destination = safePath(root, locator); this.acquireDefinition(destination); if (existsSync(destination)) { const existing = JSON.parse(readFileSync(destination, 'utf8')) as unknown; if (hash(existing) !== hash(p)) throw new StorageError('OUTPUT_CONFLICT', 'Export destination exists with different content.'); } replace(destination, `${JSON.stringify(p, null, 2)}\n`); return { destination: `${rootId}:${locator}`, modelHash: hash(p), includedData: false }; }
+ export(id: string, rootId: string, locator: string, definition?:Project) {
+  const p=parseProject(definition??this.snapshot(id)),root=this.roots[rootId];if(!root)throw new StorageError('PATH_OUTSIDE_ROOT','Unknown approved root.');
+  const destination=safePath(root,locator),parent=dirname(destination),observed=lstatSync(parent),fd=openSync(parent,constants.O_RDONLY|constants.O_DIRECTORY|constants.O_NOFOLLOW);
+  try {const opened=fstatSync(fd);if(opened.dev!==observed.dev||opened.ino!==observed.ino)throw new StorageError('PATH_OUTSIDE_ROOT','Definition export parent changed.');safePath(root,locator);
+   const leaf=join(`/proc/${process.pid}/fd/${fd}`,basename(destination));let file:number;try{file=openSync(leaf,constants.O_WRONLY|constants.O_CREAT|constants.O_EXCL|constants.O_NOFOLLOW,0o600);}catch{throw new StorageError('OUTPUT_CONFLICT','Definition export requires an unused destination.');}
+   try{writeFileSync(file,JSON.stringify(p,null,2)+'\n');fsyncSync(file);}finally{closeSync(file);}fsyncSync(fd);
+   return {destination:`${rootId}:${locator}`,modelHash:hash(p),includedData:false};
+  }finally{closeSync(fd);}
+ }
+
  latestSequence(id: string) { this.snapshot(id); return (this.db.prepare('SELECT coalesce(max(sequence),0) AS sequence FROM events WHERE project=?').get(id) as { sequence: number }).sequence; }
  events(id: string, after: number, limit = 100) { this.snapshot(id); if (!Number.isSafeInteger(after) || after < 0 || !Number.isInteger(limit) || limit < 1 || limit > 1000) throw new StorageError('INVALID_INPUT', 'Invalid replay range.'); return (this.db.prepare('SELECT sequence,body FROM events WHERE project=? AND sequence>? ORDER BY sequence LIMIT ?').all(id, after, limit) as { sequence: number; body: string }[]).map(row => ({ ...JSON.parse(row.body) as object, sequence: row.sequence })); }
  /** Imported JSON cannot attest that a baseline came from our real adapter. Reuse

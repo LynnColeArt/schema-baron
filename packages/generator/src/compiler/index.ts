@@ -15,7 +15,13 @@ export function compileProject(input:Project):GenerationIR {
  let mapping;try {mapping=compatibleMapping(project);}catch(error){fail(project.id,error instanceof Error?error.message:'Identity mapping is incompatible.');}
  if(!project.identity&&project.policies.some(p=>p.access==='authenticated'))fail(project.id,'Configure identity before generating authenticated policies.');
  if(project.identity&&project.policies.some(p=>p.access==='authenticated')&&!project.forms.some(f=>f.kind==='Login'&&effectiveAccess(project,f.pageId).access==='public'&&f.actionIds.some(id=>{const a=project.actions.find(a=>a.id===id);return a?.operation==='login'&&effectiveAccess(project,f.pageId,id).access==='public';})))fail(project.id,'Provide a public Login form and login action before generating authenticated policies.');
- for(const extension of project.extensionContracts) fail(extension.id,'Extension ownership requires the regeneration capability.');
+ for(const extension of project.extensionContracts) if(extension.version!==1||!['validator','action','service','event'].includes(extension.kind)||!/^authored\/[A-Za-z0-9_-]+\.ts$/.test(extension.relativePath))fail(extension.id,'Declare a supported validator/action/service/event v1 hook in authored/name.ts.');
+ for(const action of project.actions) if(action.extensionHookRef) {
+  const form=project.forms.find(form=>form.id===action.formId)!;
+  const supported=form.kind==='Record'&&['insert','update','delete','extension'].includes(action.operation);
+  const message=!supported?`Authored action hooks run only on Record insert, update, delete or extension actions. ${form.kind} ${action.operation} does not execute hooks.`:project.extensionContracts.find(contract=>contract.id===action.extensionHookRef)?.kind!=='action'?'An action binding requires an authored action v1 contract.':undefined;
+  if(message)diagnostics.push({code:'UNSUPPORTED_SCHEMA_OBJECT',severity:'error',objectId:action.id,field:'extensionHookRef',message,recoveryAction:'Remove this source-hook binding or bind an action v1 module to a Record insert/update/delete/extension action. Cancel never invokes hooks.'});
+ }
 
  const sources:SourceIR[]=project.schema.tables.map(t=>({id:t.id,kind:'table',name:t.physicalName,fields:t.columns.map(c=>({id:c.id,name:c.physicalName,type:c.type,nullable:c.nullable,...(c.generated?{generated:true}:{}),...(c.default?{hasDefault:true}:{})})),keys:t.primaryKey}));
  sources.push(...project.queries.map(q=>({id:q.id,kind:'query' as const,name:q.name,fields:q.projections.map(f=>({id:f.id,name:f.id,type:f.type,nullable:f.nullable})),keys:q.grain.keys})));
@@ -35,7 +41,7 @@ export function compileProject(input:Project):GenerationIR {
     const actions=form.actionIds.map(id=>project.actions.find(a=>a.id===id)!).map(action=>{
      if(!['login','logout','cancel'].includes(action.operation))fail(action.id,'Login forms support explicit login/logout/Cancel actions.');
      const button=controls.find(c=>c.events.some(e=>e.actionId===action.id));
-     const result:ActionIR={id:action.id,operation:action.operation,...(button?.appearance.label?{label:button.appearance.label}:{}),access:effectiveAccess(project,page.id,action.id).access};
+     const result:ActionIR={id:action.id,operation:action.operation,...(button?.appearance.label?{label:button.appearance.label}:{}),access:effectiveAccess(project,page.id,action.id).access,...(action.extensionHookRef?{extensionHookRef:action.extensionHookRef}:{})};
      const cancelTarget=action.success??action.destination;
      if(action.operation==='cancel'&&cancelTarget&&effectiveAccess(project,cancelTarget.pageId).access!=='public')fail(action.id,'Login Cancel requires a public destination.');
      for(const slot of ['destination','success','cancel'] as const)if(action[slot])try{result[slot]=compileDestination(project,sources,action[slot]!,action.operation);}catch(error){fail(action.id,error instanceof Error?error.message:'Invalid login destination.');}
@@ -51,11 +57,11 @@ export function compileProject(input:Project):GenerationIR {
    for(const key of form.keyMapping) if(key.expression.kind!=='field'||key.expression.alias!=='root'||key.expression.fieldId!==key.targetFieldId) fail(form.id,'Form keys must bind their own stored field. Supply incoming literal or source values through declared action key/filter mappings.');
    const actions=form.actionIds.map(id=>project.actions.find(a=>a.id===id)!).map(action=>{
     if(source.kind==='query'&&effectiveAccess(project,page.id,action.id).access==='authenticated'&&['navigate','search'].includes(action.operation))fail(action.id,'Authenticated query navigation or Search requires a proven keyed-query read guard. Keep report navigation public and protect the destination Record page, or remove this action before generation.');
-    if(!['navigate','cancel','search','insert','update','delete'].includes(action.operation)||action.extensionHookRef) fail(action.id,'This action requires a later runtime capability.');
-    if(form.kind!=='Record'&&['insert','update','delete'].includes(action.operation)) fail(action.id,'Writes require a Record form.');
-    const result:ActionIR={id:action.id,operation:action.operation,access:effectiveAccess(project,page.id,action.id).access};
+    if(!['navigate','cancel','search','insert','update','delete','extension'].includes(action.operation)) fail(action.id,'This action requires a later runtime capability.');
+    if(form.kind!=='Record'&&['insert','update','delete','extension'].includes(action.operation)) fail(action.id,'Writes require a Record form.');
+    const result:ActionIR={id:action.id,operation:action.operation,access:effectiveAccess(project,page.id,action.id).access,...(action.extensionHookRef?{extensionHookRef:action.extensionHookRef}:{})};
     for(const slot of ['destination','success','cancel'] as const) if(action[slot]) try {result[slot]=compileDestination(project,sources,action[slot]!,action.operation);}catch(error){fail(action.id,error instanceof Error?error.message:'Invalid destination.');}
-    if(['insert','update','delete'].includes(action.operation)&&!action.success&&!action.destination) fail(action.id,'Declare a success destination for this write.');
+    if(['insert','update','delete','extension'].includes(action.operation)&&!action.success&&!action.destination) fail(action.id,'Declare a success destination for this write.');
     return result;
    });
    if(source.kind==='query'&&(form.search.length||form.sorting.length))fail(form.id,'Use saved-query WHERE/HAVING parameters and query ordering for reports; table search/sort declarations require a table source.');
@@ -90,5 +96,5 @@ export function compileProject(input:Project):GenerationIR {
  });
  if(!routes.length) fail(project.id,'Create a page and table-bound Grid before generating.');
  if(diagnostics.length) throw new GenerationError(diagnostics);
- return {projectId:project.id,revision:project.revision,name:project.name,routes,sources,contexts,...(project.identity?{auth:{...(mapping?{mapping}:{})}}:{}),queries};
+ return {projectId:project.id,revision:project.revision,name:project.name,routes,sources,contexts,extensions:project.extensionContracts,...(project.identity?{auth:{...(mapping?{mapping}:{})}}:{}),queries};
 }

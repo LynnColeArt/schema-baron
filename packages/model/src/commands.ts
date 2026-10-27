@@ -18,7 +18,7 @@ export const operationInputSchemas = {
   'project.open': z.strictObject({ locator: text }),
   'project.list': z.strictObject({ approvedRoot: text }),
   'project.batch': z.strictObject({ operations: z.array(entityBatchOperationSchema).min(1).max(1000) }),
-  'project.export': z.strictObject({ destination: text, includeData: z.boolean().default(false) }),
+  'project.export': z.strictObject({ destination: text, includeData: z.boolean().default(false), outputRoot: text.optional() }),
   'connection.inspect': z.strictObject({ approvedPath: text, mode: z.literal('read-only'), createEmpty: z.literal(true).optional(), connectionId: idSchema.optional() }),
   'connection.bind': z.strictObject({ connectionId: idSchema, fingerprint: hashSchema }),
   'schema.preview': previewSchemaInput,
@@ -28,6 +28,7 @@ export const operationInputSchemas = {
   'schema.restoreApply': applyInput,
   'query.preview': z.union([z.strictObject({ queryId: idSchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() }), z.strictObject({ draft: querySchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() })]),
   'form.construct': z.strictObject({ pageId: idSchema, kind: formSchema.shape.kind, source: sourceRefSchema.optional(), fieldIds: ids, keyIds: ids, actions: z.array(actionSchema.shape.operation), links: z.array(actionSchema.shape.destination.unwrap()), style: formSchema.shape.appearance, search: formSchema.shape.search.optional(), sorting: formSchema.shape.sorting.optional(), actionDefinitions: z.array(actionSchema.omit({ id: true, formId: true })).optional(), linkedRecord: z.strictObject({ pageId: idSchema, label: text, fieldIds: ids, keyIds: ids }).optional(), pendingOperations: z.array(entityBatchOperationSchema.refine(op => ['page', 'form', 'control', 'action'].includes(op.entity), 'Construction pending operations must be ordinary page/form/control/action edits')).max(1000).optional() }),
+  'source.read': z.strictObject({ outputRoot: text, relativePath: text }),
   'extension.read': z.strictObject({ extensionId: idSchema, approvedPath: text }),
   'extension.write': z.strictObject({ extensionId: idSchema, approvedPath: text, content: z.string(), expectedFileHash: hashSchema }),
   // Transient only. Never serialize this input into Project, OperationRecord or diagnostics.
@@ -37,9 +38,11 @@ export const operationInputSchemas = {
   'flow.inspect': z.strictObject({ projection: z.enum(['application', 'schema', 'endpoint']), selectedId: idSchema.optional() }),
   'generation.preview': z.strictObject({ target: targetSchema, outputRoot: text, projectRevision: revisionSchema }),
   'generation.apply': applyInput,
-  'runtime.start': z.strictObject({ generatedRevision: revisionSchema, intent: z.enum(['build', 'run']) }),
+  'runtime.start': z.strictObject({ generatedRevision: revisionSchema, intent: z.enum(['build', 'run']), port: z.number().int().min(1024).max(65535).optional() }),
+  'runtime.context': z.strictObject({generatedRevision:revisionSchema,pageId:idSchema}),
+  'runtime.route': z.strictObject({ generatedRevision: revisionSchema, pageId: idSchema, parameters: z.record(text, scalar) }),
   'runtime.stop': z.strictObject({ generatedRevision: revisionSchema }),
-  'runtime.status': z.strictObject({ generatedRevision: revisionSchema }),
+  'runtime.status': z.strictObject({ generatedRevision: revisionSchema.optional() }),
   'job.inspect': z.strictObject({ jobId: idSchema }),
   'job.cancel': z.strictObject({ jobId: idSchema }),
 } as const;
@@ -85,7 +88,6 @@ export type ViewState = z.infer<typeof viewStateSchema>;
 export type Job = z.infer<typeof jobSchema>;
 
 const changedResult = z.strictObject({ changedIds: ids });
-const runtimeResult = z.strictObject({ status: z.enum(['stopped', 'building', 'running', 'failed']), generatedRevision: revisionSchema, jobId: idSchema.optional(), port: z.number().int().min(1).max(65535).optional() });
 const flowFieldSchema=z.strictObject({id:idSchema,name:z.string(),type:scalarTypeSchema,nullable:z.boolean()});
 const flowContextSchema=z.strictObject({parameter:text,field:flowFieldSchema.optional(),kind:z.enum(['page','sort','direction','search','key','query','mode']).optional(),allowed:z.array(z.string()).optional()});
 export const flowProjectionSchema=z.strictObject({
@@ -93,6 +95,9 @@ export const flowProjectionSchema=z.strictObject({
  edges:z.array(z.strictObject({id:idSchema,sourceObjectId:idSchema,fromId:idSchema,toId:idSchema,kind:text,label:text,access:text,policyId:z.string(),valid:z.boolean(),diagnostics:z.array(diagnosticSchema),mappings:z.array(z.strictObject({parameter:text,field:flowFieldSchema,expression:z.discriminatedUnion('kind',[z.strictObject({kind:z.literal('field'),fieldId:idSchema}),z.strictObject({kind:z.literal('parameter'),parameterId:idSchema}),z.strictObject({kind:z.literal('literal'),value:scalar})])})),context:z.array(flowContextSchema),slot:z.enum(['destination','success','cancel']).optional(),dynamic:z.boolean().optional()})),
  endpoints:z.array(z.strictObject({id:idSchema,sourceObjectId:idSchema,method:text,path:z.string(),handler:text,access:text,actionIds:ids})),diagnostics:z.array(diagnosticSchema)
 });
+export const runtimeContextSchema=z.strictObject({generatedRevision:revisionSchema,modelRevision:revisionSchema,pageId:idSchema,title:text,route:text,fields:z.array(z.strictObject({parameter:text,label:text,kind:z.enum(['key','search','query','page','sort','direction','record-mode']),type:scalarTypeSchema.optional(),nullable:z.boolean(),required:z.boolean(),choices:z.array(z.strictObject({value:text,label:text})).optional(),recordId:text.optional(),modeParameter:text.optional(),defaultAvailable:z.boolean().optional()}))});
+export const runtimeResultSchema = z.strictObject({ status: z.enum(['stopped', 'building', 'starting', 'running', 'failed']), generatedRevision: revisionSchema, modelRevision: revisionSchema, runningRevision: revisionSchema.optional(), jobId: idSchema.optional(), port: z.number().int().min(1).max(65535).optional(), executable: text, arguments: z.array(z.string()), cwd: text, intent: z.enum(['build','run']).optional(), message: z.string().optional() });
+const runtimeResult=runtimeResultSchema;
 /** A registry's implementation must satisfy its result schema as well as its input. */
 export const migrationHistorySchema = z.strictObject({ id: idSchema, planId: idSchema, requestId: idSchema, connectionId: idSchema, backupRef: idSchema, kind: z.enum(['migration','restore']), createdAt: z.iso.datetime(), baseRevision: revisionSchema, newRevision: revisionSchema.optional(), outcome: z.enum(['applying','committed','rolled-back','recovery-pending']), backupValidated: z.boolean(), message: text });
 export type MigrationHistory = z.infer<typeof migrationHistorySchema>;
@@ -112,6 +117,7 @@ export const operationResultSchemas = {
   'schema.restoreApply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), backupRef: idSchema }),
   'query.preview': z.strictObject({ fields: z.array(querySchema.shape.projections.element.omit({ expression: true })), rows: z.array(z.record(idSchema, scalar)).max(200), sql: text, truncated: z.boolean() }),
   'form.construct': changedResult,
+  'source.read': z.strictObject({path:text,content:z.string(),hash:hashSchema,readOnly:z.literal(true)}),
   'extension.read': z.strictObject({ extensionId: idSchema, content: z.string(), hash: hashSchema }),
   'extension.write': z.strictObject({ extensionId: idSchema, hash: hashSchema }),
   'identity.configure': z.strictObject({ configured: z.literal(true) }),
@@ -120,6 +126,8 @@ export const operationResultSchemas = {
   'flow.inspect': flowProjectionSchema,
   'generation.preview': reviewedPlanSchema,
   'generation.apply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), manifest: generationManifestSchema }),
+  'runtime.context':runtimeContextSchema,
+  'runtime.route': z.strictObject({url:text,generatedRevision:revisionSchema,pageId:idSchema}),
   'runtime.start': runtimeResult,
   'runtime.stop': runtimeResult,
   'runtime.status': runtimeResult,

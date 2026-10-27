@@ -11,6 +11,10 @@
     "./flow": {
       "types": "./src/flow/index.ts",
       "default": "./dist/flow/index.js"
+    },
+    "./page-document": {
+      "types": "./src/page-document/index.ts",
+      "default": "./dist/page-document/index.js"
     }
   },
   "dependencies": {

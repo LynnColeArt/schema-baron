@@ -731,6 +731,7 @@ export function FormProperties({
   };
   const actionProperties=(id:string)=>{
           const action = project.actions.find((a) => a.id === id);
+          const supportsHook = form.kind === "Record" && action && ["insert", "update", "delete", "extension"].includes(action.operation);
           return action ? (
             <fieldset key={id}>
               <legend>Action: {action.operation}</legend>
@@ -766,9 +767,9 @@ export function FormProperties({
                   { value: "", label: "None" },
                   ...project.extensionContracts
                     .filter(
-                      (e) => e.kind === "action" || e.kind === "validator",
+                      (e) => (supportsHook && e.kind === "action") || e.id === action.extensionHookRef,
                     )
-                    .map((e) => ({ value: e.id, label: e.relativePath })),
+                    .map((e) => ({ value: e.id, label: supportsHook && e.kind === "action" ? e.relativePath : `Unsupported binding: ${e.relativePath}` })),
                 ],
                 (id) => {
                   const next = { ...action };
@@ -777,6 +778,7 @@ export function FormProperties({
                   onChange([{ entity: "action", value: next }]);
                 },
               )}
+              {!supportsHook && <small>Source hooks require a Record write or extension action. Cancel never invokes hooks; select None to remove an unsupported binding.</small>}
               {(["destination", "success", "cancel"] as const).map((slot) =>
                 destinationEditor(action, slot),
               )}
