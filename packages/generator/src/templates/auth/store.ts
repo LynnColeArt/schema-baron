@@ -66,6 +66,7 @@ export class IdentityStore {
   return {token,csrf,expires,userId:user.id};
  }
  session(token:string|undefined,now=Date.now()) {if(!token||!/^[A-Za-z0-9_-]{43}$/.test(token))return;return this.db.prepare('SELECT user,expires,csrf FROM sessions WHERE project=? AND token=? AND expires>?').get(this.project,digest(token),now) as {user:string;expires:number;csrf:string}|undefined;}
+ username(token:string|undefined) {const session=this.session(token);if(!session)return;const db=this.identityDatabase();try {const row=(this.mapping?db.prepare(`SELECT ${quote(this.mapping.username)} AS username FROM ${quote(this.mapping.table)} WHERE ${quote(this.mapping.id)}=?`).get(session.user):db.prepare('SELECT username FROM identities WHERE project=? AND id=?').get(this.project,session.user)) as {username:string}|undefined;return row?.username;}finally{if(db!==this.db)db.close();}}
  checkCsrf(token:string|undefined,csrf:string|undefined) {const session=this.session(token);return !!session&&!!csrf&&timingSafeEqual(Buffer.from(session.csrf,'hex'),Buffer.from(digest(csrf),'hex'));}
  logout(token:string) {this.db.prepare('DELETE FROM sessions WHERE project=? AND token=?').run(this.project,digest(token));}
  close(){this.db.close();}

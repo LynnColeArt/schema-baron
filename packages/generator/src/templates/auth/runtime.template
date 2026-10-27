@@ -58,11 +58,11 @@ export async function authenticate(request:Request) {
  const jar=await cookies(),data=await request.formData();
  const secure=originCheck(request.headers.get('origin'),request.headers.get('host'),String(data.get('_csrf')??''),jar.get(csrfCookie)?.value);
  const actionId=String(data.get('_action')??''),login=authConfig.logins.find(l=>l.actions.some(a=>a.id===actionId));
- const action=login?.actions.find(a=>a.id===actionId);if(!action||!login)throw new AccessError(403,'Login action is not declared.');
+ const action=login?.actions.find(a=>a.id===actionId);if(!action||!login||!['login','logout'].includes(action.operation))throw new AccessError(403,'Login action is not declared.');
  const allowed=['_csrf','_action','returnTo',login.username,login.password];for(const [key,value] of data)if(!allowed.includes(key)||data.getAll(key).length!==1||typeof value!=='string'||value.length>16000)throw new AccessError(400,'Invalid login input.');
  const token=jar.get(sessionCookie)?.value,identity=store();
  try {
-  if(action.operation==='logout'){authorize(login.pageId,action.id,token);if(!identity.checkCsrf(token,jar.get(csrfCookie)?.value))throw new AccessError(403,'CSRF validation failed.');if(token)identity.logout(token);jar.delete(sessionCookie);jar.delete(csrfCookie);return Response.json({location:authConfig.loginPath});}
+  if(action.operation==='logout'){authorize(login.pageId,action.id,token);if(!identity.checkCsrf(token,jar.get(csrfCookie)?.value))throw new AccessError(403,'CSRF validation failed.');if(token)identity.logout(token);jar.delete(sessionCookie);jar.delete(csrfCookie);const fallback=authConfig.routes.find(p=>p.access==='public'&&!authConfig.logins.some(l=>l.pageId===p.id))??authConfig.routes.find(p=>p.access==='public');return Response.json({location:fallback?.path??authConfig.loginPath});}
   // Access rules apply to login itself; a public login route is explicitly authored.
   authorize(login.pageId,action.id,token);
   const submitted=data.get('returnTo');let location:string;
@@ -73,3 +73,6 @@ export async function authenticate(request:Request) {
  }finally{identity.close();}
 }
 export function failure(error:unknown) {const status=error instanceof AccessError?error.status:400;return Response.json({error:error instanceof AccessError?error.message:'Request could not be completed.'},{status,headers:{'cache-control':'no-store'}});}
+/** Only declared, typed page context reaches links or login return fields. */
+export function pageReturn(pageId:string,parameters:Parameters) {const page=authConfig.routes.find(p=>p.id===pageId);if(!page)throw new AccessError(400,'Unknown page.');const values:Record<string,string>={};for(const field of page.parameters){const value=parameters[field.parameter];if(typeof value==='string')values[field.parameter]=value;}return returnTarget(page.path+(Object.keys(values).length?'?'+new URLSearchParams(values):''));}
+export function loginCancel(loginId:string,parameters:Parameters) {if(typeof parameters.returnTo==='string'){try{const target=new URL(returnTarget(parameters.returnTo),'http://runtime.invalid');parameters=Object.fromEntries(target.searchParams);}catch{parameters={};}}const login=authConfig.logins.find(l=>l.id===loginId);const action=login?.actions.find(a=>a.operation==='cancel');const fallback=authConfig.routes.find(p=>p.access==='public'&&!authConfig.logins.some(l=>l.pageId===p.id))??authConfig.routes.find(p=>p.access==='public');if(!fallback)throw new AccessError(400,'Configure a public Cancel page.');if(!action?.target)return pageReturn(fallback.id,parameters);const path=returnTarget(destination(action.target,{},parameters,authConfig.contexts));if(authConfig.routes.find(p=>p.path===new URL(path,'http://runtime.invalid').pathname)?.access!=='public')throw new AccessError(400,'Cancel requires a public page.');return path;}

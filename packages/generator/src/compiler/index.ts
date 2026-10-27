@@ -30,12 +30,15 @@ export function compileProject(input:Project):GenerationIR {
     const usernames=controls.filter(c=>c.credentialRole==='username'),passwords=controls.filter(c=>c.credentialRole==='password');
     if(!project.identity||usernames.length!==1||passwords.length!==1||usernames[0]!.binding||passwords[0]!.binding)fail(form.id,'Login requires configured identity and exactly one explicit username and password credential role without data bindings.');
     const actions=form.actionIds.map(id=>project.actions.find(a=>a.id===id)!).map(action=>{
-     if(!['login','logout'].includes(action.operation))fail(action.id,'Login forms support explicit login/logout actions.');
-     const result:ActionIR={id:action.id,operation:action.operation,access:effectiveAccess(project,page.id,action.id).access};
+     if(!['login','logout','cancel'].includes(action.operation))fail(action.id,'Login forms support explicit login/logout/Cancel actions.');
+     const button=controls.find(c=>c.events.some(e=>e.actionId===action.id));
+     const result:ActionIR={id:action.id,operation:action.operation,...(button?.appearance.label?{label:button.appearance.label}:{}),access:effectiveAccess(project,page.id,action.id).access};
+     const cancelTarget=action.success??action.destination;
+     if(action.operation==='cancel'&&cancelTarget&&effectiveAccess(project,cancelTarget.pageId).access!=='public')fail(action.id,'Login Cancel requires a public destination.');
      for(const slot of ['destination','success','cancel'] as const)if(action[slot])try{result[slot]=compileDestination(project,sources,action[slot]!,action.operation);}catch(error){fail(action.id,error instanceof Error?error.message:'Invalid login destination.');}
      return result;
     });
-    logins.push({id:form.id,username:usernames[0]?.id??'',password:passwords[0]?.id??'',actions});return [];
+    logins.push({id:form.id,username:usernames[0]?.id??'',password:passwords[0]?.id??'',usernameLabel:usernames[0]?.appearance.label??'Username',passwordLabel:passwords[0]?.appearance.label??'Password',actions});return [];
    }
    if(!['Grid','Search','Record'].includes(form.kind)||!source) {fail(form.id,'Generate a table-bound Grid, Search or Record form.');return [];}
    for(const key of form.keyMapping) if(key.expression.kind!=='field'||key.expression.alias!=='root'||key.expression.fieldId!==key.targetFieldId) fail(form.id,'Form keys must bind their own stored field. Supply incoming literal or source values through declared action key/filter mappings.');
@@ -51,7 +54,7 @@ export function compileProject(input:Project):GenerationIR {
    for(const sorting of form.sorting){const field=source.fields.find(f=>f.id===sorting.fieldId);if(field?.type.kind==='decimal'&&field.type.encoding==='text') fail(form.id,'Exact decimal text sorting is unavailable in this output slice.');}
 
    if(!form.controlIds.length) fail(form.id,'Select at least one Grid display control before generation.');
-   const controls=form.controlIds.map(id=>{
+   const controls=form.controlIds.filter(id=>project.controls.find(c=>c.id===id)?.kind!=='identity').map(id=>{
     const c=project.controls.find(c=>c.id===id)!;
     if(!['label','text','number','date','checkbox','select','link','button'].includes(c.kind)||c.binding?.kind==='derived') fail(c.id,'This control requires a generator capability that is not available yet.');
     if(c.appearance.className||c.appearance.width) fail(c.id,'Custom control layout generation is not available yet.');
@@ -72,7 +75,10 @@ export function compileProject(input:Project):GenerationIR {
    }
    return [{pageId:page.id,kind:form.kind,actions,context:contexts,id:form.id,label:form.appearance.label??'Records',source,controls,keyMapping:form.keyMapping,search:form.search,sorting:form.sorting,pageSize:form.paging.pageSize}];
   });
-  return {id:page.id,path:page.route,title:page.title,document:page.document,grids,records,logins,policy:{access:effective.access as 'public'|'authenticated',sourceId:effective.id}};
+  const identities=project.controls.filter(c=>c.kind==='identity'&&!c.credentialRole&&project.forms.some(f=>f.id===c.formId&&f.pageId===page.id));
+  if(identities.length>1)fail(page.id,'Place at most one identity control in each page header.');
+  if(identities.length&&(!project.identity||!project.forms.some(f=>f.kind==='Login'&&effectiveAccess(project,f.pageId).access==='public'&&f.actionIds.some(id=>{const action=project.actions.find(a=>a.id===id);return action?.operation==='login'&&effectiveAccess(project,f.pageId,id).access==='public';}))))fail(page.id,'Configure identity and a public Login form/action before placing a header identity control.');
+  return {...(identities[0]?{identityCaption:identities[0].appearance.label??'Signed in as'}:{}),id:page.id,path:page.route,title:page.title,document:page.document,grids,records,logins,policy:{access:effective.access as 'public'|'authenticated',sourceId:effective.id}};
  });
  if(!routes.length) fail(project.id,'Create a page and table-bound Grid before generating.');
  if(diagnostics.length) throw new GenerationError(diagnostics);

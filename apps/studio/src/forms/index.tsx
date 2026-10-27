@@ -190,7 +190,7 @@ export function FormWizard({
                       : k === "Search"
                         ? ["search"]
                         : k === "Login"
-                          ? ["login", "cancel"]
+                          ? ["login", "logout", "cancel"]
                           : [],
                   );
                 }}

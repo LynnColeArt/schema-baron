@@ -1,3 +1,4 @@
+import { identityControlFiles } from '../identity-controls/index.js';
 import { authFiles } from '../auth/index.js';
 import { searchFiles } from '../search/index.js';
 import { createHash } from 'node:crypto';
@@ -12,7 +13,7 @@ export const outputPackage={name:'generated-application',version:'1.0.0',private
 const pretty=(value:unknown)=>JSON.stringify(value,null,2)+'\n';
 export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFile[] {
  const flashCookie='record_saved_'+createHash('sha256').update(ir.projectId).digest('hex').slice(0,20);
- const files:GeneratedFile[]=authFiles(ir);const add=(path:string,content:string)=>files.push({path,content});
+ const files:GeneratedFile[]=[...authFiles(ir),...identityControlFiles()];const add=(path:string,content:string)=>files.push({path,content});
  add('package.json',pretty(outputPackage));add('package-lock.json',readFileSync(new URL('./package-lock.template',import.meta.url),'utf8'));
  add('.npmrc','registry=https://registry.npmjs.org/\nignore-scripts=true\nsave-exact=true\nengine-strict=true\n');add('.nvmrc','24.22.1\n');add('.gitignore','node_modules/\n.next/\n.env*\n');
  add('tsconfig.json',pretty({compilerOptions:{target:'ES2023',lib:['dom','dom.iterable','es2023'],strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,noEmit:true,allowImportingTsExtensions:true,skipLibCheck:true,esModuleInterop:true,module:'esnext',moduleResolution:'bundler',resolveJsonModule:true,isolatedModules:true,jsx:'react-jsx',plugins:[{name:'next'}]},include:['next-env.d.ts','**/*.ts','**/*.tsx','.next/types/**/*.ts'],exclude:['node_modules']}));
@@ -40,7 +41,7 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
    if (node.kind === 'text') return `${indent}{${JSON.stringify(node.text)}}`;
    if (node.kind === 'form') {
     placed.add(node.formId);
-    const login=route.logins.find(l=>l.id===node.formId);if(login)return `${indent}<Login username={${JSON.stringify(login.username)}} password={${JSON.stringify(login.password)}} actions={${JSON.stringify(login.actions.map(a=>({id:a.id,operation:a.operation})))}} returnTo={typeof parameters.returnTo==='string'?parameters.returnTo:''} />`;
+    const login=route.logins.find(l=>l.id===node.formId);if(login)return `${indent}<Login username={${JSON.stringify(login.username)}} password={${JSON.stringify(login.password)}} usernameLabel={${JSON.stringify(login.usernameLabel)}} passwordLabel={${JSON.stringify(login.passwordLabel)}} cancelTo={loginCancel(${JSON.stringify(login.id)},parameters)} actions={${JSON.stringify(login.actions.map(a=>({id:a.id,operation:a.operation,...(a.label?{label:a.label}:{})})))}} returnTo={typeof parameters.returnTo==='string'?parameters.returnTo:''} />`;
     return recordComponents.has(node.formId)?`${indent}{renderRecord${recordComponents.get(node.formId)}()}`:`${indent}<Grid${components.get(node.formId)} parameters={parameters} />`;
    }
    return `${indent}<${node.tag}>\n${node.children.map(child => render(child, indent + '  ')).join('\n')}\n${indent}</${node.tag}>`;
@@ -49,7 +50,7 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
   const unplaced = route.grids.filter(g => !placed.has(g.id)).map(g => `      <Grid${components.get(g.id)} parameters={parameters} />`).join('\n');
   const depth = route.path === '/' ? 0 : route.path.slice(1).split('/').length;
   const relative = '../'.repeat(depth + 1);
-  add(`app${route.path === '/' ? '' : route.path}/page.tsx`, [...components.values()].map(n => `import { Grid${n} } from '${relative}components/grid-${n}';`).join('\n') + [...recordComponents.values()].map(n=>`\nimport { Record${n} } from '${relative}components/record-${n}';\nimport { loadRecord as loadRecord${n}, config as config${n} } from '${relative}server/record-${n}';`).join('')+`\nimport { guardPage } from '${relative}server/auth';\nimport { Login } from '${relative}components/login';\nimport { cookies } from 'next/headers';\nimport { SavedNotice } from '${relative}components/saved-notice';\nimport { context } from '${relative}server/navigation';` + `
+  add(`app${route.path === '/' ? '' : route.path}/page.tsx`, [...components.values()].map(n => `import { Grid${n} } from '${relative}components/grid-${n}';`).join('\n') + [...recordComponents.values()].map(n=>`\nimport { Record${n} } from '${relative}components/record-${n}';\nimport { loadRecord as loadRecord${n}, config as config${n} } from '${relative}server/record-${n}';`).join('')+`\nimport { IdentityHeader } from '${relative}components/identity-header';\nimport { guardPage, loginCancel, pageReturn } from '${relative}server/auth';\nimport { Login } from '${relative}components/login';\nimport { cookies } from 'next/headers';\nimport { SavedNotice } from '${relative}components/saved-notice';\nimport { context } from '${relative}server/navigation';` + `
 
 export const dynamic = 'force-dynamic';
 type Parameters = Record<string, string | string[] | undefined>;
@@ -61,6 +62,7 @@ ${[...recordComponents.values()].map(n=>`  const renderRecord${n}=()=>{try {cons
   const saved=(await cookies()).get(${JSON.stringify(flashCookie)})?.value==='1';
   return (
     <>
+${route.identityCaption!==undefined?`      <IdentityHeader caption={${JSON.stringify(route.identityCaption)}} returnTo={pageReturn(${JSON.stringify(route.id)},parameters)} />`:''}
       <h1>{${JSON.stringify(route.title)}}</h1>
       <SavedNotice saved={saved} cookieName={${JSON.stringify(flashCookie)}} />
 ${document}

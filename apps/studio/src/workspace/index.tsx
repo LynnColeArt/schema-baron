@@ -13,6 +13,7 @@ import {
 } from "../forms/scalars.js";
 import { FormWizard, FormProperties } from "../forms/index.js";
 import { GenerationReview } from "../generation/index.js";
+import { SecurityEditor } from "../security-editor/index.js";
 import { MigrationHistory } from "../migration-history/index.js";
 import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
@@ -39,6 +40,7 @@ type Modal =
   | "open"
   | "page"
   | "form"
+  | "security"
   | "settings"
   | "connection"
   | "generation"
@@ -833,6 +835,7 @@ export default function Workspace() {
         <button onClick={() => dialog("settings")} disabled={!project}>
           Project settings
         </button>
+        <button onClick={() => dialog("security")} disabled={!project || dirty}>Login and access…</button>
         <button onClick={() => dialog("connection")} disabled={!project}>
           Connections…
         </button>
@@ -1506,7 +1509,9 @@ export default function Workspace() {
                       ? "Insert form"
                       : modal === "close"
                         ? "Unsaved document changes"
-                        : modal === "settings"
+                        : modal === "security"
+                          ? "Login and access"
+                          : modal === "settings"
                           ? "Project settings"
                           : modal === "generation"
                             ? "Generate application"
@@ -1779,6 +1784,8 @@ export default function Workspace() {
                 </button>
               </div>
             </>
+          ) : modal === "security" ? (
+            project ? <SecurityEditor project={project} client={client} onChanged={acceptSnapshot} onBusy={setBusy} onClose={() => setModal(null)} /> : <p>Open a project first.</p>
           ) : modal === "settings" ? (
             <>
               <dl className="settings">
