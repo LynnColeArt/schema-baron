@@ -197,3 +197,94 @@ test("recovery backups are bounded and an existing backup is never overwritten",
   expect(retain("large", initialEditor(), initialView())).toBe(false);
   expect(storage.get("studio.workspace.large")).toBe(oversized);
 });
+
+test("form/action/control recovery keeps incomplete tuples, function arguments, scalar formats and history", () => {
+  const p = project();
+  const form = {
+    id: id("f"),
+    pageId: orchard.id,
+    kind: "Login" as const,
+    keyMapping: [],
+    controlIds: [id("c")],
+    actionIds: [id("a")],
+    search: [],
+    sorting: [],
+    paging: { pageSize: 0 },
+    appearance: { width: 0 },
+  };
+  const control = {
+    id: id("c"),
+    formId: form.id,
+    kind: "select" as const,
+    readOnly: true,
+    binding: {
+      kind: "derived" as const,
+      expression: {
+        kind: "function" as const,
+        function: "coalesce" as const,
+        args: [],
+      },
+      sourceDependencies: [],
+    },
+    appearance: {},
+    validation: { required: false, maxLength: 0 },
+    events: [],
+    lookup: {
+      source: { kind: "table" as const, id: "" as ReturnType<typeof id> },
+      valueFieldIds: [],
+      labelFieldId: "" as ReturnType<typeof id>,
+    },
+  };
+  const action = {
+    id: id("a"),
+    formId: form.id,
+    operation: "extension" as const,
+    extensionHookRef: "" as ReturnType<typeof id>,
+    destination: {
+      pageId: "" as ReturnType<typeof id>,
+      keyMapping: [],
+      filterMapping: [],
+    },
+  };
+  const editor = edit(initialEditor(), p, [
+    { entity: "form", value: form },
+    { entity: "control", value: control },
+    { entity: "action", value: action },
+  ]);
+  expect(retain("editing", editor, initialView())).toBe(true);
+  const result = restore("editing");
+  expect(result.issues).toEqual([]);
+  expect(result.editor).toEqual(editor);
+  expect(projectSchema.safeParse(visible(p, result.editor)).success).toBe(
+    false,
+  );
+});
+
+test("scalar text buffers remain separate, bounded and recoverable through history and project switches", () => {
+  const editor = {
+    ...mixed(),
+    buffers: {
+      "orchard:Width": { text: "-", optional: true, positive: true },
+      "form:Page size": {
+        text: "",
+        optional: false,
+        min: 1,
+        max: 200,
+        integer: true,
+      },
+      "control:min": { text: "1e", optional: true },
+      "control:maxLength": {
+        text: "0",
+        optional: true,
+        positive: true,
+        integer: true,
+      },
+    },
+  };
+  expect(retain("scalars", editor, initialView())).toBe(true);
+  const recovered = restore("scalars");
+  expect(recovered.issues).toEqual([]);
+  expect(recovered.editor).toEqual(editor);
+  expect(undo(recovered.editor).buffers).toEqual(editor.buffers);
+  expect(redo(undo(recovered.editor)).buffers).toEqual(editor.buffers);
+});

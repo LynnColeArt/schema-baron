@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
+import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
 import { diagnosticSchema, outcomeSchema } from './diagnostics.js';
 import type { Diagnostic } from './diagnostics.js';
 
@@ -26,11 +26,13 @@ export const operationInputSchemas = {
   'schema.history': z.strictObject({ connectionId: idSchema }),
   'schema.restorePreview': z.strictObject({ connectionId: idSchema, backupRef: idSchema }),
   'schema.restoreApply': applyInput,
-  'query.preview': z.union([z.strictObject({ queryId: idSchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200) }), z.strictObject({ draft: querySchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200) })]),
-  'form.construct': z.strictObject({ pageId: idSchema, kind: formSchema.shape.kind, source: sourceRefSchema.optional(), fieldIds: ids, keyIds: ids, actions: z.array(actionSchema.shape.operation), links: z.array(actionSchema.shape.destination.unwrap()), style: formSchema.shape.appearance }),
+  'query.preview': z.union([z.strictObject({ queryId: idSchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() }), z.strictObject({ draft: querySchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() })]),
+  'form.construct': z.strictObject({ pageId: idSchema, kind: formSchema.shape.kind, source: sourceRefSchema.optional(), fieldIds: ids, keyIds: ids, actions: z.array(actionSchema.shape.operation), links: z.array(actionSchema.shape.destination.unwrap()), style: formSchema.shape.appearance, search: formSchema.shape.search.optional(), sorting: formSchema.shape.sorting.optional(), actionDefinitions: z.array(actionSchema.omit({ id: true, formId: true })).optional(), linkedRecord: z.strictObject({ pageId: idSchema, label: text, fieldIds: ids, keyIds: ids }).optional(), pendingOperations: z.array(entityBatchOperationSchema.refine(op => ['page', 'form', 'control', 'action'].includes(op.entity), 'Construction pending operations must be ordinary page/form/control/action edits')).max(1000).optional() }),
+  'source.read': z.strictObject({ outputRoot: text, relativePath: text }),
   'extension.read': z.strictObject({ extensionId: idSchema, approvedPath: text }),
   'extension.write': z.strictObject({ extensionId: idSchema, approvedPath: text, content: z.string(), expectedFileHash: hashSchema }),
   // Transient only. Never serialize this input into Project, OperationRecord or diagnostics.
+  'identity.configure': identitySchema,
   'identity.provision': z.strictObject({ identitySourceRef: idSchema, username: text, password: z.string().min(1).max(1024) }),
   'project.validate': z.strictObject({ objectIds: ids.optional() }),
   'flow.inspect': z.strictObject({ projection: z.enum(['application', 'schema', 'endpoint']), selectedId: idSchema.optional() }),
@@ -50,7 +52,7 @@ const planBase = { id: idSchema, sourceRevision: revisionSchema, modelHash: hash
 export const reviewedPlanSchema = z.discriminatedUnion('kind', [
   z.strictObject({ ...planBase, kind: z.literal('migration'), connectionId: idSchema, schemaFingerprint: hashSchema, dataFingerprint: hashSchema, backupPolicy: z.strictObject({ required: z.literal(true), approvedRootId: idSchema }), recovery: z.strictObject({ backupMethod: z.literal('sqlite-online-backup'), instructions: z.array(text).min(1), foreignKeysBeforeTransaction: z.literal(false), verifyBeforeCommit: z.array(z.enum(['foreign_key_check', 'integrity_check'])), restoreRequiresReview: z.literal(true), sqliteVersion: text, strategy: z.enum(['native', 'rebuild']) }).optional(), changes: z.array(z.strictObject({ objectId: idSchema, tableId: idSchema, kind: z.enum(['rename','add','drop','type','key','index','foreign-key','constraint']), description: text })).optional(), steps: z.array(z.strictObject({ id: idSchema, sql: text, objectIds: ids, transactional: z.boolean() })) }),
   z.strictObject({ ...planBase, kind: z.literal('restore'), connectionId: idSchema, backupRef: idSchema, schemaFingerprint: hashSchema, dataFingerprint: hashSchema, backupFingerprint: hashSchema, backupDataFingerprint: hashSchema, restoredSchema: schemaSchema, steps: z.array(z.strictObject({ id: idSchema, sql: text, objectIds: ids, transactional: z.literal(true) })) }),
-  z.strictObject({ ...planBase, kind: z.literal('generation'), generatorVersion: text, outputFingerprint: hashSchema, outputRootId: idSchema, extensionHashes: z.record(idSchema, hashSchema), steps: z.array(z.strictObject({ id: idSchema, path: text, operation: z.enum(['create', 'replace', 'delete', 'preserve']), beforeHash: hashSchema.optional(), afterHash: hashSchema.optional() })) }),
+  z.strictObject({ ...planBase, kind: z.literal('generation'), generatorVersion: text, outputFingerprint: hashSchema, outputRootId: idSchema, outputLocator: z.string().min(1).optional(), connectionIdentity: z.string().min(1).optional(), extensionHashes: z.record(idSchema, hashSchema), steps: z.array(z.strictObject({ id: idSchema, path: text, operation: z.enum(['create', 'replace', 'delete', 'preserve']), beforeHash: hashSchema.optional(), afterHash: hashSchema.optional(), afterContent: z.string().max(1_000_000).optional() })) }),
 ]).superRefine((plan, ctx) => {
   if (Date.parse(plan.expiresAt) <= Date.parse(plan.createdAt)) ctx.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Plan expiry must follow creation' });
   const required = plan.impact.filter(i => i.requiresAcknowledgement).map(i => i.id).sort();
@@ -104,8 +106,10 @@ export const operationResultSchemas = {
   'schema.restoreApply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), backupRef: idSchema }),
   'query.preview': z.strictObject({ fields: z.array(querySchema.shape.projections.element.omit({ expression: true })), rows: z.array(z.record(idSchema, scalar)).max(200), sql: text, truncated: z.boolean() }),
   'form.construct': changedResult,
+  'source.read': z.strictObject({path:text,content:z.string(),hash:hashSchema,readOnly:z.literal(true)}),
   'extension.read': z.strictObject({ extensionId: idSchema, content: z.string(), hash: hashSchema }),
   'extension.write': z.strictObject({ extensionId: idSchema, hash: hashSchema }),
+  'identity.configure': z.strictObject({ configured: z.literal(true) }),
   'identity.provision': z.strictObject({ userId: idSchema }),
   'project.validate': z.strictObject({ valid: z.boolean(), diagnostics: z.array(diagnosticSchema) }),
   'flow.inspect': z.strictObject({ nodes: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, kind: text })), edges: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, fromId: idSchema, toId: idSchema, kind: text })) }),

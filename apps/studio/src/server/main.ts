@@ -17,6 +17,14 @@ async function main() {
  const server = createServer((request, response) => { if (handle) void handle(request, response); else { response.writeHead(503); response.end(); } });
  server.requestTimeout = 15000; server.headersTimeout = 10000;
  let app: ReturnType<typeof next> | undefined;
+ async function shutdown() {
+  // Stop accepting requests and interrupt active workers before waiting for HTTP to drain.
+  const stopped = new Promise<void>((resolve,reject) => server.close(error => error && (error as NodeJS.ErrnoException).code !== 'ERR_SERVER_NOT_RUNNING' ? reject(error) : resolve()));
+  server.closeIdleConnections();
+  const results = await Promise.allSettled([stopped,service.close()]);
+  clearOwner(); await app?.close();
+  for(const result of results)if(result.status === 'rejected')throw result.reason;
+ }
  try {
   await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(port, '127.0.0.1', resolve); });
   const address = server.address(); if (!address || typeof address === 'string') throw new Error('Missing owner address.');
@@ -26,8 +34,8 @@ async function main() {
   await app.prepare(); setOwner(service); handle = app.getRequestHandler();
   process.stderr.write(`Schema Baron owner ready at ${origin}\n`);
   let closing = false;
-  const close = () => { if (closing) return; closing = true; server.close(() => { clearOwner(); void service.close().then(() => app!.close()).then(() => { process.exitCode = 0; }); }); server.closeIdleConnections(); };
+  const close = () => { if (closing) return; closing = true; void shutdown().then(() => { process.exitCode = 0; }, () => { process.stderr.write('Studio owner shutdown failed; inspect recovery before reopening.\n'); process.exitCode = 1; }); };
   process.once('SIGTERM', close); process.once('SIGINT', close);
- } catch (error) { server.close(); service.close(); await app?.close(); throw error; }
+ } catch (error) { await shutdown(); throw error; }
 }
 main().catch(() => { process.stderr.write('Studio owner failed to start; check private configuration and build output.\n'); process.exitCode = 1; });

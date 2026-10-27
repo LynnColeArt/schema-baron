@@ -1,0 +1,21 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-t
+
+ ❯ packages/generator/tests/regeneration/commands.test.ts (8 tests | 1 failed | 7 skipped) 7896ms
+   × recovery refuses a later in-output data rebind before moving the reviewed old tree 7893ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/generator/tests/regeneration/commands.test.ts > recovery refuses a later in-output data rebind before moving the reviewed old tree
+Error: ENOENT: no such file or directory, open '/tmp/wp20-commands-lOVagc/output/app/.next/data.sqlite'
+ ❯ packages/generator/tests/regeneration/commands.test.ts:85:203
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  05:42:32
+   Duration  9.48s (tests 87%, transform 8%, import 5%)
+

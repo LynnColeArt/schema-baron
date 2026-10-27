@@ -7,12 +7,17 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
+    },
+    "./page-document": {
+      "types": "./src/page-document/index.ts",
+      "default": "./dist/page-document/index.js"
     }
   },
   "dependencies": {
     "@schema-baron/model": "0.0.0",
     "@schema-baron/storage": "0.0.0",
-    "@schema-baron/sqlite": "0.0.0"
+    "@schema-baron/sqlite": "0.0.0",
+    "@schema-baron/generator": "0.0.0"
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json"
