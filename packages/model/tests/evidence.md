@@ -39,3 +39,40 @@ HTTP/MCP parity, SQLite migration, generated app, UI or performance acceptance i
 claimed; those belong to later WPs. No native module rebuild was needed. No hosted
 sync opt-in or Spec Kitty upgrade was performed. Canonical status showed WP02
 in_progress with implementer-ivan and no returned review feedback in this first pass.
+
+## Review cycle 1 repairs — 2026-10-26 America/Chicago
+
+Acknowledged the three blocking findings in `review-feedback-1.md` and canonical
+`review-cycle-1.md`; the refreshed implementation prompt was read in full. The
+parent's staging clarification and corrected committed reviewer evidence make
+live downstream-consumer checking N/A for this library boundary. WP03/WP04 retain
+that integration ownership; no dummy consumers or later-package code was added.
+
+Added `review-regressions.test.ts` before changing production behavior. Its first
+run had six failures out of 14 cases: two scoped-global-policy exceptions, three
+row-grain ORDER BY aggregates (direct, nested arithmetic, nested function), and a
+future-alias JOIN ON predicate. Eight valid/other-invalid counterparts already
+passed. After the fixes all 14 pass, with unchanged-input assertions retained.
+
+- Invalid global policy scope/owner/inheritance returns object-linked diagnostics;
+  effective access is derived only after the global policy is valid.
+- ORDER BY aggregate flags participate in the same grain/grouping analysis as
+  projections. Explicit grouped counterparts remain valid.
+- Each ON predicate resolves only earlier aliases and the current right alias;
+  previous outer-join nullability is retained. Valid sequential joins pass.
+
+Observed verification after repair:
+
+- `npm test`: 74 passed, including 63 model tests across the existing and new suites.
+- `npm run typecheck` and `npm run build`: passed implemented scope, with other
+  product packages still explicitly NOT IMPLEMENTED.
+- Both test files strict-typechecked with explicit Node types: passed.
+- Native `@schema-baron/model` ESM import after build: all three reviewer reproductions
+  return the required diagnostics and all three valid counterparts pass.
+- Diff-scoped lint, whitespace check, credential scan and exact-lock dependency
+  metadata checks: passed. No dependency or installation changes.
+
+These remain model-boundary checks; no SQLite compiler, storage, UI, HTTP/MCP or
+later-WP integration acceptance is claimed. No planning/task file was manually
+edited, no add-history/force waiver was used, and no CLI upgrade or hosted sync
+change was performed.

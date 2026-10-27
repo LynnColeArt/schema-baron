@@ -141,14 +141,23 @@ export function validateProject(input: unknown): ValidationResult {
     const connected = new Set([q.sources[0]!.alias]);
     for (const join of q.joins) {
       if (!connected.has(join.leftAlias) || connected.has(join.rightAlias) || !ctx.sources.has(join.rightAlias)) error('BROKEN_REFERENCE', q.id, 'joins', 'Join must connect an existing source to a new source alias.');
-      connected.add(join.rightAlias); predicate(join.on, { ...ctx, aggregateAllowed: false }, q.id, 'joins.on');
+      // ON sees earlier sources plus this join's right side, never future aliases.
+      const availableAliases = new Set([...connected, join.rightAlias]);
+      const joinContext: Context = {
+        ...ctx,
+        sources: new Map([...ctx.sources].filter(([alias]) => availableAliases.has(alias))),
+        nullableAliases: new Set([...ctx.nullableAliases].filter(alias => connected.has(alias))),
+        aggregateAllowed: false,
+      };
+      predicate(join.on, joinContext, q.id, 'joins.on');
+      connected.add(join.rightAlias);
     }
     if (connected.size !== q.sources.length) error('INVALID_QUERY_GRAIN', q.id, 'sources', 'Every source must have an explicit join.');
     predicate(q.where, { ...ctx, aggregateAllowed: false }, q.id, 'where'); predicate(q.having, ctx, q.id, 'having');
     for (const group of q.groupBy) expr(group, { ...ctx, aggregateAllowed: false }, q.id, 'groupBy');
-    for (const order of q.orderBy) expr(order.expression, ctx, q.id, 'orderBy');
+    const ordering = q.orderBy.map(order => expr(order.expression, ctx, q.id, 'orderBy'));
     const outputs = q.projections.map(output => { const shape = expr(output.expression, ctx, output.id, 'expression'); if (shape && (!sameType(shape.type, output.type) || shape.nullable !== output.nullable)) error('TYPE_MISMATCH', output.id, 'type', 'Result type/nullability must match expression including outer joins.'); return shape; });
-    const aggregate = outputs.some(o => o?.aggregate) || !!q.having || q.groupBy.length > 0;
+    const aggregate = outputs.some(o => o?.aggregate) || ordering.some(o => o?.aggregate) || !!q.having || q.groupBy.length > 0;
     if (aggregate && q.grain.strategy === 'rows') error('INVALID_QUERY_GRAIN', q.id, 'grain', 'Aggregates require an explicitly declared grain.');
     if (!aggregate && q.grain.strategy !== 'rows') error('INVALID_QUERY_GRAIN', q.id, 'grain', 'Grouped grain requires grouping or aggregates.');
     if (aggregate) {
@@ -208,7 +217,8 @@ export function validateProject(input: unknown): ValidationResult {
     if (control.lookup) { const fields = sourceFields(control.lookup.source, control.id, 'lookup.source'); for (const id of [...control.lookup.valueFieldIds, control.lookup.labelFieldId]) ref(fields, id, control.id, 'lookup'); if (shape && control.lookup.valueFieldIds.length === 1) { const field = fields.find(f => f.id === control.lookup!.valueFieldIds[0]); if (field && !sameType(shape.type, field.type)) error('TYPE_MISMATCH', control.id, 'lookup', 'Lookup value type must match binding.'); } }
   }
   const global = ref(p.policies, p.globalPolicyId, p.id, 'globalPolicyId');
-  if (global && (global.scope !== 'global' || global.ownerId !== p.id || global.access === 'inherit')) error('VALIDATION_FAILED', global.id, 'scope', 'Global policy must explicitly declare project access.');
+  const validGlobal = global?.scope === 'global' && global.ownerId === p.id && global.access !== 'inherit';
+  if (global && !validGlobal) error('VALIDATION_FAILED', global.id, 'scope', 'Global policy must explicitly declare project access.');
   function checkPolicy(policyId: StableId | undefined, ownerId: StableId, scope: 'page' | 'action') { if (!policyId) return; const policy = ref(p.policies, policyId, ownerId, 'policyId'); if (policy && (policy.ownerId !== ownerId || policy.scope !== scope)) error('BROKEN_REFERENCE', ownerId, 'policyId', 'Policy scope and owner must match.'); }
   for (const policy of p.policies) { const owners = policy.scope === 'global' ? [p] : policy.scope === 'page' ? p.pages : p.actions; ref<{ id: StableId }>(owners, policy.ownerId, policy.id, 'ownerId'); if (policy.scope === 'global' && policy.id !== p.globalPolicyId) error('VALIDATION_FAILED', policy.id, 'scope', 'Only one global policy is allowed.'); }
   p.pages.forEach(page => checkPolicy(page.policyId, page.id, 'page'));
@@ -217,7 +227,7 @@ export function validateProject(input: unknown): ValidationResult {
     if (!form.actionIds.includes(action.id)) error('BROKEN_REFERENCE', action.id, 'formId', 'Form must include its action.');
     checkPolicy(action.policyId, action.id, 'action');
     const page = p.pages.find(page => page.id === form.pageId);
-    if (global && global.access !== 'inherit' && page) {
+    if (validGlobal && page) {
       const parent = effectiveAccess(p, page.id); const policy = p.policies.find(policy => policy.id === action.policyId);
       if (parent.access === 'authenticated' && policy?.access === 'public') error('ACCESS_DENIED', action.id, 'policyId', 'An action cannot weaken protected page access.');
     }
