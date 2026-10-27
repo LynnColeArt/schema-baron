@@ -22,7 +22,7 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { config } from './record-${index}';
 import { execute, type State, type Control } from './record-service.ts';
-import { context } from './navigation';
+import { context, type ContextField } from './navigation';
 import type { Field } from './record-validation';
 export async function submit${index}(_previous:State, data:FormData):Promise<State> {
  const empty:State={values:{},errors:{},summary:''};
@@ -33,7 +33,7 @@ export async function submit${index}(_previous:State, data:FormData):Promise<Sta
   const parameters:unknown=JSON.parse(text);
   if(!parameters||typeof parameters!=='object'||Array.isArray(parameters)||Object.values(parameters).some(v=>typeof v!=='string')) throw Error();
   const params=parameters as Record<string,string>;
-  const allowed=[...config.context.map(c=>c.parameter),...config.keyParameters,config.id+':mode'];
+  const allowed=[...(config.context as readonly ContextField[]).map(c=>c.parameter),...config.keyParameters,config.id+':mode'];
   if(Object.keys(params).some(key=>!allowed.includes(key))) throw Error();
   context(params,config.context);
   const input:Record<string,string>={};

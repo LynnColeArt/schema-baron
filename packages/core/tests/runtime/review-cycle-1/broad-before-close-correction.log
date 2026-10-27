@@ -1,0 +1,46 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-u
+
+ ❯ packages/sqlite/tests/query/transports.test.ts (3 tests | 1 failed) 5645ms
+   × public cancel waits for worker exit; stale/conflicting cancellations have no effects and service remains responsive 640ms
+ ❯ packages/sqlite/tests/introspection/connections.test.ts (6 tests | 1 failed) 33321ms
+   × owner close rejects delayed asynchronous finalization and reopening sees only the committed snapshot 30006ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/sqlite/tests/introspection/connections.test.ts > owner close rejects delayed asynchronous finalization and reopening sees only the committed snapshot
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/sqlite/tests/introspection/connections.test.ts:61:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/sqlite/tests/query/transports.test.ts > public cancel waits for worker exit; stale/conflicting cancellations have no effects and service remains responsive
+AssertionError: expected { ok: true, revision: 3, …(2) } to match object { ok: true, result: { …(3) } }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "ok": true,
+    "result": {
+      "committed": false,
+      "id": "running-preview",
+-     "status": "canceled",
++     "status": "succeeded",
+    },
+  }
+
+ ❯ packages/sqlite/tests/query/transports.test.ts:48:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 60 passed (62)
+      Tests  2 failed | 433 passed (435)
+   Start at  07:08:07
+   Duration  307.18s (tests 97%, import 2%)
+

@@ -5,7 +5,7 @@ export type CommandHandler = (command: Command, snapshot: Project | undefined) =
 /** Input and result validators come exclusively from the canonical model package. */
 export class CommandRegistry {
  private asyncHandlers = new Map<Operation, (command: Command, snapshot?: Project) => Promise<CommandEffect>>();
- registerAsync(operation: Operation, handler: (command: Command, snapshot?: Project) => Promise<CommandEffect>) { if (this.has(operation)) throw new Error('Operation already registered'); this.asyncHandlers.set(operation, handler); }
+ registerAsync(operation: Operation, handler: (command: Command, snapshot?: Project) => Promise<CommandEffect>, synchronous?:CommandHandler) { if (this.has(operation)) throw new Error('Operation already registered'); this.asyncHandlers.set(operation, handler); if(synchronous)this.handlers.set(operation,synchronous); }
  isAsync(operation: Operation) { return this.asyncHandlers.has(operation); }
  async runAsync(command: Command, snapshot?: Project): Promise<CommandEffect> { const handler = this.asyncHandlers.get(command.operation); if (!handler) return this.run(command, snapshot); const effect = await handler(command, snapshot); operationResultSchemas[command.operation].parse(effect.result); return effect; }
  private handlers = new Map<Operation, CommandHandler>();
