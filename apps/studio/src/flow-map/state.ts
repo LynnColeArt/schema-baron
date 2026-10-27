@@ -12,3 +12,12 @@ export function filteredGraph(graph:BehaviorProjection,view:MapView){
  const ids=new Set(nodes.map(n=>n.id));const edges=graph.edges.filter(e=>ids.has(e.fromId)&&ids.has(e.toId)&&(view.kind==='navigation'?e.kind==='destination':view.kind==='auth'?e.kind==='auth'||e.kind==='return':view.kind==='outcomes'?['success','cancel','destination'].includes(e.kind):true));
  if(['navigation','auth','outcomes'].includes(view.kind)){const used=new Set(edges.flatMap(e=>[e.fromId,e.toId]));return {nodes:nodes.filter(n=>used.has(n.id)),edges};}return {nodes,edges};
 }
+
+/** Controlled canvas measurements are view-only, but must survive new projection
+ * objects with stable IDs. React Flow resets missing measured dimensions. */
+export type NodeMeasurements=Record<string,{width:number;height:number}>;
+export function retainNodeMeasurements(previous:NodeMeasurements,updates:readonly {id:string;dimensions:{width:number;height:number}}[]):NodeMeasurements {
+ let next=previous;
+ for(const {id,dimensions} of updates){const {width,height}=dimensions;if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)continue;if(next[id]?.width===width&&next[id]?.height===height)continue;if(next===previous)next=Object.assign(Object.create(null) as NodeMeasurements,previous);next[id]={width,height};}
+ return next;
+}

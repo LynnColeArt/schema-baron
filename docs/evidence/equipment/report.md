@@ -71,3 +71,8 @@ The owner and both test-owned runtime groups are stopped. A future owner can reo
 ## Remaining mission scope
 
 WP23 still owns Publication Catalog and UI/MCP parity. WP25 owns the comprehensive five-mode/fidelity/keyboard/scale corpus. Full AT-04/09 fault-injection recovery, broad security attack corpus and full NFR acceptance are not claimed by this Equipment happy/exception walkthrough. Both source defects were reported and corrected with narrow authorization; no acceptance constants or hidden authoring setup were added.
+
+
+## Independent review correction
+
+Review cycle 1 found a reproducible focused-map pointer regression after saved mapping edits. It is closed by retaining React Flow's controlled-node dimensions in project-local, non-persisted view state. Correct nodes and viewport had been present but all node wrappers were hidden after dimension metadata was lost. The original pointer case now passes in two fresh runs; full bounded flow/document coverage passes six cases with the historical checkpoint explicitly skipped, and the complete Equipment journey passes again. See [review-cycle-2/report.md](review-cycle-2/report.md) for failed-before geometry, visible-after geometry, generic cache tests and actual pointer/Properties/handler correspondence. The original saved study and reference data remain intact.
