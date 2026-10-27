@@ -8,6 +8,7 @@ import type { CommandEffect } from '../commands/index.js';
 import { registerSchemaApply, CommittedMigrationError } from '../schema-apply/index.js';
 import { registerSchemaPreview, SchemaPreviewError } from '../schema-preview/index.js';
 import { registerGeneration, GenerationError } from '../generation/index.js';
+import { registerQueryPreview } from '../query-preview/index.js';
 import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { constructForm } from '../form-construction/index.js';
@@ -37,6 +38,7 @@ export class ProjectCore {
  private migration: ReturnType<typeof registerSchemaApply>;
  private pending = new Map<string, PendingCommand>();
  private closeGeneration:()=>Promise<void>;
+ private queryPreview: ReturnType<typeof registerQueryPreview>;
  private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>; private closeSchemaPreview: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
@@ -46,6 +48,7 @@ export class ProjectCore {
   this.migration = registerSchemaApply(this.registry, options, this.storage, this.plans);
   this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.closeSchemaPreview = registerSchemaPreview(this.registry, options, this.plans, id => this.closed ? undefined : this.storage.snapshot(id), (id, connection) => this.storage.hasInspectedConnection(id, connection));
+  this.queryPreview = registerQueryPreview(this.registry, {...options,recordJob:(projectId,job)=>this.recordJob(options.ownerId,projectId,job)});
   this.registry.register('project.create', c => { if (c.operation !== 'project.create') throw new Error(); if (c.input.emptyDatabaseLocation) throw new StorageError('INVALID_INPUT', 'Database creation belongs to the connection adapter.'); const id = c.projectId; const policy = createId(); const candidate = parseProject({ id, formatVersion: FORMAT_VERSION, revision: 1, name: c.input.name, target: c.input.target, targetVersion: '1', connectionRefs: [], connections: [], schema: { id: createId(), revision: 1, tables: [], opaqueObjects: [] }, queries: [], pages: [], forms: [], controls: [], actions: [], policies: [{ id: policy, ownerId: id, scope: 'global', access: 'public' }], globalPolicyId: policy, outputConfig: { approvedRootId: 'output', relativePath: 'app' }, extensionContracts: [] }); return { result: candidate, candidate, root: c.input.approvedRoot }; });
   this.registry.register('project.batch', (c, p) => { if (c.operation !== 'project.batch' || !p) throw new Error(); return { result: { changedIds: c.input.operations.map(op => op.id) }, candidate: applyBatch(p, c.input.operations as EntityBatchOperation[]), changedIds: c.input.operations.map(op => op.id) }; });
   this.registry.register('form.construct', (c,p) => { if(c.operation !== 'form.construct' || !p) throw new Error(); return constructForm(p,c.input); });
@@ -60,6 +63,8 @@ export class ProjectCore {
  job(actor: string, projectId: string, id: string) { this.authorize(actor); return this.storage.job(projectId, id); }
  recordJob(actor: string, projectId: string, input: unknown) { this.authorize(actor); const job = jobSchema.parse(input); this.storage.putJob(projectId, job.id, job); return job; }
  operation(actor: string, projectId: string, requestId: string) { this.authorize(actor); return this.storage.operation(projectId, requestId); }
+ /** Called only by an already reserved command handler; authorization still applies. */
+ cancelQueryPreview(actor: string, projectId: string, id: string) { this.authorize(actor); return this.queryPreview.cancel(projectId,id); }
  get recovery() { return structuredClone(this.storage.recovery); }
  /** Reserve the canonical key before invoking an async feature, including its first
   * synchronous effect. The store's writer/root leases exclude another live core.
@@ -126,5 +131,15 @@ export class ProjectCore {
   }
  }
  cancelMigration(projectId: string, jobId: string) { return this.migration.cancel(projectId, jobId); }
- close() { if (this.closed) return Promise.resolve(); this.closed = true; const active = this.migration.active; const settling = Promise.all([this.migration.close(),this.closeConnections(),this.closeSchemaPreview(),this.closeGeneration()]); if (!active) { this.storage.close(); return settling.then(() => {}); } return settling.then(async () => { await Promise.all([...this.pending.values()].filter(p => ['schema.apply','schema.restoreApply'].includes(p.operation)).map(p => p.outcome)); this.storage.close(); }); }
+ close() {
+  if (this.closed) return Promise.resolve();
+  this.closed = true;
+  const active = this.migration.active || this.queryPreview.hasActive();
+  const settling = Promise.all([this.migration.close(), this.closeConnections(), this.closeSchemaPreview(), this.closeGeneration(), this.queryPreview.close()]);
+  if (!active) { this.storage.close(); return settling.then(() => {}); }
+  return settling.then(async () => {
+   await Promise.all([...this.pending.values()].filter(p => ['schema.apply', 'schema.restoreApply'].includes(p.operation)).map(p => p.outcome));
+   this.storage.close();
+  });
+ }
 }

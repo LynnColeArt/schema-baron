@@ -1,4 +1,6 @@
 import { identityControlFiles } from '../identity-controls/index.js';
+import {reportFiles} from '../report/index.js';
+import {queryRuntimeFiles,queryScalarFile} from '../report/runtime-files.js';
 import { authFiles } from '../auth/index.js';
 import { searchFiles } from '../search/index.js';
 import { createHash } from 'node:crypto';
@@ -16,7 +18,7 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
  const files:GeneratedFile[]=[...authFiles(ir),...identityControlFiles()];const add=(path:string,content:string)=>files.push({path,content});
  add('package.json',pretty(outputPackage));add('package-lock.json',readFileSync(new URL('./package-lock.template',import.meta.url),'utf8'));
  add('.npmrc','registry=https://registry.npmjs.org/\nignore-scripts=true\nsave-exact=true\nengine-strict=true\n');add('.nvmrc','24.22.1\n');add('.gitignore','node_modules/\n.next/\n.env*\n');
- add('tsconfig.json',pretty({compilerOptions:{target:'ES2023',lib:['dom','dom.iterable','es2023'],strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,noEmit:true,allowImportingTsExtensions:true,skipLibCheck:true,esModuleInterop:true,module:'esnext',moduleResolution:'bundler',resolveJsonModule:true,isolatedModules:true,jsx:'react-jsx',plugins:[{name:'next'}]},include:['next-env.d.ts','**/*.ts','**/*.tsx','.next/types/**/*.ts'],exclude:['node_modules']}));
+ add('tsconfig.json',pretty({compilerOptions:{target:'ES2023',lib:['dom','dom.iterable','es2023'],strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,noEmit:true,allowJs:true,checkJs:false,allowImportingTsExtensions:true,skipLibCheck:true,esModuleInterop:true,module:'esnext',moduleResolution:'bundler',resolveJsonModule:true,isolatedModules:true,jsx:'react-jsx',plugins:[{name:'next'}]},include:['next-env.d.ts','**/*.ts','**/*.tsx','.next/types/**/*.ts'],exclude:['node_modules']}));
  add('next-env.d.ts','/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n');
  add('next.config.ts',`import type { NextConfig } from 'next';\nconst config: NextConfig = {\n  serverExternalPackages: ['better-sqlite3']\n};\nexport default config;\n`);
  add('app/layout.tsx',`import type { ReactNode } from 'react';\nimport './styles.css';\n\nexport default function Layout({ children }: { children: ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        <main>{children}</main>\n      </body>\n    </html>\n  );\n}\n`);
@@ -27,12 +29,14 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
  for(const name of ['validation','repository','service']) add('server/record-'+name+'.ts',readFileSync(new URL('../record/'+name+'.template',import.meta.url),'utf8'));
  add('components/saved-notice.tsx',`'use client';\nimport { useEffect } from 'react';\nexport function SavedNotice({saved,cookieName}:{saved:boolean;cookieName:string}) {\n useEffect(()=>{if(saved) document.cookie=cookieName+'=; Path=/; Max-Age=0; SameSite=Lax';},[saved,cookieName]);\n return saved?<p role="status">Record saved.</p>:null;\n}\n`);
  add('server/navigation.ts',readFileSync(new URL('../navigation/runtime.template',import.meta.url),'utf8'));
+ files.push(queryScalarFile());
+ if(ir.queries.length){files.push(...queryRuntimeFiles());add('server/query-runtime.ts',readFileSync(new URL('../report/runtime.template',import.meta.url),'utf8'));add('server/query-worker.mjs',readFileSync(new URL('../report/worker.template',import.meta.url),'utf8'));}
  let index = 0;
  for (const route of ir.routes) {
   const components = new Map<string, number>();
   for (const grid of route.grids) {
    components.set(grid.id, index);
-   files.push(...(grid.kind==='Search'?searchFiles:gridFiles)(grid,index++));
+   files.push(...(grid.report?reportFiles(grid,index++,ir.queries):(grid.kind==='Search'?searchFiles:gridFiles)(grid,index++)));
   }
   const recordComponents=new Map<string,number>();
   for(const record of route.records) {recordComponents.set(record.id,index);files.push(...recordFiles(record,index++,flashCookie));}

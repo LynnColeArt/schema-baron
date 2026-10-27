@@ -28,6 +28,17 @@ fanouts, cyclic query references, nested aggregates and aggregate WHERE clauses
 are rejected. There is no executable SQL or JavaScript expression node. Imported
 opaque SQLite objects retain their SQL as read-only schema metadata.
 
+Forms may optionally declare `queryParameters: [{ parameterId, value }]` for fixed
+literal presets or `{ parameterId, runtime: { name } }` for public runtime inputs
+on a saved query source (including its query dependencies). Choose exactly one
+source per parameter; names are unique within the form. Literal values
+use the parameter's declared logical type/nullability. Absent mappings leave the
+query default or required-input check in force; explicit null is distinct from
+absence. IDs survive query/parameter renames. Duplicates, removed IDs, incompatible
+values and presets on a table source are rejected. Runtime inputs read only declared URL parameters; control/row-result expressions
+cannot supply their own pre-query inputs.
+Form key mappings and appearance remain separate from presets and editor layout.
+
 `commandSchema` discriminates every registered operation and validates its input.
 `operationInputSchemas` and `operationResultSchemas` let adapters/registries bind
 strict matching boundaries. `EntityBatchOperation` preserves entity-specific
@@ -45,3 +56,9 @@ expiry and exact disclosed acknowledgement IDs. `validatePlanApplication` is a
 pure freshness/acknowledgement check. Services must call it under a real lease /
 transaction and verify stored immutable plan hashes. This package does not claim
 to implement database backups, SQL execution, generation or transport auth.
+
+Generated query-backed Grids expose runtime inputs as `FORM:parameter:NAME` with
+a `:mode` of `default`, `value`, or `null`. Absence uses the query default; explicit
+blank text and null remain distinct. Required inputs need a mapping before report
+generation. Read-only derived report expressions declare their saved query as a
+source dependency; child aggregates belong to that query graph.

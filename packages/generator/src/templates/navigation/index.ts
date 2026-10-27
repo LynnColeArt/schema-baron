@@ -1,9 +1,10 @@
+import {queryInputs} from '@schema-baron/model';
 import type { Action, Expression, Form, Project } from '@schema-baron/model';
 import type { ContextIR, DestinationIR, NavigationExpressionIR, SourceIR } from '../../ir/index.js';
 export function contextFields(project:Project,sources:SourceIR[]):ContextIR[] {
  return project.forms.filter(f=>f.kind==='Grid'||f.kind==='Search').flatMap(form=>{
   const source=sources.find(s=>s.id===form.sourceRef?.id); if(!source) return [];
-  return [{parameter:form.id+':page',kind:'page'},{parameter:form.id+':sort',kind:'sort',allowed:[...new Set([...project.controls.filter(c=>form.controlIds.includes(c.id)).flatMap(c=>c.binding?.kind==='stored'?[c.binding.fieldId]:[]),...form.sorting.map(s=>s.fieldId)])]},{parameter:form.id+':direction',kind:'direction'},...form.keyMapping.map(k=>({parameter:keyParameter(form,k.targetFieldId),kind:'key' as const,field:source.fields.find(f=>f.id===k.targetFieldId)!})),...form.search.map(s=>({parameter:form.id+':filter:'+s.fieldId,kind:'search' as const,field:source.fields.find(f=>f.id===s.fieldId)!}))];
+  return [...(form.queryParameters??[]).flatMap(m=>{if(!m.runtime)return [];const p=queryInputs(project,source.id).find(p=>p.id===m.parameterId);return p?[{parameter:form.id+':parameter:'+m.runtime.name,kind:'query' as const,field:{id:p.id,name:p.name,type:p.type,nullable:p.nullable}},{parameter:form.id+':parameter:'+m.runtime.name+':mode',kind:'mode' as const}]:[];}),{parameter:form.id+':page',kind:'page'},{parameter:form.id+':sort',kind:'sort',allowed:[...new Set([...project.controls.filter(c=>form.controlIds.includes(c.id)).flatMap(c=>c.binding?.kind==='stored'?[c.binding.fieldId]:[]),...form.sorting.map(s=>s.fieldId)])]},{parameter:form.id+':direction',kind:'direction'},...form.keyMapping.map(k=>({parameter:keyParameter(form,k.targetFieldId),kind:'key' as const,field:source.fields.find(f=>f.id===k.targetFieldId)!})),...form.search.map(s=>({parameter:form.id+':filter:'+s.fieldId,kind:'search' as const,field:source.fields.find(f=>f.id===s.fieldId)!}))];
  });
 }
 export function keyParameter(form:{id:string;keyMapping:Form['keyMapping']},fieldId:string) {
