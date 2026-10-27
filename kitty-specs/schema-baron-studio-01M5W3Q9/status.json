@@ -568,7 +568,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for review: 14375ba; canonical MCP/Studio-authored reports and independent production CRUD totals/minimum/filter returns/reopen passed; 338 tests/45 files, strict builds, lint/native/dependency checks passed. Final auth13/14 integration and two WP20 regeneration cycles explicitly pending.",
-        "Independent review requests changes: P1 native SQLite execution survives generated report deadline; eight checks and bounded valid-query CPU evidence in /tmp/wp17-review-feedback.md. Shared model/SQLite/compiler/navigation/UI/lock integration authorized and rationale reviewed. Auth integration pending WP14, regeneration pending WP20; neither passed."
+        "Independent review requests changes: P1 native SQLite execution survives generated report deadline; eight checks and bounded valid-query CPU evidence in /tmp/wp17-review-feedback.md. Shared model/SQLite/compiler/navigation/UI/lock integration authorized and rationale reviewed. Auth integration pending WP14, regeneration pending WP20; neither passed.",
+        "Review-cycle-1 P1 corrected in 2bf3aee: isolated native child killed and reaped before deadline/cancel/error settles; accepted90k join fail-before/pass-after liveness, cleanup regressions9tests, strict type/build/lint and standalone production authoring/E2E pass. Auth14/regen20 integration remains pending."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
