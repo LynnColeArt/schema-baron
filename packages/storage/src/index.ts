@@ -3,7 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { canonicalJson, parseProject, operationRecordSchema, FORMAT_VERSION } from '@schema-baron/model';
-import type { Connection, Job, Project } from '@schema-baron/model';
+import type { Command, Connection, Job, MigrationHistory, Project } from '@schema-baron/model';
 export class StorageError extends Error { constructor(readonly code: string, message: string) { super(message); } }
 export const hash = (value: unknown): string => createHash('sha256').update(canonicalJson(value)).digest('hex');
 function definitionFilename(id: string): string { const encoded = encodeURIComponent(id); return `${encoded.length <= 200 ? encoded : `%long-${hash(id)}`}.json`; }
@@ -39,6 +39,7 @@ function replace(path: string, content: string) {
 interface ProjectRow { id: string; root: string; locator: string; snapshot: string }
 export interface StoredRecord { requestId: string; payloadHash: string; actor: string; baseRevision: number; newRevision?: number; outcome: unknown }
 interface Journal extends ProjectRow { beforeHash: string | null; record: string; event: string }
+export interface MigrationJournal { history: MigrationHistory; command: Command; source: Project; backupLocator: { approvedRootId: string; relativePath: string }; actor: string; payloadHash: string; after?: Project }
 export class ProjectStorage {
  private db: Database.Database; private lease: Database.Database; private rootLeases: Database.Database[] = []; private definitionLeases = new Map<string, Database.Database>(); private blocked = false;
  readonly roots: Record<string, string>;
@@ -63,7 +64,9 @@ export class ProjectStorage {
     CREATE TABLE IF NOT EXISTS operations(project TEXT NOT NULL, request TEXT NOT NULL, payloadHash TEXT NOT NULL, outcome TEXT NOT NULL, record TEXT NOT NULL, PRIMARY KEY(project,request));
     CREATE TABLE IF NOT EXISTS events(sequence INTEGER NOT NULL, project TEXT NOT NULL, body TEXT NOT NULL, PRIMARY KEY(project,sequence));
     CREATE TABLE IF NOT EXISTS plans(project TEXT NOT NULL, id TEXT NOT NULL, body TEXT NOT NULL, PRIMARY KEY(project,id));
-    CREATE TABLE IF NOT EXISTS jobs(project TEXT NOT NULL, id TEXT NOT NULL, body TEXT NOT NULL, PRIMARY KEY(project,id));`);
+    CREATE TABLE IF NOT EXISTS jobs(project TEXT NOT NULL, id TEXT NOT NULL, body TEXT NOT NULL, PRIMARY KEY(project,id));
+    CREATE TABLE IF NOT EXISTS migration_authority(id INTEGER PRIMARY KEY CHECK(id=1), token TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS migrations(project TEXT NOT NULL, id TEXT NOT NULL, body TEXT NOT NULL, PRIMARY KEY(project,id));`);
    this.recover();
   } catch (error) { this.db.close(); for (const lock of this.definitionLeases.values()) lock.close(); for (const lock of this.rootLeases) lock.close(); this.lease.close(); throw error; }
  }
@@ -140,8 +143,14 @@ export class ProjectStorage {
   if (!connection.inspectedSchema || connection.inspectedForConnectionId !== connection.id) return false;
   const rows = this.db.prepare("SELECT outcome FROM operations WHERE project=? AND json_extract(outcome,'$.ok')=1 AND json_extract(outcome,'$.result.connection.inspectedForConnectionId')=? AND json_extract(outcome,'$.result.connection.fingerprint')=?").all(project, connection.id, connection.fingerprint) as { outcome: string }[];
   const observed = (value: Connection) => ({ inspectedForConnectionId: value.inspectedForConnectionId, locator: value.locator, fingerprint: value.fingerprint, capabilities: value.capabilities, physical: value.physical, inspectedSchema: value.inspectedSchema });
-  return rows.some(row => { const outcome = JSON.parse(row.outcome) as { result: { connection: Connection } }; return hash(observed(outcome.result.connection)) === hash(observed(connection)); });
+  const migrated = this.migrations(project).some(j => j.history.outcome === 'committed' && j.after?.connections.some(c => c.id === connection.id && hash(observed(c)) === hash(observed(connection))));
+  return migrated || rows.some(row => { const outcome = JSON.parse(row.outcome) as { result: { connection: Connection } }; return hash(observed(outcome.result.connection)) === hash(observed(connection)); });
  }
+ /** Canonical migration journal shares the metadata writer and recovery authority. */
+ migrationAuthority(): string { this.db.prepare('INSERT OR IGNORE INTO migration_authority VALUES(1,?)').run(randomUUID()); return (this.db.prepare('SELECT token FROM migration_authority WHERE id=1').get() as { token: string }).token; }
+ migrations(project?: string): MigrationJournal[] { this.assertReady(); const rows = (project === undefined ? this.db.prepare('SELECT body FROM migrations ORDER BY rowid').all() : this.db.prepare('SELECT body FROM migrations WHERE project=? ORDER BY rowid').all(project)) as { body: string }[]; return rows.map(row => JSON.parse(row.body) as MigrationJournal); }
+ recordMigration(journal: MigrationJournal) { this.assertReady(); this.db.prepare('INSERT INTO migrations VALUES(?,?,?)').run(journal.source.id, journal.history.id, JSON.stringify(journal)); }
+ updateMigration(journal: MigrationJournal) { this.assertReady(); this.db.prepare('UPDATE migrations SET body=? WHERE project=? AND id=?').run(JSON.stringify(journal), journal.source.id, journal.history.id); }
  putPlan(project: string, id: string, body: unknown) { this.snapshot(project); if (this.plan(project, id) !== undefined) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Reviewed plans are immutable; create a new plan ID.'); this.db.prepare('INSERT INTO plans VALUES(?,?,?)').run(project, id, JSON.stringify(body)); }
  plan(project: string, id: string): unknown { this.snapshot(project); const row = this.db.prepare('SELECT body FROM plans WHERE project=? AND id=?').get(project, id) as { body: string } | undefined; return row && JSON.parse(row.body); }
  putJob(project: string, id: string, body: unknown) { const snapshot = this.snapshot(project); this.db.transaction(() => { this.db.prepare('INSERT OR REPLACE INTO jobs VALUES(?,?,?)').run(project, id, JSON.stringify(body)); const sequence = (this.db.prepare('SELECT coalesce(max(sequence),0)+1 AS next FROM events WHERE project=?').get(project) as { next: number }).next; this.db.prepare('INSERT INTO events VALUES(?,?,?)').run(sequence, project, JSON.stringify({ kind: 'job', revision: snapshot.revision, jobId: id, objectIds: [], diagnostics: [] })); })(); }

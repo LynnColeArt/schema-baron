@@ -5,6 +5,7 @@ import { createId } from "@schema-baron/model";
 import type { Control, Form, Page, Project } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
+import { MigrationHistory } from "../migration-history/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
 import {
@@ -30,6 +31,7 @@ type Modal =
   | "form"
   | "settings"
   | "connection"
+  | "history"
   | "close"
   | null;
 type Message = {
@@ -942,6 +944,7 @@ export default function Workspace() {
         <button onClick={() => dialog("connection")} disabled={!project}>
           Connections…
         </button>
+        <button onClick={() => dialog("history")} disabled={!project || !caps.operations.some(c => c.operation === "schema.history")}>Migration history…</button>
         <span className="menu-spacer" />
         <button
           onClick={() => setHidden((h) => ({ ...h, explorer: !h.explorer }))}
@@ -1530,7 +1533,7 @@ export default function Workspace() {
                         ? "Unsaved document changes"
                         : modal === "settings"
                           ? "Project settings"
-                          : "Connection setup"
+                          : modal === "history" ? "Migration history and restore" : "Connection setup"
           }
           busy={busy}
           onCancel={() => setModal(null)}
@@ -1806,6 +1809,8 @@ export default function Workspace() {
                 <button onClick={() => setModal(null)}>Close</button>
               </div>
             </>
+          ) : modal === "history" ? (
+            project ? <MigrationHistory project={project} client={client} onClose={() => setModal(null)} onChanged={acceptSnapshot} /> : <p>Open a project to view migration history.</p>
           ) : (
             project ? <ConnectionSetup project={project} client={client} roots={caps.approvedRootIds} onClose={() => setModal(null)} onBound={(snapshot) => { acceptSnapshot(snapshot); setModal(null); notice("SQLite connection bound. Schema refreshed."); }} /> : <p>Open a project before setting up a database.</p>
           )}

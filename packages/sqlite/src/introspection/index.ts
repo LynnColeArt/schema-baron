@@ -6,12 +6,12 @@ export interface PhysicalForeignKey { id: number; seq: number; table: string; fr
 export interface PhysicalIndex { name: string; unique: number; origin: string; partial: number; sql: string | null; columns: { seqno: number; cid: number; name: string | null; desc: number; coll: string; key: number }[] }
 export interface PhysicalTable { name: string; columns: PhysicalColumn[]; foreignKeys: PhysicalForeignKey[]; indexes: PhysicalIndex[] }
 export interface Inspection { sqliteVersion: string; encoding: string; foreignKeys: boolean; objects: SchemaObject[]; tables: PhysicalTable[]; fingerprint: string }
-export function inspectDatabase(db: Database.Database): Inspection {
- const objects = db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all() as SchemaObject[];
+export function inspectDatabase(db: Database.Database, schema: 'main' | 'restore_source' = 'main'): Inspection {
+ const objects = (db.prepare(`SELECT * FROM ${schema}.sqlite_schema ORDER BY name`).all() as SchemaObject[]).filter(o => o.name !== '__schema_baron_migrations' && o.tbl_name !== '__schema_baron_migrations');
  const tables = objects.filter(o => o.type === 'table' && !o.name.startsWith('sqlite_')).map(o => ({ name: o.name,
-  columns: db.prepare('SELECT * FROM pragma_table_xinfo(?) ORDER BY cid').all(o.name) as PhysicalColumn[],
-  foreignKeys: db.prepare('SELECT * FROM pragma_foreign_key_list(?) ORDER BY id,seq').all(o.name) as PhysicalForeignKey[],
-  indexes: (db.prepare('SELECT * FROM pragma_index_list(?) ORDER BY name').all(o.name) as { name: string; unique: number; origin: string; partial: number }[]).map(i => ({ name: i.name, unique: i.unique, origin: i.origin, partial: i.partial, sql: objects.find(o => o.name === i.name)?.sql ?? null, columns: db.prepare('SELECT * FROM pragma_index_xinfo(?) ORDER BY seqno').all(i.name) as PhysicalIndex['columns'] })),
+  columns: db.prepare('SELECT * FROM pragma_table_xinfo(?, ?) ORDER BY cid').all(o.name, schema) as PhysicalColumn[],
+  foreignKeys: db.prepare('SELECT * FROM pragma_foreign_key_list(?, ?) ORDER BY id,seq').all(o.name, schema) as PhysicalForeignKey[],
+  indexes: (db.prepare('SELECT * FROM pragma_index_list(?, ?) ORDER BY name').all(o.name, schema) as { name: string; unique: number; origin: string; partial: number }[]).map(i => ({ name: i.name, unique: i.unique, origin: i.origin, partial: i.partial, sql: objects.find(o => o.name === i.name)?.sql ?? null, columns: db.prepare('SELECT * FROM pragma_index_xinfo(?, ?) ORDER BY seqno').all(i.name, schema) as PhysicalIndex['columns'] })),
  }));
  const sqliteVersion = String(db.prepare('SELECT sqlite_version()').pluck().get());
  const encoding = String(db.pragma('encoding', { simple: true }));
