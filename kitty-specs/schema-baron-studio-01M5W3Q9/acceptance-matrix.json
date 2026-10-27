@@ -237,11 +237,11 @@
     {
       "criterion_id": "FR-024",
       "description": "Verify FR-024 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-024; docs/evidence/generality/report.md Generic defects and bounded corrections; docs/evidence/usability/report.md; tests/contracts/parity/output-fidelity.test.ts; packages/generator/src/compiler/index.ts. Editable form/control ordering, content layout, labels and control numeric formats; declared native events plus executed typed authored validator/action. Custom CSS classes/widths/form-level formats and unsupported events explicitly diagnose; arbitrary styling/event roundtrip not claimed. Reviewed against mission spec FR-024; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:56.352301+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
