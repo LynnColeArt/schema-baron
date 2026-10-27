@@ -1027,3 +1027,305 @@ test("native Chromium 200 percent keeps schema footer and query authoring keyboa
     await context.close();
   }
 });
+
+test("unfinished query and structural history survive all switches, reload and MCP rebases; invalid save stays atomic", async ({
+  page,
+}, info) => {
+  const id = await start(page, "Query history recovery");
+  const path = join(root, "definitions", "history.sqlite"),
+    db = new Database(path);
+  db.exec(
+    "CREATE TABLE sample(id INTEGER PRIMARY KEY,value TEXT NOT NULL); INSERT INTO sample VALUES(1,'abc');",
+  );
+  db.close();
+  const original = await import("node:fs").then((fs) => fs.readFileSync(path));
+  await click(page, "Connections…");
+  await page.getByLabel("Relative SQLite file").fill("history.sqlite");
+  await click(page, "Inspect SQLite file");
+  await click(page, "Bind inspected database");
+  await expect(page.getByRole("dialog")).toBeHidden();
+  await click(page, "Queries");
+  await click(page, "New query");
+  await page.getByLabel("Query name", { exact: true }).fill("Function draft");
+  await page
+    .getByLabel("Add source", { exact: true })
+    .selectOption({ label: "table: sample" });
+  await section(page, "Fields");
+  await click(page, "Add projection");
+  await kind(page, "Projection 1", "function");
+  await page
+    .getByLabel("Projection 1 function", { exact: true })
+    .selectOption("length");
+  await page
+    .getByRole("button", { name: "Remove argument", exact: true })
+    .first()
+    .click();
+  await page
+    .getByRole("button", { name: "Remove argument", exact: true })
+    .first()
+    .click();
+  await page.getByRole("button", { name: "Undo query", exact: true }).focus();
+  await page.keyboard.press("Control+z");
+  await expect(
+    page.getByRole("button", { name: "Remove argument", exact: true }),
+  ).toHaveCount(1);
+  await page.keyboard.press("Control+Shift+z");
+  await expect(
+    page.getByRole("button", { name: "Remove argument", exact: true }),
+  ).toHaveCount(0);
+  await click(page, "Save query");
+  await expect(
+    page.getByRole("button").filter({ hasText: "Complete the query sources" }),
+  ).toBeVisible();
+  const draft = await page.evaluate((project) => {
+    const saved = JSON.parse(
+      sessionStorage.getItem(`studio.query.${project}`)!,
+    );
+    return saved.drafts[saved.selected].value;
+  }, id);
+  const queryId = draft.id,
+    projectionId = draft.projections[0].id;
+  const before = await snapshot(id),
+    request = {
+      requestId: createId(),
+      operation: "project.batch",
+      expectedRevision: before.revision,
+      input: {
+        operations: [
+          { kind: "put", entity: "query", id: queryId, value: draft },
+        ],
+      },
+    };
+  const rejected = await fetch(`${url}/api/v1/projects/${id}/commands`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${capability}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(request),
+  });
+  expect(rejected.status).toBe(400);
+  expect(await snapshot(id)).toEqual(before);
+  // Keep an invalid state in redo history too, then navigate without adding model history.
+  await click(page, "Undo query");
+  await expect(
+    page.getByRole("button", { name: "Remove argument", exact: true }),
+  ).toHaveCount(1);
+  await click(page, "Redo query");
+  const historySize = async () =>
+    page.evaluate((project) => {
+      const s = JSON.parse(sessionStorage.getItem(`studio.query.${project}`)!);
+      return s.drafts[s.selected].past.length;
+    }, id);
+  const priorNavigation = await historySize();
+  await section(page, "Review");
+  await section(page, "Fields");
+  await page.getByLabel("Query name", { exact: true }).focus();
+  expect(await historySize()).toBe(priorNavigation);
+  // Ctrl+Z in a real text edit must not jump to a structural argument snapshot.
+  await page.getByLabel("Query name", { exact: true }).press("End");
+  await page.keyboard.type("x");
+  await page.keyboard.press("Control+z");
+  await expect(page.getByLabel("Query name", { exact: true })).toHaveValue(
+    "Function draft",
+  );
+  const nativeFuture = await page.evaluate((project) => {
+    const s = JSON.parse(sessionStorage.getItem(`studio.query.${project}`)!);
+    return s.drafts[s.selected].future ?? [];
+  }, id);
+  expect(nativeFuture).toHaveLength(0);
+  await expect(
+    page.getByRole("button", { name: "Remove argument", exact: true }),
+  ).toHaveCount(0);
+  await page.getByLabel("Query name", { exact: true }).fill("Function draft");
+  await click(page, "New query");
+  await page
+    .getByLabel("Query name", { exact: true })
+    .fill("Preaggregation draft");
+  await section(page, "Fields");
+  await page
+    .getByLabel("Aggregate grain", { exact: true })
+    .selectOption("preaggregated");
+  const preaggId = await page.evaluate(
+    (project) =>
+      JSON.parse(sessionStorage.getItem(`studio.query.${project}`)!).selected,
+    id,
+  );
+  await click(page, "New query");
+  await page.getByLabel("Query name", { exact: true }).fill("Sibling draft");
+  await click(page, "Return to page");
+  await click(page, "Schema");
+  await click(page, "Queries");
+  await click(page, "New project…");
+  await page
+    .getByLabel("Project name", { exact: true })
+    .fill("History switch target");
+  await click(page, "Create project");
+  await expect(page.locator(".titlebar")).toContainText(
+    "History switch target",
+  );
+  await click(page, "Open / Switch…");
+  await page.getByRole("button", { name: /Query history recovery/ }).click();
+  await expect(page.locator(".titlebar")).toContainText(
+    "Query history recovery",
+  );
+  await page.reload();
+  await click(page, "Queries");
+  for (const name of [
+    "Function draft *",
+    "Preaggregation draft *",
+    "Sibling draft *",
+  ])
+    await expect(page.getByRole("button", { name, exact: true })).toBeVisible();
+  await click(page, "Function draft *");
+  await expect(
+    page.getByRole("button", { name: "Remove argument", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button").filter({ hasText: "Complete the query sources" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Undo query", exact: true }).focus();
+  await page.keyboard.press("Control+z"); // undo native text-history entry first
+  // Undo any name-only edits to reach the preceding structural boundary.
+  for (
+    let i = 0;
+    i < 6 &&
+    (await page
+      .getByRole("button", { name: "Remove argument", exact: true })
+      .count()) === 0;
+    i++
+  )
+    await click(page, "Undo query");
+  await expect(
+    page.getByRole("button", { name: "Remove argument", exact: true }),
+  ).toHaveCount(1);
+  await page.screenshot({
+    path: info.outputPath("recovered-query-history.png"),
+    fullPage: true,
+  });
+  // Return to the unfinished function and continue authoring to a valid saved definition.
+  while (
+    await page
+      .getByRole("button", { name: "Redo query", exact: true })
+      .isEnabled()
+  )
+    await click(page, "Redo query");
+  await click(page, "Add argument");
+  await page
+    .getByLabel("Projection 1 argument 1 type", { exact: true })
+    .selectOption("text");
+  await page
+    .getByLabel("Projection 1 argument 1 value", { exact: true })
+    .fill("abc");
+  await click(page, "Save query");
+  await expect.poll(async () => (await snapshot(id)).queries.length).toBe(1);
+  let saved = await snapshot(id);
+  expect(saved.queries[0]!.id).toBe(queryId);
+  expect(saved.queries[0]!.projections[0]!.id).toBe(projectionId);
+  // Undoing a committed model edit only stages a different definition until explicit Save.
+  await click(page, "Undo query");
+  expect((await snapshot(id)).queries).toEqual(saved.queries);
+  await expect(
+    page.getByRole("button", { name: "Save query", exact: true }),
+  ).toBeEnabled();
+  await click(page, "Redo query");
+  await expect(
+    page.getByRole("button", { name: "Save query", exact: true }),
+  ).toBeDisabled();
+  // Opening an unsaved query document is navigation. Undo can still reach its editable blank definition.
+  while (
+    await page
+      .getByRole("button", { name: "Undo query", exact: true })
+      .isEnabled()
+  )
+    await click(page, "Undo query");
+  await expect(page.getByLabel("Query name", { exact: true })).toHaveValue(
+    "Untitled query",
+  );
+  await click(page, "Save query");
+  await expect(
+    page.getByRole("button").filter({ hasText: "Complete the query sources" }),
+  ).toBeVisible();
+  expect((await snapshot(id)).queries).toEqual(saved.queries);
+  await page.reload();
+  await click(page, "Queries");
+  await expect(page.getByLabel("Query name", { exact: true })).toHaveValue(
+    "Untitled query",
+  );
+  while (
+    await page
+      .getByRole("button", { name: "Redo query", exact: true })
+      .isEnabled()
+  )
+    await click(page, "Redo query");
+  await expect(
+    page.getByLabel("Projection 1 name", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Save query", exact: true }),
+  ).toBeDisabled();
+  expect((await snapshot(id)).queries).toEqual(saved.queries);
+  await click(page, "Remove projection 1");
+  const remote = { ...saved.queries[0]!, name: "Remote name" };
+  expect(
+    (
+      await mcp.callTool({
+        name: "project_batch",
+        arguments: {
+          projectId: id,
+          requestId: createId(),
+          expectedRevision: saved.revision,
+          input: {
+            operations: [
+              { kind: "put", entity: "query", id: queryId, value: remote },
+            ],
+          },
+        },
+      })
+    ).structuredContent,
+  ).toMatchObject({ ok: true });
+  await expect(page.getByLabel("Query name", { exact: true })).toHaveValue(
+    "Remote name",
+  );
+  await click(page, "Undo query");
+  await expect(
+    page.getByLabel("Projection 1 name", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Query name", { exact: true })).toHaveValue(
+    "Remote name",
+  );
+  await expect(
+    page.getByRole("alert").filter({ hasText: "Query changed elsewhere" }),
+  ).toHaveCount(0);
+  // An unrelated remote edit must be present when undo restores a removed source too.
+  await section(page, "Sources");
+  await click(page, "Remove source 1");
+  await click(page, "Undo query");
+  await expect(page.getByLabel("Source 1 alias", { exact: true })).toHaveValue(
+    "source1",
+  );
+  await click(page, "Preaggregation draft *");
+  await expect(page.getByLabel("Aggregate grain", { exact: true })).toHaveValue(
+    "preaggregated",
+  );
+  await page
+    .getByLabel("Aggregate grain", { exact: true })
+    .selectOption("rows");
+  await section(page, "Sources");
+  await page
+    .getByLabel("Add source", { exact: true })
+    .selectOption({ label: "table: sample" });
+  await section(page, "Fields");
+  await projection(page, 1, "value", "source1", "value");
+  await click(page, "Save query");
+  await expect.poll(async () => (await snapshot(id)).queries.length).toBe(2);
+  saved = await snapshot(id);
+  expect(saved.queries.some((q) => q.id === preaggId)).toBe(true);
+  expect(await import("node:fs").then((fs) => fs.readFileSync(path))).toEqual(
+    original,
+  );
+  await page.screenshot({
+    path: info.outputPath("continued-recovered-query.png"),
+    fullPage: true,
+  });
+});

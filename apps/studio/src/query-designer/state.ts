@@ -1,11 +1,15 @@
-import { z } from "zod";
-import { createId, querySchema, canonicalJson } from "@schema-baron/model";
+import { createId, canonicalJson } from "@schema-baron/model";
 import type { Query } from "@schema-baron/model";
-export interface Draft {
-  base?: Query | undefined;
+export interface Snapshot {
   value: Query;
   conflicts: string[];
 }
+export interface Draft extends Snapshot {
+  base?: Query | undefined;
+  past?: Snapshot[];
+  future?: Snapshot[];
+}
+export { recoverDraft } from "./recovery.js";
 export const same = (a: unknown, b: unknown) =>
   canonicalJson(a) === canonicalJson(b);
 export function blankQuery(): Query {
@@ -21,27 +25,91 @@ export function blankQuery(): Query {
     grain: { strategy: "rows", keys: [] },
   };
 }
-export function rebase(draft: Draft, remote: Query | undefined): Draft {
-  if (same(remote, draft.base)) return draft;
-  if (!draft.base) return remote ? { ...draft, conflicts: ["id"] } : draft;
-  if (!remote) return { ...draft, conflicts: ["deleted query"] };
-  const value = { ...draft.value },
-    conflicts = [...draft.conflicts];
+function mergeSnapshot(
+  snapshot: Snapshot,
+  base: Query | undefined,
+  remote: Query | undefined,
+): Snapshot {
+  if (same(remote, base)) return snapshot;
+  if (!base)
+    return remote
+      ? { ...snapshot, conflicts: [...new Set([...snapshot.conflicts, "id"])] }
+      : snapshot;
+  if (!remote)
+    return {
+      ...snapshot,
+      conflicts: [...new Set([...snapshot.conflicts, "deleted query"])],
+    };
+  const value = { ...snapshot.value },
+    conflicts = [...snapshot.conflicts];
   for (const key of Object.keys({
-    ...draft.base,
+    ...base,
     ...value,
     ...remote,
   }) as (keyof Query)[]) {
-    if (same(value[key], draft.base[key])) {
+    if (same(value[key], base[key])) {
       if (remote[key] === undefined) delete value[key];
       else Object.assign(value, { [key]: remote[key] });
-    } else if (
-      !same(remote[key], draft.base[key]) &&
-      !same(value[key], remote[key])
-    )
+    } else if (!same(remote[key], base[key]) && !same(value[key], remote[key]))
       conflicts.push(key);
   }
-  return { base: remote, value, conflicts: [...new Set(conflicts)] };
+  return { value, conflicts: [...new Set(conflicts)] };
+}
+export function rebase(draft: Draft, remote: Query | undefined): Draft {
+  if (same(remote, draft.base)) return draft;
+  return {
+    ...draft,
+    ...mergeSnapshot(draft, draft.base, remote),
+    base: remote ?? draft.base,
+    ...(draft.past
+      ? { past: draft.past.map((s) => mergeSnapshot(s, draft.base, remote)) }
+      : {}),
+    ...(draft.future
+      ? {
+          future: draft.future.map((s) => mergeSnapshot(s, draft.base, remote)),
+        }
+      : {}),
+  };
+}
+const snapshot = (d: Snapshot): Snapshot => ({
+  value: d.value,
+  conflicts: d.conflicts,
+});
+export function changeDraft(
+  prior: Draft | undefined,
+  base: Query | undefined,
+  value: Query,
+): Draft {
+  const current = prior ?? { base, value: base ?? value, conflicts: [] };
+  if (same(current.value, value)) return current;
+  return {
+    ...current,
+    value,
+    past: [...(current.past ?? []).slice(-99), snapshot(current)],
+    future: [],
+  };
+}
+export function undoDraft(draft: Draft): Draft {
+  const past = draft.past ?? [],
+    previous = past.at(-1);
+  if (!previous) return draft;
+  return {
+    ...draft,
+    ...previous,
+    past: past.slice(0, -1),
+    future: [...(draft.future ?? []).slice(-99), snapshot(draft)],
+  };
+}
+export function redoDraft(draft: Draft): Draft {
+  const future = draft.future ?? [],
+    next = future.at(-1);
+  if (!next) return draft;
+  return {
+    ...draft,
+    ...next,
+    past: [...(draft.past ?? []).slice(-99), snapshot(draft)],
+    future: future.slice(0, -1),
+  };
 }
 export function checkpoint(
   current: Draft,
@@ -96,37 +164,4 @@ export function renameAlias(query: Query, index: number, alias: string): Query {
           }
         : query.grain,
   };
-}
-
-/** Validate recovery structure without treating an unfinished editor as a saved query. */
-export function recoverDraft(input: unknown): Draft | undefined {
-  if (!input || typeof input !== "object") return;
-  const d = input as Draft;
-  if (
-    !d.value ||
-    !Array.isArray(d.conflicts) ||
-    !d.conflicts.every((c) => typeof c === "string")
-  )
-    return;
-  const normalize = (value: unknown): unknown =>
-    value === ""
-      ? "unfinished"
-      : Array.isArray(value)
-        ? value.map(normalize)
-        : value && typeof value === "object"
-          ? Object.fromEntries(
-              Object.entries(value).map(([k, v]) => [k, normalize(v)]),
-            )
-          : value;
-  const value = d.value;
-  const loose = querySchema.extend({
-    sources: z.array(querySchema.shape.sources.element),
-    projections: z.array(querySchema.shape.projections.element),
-  });
-  if (
-    !loose.safeParse(normalize(value)).success ||
-    (d.base && !querySchema.safeParse(d.base).success)
-  )
-    return;
-  return d;
 }

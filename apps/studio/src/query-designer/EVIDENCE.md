@@ -94,3 +94,78 @@ Retained final-build review service: `http://127.0.0.1:42305`, private configura
 native-zoom fixes; the earlier WP08 server and drafts were never touched. The retained
 fixture contains the saved composite joined query, exact totals and bound form preset.
 The private key is never included in source, screenshots, logs or this evidence.
+
+## Review cycle 1 repair (cycle 2 handoff)
+
+Source under review: `1f090eb`. Canonical review reference:
+`01M5Y0TM3JREQNX11R7HWKYG6H`, `WP16-visual-query-designer-and-saved-data-sources/review-cycle-1.md`.
+Both findings were reproduced before editing production code.
+
+- P1: `recovery.ts` now validates a bounded recursive **editing shape**, independent
+  of committed-query minima/semantic checks. Empty function argument lists,
+  preaggregation alias lists, sources/projections, blank identifiers/names and
+  intermediate decimal bounds remain normal editable drafts, including inside
+  undo/redo snapshots. Unknown/malformed expression trees are still quarantined;
+  a bad history entry does not discard the valid current draft or other entries.
+  Original malformed data is retained separately with a visible recovery notice.
+- P2: visible Undo query / Redo query and active-document Ctrl+Z, Ctrl+Shift+Z and
+  Ctrl+Y operate on at most 100 semantic snapshots per direction. Native text-input
+  undo is not intercepted. Navigation, focus, positions and result changes do not
+  create model history. Current/past/future are three-way rebased together, including
+  explicit conflict diagnostics for colliding historical edits. Choosing a conflict
+  resolution starts a new history boundary, explained in the UI.
+- Query section, diagnostic and input focus/caret metadata are recovered separately
+  from model history. Save checkpoints preserve newer typing and history. Undo after
+  Save only stages a different definition; it never changes SQLite or the committed
+  project without an explicit subsequent Save.
+- Convention confirmed with root: New query opens an unsaved document; no Delete or
+  Remove query command is offered. Opening it is navigation. Undo can reach its blank
+  definition, which remains recoverable/editable; Redo restores the saved definition.
+  An incomplete blank or function draft cannot cross the strict atomic Save boundary.
+
+The original reviewer probe was copied unchanged temporarily for execution, then
+removed from the working tree. Original and temporary-copy SHA256 both remained:
+`29702382727ef7bb15f5bc73ec1cd22434e7f2e85685fe9fc52d801c368fffe9`.
+Original feedback SHA256:
+`200278b46eb27f067a4ab15375bcc5b7728fbdccbe2685226efd1b872af41f35`.
+
+| Unchanged probe measurement | Before repair | After repair |
+|---|---:|---:|
+| undoRestored | 0 | 1 |
+| switchedFunction | 0 | 1 |
+| switchedPreagg | 0 | 1 |
+| switchedValid | 1 | 1 |
+| reloadedFunction | 0 | 1 |
+| reloadedPreagg | 0 | 1 |
+| reloadedValid | 1 | 1 |
+
+Observed verification on the repaired source:
+
+- `npm test`: **264 tests / 29 suites passed**, 17.33s, including eight new focused
+  history/recovery cases. Wrong current/history shapes, valid siblings, history
+  bounds, unrelated remote rebases, historical collisions and save checkpoints
+  are covered without changing canonical server validation.
+- `npm run build` and `npm run typecheck`: passed. New/changed browser sources also
+  passed independent strict tsc with noUncheckedIndexedAccess/exactOptionalPropertyTypes.
+- Original three actual browser scenarios, new recovery/history scenario and the
+  unchanged reviewer probe: **5 passed**, 22.0s. The existing actual native200 test
+  still passed with the new Undo/Redo affordances. No shared native-zoom or literal
+  preset contract edits were needed in this repair.
+- The stronger native-text check additionally passed in isolation (7.1s total):
+  browser text undo restored the text without creating a structural redo branch.
+- The new full scenario authors invalid current/past/future through UI; retains
+  three sibling drafts through page/schema/project switches and reload; resumes
+  editing and saves original query/result IDs; recovers the blank undo state and
+  redoes to the saved definition; rejects an invalid public batch with HTTP400 and
+  unchanged project; preserves remote fields when undo restores a projection/source;
+  and proves final SQLite bytes are unchanged.
+- `recovered-query-history.png` and `continued-recovered-query.png` retain actual
+  recovery/continuation pixels in the existing evidence directory. Source inspection
+  confirms recovery is called from the live designer; strict Save still calls the
+  canonical query schema and whole-project validator before public batch persistence.
+
+The earlier axe/cross-browser/performance limits still apply. This is an independent
+review handoff, not self-approval. No unreviewed WP10 source, compiler/worker change,
+hosted sync opt-in, runtime upgrade or manual status mutation was introduced.
+
+Cycle2 route application chunk: 157,874 bytes / 44,241 gzip bytes (measurement only; no declared bundle budget). Final diff-scoped lint checked eight source/test/evidence paths and passed; no whitespace errors.

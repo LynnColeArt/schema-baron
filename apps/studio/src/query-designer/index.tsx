@@ -6,6 +6,7 @@ import {
   querySchema,
   validateProject,
   ModelValidationError,
+  diagnosticSchema,
 } from "@schema-baron/model";
 import type {
   Diagnostic,
@@ -15,7 +16,16 @@ import type {
 } from "@schema-baron/model";
 import type { StudioClient } from "../project-ui/api.js";
 import { OwnerError } from "../project-ui/api.js";
-import { blankQuery, checkpoint, rebase, same, recoverDraft } from "./state.js";
+import {
+  blankQuery,
+  checkpoint,
+  rebase,
+  same,
+  recoverDraft,
+  changeDraft,
+  undoDraft,
+  redoDraft,
+} from "./state.js";
 import type { Draft } from "./state.js";
 import { TypeEditor } from "./expression.js";
 import "./styles.css";
@@ -50,8 +60,16 @@ export function QueryDesigner({
 }) {
   const [drafts, setDrafts] = useState<Record<string, Draft>>({}),
     [selected, setSelected] = useState(""),
-    [tab, setTab] = useState("Sources"),
-    [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]),
+    [views, setViews] = useState<
+      Record<
+        string,
+        {
+          tab?: string;
+          diagnostics?: Diagnostic[];
+          focus?: { label: string; start: number | null; end: number | null };
+        }
+      >
+    >({}),
     [status, setStatus] = useState("Ready"),
     [saving, setSaving] = useState(false),
     [running, setRunning] = useState(""),
@@ -67,6 +85,23 @@ export function QueryDesigner({
   >({});
   const current = useRef({ drafts, selected, project });
   current.current = { drafts, selected, project };
+  const tab = views[selected]?.tab ?? "Sources",
+    diagnostics = views[selected]?.diagnostics ?? [];
+  function setTab(tab: string) {
+    setViews((v) => ({
+      ...v,
+      [current.current.selected]: { ...v[current.current.selected], tab },
+    }));
+  }
+  function setDiagnostics(diagnostics: Diagnostic[]) {
+    setViews((v) => ({
+      ...v,
+      [current.current.selected]: {
+        ...v[current.current.selected],
+        diagnostics,
+      },
+    }));
+  }
   const saveLock = useRef(false),
     generation = useRef(0);
   const q =
@@ -89,7 +124,12 @@ export function QueryDesigner({
         const saved = JSON.parse(raw);
         const recovered: Record<string, Draft> = {};
         for (const [id, d] of Object.entries(saved.drafts ?? {})) {
-          const item = recoverDraft(d);
+          const issues: string[] = [];
+          const item = recoverDraft(d, issues);
+          if (issues.length) {
+            sessionStorage.setItem(`${key}.unreadable`, raw);
+            setStatus(issues.join(" "));
+          }
           if (item?.value.id === id)
             recovered[id] = rebase(
               item,
@@ -103,6 +143,33 @@ export function QueryDesigner({
           }
         }
         setDrafts(recovered);
+        const restoredViews: typeof views = {};
+        for (const [id, entry] of Object.entries(saved.views ?? {})) {
+          if (!entry || typeof entry !== "object") continue;
+          const meta = entry as (typeof views)[string];
+          restoredViews[id] = {
+            ...(meta.tab &&
+            ["Sources", "Fields", "Parameters", "Review"].includes(meta.tab)
+              ? { tab: meta.tab }
+              : {}),
+            ...(Array.isArray(meta.diagnostics)
+              ? {
+                  diagnostics: meta.diagnostics.flatMap((d) => {
+                    const parsed = diagnosticSchema.safeParse(d);
+                    return parsed.success ? [parsed.data] : [];
+                  }),
+                }
+              : {}),
+            ...(meta.focus &&
+            typeof meta.focus.label === "string" &&
+            [meta.focus.start, meta.focus.end].every(
+              (n) => n === null || Number.isSafeInteger(n),
+            )
+              ? { focus: meta.focus }
+              : {}),
+          };
+        }
+        setViews(restoredViews);
         setPositions(
           Object.fromEntries(
             Object.entries(saved.positions ?? {}).filter(
@@ -132,14 +199,14 @@ export function QueryDesigner({
     try {
       sessionStorage.setItem(
         key,
-        JSON.stringify({ drafts, positions, selected }),
+        JSON.stringify({ drafts, positions, selected, views }),
       );
     } catch {
       setStatus(
         "Draft recovery storage unavailable. Keep this tab open until saved.",
       );
     }
-  }, [drafts, positions, selected, key]);
+  }, [drafts, positions, selected, views, key]);
   useEffect(() => {
     setDrafts((ds) =>
       Object.fromEntries(
@@ -194,18 +261,84 @@ export function QueryDesigner({
     setDrafts((ds) => ({ ...ds, [value.id]: { value, conflicts: [] } }));
     setSelected(value.id);
     setPreview(null);
-    setTab("Sources");
+    setViews((v) => ({ ...v, [value.id]: { tab: "Sources" } }));
+  }
+  useEffect(() => {
+    if (!active) return;
+    const focus = views[selected]?.focus;
+    if (!focus) return;
+    const element = Array.from(
+      document.querySelectorAll<HTMLElement>(".qd [aria-label]"),
+    ).find(
+      (e) =>
+        e.getAttribute("aria-label") === focus.label &&
+        e.getClientRects().length,
+    );
+    if (!element) return;
+    element.focus();
+    if (
+      element instanceof HTMLInputElement &&
+      focus.start !== null &&
+      focus.end !== null &&
+      element.selectionStart !== null
+    )
+      element.setSelectionRange(focus.start, focus.end);
+  }, [active, selected, tab]);
+  function retainFocus(element: EventTarget) {
+    if (
+      !(
+        element instanceof HTMLInputElement ||
+        element instanceof HTMLSelectElement ||
+        element instanceof HTMLTextAreaElement
+      )
+    )
+      return;
+    const label = element.getAttribute("aria-label");
+    if (!label) return;
+    const focus = {
+      label,
+      start:
+        element instanceof HTMLSelectElement ? null : element.selectionStart,
+      end: element instanceof HTMLSelectElement ? null : element.selectionEnd,
+    };
+    setViews((v) => ({
+      ...v,
+      [current.current.selected]: { ...v[current.current.selected], focus },
+    }));
   }
   function update(value: Query) {
     setDrafts((ds) => ({
       ...ds,
-      [value.id]: {
-        base: project.queries.find((q) => q.id === value.id),
-        conflicts: [],
-        ...ds[value.id],
+      [value.id]: changeDraft(
+        ds[value.id],
+        project.queries.find((q) => q.id === value.id),
         value,
-      },
+      ),
     }));
+  }
+  function history(direction: "undo" | "redo") {
+    const available = current.current.drafts[current.current.selected];
+    if (
+      !available ||
+      !(direction === "undo"
+        ? available.past?.length
+        : available.future?.length)
+    )
+      return;
+    setDrafts((ds) => {
+      const id = current.current.selected,
+        d = ds[id];
+      if (!d) return ds;
+      return {
+        ...ds,
+        [id]: direction === "undo" ? undoDraft(d) : redoDraft(d),
+      };
+    });
+    setStatus(
+      direction === "undo"
+        ? "Query model edit undone · Draft only until Save"
+        : "Query model edit redone · Draft only until Save",
+    );
   }
   function fail(e: unknown) {
     setDiagnostics(
@@ -291,9 +424,29 @@ export function QueryDesigner({
   }
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
-      if (active && (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+      if (!active || !(e.ctrlKey || e.metaKey)) return;
+      if (e.key.toLowerCase() === "s") {
         e.preventDefault();
         void save();
+        return;
+      }
+      const target = e.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.closest("[contenteditable=true],textarea") ||
+          (target instanceof HTMLInputElement &&
+            !["checkbox", "radio", "button", "submit", "range"].includes(
+              target.type,
+            )))
+      )
+        return;
+      if (e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        history(e.shiftKey ? "redo" : "undo");
+      }
+      if (e.key.toLowerCase() === "y") {
+        e.preventDefault();
+        history("redo");
       }
     };
     window.addEventListener("keydown", key);
@@ -369,6 +522,8 @@ export function QueryDesigner({
     <section
       className="qd"
       aria-label="Data Source query designer"
+      onFocusCapture={(e) => retainFocus(e.target)}
+      onSelectCapture={(e) => retainFocus(e.target)}
       style={{ display: active ? "grid" : "none" }}
     >
       <header>
@@ -380,6 +535,20 @@ export function QueryDesigner({
         <button onClick={add}>New query</button>
         <button disabled={!q || saving || !dirty} onClick={() => void save()}>
           Save query
+        </button>
+        <button
+          disabled={!drafts[selected]?.past?.length}
+          onClick={() => history("undo")}
+          title="Undo query model edit (Ctrl+Z outside text inputs)"
+        >
+          Undo query
+        </button>
+        <button
+          disabled={!drafts[selected]?.future?.length}
+          onClick={() => history("redo")}
+          title="Redo query model edit (Ctrl+Shift+Z or Ctrl+Y)"
+        >
+          Redo query
         </button>
         <button disabled={!q || !!running} onClick={() => void run()}>
           Run preview
@@ -435,6 +604,10 @@ export function QueryDesigner({
               {drafts[q.id]?.conflicts.length ? (
                 <div role="alert">
                   Query changed elsewhere: {drafts[q.id]!.conflicts.join(", ")}
+                  <p>
+                    Choosing a resolution starts a new query history, so older
+                    conflicting snapshots cannot silently reappear.
+                  </p>
                   <button
                     onClick={() =>
                       setDrafts((ds) => ({
