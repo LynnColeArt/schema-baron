@@ -298,6 +298,9 @@
       "last_event_id": "01M5XT3GQA873R8KH0Q9JFG6G4",
       "last_transition_at": "2026-10-27T04:32:41.195010+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: 7d85f26; safe typed compiler, exact decimal helpers, real bounded HTTP/MCP preview and confirmed-exit cancellation/shutdown; npm run verify 168 tests plus strict module checks passed. Shared integration rationale and limits in packages/core/src/query-preview/EVIDENCE.md."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
