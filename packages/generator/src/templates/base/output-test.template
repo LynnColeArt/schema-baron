@@ -1,0 +1,16 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import Database from 'better-sqlite3';
+test('prepared allowlisted reads, paging and formatting use disposable test data',async()=>{
+ const root=mkdtempSync(join(tmpdir(),'generated-read-test-'));const path=join(root,'test.sqlite');
+ process.env.APPLICATION_DATABASE_PATH=path;
+ const db=new Database(path);db.exec('CREATE TABLE "odd "" table"("key" TEXT PRIMARY KEY,"label" TEXT)');db.prepare('INSERT INTO "odd "" table" VALUES(?,?)').run('a',"100% actual");db.prepare('INSERT INTO "odd "" table" VALUES(?,?)').run('b','Another');db.close();
+ try {
+ const {readGrid}=await import('../server/repository.ts');const {formatValue}=await import('../server/format.ts');
+ const config={table:'odd " table',fields:[{id:'key-id',name:'key',type:{kind:'text'},nullable:false},{id:'label-id',name:'label',type:{kind:'text'},nullable:true}],search:[{fieldId:'label-id',operator:'contains'}],sorting:[{fieldId:'key-id',direction:'asc'}],pageSize:1};
+ assert.equal(readGrid(config,{},'grid').rows[0]['key-id'],'a');assert.equal(readGrid(config,{'grid:page':'2'},'grid').rows[0]['key-id'],'b');assert.equal(readGrid(config,{'grid:filter:label-id':"' OR 1=1 --"},'grid').rows.length,0);assert.equal(readGrid(config,{'grid:filter:label-id':'%'},'grid').rows[0]['key-id'],'a');assert.ok(readGrid(config,{'grid:sort':'forged'},'grid').error);assert.ok(readGrid(config,{'grid:filter:unknown':'bad'},'grid').error);assert.ok(readGrid(config,{'grid:page':'-1'},'grid').error);assert.equal(formatValue(1234n,{kind:'decimal',scale:2,encoding:'scaled-integer'},'currency'),'$12.34');assert.equal(formatValue(null,{kind:'text'},'plain'),'—');
+ }finally{rmSync(root,{recursive:true,force:true});}
+});

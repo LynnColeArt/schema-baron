@@ -5,10 +5,11 @@ import type { StorageOptions } from '@schema-baron/storage';
 import type { CommandEffect } from '../commands/index.js';
 import { registerSchemaApply, CommittedMigrationError } from '../schema-apply/index.js';
 import { registerSchemaPreview, SchemaPreviewError } from '../schema-preview/index.js';
+import { registerGeneration, GenerationError } from '../generation/index.js';
 import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { PlanRepository } from '../plans/index.js';
-export interface CoreOptions extends StorageOptions { ownerId: string; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
+export interface CoreOptions extends StorageOptions { ownerId: string; generationFault?: (phase:string)=>void; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
 export type Outcome = { ok: true; revision: number; result: unknown; diagnostics: Diagnostic[] } | { ok: false; revision: number; error: { code: string; message: string; retryable: boolean }; diagnostics: Diagnostic[] };
 interface PendingCommand { operation: string; payloadHash: string; outcome: Promise<Outcome> }
 const collection = { connection: 'connections', table: 'tables', query: 'queries', page: 'pages', form: 'forms', control: 'controls', action: 'actions', policy: 'policies', extension: 'extensionContracts' } as const;
@@ -27,10 +28,12 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
 export class ProjectCore {
  private migration: ReturnType<typeof registerSchemaApply>;
  private pending = new Map<string, PendingCommand>();
+ private closeGeneration:()=>Promise<void>;
  private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>; private closeSchemaPreview: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
+  this.closeGeneration=registerGeneration(this.registry, options, this.plans, this.storage);
   this.migration = registerSchemaApply(this.registry, options, this.storage, this.plans);
   this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.closeSchemaPreview = registerSchemaPreview(this.registry, options, this.plans, id => this.closed ? undefined : this.storage.snapshot(id), (id, connection) => this.storage.hasInspectedConnection(id, connection));
@@ -105,12 +108,12 @@ export class ProjectCore {
    return outcome;
   } catch (error) {
    if (error instanceof CommittedMigrationError) return { ok: true, revision, result: error.result, diagnostics: [] };
-   const diagnostics = error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : [];
-   const outcome: Outcome = { ok: false, revision, error: { code: error instanceof StorageError ? error.code : error instanceof ModelValidationError ? 'VALIDATION_FAILED' : 'RECOVERY_REQUIRED', message: error instanceof StorageError ? error.message : error instanceof ModelValidationError ? 'Candidate project is invalid.' : 'Operation failed; inspect recovery before retrying.', retryable: error instanceof StorageError && ['PROJECT_BUSY', 'RECOVERY_REQUIRED'].includes(error.code) }, diagnostics };
+   const diagnostics = error instanceof GenerationError || error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : [];
+   const outcome: Outcome = { ok: false, revision, error: { code: error instanceof StorageError ? error.code : error instanceof ModelValidationError || error instanceof GenerationError ? 'VALIDATION_FAILED' : 'RECOVERY_REQUIRED', message: error instanceof StorageError ? error.message : error instanceof ModelValidationError || error instanceof GenerationError ? error.message : 'Operation failed; inspect recovery before retrying.', retryable: error instanceof StorageError && ['PROJECT_BUSY', 'RECOVERY_REQUIRED'].includes(error.code) }, diagnostics };
    if (accepted && payloadHash && revision > 0 && !(error instanceof StorageError && error.code === 'RECOVERY_REQUIRED')) { try { this.storage.complete(accepted.projectId, { requestId: accepted.requestId, payloadHash, actor, baseRevision: revision, outcome }, { revision, kind: 'diagnostic', objectIds: diagnostics.flatMap(d => d.objectId ? [d.objectId] : []), diagnostics }); } catch { return { ok: false, revision, error: { code: 'RECOVERY_REQUIRED', message: 'Outcome could not be recorded; restart before retrying.', retryable: true }, diagnostics: [] }; } }
    return outcome;
   }
  }
  cancelMigration(projectId: string, jobId: string) { return this.migration.cancel(projectId, jobId); }
- close() { if (this.closed) return Promise.resolve(); this.closed = true; const active = this.migration.active; const settling = Promise.all([this.migration.close(),this.closeConnections(),this.closeSchemaPreview()]); if (!active) { this.storage.close(); return settling.then(() => {}); } return settling.then(async () => { await Promise.all([...this.pending.values()].filter(p => ['schema.apply','schema.restoreApply'].includes(p.operation)).map(p => p.outcome)); this.storage.close(); }); }
+ close() { if (this.closed) return Promise.resolve(); this.closed = true; const active = this.migration.active; const settling = Promise.all([this.migration.close(),this.closeConnections(),this.closeSchemaPreview(),this.closeGeneration()]); if (!active) { this.storage.close(); return settling.then(() => {}); } return settling.then(async () => { await Promise.all([...this.pending.values()].filter(p => ['schema.apply','schema.restoreApply'].includes(p.operation)).map(p => p.outcome)); this.storage.close(); }); }
 }
