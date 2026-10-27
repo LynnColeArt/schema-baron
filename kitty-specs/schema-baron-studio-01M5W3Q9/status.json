@@ -519,7 +519,7 @@
     },
     "WP19": {
       "actor": "user",
-      "agent": "codex",
+      "agent": null,
       "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
@@ -528,9 +528,11 @@
       "last_transition_at": "2026-10-27T08:44:58.084191+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: canonical HTML/Design model editing, isolated current-draft Preview, session preservation and honest WP20/21 capability seams; commit 963ed0c, seven available browser regressions pass, final focused 33 tests pass."
+        "Ready for independent review: canonical HTML/Design model editing, isolated current-draft Preview, session preservation and honest WP20/21 capability seams; commit 963ed0c, seven available browser regressions pass, final focused 33 tests pass.",
+        "Independent review requests P2 literal-brace serializer roundtrip fix. Shared workspace/session/state/core export edits coordinated with root and required for real mode registration, draft recovery, Save guards, and browser-safe codec integration. Eight-item checklist and observed evidence in feedback."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP19-design-and-html-editing-with-working-document-modes/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP19-design-and-html-editing-with-working-document-modes/review-cycle-1.md",
@@ -538,14 +540,14 @@
         "verdict": "changes_requested"
       },
       "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T091": "done",
-        "T092": "done",
-        "T093": "done",
-        "T094": "done",
-        "T095": "done"
+        "T091": "planned",
+        "T092": "planned",
+        "T093": "planned",
+        "T094": "planned",
+        "T095": "planned"
       }
     },
     "WP20": {
