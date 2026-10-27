@@ -197,11 +197,11 @@
     {
       "criterion_id": "FR-020",
       "description": "Verify FR-020 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-020; docs/evidence/equipment/report.md T108; docs/evidence/generality/report.md; packages/sqlite/tests/query/mixed-numeric.test.ts; packages/generator/tests/reports/behavior.test.ts. Generic quantity times exact price, zero-child totals and fractional royalties equal independent BigInt oracle; 3.10 to 3.20 to 3.10 and 1.35/0.00; dependency refresh and noneditable derived authority verified. Reviewed against mission spec FR-020; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:43.921447+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
