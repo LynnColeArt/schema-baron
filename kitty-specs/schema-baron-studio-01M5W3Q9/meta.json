@@ -1,5 +1,4 @@
 {
-  "accept_commit": "08dd69c32e0a74d261d90ecfe781a3eebeaab35f",
   "acceptance_history": [
     {
       "accept_commit": "08dd69c32e0a74d261d90ecfe781a3eebeaab35f",
@@ -7,12 +6,18 @@
       "accepted_at": "2026-10-27T17:17:28.315710+00:00",
       "accepted_by": "codex",
       "accepted_from_commit": "fb2660571b36eff192a199aa0ef1542aa68a71bb"
+    },
+    {
+      "acceptance_mode": "local",
+      "accepted_at": "2026-10-27T17:29:04.627636+00:00",
+      "accepted_by": "codex",
+      "accepted_from_commit": "2018fc760f5d7efdb5546dc17048d18f5e77d035"
     }
   ],
   "acceptance_mode": "local",
-  "accepted_at": "2026-10-27T17:17:28.315710+00:00",
+  "accepted_at": "2026-10-27T17:29:04.627636+00:00",
   "accepted_by": "codex",
-  "accepted_from_commit": "fb2660571b36eff192a199aa0ef1542aa68a71bb",
+  "accepted_from_commit": "2018fc760f5d7efdb5546dc17048d18f5e77d035",
   "baseline_merge_commit": "0690035de82e68e068e4f94690a51081413f1030",
   "coordination_branch": "kitty/mission-schema-baron-studio-01M5W3Q9",
   "created_at": "2026-10-26T12:42:18.166623+00:00",
