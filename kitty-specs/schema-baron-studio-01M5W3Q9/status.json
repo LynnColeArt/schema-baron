@@ -783,24 +783,26 @@
       "last_transition_at": "2026-10-27T15:31:49.078277+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: UI-authored Publication composite-key acceptance, all 31 real MCP/Studio HTTP operations, original Equipment isolation and draft recovery, portable output; 464 tests and strict builds passed. Sources 4f0fe29, 7da1819, 0a9f770."
+        "Ready for independent review: UI-authored Publication composite-key acceptance, all 31 real MCP/Studio HTTP operations, original Equipment isolation and draft recovery, portable output; 464 tests and strict builds passed. Sources 4f0fe29, 7da1819, 0a9f770.",
+        "Independent review R1 P2: synchronous offline install blocks in-process acceptance owner; warmed socket reset reproduced; fresh visible Publication and serial parity pass. Evidence ac64f16."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP23-second-project-generality-and-ui-mcp-parity-acceptance/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP23-second-project-generality-and-ui-mcp-parity-acceptance/review-cycle-1.md",
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T111": "done",
-        "T112": "done",
-        "T113": "done",
-        "T114": "done",
-        "T115": "done"
+        "T111": "planned",
+        "T112": "planned",
+        "T113": "planned",
+        "T114": "planned",
+        "T115": "planned"
       }
     },
     "WP24": {
