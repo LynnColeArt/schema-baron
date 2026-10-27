@@ -517,6 +517,9 @@
       "last_event_id": "01M5Y80ZTEW3GJQPEE3FNQE527",
       "last_transition_at": "2026-10-27T08:35:58.414841+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: canonical HTML/Design model editing, isolated current-draft Preview, session preservation and honest WP20/21 capability seams; commit 963ed0c, seven available browser regressions pass, final focused 33 tests pass."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
