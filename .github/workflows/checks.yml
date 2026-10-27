@@ -1,0 +1,32 @@
+name: Workspace checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install --global npm@11.19.1 --ignore-scripts
+      - run: npm ci --ignore-scripts
+      - run: npm run native:verify
+      - run: npm run verify
+        env:
+          SCHEMA_BARON_LINT_BASE: ${{ github.event.pull_request.base.sha || 'HEAD^' }}
+      - run: npm audit --audit-level=low
+      # Browser journeys are activated by real e2e tests; no pass-with-no-tests flag.
+      - name: Browser acceptance when implemented
+        shell: bash
+        run: |
+          if test -d tests/e2e && find tests/e2e -name '*.spec.ts' -print -quit | read -r file; then
+            npx --no-install playwright install --with-deps chromium
+            npm run test:e2e
+          else
+            echo 'NOT IMPLEMENTED: browser acceptance tests'
+          fi

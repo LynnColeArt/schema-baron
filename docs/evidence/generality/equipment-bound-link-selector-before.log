@@ -1,0 +1,30 @@
+
+Running 1 test using 1 worker
+
+(node:1812102) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/e2e/equipment/workflow.spec.ts:176:1 › Equipment Desk starts blank and authors schema and forms through supported controls (2.3m)
+
+
+  1) tests/e2e/equipment/workflow.spec.ts:176:1 › Equipment Desk starts blank and authors schema and forms through supported controls
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: 'status', exact: true })
+
+
+      839 |     name: 'status',
+      840 |     exact: true
+    > 841 |   }).click();
+          |      ^
+      842 |   expect(new URL(app.url()).searchParams.get(gridFor(line.id).id + ':filter:' + line.columns.find(c => c.physicalName === 'loan_id')!.id)).toBe('1');
+      843 |   const lineRow = app.getByRole('row').filter({
+      844 |     hasText: 'Lens'
+        at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-w/tests/e2e/equipment/workflow.spec.ts:841:6
+
+    Error Context: docs/evidence/generality/equipment-regression/equipment-workflow-Equipme-6d6bb--through-supported-controls/error-context.md
+
+    Error Context: docs/evidence/generality/equipment-regression/equipment-workflow-Equipme-6d6bb--through-supported-controls/error-context.md
+
+  1 failed
+    tests/e2e/equipment/workflow.spec.ts:176:1 › Equipment Desk starts blank and authors schema and forms through supported controls

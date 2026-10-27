@@ -1,0 +1,5 @@
+
+> schema-baron@0.0.0 native:verify
+> node scripts/workspace/native.mjs
+
+SQLite 3.53.4: native insert, transaction and online backup passed

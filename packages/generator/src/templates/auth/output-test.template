@@ -1,0 +1,19 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {randomUUID} from 'node:crypto';
+import Database from 'better-sqlite3';
+import {IdentityStore,verifyPassword} from '../server/identity-store.ts';
+test('independent visitor store verifies salted credentials and hashed session lifecycle',async()=>{
+ const root=mkdtempSync(join(tmpdir(),'generated-visitor-')),path=join(root,'identity.sqlite'),store=new IdentityStore(path,'first'),other=new IdentityStore(path,'second');
+ try {
+  const username=randomUUID(),password=randomUUID();await store.provision(username,password,'first-provision');
+  const db=new Database(path,{readonly:true}),row=db.prepare('SELECT password FROM identities WHERE project=?').get('first');
+  assert.match(row.password,/^scrypt\$1\$32768\$8\$1\$/);assert.equal(await verifyPassword(password,row.password),true);assert.equal(await verifyPassword('wrong',row.password),false);
+  const initial=await store.login(username,password,undefined,'test');assert.ok(store.session(initial.token));assert.equal(other.session(initial.token),undefined);assert.ok(store.checkCsrf(initial.token,initial.csrf));
+  assert.equal(JSON.stringify(db.prepare('SELECT * FROM sessions').all()).includes(initial.token),false);
+  const rotated=await store.login(username,password,initial.token,'test');assert.equal(store.session(initial.token),undefined);assert.ok(store.session(rotated.token));assert.equal(store.session(rotated.token,rotated.expires),undefined);store.logout(rotated.token);assert.equal(store.session(rotated.token),undefined);db.close();
+ }finally{store.close();other.close();rmSync(root,{recursive:true,force:true});}
+});

@@ -1,0 +1,47 @@
+Review migration
+
+8 SQL steps · source revision 3 · expires 2026-10-27T14:42:43.629Z
+
+Exact proposal identity
+Reviewed SQL
+CREATE TABLE "__baron_8433e52a76e840f7aaf0dd9ed2671ef1" ("id" INTEGER NOT NULL, "pen_name" TEXT NOT NULL, "email" TEXT NOT NULL, PRIMARY KEY ("id" ASC), CONSTRAINT "7e261eb6-3f4c-4e6b-b5d2-7c8ca19df034" UNIQUE ("email"))
+CREATE TABLE "__baron_21d9e979baa94d50b2bf15754ac20258" ("id" INTEGER NOT NULL, "author_id" INTEGER NOT NULL, "title" TEXT NOT NULL, "royalty" TEXT NOT NULL, PRIMARY KEY ("id" ASC), CONSTRAINT "d45a597d-8eab-4105-9f91-59905c15f732" FOREIGN KEY ("author_id") REFERENCES "authors" ("id") ON UPDATE RESTRICT ON DELETE RESTRICT)
+CREATE TABLE "__baron_8ba84ccdd9c64064aea1491403fa37df" ("id" INTEGER NOT NULL, "caption" TEXT NOT NULL, PRIMARY KEY ("id" ASC))
+CREATE TABLE "__baron_4cef8d246d574ee9aee0318d41bfc564" ("publication_id" INTEGER NOT NULL, "category_id" INTEGER NOT NULL, "annotation" TEXT NOT NULL, PRIMARY KEY ("publication_id" ASC, "category_id" ASC), CONSTRAINT "d14ddffa-2e7c-4e85-9395-85afb11dcba8" FOREIGN KEY ("publication_id") REFERENCES "publications" ("id") ON UPDATE RESTRICT ON DELETE RESTRICT, CONSTRAINT "66f8712c-eb9f-4791-8421-6397e83a93e6" FOREIGN KEY ("category_id") REFERENCES "categories" ("id") ON UPDATE RESTRICT ON DELETE RESTRICT)
+ALTER TABLE "__baron_8433e52a76e840f7aaf0dd9ed2671ef1" RENAME TO "authors"
+ALTER TABLE "__baron_21d9e979baa94d50b2bf15754ac20258" RENAME TO "publications"
+ALTER TABLE "__baron_8ba84ccdd9c64064aea1491403fa37df" RENAME TO "categories"
+ALTER TABLE "__baron_4cef8d246d574ee9aee0318d41bfc564" RENAME TO "publication_categories"
+Impact and dependencies
+
+Create table authors
+
+create · 0 affected rows · object 3e19ea16-08fe-4618-aa55-5ffdf87ec8f3 · impact fdd26097-5a9b-40b6-8338-0adbfe701352
+
+Create table publications
+
+create · 0 affected rows · object 3d5ace48-c14f-4ee2-abd8-426a40b9f39f · impact 27011260-e36a-4f89-80c2-ac92ef637688
+
+Create table categories
+
+create · 0 affected rows · object 7353975b-eb1d-43df-9c29-f7783aa368c0 · impact d5d2340e-faa2-4c44-9353-1088b4b01516
+
+Create table publication_categories
+
+create · 0 affected rows · object 6ebc6c14-5cef-4f46-b18c-2e7d9ddb5087 · impact e071d106-35b9-49b6-994b-4f12b00485c1
+Backup and recovery
+
+Required SQLite online backup in approved root catalog-6MrH23. The executor allocates the exact backup location during apply; no backup has been made by preview.
+
+Acquire the migration lease and recheck schema/data fingerprints under a write transaction before changing data.
+
+Create and verify an SQLite online backup in the disclosed owner-approved root before DDL.
+
+Set foreign_keys OFF before BEGIN for a rebuild; execute all reviewed steps in one transaction and reject failed foreign_key_check or integrity_check before commit. Restore the original connection settings.
+
+On failure roll back the transaction. Inspect the durable migration journal and database marker to distinguish rollback from a committed migration before retrying.
+
+Restoring a backup requires a separately reviewed restore plan and exact acknowledgements; preview never performs a restore.
+
+Cancel review
+Apply reviewed migration

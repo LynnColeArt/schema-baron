@@ -1,0 +1,5 @@
+{
+  "name": "Recovery acceptance",
+  "sql": "CREATE TABLE parent(id INTEGER PRIMARY KEY,title TEXT NOT NULL);CREATE INDEX title_lookup ON parent(title);CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0));INSERT INTO parent VALUES(1,'original');INSERT INTO child VALUES(9,1)",
+  "authoredComment": "// Retained authored recovery acceptance customization\n"
+}

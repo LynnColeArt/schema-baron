@@ -1,0 +1,31 @@
+Review migration
+
+4 SQL steps · source revision 74 · expires 2026-10-27T14:47:55.938Z
+
+Exact proposal identity
+Reviewed SQL
+CREATE TABLE "__baron_436aeb9537ba4f30a7ee04884c50fdf9" ("id" INTEGER NOT NULL, "caption" TEXT NOT NULL, "daily_rate" TEXT NOT NULL, "notes" INTEGER, "condition" TEXT NOT NULL, PRIMARY KEY ("id" ASC))
+INSERT INTO "__baron_436aeb9537ba4f30a7ee04884c50fdf9" ("id", "caption", "daily_rate", "notes", "condition") SELECT "id" AS "id", "caption" AS "caption", "daily_rate" AS "daily_rate", 0 AS "notes", "condition" AS "condition" FROM main."assets"
+DROP TABLE "assets"
+ALTER TABLE "__baron_436aeb9537ba4f30a7ee04884c50fdf9" RENAME TO "assets"
+Impact and dependencies
+Replace values in assets.notes with the reviewed expression
+backfill · 1 affected rows · object 6c3ac70e-6b4a-4c3f-9fa5-5d258413bb10 · impact 5a425cf1-d2e1-4160-813e-a41b2bb7fbe3
+Convert column notes
+change · 1 affected rows · object 6c3ac70e-6b4a-4c3f-9fa5-5d258413bb10 · impact c49459f7-3a0f-4190-8084-25a9f69ec611
+Backup and recovery
+
+Required SQLite online backup in approved root projects. The executor allocates the exact backup location during apply; no backup has been made by preview.
+
+Acquire the migration lease and recheck schema/data fingerprints under a write transaction before changing data.
+
+Create and verify an SQLite online backup in the disclosed owner-approved root before DDL.
+
+Set foreign_keys OFF before BEGIN for a rebuild; execute all reviewed steps in one transaction and reject failed foreign_key_check or integrity_check before commit. Restore the original connection settings.
+
+On failure roll back the transaction. Inspect the durable migration journal and database marker to distinguish rollback from a committed migration before retrying.
+
+Restoring a backup requires a separately reviewed restore plan and exact acknowledgements; preview never performs a restore.
+
+Cancel review
+Apply reviewed migration

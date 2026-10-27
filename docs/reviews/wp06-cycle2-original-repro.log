@@ -1,0 +1,21 @@
+{"phase":"before","files":{"matching.sqlite":false,"a.sqlite":false,"b.sqlite":false},"revision":1,"operation":null}
+{"phase":"matching","results":[{"ok":true,"revision":1,"locator":{"approvedRootId":"projects","relativePath":"matching.sqlite"}},{"ok":true,"revision":1,"locator":{"approvedRootId":"projects","relativePath":"matching.sqlite"}}],"files":{"matching.sqlite":true},"revision":1,"operation":{"requestId":"matching","payloadHash":"5a6ee9a28ddb0cea0036334178e1a213657aeba41a349393c0307875b79f0772","actor":"owner","baseRevision":1,"outcome":"committed","eventSequence":1},"retry":{"ok":true,"revision":1,"locator":{"approvedRootId":"projects","relativePath":"matching.sqlite"}}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(matchingResults.every(result => !result.ok && result.error.code === 'OUTPUT_CONFLICT'))
+
+    at file:///home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-f/docs/reviews/wp06-idempotency-repro.mjs:22:3
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

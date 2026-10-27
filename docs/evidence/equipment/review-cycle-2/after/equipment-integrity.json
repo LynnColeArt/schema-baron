@@ -1,0 +1,17 @@
+{
+  "integrity": [
+    {
+      "integrity_check": "ok"
+    }
+  ],
+  "fkViolations": [],
+  "uniqueIndexes": [
+    {
+      "seq": 0,
+      "name": "sqlite_autoindex_borrowers_1",
+      "unique": 1,
+      "origin": "u",
+      "partial": 0
+    }
+  ]
+}

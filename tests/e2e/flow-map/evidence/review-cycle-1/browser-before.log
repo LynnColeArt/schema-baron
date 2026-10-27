@@ -1,0 +1,39 @@
+
+Running 1 test using 1 worker
+
+(node:320523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/e2e/flow-map/workflow.spec.ts:254:1 › invalid typed draft edge exposes its diagnostic and stays selectable until Properties repairs it (7.1s)
+
+
+  1) tests/e2e/flow-map/workflow.spec.ts:254:1 › invalid typed draft edge exposes its diagnostic and stays selectable until Properties repairs it
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('region', { name: 'Application behavior map' }).locator('.flow-details')
+    Expected: "invalid"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('region', { name: 'Application behavior map' }).locator('.flow-details') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Application behavior map' }).locator('.flow-details')
+        14 × locator resolved to <div aria-live="polite" class="flow-details">…</div>
+           - unexpected value "null"
+
+
+      264 |  await map.getByText(/^Keyboard behavior list/).click();await map.getByRole('group',{name:'Selectable behavior list'}).getByRole('button',{name:new RegExp('destination.*'+action.id)}).click();
+      265 |  await page.getByLabel('navigate destination keyMapping source 1',{exact:true}).selectOption(title.id);
+    > 266 |  await expect(map.locator('.flow-details')).toHaveAttribute('data-validity','invalid');
+          |                                             ^
+      267 |  await expect(map.locator('.flow-details')).toContainText('Invalid draft flow');await expect(map.locator('.flow-details')).toContainText('TYPE_MISMATCH');
+      268 |  const edge=map.locator('.react-flow__edge[data-id="'+edgeId+'"]');await expect(edge).toHaveAttribute('aria-label',/Invalid draft flow/);await expect(edge.locator('.react-flow__edge-path')).toHaveCSS('stroke','rgb(173, 40, 49)');
+      269 |  await expect(map).toHaveAttribute('data-selection',edgeId);expect(await map.locator('.react-flow__node').count()).toBe(nodeCount);
+        at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-r/tests/e2e/flow-map/workflow.spec.ts:266:45
+
+    Error Context: test-results/flow-map-workflow-invalid--30807-until-Properties-repairs-it/error-context.md
+
+    Error Context: test-results/flow-map-workflow-invalid--30807-until-Properties-repairs-it/error-context.md
+
+  1 failed
+    tests/e2e/flow-map/workflow.spec.ts:254:1 › invalid typed draft edge exposes its diagnostic and stays selectable until Properties repairs it
