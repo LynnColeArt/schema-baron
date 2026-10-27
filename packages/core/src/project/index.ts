@@ -1,3 +1,5 @@
+import { createHmac, randomBytes } from 'node:crypto';
+import { registerIdentity } from '../identity/index.js';
 import { commandSchema, jobSchema, createId, parseProject, validateProject, ModelValidationError, FORMAT_VERSION } from '@schema-baron/model';
 import type { Command, Diagnostic, EntityBatchOperation, Project } from '@schema-baron/model';
 import { ProjectStorage, StorageError, hash } from '@schema-baron/storage';
@@ -31,6 +33,8 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
  const candidate=stageBatch(project,operations);candidate.revision++;return parseProject(candidate);
 }
 export class ProjectCore {
+ private transientKey=randomBytes(32);
+ private commandHash(command:Command) {return command.operation==='identity.provision'?createHmac('sha256',this.transientKey).update(JSON.stringify(command)).digest('hex'):hash(command);}
  private migration: ReturnType<typeof registerSchemaApply>;
  private pending = new Map<string, PendingCommand>();
  private closeGeneration:()=>Promise<void>;
@@ -39,6 +43,7 @@ export class ProjectCore {
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
+  registerIdentity(this.registry,options,id=>this.storage.snapshot(id),(id,c)=>this.storage.hasInspectedConnection(id,c));
   this.closeGeneration=registerGeneration(this.registry, options, this.plans, this.storage);
   this.migration = registerSchemaApply(this.registry, options, this.storage, this.plans);
   this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
@@ -69,7 +74,7 @@ export class ProjectCore {
   try {
    if (this.closed) return this.execute(actor, input);
    this.authorize(actor); command = commandSchema.parse(input);
-   key = JSON.stringify([command.projectId, command.requestId]); payloadHash = hash(command);
+   key = JSON.stringify([command.projectId, command.requestId]); payloadHash = this.commandHash(command);
    const pending = this.pending.get(key);
    if (pending) return pending.payloadHash === payloadHash ? pending.outcome : this.execute(actor, command);
    if (!this.registry.isAsync(command.operation)) return this.execute(actor, command);
@@ -98,17 +103,18 @@ export class ProjectCore {
    if (this.closed && !(reservation && ['schema.apply','schema.restoreApply'].includes(reservation.operation))) throw new StorageError('RECOVERY_REQUIRED', 'Owner has closed; inspect the durable outcome after restart.');
    this.authorize(actor); const parsed = commandSchema.safeParse(input); if (!parsed.success) throw new StorageError('INVALID_INPUT', 'Command does not match the operation schema.'); const command: Command = parsed.data;
    if (!this.registry.has(command.operation)) throw new StorageError('INVALID_INPUT', 'Operation is not available.');
-   payloadHash = hash(command); const retry = this.storage.lookup(command.projectId, command.requestId);
-   if (retry) { if (retry.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Request ID already identifies a different payload.'); return retry.outcome as Outcome; }
+   payloadHash = this.commandHash(command); const retry = this.storage.lookup(command.projectId, command.requestId);
+   if (retry) { if (retry.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', command.operation==='identity.provision'?'Transient provisioning request was consumed or changed. After restart inspect the identity source and use a new request ID.':'Request ID already identifies a different payload.'); return retry.outcome as Outcome; }
    const recovering = this.migration.retry(command.projectId,command.requestId,payloadHash); if (recovering) return recovering;
    const pending = this.pending.get(JSON.stringify([command.projectId, command.requestId]));
    if (pending && pending !== reservation) {
-    if (pending.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Request ID already identifies a different payload.');
+    if (pending.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', command.operation==='identity.provision'?'Transient provisioning request was consumed or changed. After restart inspect the identity source and use a new request ID.':'Request ID already identifies a different payload.');
     throw new StorageError('PROJECT_BUSY', 'This request is still running. Await executeAsync or retry after completion.');
    }
    this.migration.guard(command.projectId, command.operation);
    const project = command.operation === 'project.create' || command.operation === 'project.list' ? undefined : command.operation === 'project.open' ? this.storage.open(command.projectId, command.input.locator) : this.storage.snapshot(command.projectId); revision = project?.revision ?? 0;
    if (command.expectedRevision !== revision) throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');
+   if(command.operation==='identity.provision'&&!project?.identity)throw new StorageError('INVALID_INPUT','Configure identity before provisioning.');
    accepted = command;
    const effect = prepared ? prepared() : this.registry.run(command, project); const outcome: Outcome = { ok: true, revision: effect.candidate?.revision ?? revision, result: effect.result, diagnostics: [] };
    if (effect.job) { jobSchema.parse(effect.job); if (command.operation !== 'job.cancel' || command.input.jobId !== effect.job.id || effect.candidate) throw new StorageError('VALIDATION_FAILED', 'Job effects must match the cancellation command.'); }

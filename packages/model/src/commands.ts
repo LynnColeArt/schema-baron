@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
+import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
 import { diagnosticSchema, outcomeSchema } from './diagnostics.js';
 import type { Diagnostic } from './diagnostics.js';
 
@@ -31,6 +31,7 @@ export const operationInputSchemas = {
   'extension.read': z.strictObject({ extensionId: idSchema, approvedPath: text }),
   'extension.write': z.strictObject({ extensionId: idSchema, approvedPath: text, content: z.string(), expectedFileHash: hashSchema }),
   // Transient only. Never serialize this input into Project, OperationRecord or diagnostics.
+  'identity.configure': identitySchema,
   'identity.provision': z.strictObject({ identitySourceRef: idSchema, username: text, password: z.string().min(1).max(1024) }),
   'project.validate': z.strictObject({ objectIds: ids.optional() }),
   'flow.inspect': z.strictObject({ projection: z.enum(['application', 'schema', 'endpoint']), selectedId: idSchema.optional() }),
@@ -106,6 +107,7 @@ export const operationResultSchemas = {
   'form.construct': changedResult,
   'extension.read': z.strictObject({ extensionId: idSchema, content: z.string(), hash: hashSchema }),
   'extension.write': z.strictObject({ extensionId: idSchema, hash: hashSchema }),
+  'identity.configure': z.strictObject({ configured: z.literal(true) }),
   'identity.provision': z.strictObject({ userId: idSchema }),
   'project.validate': z.strictObject({ valid: z.boolean(), diagnostics: z.array(diagnosticSchema) }),
   'flow.inspect': z.strictObject({ nodes: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, kind: text })), edges: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, fromId: idSchema, toId: idSchema, kind: text })) }),

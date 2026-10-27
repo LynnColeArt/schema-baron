@@ -2,6 +2,14 @@ import type { GeneratedFile, RecordIR } from '../../ir/index.js';
 export function recordFiles(record:RecordIR,index:number,flashCookie:string):GeneratedFile[] {
  const config=JSON.stringify(record.config,null,2);
  return [
+ {path:`app/runtime/record-${index}/route.ts`,content:`import { cookies } from 'next/headers';
+import { authorize, originCheck, failure, sessionCookie, csrfCookie } from '../../../server/auth';
+import { config } from '../../../server/record-${index}';
+import { load, execute } from '../../../server/record-service';
+export const dynamic='force-dynamic';
+export async function GET(request:Request){try{const jar=await cookies();authorize(config.pageId,undefined,jar.get(sessionCookie)?.value);const parameters:Record<string,string>={};for(const [k,v] of new URL(request.url).searchParams){if(k in parameters)throw Error();parameters[k]=v;}return Response.json(load(config,parameters),{headers:{'cache-control':'no-store'}});}catch(error){return failure(error);}}
+export async function POST(request:Request){try{const jar=await cookies();originCheck(request.headers.get('origin'),request.headers.get('host'),request.headers.get('x-csrf-token')??undefined,jar.get(csrfCookie)?.value);const body:unknown=await request.json();if(!body||typeof body!=='object'||Array.isArray(body))throw Error();const b=body as Record<string,unknown>;if(Object.keys(b).some(k=>!['action','parameters','input','confirmed'].includes(k))||typeof b.action!=='string')throw Error();authorize(config.pageId,b.action,jar.get(sessionCookie)?.value);for(const value of [b.parameters,b.input])if(!value||typeof value!=='object'||Array.isArray(value)||Object.values(value).some(v=>typeof v!=='string'))throw Error();const result=execute(config,b.action,b.parameters as Record<string,string>,b.input as Record<string,string>,b.confirmed===true);return Response.json(result,{status:result.summary?400:200,headers:{'cache-control':'no-store'}});}catch(error){return failure(error);}}
+`},
  {path:`server/record-${index}.ts`,content:`import 'server-only';
 import { load } from './record-service.ts';
 import type { Parameters } from './record-validation.ts';
@@ -9,6 +17,7 @@ export const config = ${config} as const;
 export function loadRecord(parameters:Parameters) { return load(config,parameters); }
 `},
  {path:`server/record-action-${index}.ts`,content:`'use server';
+import { guardAction } from './auth';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { config } from './record-${index}';
@@ -18,6 +27,8 @@ import type { Field } from './record-validation';
 export async function submit${index}(_previous:State, data:FormData):Promise<State> {
  const empty:State={values:{},errors:{},summary:''};
  try {
+  const requested=data.get('_action');if(typeof requested!=='string')throw Error();
+  await guardAction(config.pageId,requested,data);
   const text=data.get('_parameters'); if(typeof text!=='string'||text.length>20000) throw Error();
   const parameters:unknown=JSON.parse(text);
   if(!parameters||typeof parameters!=='object'||Array.isArray(parameters)||Object.values(parameters).some(v=>typeof v!=='string')) throw Error();
@@ -26,7 +37,7 @@ export async function submit${index}(_previous:State, data:FormData):Promise<Sta
   if(Object.keys(params).some(key=>!allowed.includes(key))) throw Error();
   context(params,config.context);
   const input:Record<string,string>={};
-  for(const [key] of data) if(!['_parameters','_action','_confirmed'].includes(key)&&!key.startsWith('field:')&&!key.startsWith('$ACTION_')) throw Error();
+  for(const [key] of data) if(!['_parameters','_action','_confirmed','_csrf'].includes(key)&&!key.startsWith('field:')&&!key.startsWith('$ACTION_')) throw Error();
   for(const [key,value] of data) if(key.startsWith('field:')) {
    if(typeof value!=='string'||key.slice(6) in input) throw Error(); input[key.slice(6)]=value;
   }
@@ -49,12 +60,14 @@ export async function submit${index}(_previous:State, data:FormData):Promise<Sta
 `},
  {path:`components/record-${index}.tsx`,content:`'use client';
 import { useActionState } from 'react';
+import { Csrf } from './csrf';
 import { submit${index} } from '../server/record-action-${index}';
 import type { State } from '../server/record-service';
 type Props={parameters:Record<string,string>;initial:Record<string,string>;isNew:boolean;name:string;impacts:{table:string;rule:string;count:number}[];options:Record<string,{value:string;label:string}[]>};
 export function Record${index}({parameters,initial,isNew,name,impacts,options}:Props) {
  const [state,action,pending]=useActionState(submit${index},{values:initial,errors:{},summary:''} as State);
  return <section><h2>{${JSON.stringify(record.label)}}</h2><form action={action} className="record-form">
+ <Csrf />
  <input type="hidden" name="_parameters" value={JSON.stringify(parameters)} />
  {state.summary&&<p role="alert">{state.summary}</p>}
  <div className="record-fields">

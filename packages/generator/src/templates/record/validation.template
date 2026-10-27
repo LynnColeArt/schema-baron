@@ -1,7 +1,7 @@
 import 'server-only';
 import Decimal from 'decimal.js';
 import { z } from 'zod';
-export type Scalar = { readonly kind:string; readonly encoding?:string; readonly scale?:number; readonly precision?:number };
+export type Scalar = { readonly kind:string; readonly encoding?:string; readonly scale?:number; readonly precision?:number; readonly rounding?:string };
 export type Field = { readonly id:string; readonly name:string; readonly type:Scalar; readonly nullable:boolean; readonly generated?:boolean; readonly hasDefault?:boolean };
 export type Input = Record<string,string>;
 export type Binding = string | number | bigint | null;

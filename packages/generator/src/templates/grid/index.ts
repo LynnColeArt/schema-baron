@@ -11,19 +11,39 @@ export function gridFiles(grid: GridIR, index: number) {
  const controls = grid.controls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${literal(c.label)}}</NavigationLink>`).join('')}</td>`:`<td>{${c.fieldId ? `formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f => f.id === c.fieldId)?.type)}, ${literal(c.format)})` : literal(c.label)}}</td>`).join('\n                  ');
  const rowKey = grid.source.keys.length ? `JSON.stringify([${grid.source.keys.map(k => `row[${literal(k)}]`).join(', ')}].map(value => String(value)))` : 'rowIndex';
  return [
+  {path:`app/runtime/navigation-${index}/route.ts`,content:`import {cookies} from 'next/headers';
+import {authorize,sessionCookie,failure} from '../../../server/auth';
+import {config,actions} from '../../../server/grid-${index}';
+import {connect,read} from '../../../server/record-repository';
+import {value} from '../../../server/record-validation';
+import {context,destination,type ContextField} from '../../../server/navigation';
+const allowed=${JSON.stringify(grid.context??[])} as readonly ContextField[];
+export async function GET(request:Request){let db:ReturnType<typeof connect>|undefined;try{
+ const url=new URL(request.url),id=url.searchParams.get('_action')??'';
+ authorize(${JSON.stringify(grid.pageId??'')},id,(await cookies()).get(sessionCookie)?.value);
+ const action=actions.find(a=>a.id===id);if(!action)throw Error();
+ const parameters:Record<string,string>={};for(const [key,text] of url.searchParams){if(url.searchParams.getAll(key).length!==1)throw Error();if(key==='_action'||config.keys.some((_,i)=>key==='_key:'+i))continue;if(!allowed.some(c=>c.parameter===key))throw Error();parameters[key]=text;}
+ context(parameters,allowed);let row:Record<string,unknown>={};
+ if(!action.destination.newForms.length){const keys=config.keys.map((key,i)=>{const text=url.searchParams.get('_key:'+i);if(text===null)throw Error();return value(config.fields.find(f=>f.id===key)!,text);});db=connect();row=read(db,{...config,keys:config.keys},keys)??{};if(!Object.keys(row).length)throw Error();}
+ return Response.redirect(new URL(destination(action.destination,row,parameters,allowed),request.url),303);
+ }catch(error){return failure(error);}finally{db?.close();}}
+`},
   { path: `server/grid-${index}.ts`, content: `import 'server-only';
 import { readGrid } from './repository.ts';
-import { destination, type Destination, type ContextField } from './navigation.ts';
+import { entered } from './record-validation.ts';
+import { destination, context, type Destination, type ContextField } from './navigation.ts';
 import type { Parameters } from './record-validation';
 
 // This repository's identifiers come from the validated project, never a request.
-const config = ${JSON.stringify(config, null, 2)} as const;
-const actions = ${JSON.stringify(links.map(action=>({id:action.id,destination:action.destination})))} as readonly {id:string;destination:Destination}[];
+export const config = ${JSON.stringify(config, null, 2)} as const;
+export const actions = ${JSON.stringify(links.map(action=>({id:action.id,access:action.access??'public',destination:action.destination})))} as readonly {id:string;access:string;destination:Destination}[];
 const allowed = ${JSON.stringify(grid.context??[])} as readonly ContextField[];
 export function link(id:string,row:Record<string,unknown>,parameters:Parameters):{href?:string;error?:string} {
  const action=actions.find(a=>a.id===id);
  if(!action) return {error:'This navigation action is unavailable.'};
- try{return {href:destination(action.destination,row,parameters,allowed)};}
+ try{
+  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(!action.destination.newForms.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'/runtime/navigation-${index}?'+query};}
+  return {href:destination(action.destination,row,parameters,allowed)};}
  catch{return {error:'This link could not be created. Check the page filters and mapped record values.'};}
 }
 

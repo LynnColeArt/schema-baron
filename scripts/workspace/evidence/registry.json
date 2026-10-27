@@ -1,7 +1,7 @@
 {
   "observedAt": "2026-10-27T06:22:55.311Z",
   "clientDate": "2026-10-26",
-  "lockSha256": "5fe5eb7faaa2d87486b12b1a2bd1511d63c07f47ad9ffc4e9d2ed3710ef67d72",
+  "lockSha256": "8158ccfaee5c81d5093c5fea48af92874cce90290b60fd7ba708626067b903c8",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
     {
@@ -8117,5 +8117,10 @@
     "baseline": "c3856ab3021770bb038cd05ddf761c12d420b043",
     "previousLockSha256": "3ba0e74cffa371e40f264a7d42f11ca9aeb78edddc7b5aa6798f72e17e05c0d8",
     "reason": "Only the existing @schema-baron/sqlite workspace dependency edge was added to generator; all external artifact lock entries compare unchanged. Original registry observedAt and artifact records are preserved; no download or new registry verification is claimed."
+  },
+  "lockReconciliation": {
+    "previousLockSha256": "5fe5eb7faaa2d87486b12b1a2bd1511d63c07f47ad9ffc4e9d2ed3710ef67d72",
+    "lockSha256": "8158ccfaee5c81d5093c5fea48af92874cce90290b60fd7ba708626067b903c8",
+    "rationale": "Offline merge reconciliation: added generator local workspace dependency @schema-baron/sqlite alongside its existing pinned better-sqlite3 edge. Programmatic equality confirmed every external artifact entry against both merge parents; registry records and observedAt are unchanged. No registry lookup or new registry claim."
   }
 }

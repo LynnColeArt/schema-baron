@@ -43,7 +43,9 @@ test('reports diagnose unsupported table filters and tightened query action poli
  const p=reportProject(),f=p.forms[0]!;f.search=[{fieldId:p.queries.at(-1)!.projections[0]!.id,operator:'eq'}];
  expect(()=>compileProject(p)).toThrow('Use saved-query WHERE/HAVING');f.search=[];
  p.actions.push({id:'locked-link',formId:f.id,operation:'navigate',policyId:'locked-policy',destination:{pageId:f.pageId,keyMapping:[],filterMapping:[]}} as any);f.actionIds=['locked-link'] as any;p.policies.push({id:'locked-policy',scope:'action',ownerId:'locked-link',access:'authenticated'} as any);
- expect(()=>compileProject(p)).toThrow('Authenticated query navigation or Search requires a proven keyed-query read guard');
+ // Identity validation may add an earlier diagnostic; the report-specific refusal must remain.
+ let failure:unknown;try{compileProject(p);}catch(error){failure=error;}
+ expect(failure).toMatchObject({diagnostics:expect.arrayContaining([expect.objectContaining({objectId:'locked-link',message:expect.stringContaining('Authenticated query navigation or Search requires a proven keyed-query read guard')})])});
 });
 test('query compiler failures retain actionable query-linked diagnostics',()=>{
  const p=reportProject(),q=p.queries.find(q=>q.joins.length)!;
