@@ -785,7 +785,8 @@
       "notes": [
         "Ready for independent review: UI-authored Publication composite-key acceptance, all 31 real MCP/Studio HTTP operations, original Equipment isolation and draft recovery, portable output; 464 tests and strict builds passed. Sources 4f0fe29, 7da1819, 0a9f770.",
         "Independent review R1 P2: synchronous offline install blocks in-process acceptance owner; warmed socket reset reproduced; fresh visible Publication and serial parity pass. Evidence ac64f16.",
-        "R1 repaired in 9f35988: asynchronous offline install preserves owner responsiveness; durable redacted failure context retained. Concurrent 3 files/9 tests, serial 31-operation corpus, warmed-owner/failure-evidence 2 tests, strict TS/lint/credentials green. Retained visible proof audited; production unchanged."
+        "R1 repaired in 9f35988: asynchronous offline install preserves owner responsiveness; durable redacted failure context retained. Concurrent 3 files/9 tests, serial 31-operation corpus, warmed-owner/failure-evidence 2 tests, strict TS/lint/credentials green. Retained visible proof audited; production unchanged.",
+        "Independent cycle2 review passed: R1 fixed by asynchronous offline child; four files11tests pass at2workers plus2 heldouts;31cold operations preserved, during-install HTTP200 and cleanup verified. All8 checklist items PASS. Evidence1b49bed; no self-review fallback."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
