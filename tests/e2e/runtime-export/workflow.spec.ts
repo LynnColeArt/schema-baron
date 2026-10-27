@@ -1,3 +1,4 @@
+import { pinnedNpmCli } from '../../../scripts/release/toolchain.mjs';
 import { test, expect } from '@playwright/test';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
@@ -258,7 +259,7 @@ test('UI/MCP authoring, managed commands and selected route share authority; exp
     await expect(page.getByRole('region', {
       name: 'Managed generated runtime'
     })).toContainText('unsaved draft retained');
-    const npm = '/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
+    const npm = pinnedNpmCli;
     expect(spawnSync(process.execPath, [npm, 'ci', '--ignore-scripts', '--offline'], {
       cwd: join(root, 'output/app'),
       encoding: 'utf8'

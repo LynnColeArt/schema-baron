@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-10-27T06:22:55.311Z",
+  "observedAt": "2026-10-27T16:33:29.217Z",
   "clientDate": "2026-10-26",
-  "lockSha256": "8158ccfaee5c81d5093c5fea48af92874cce90290b60fd7ba708626067b903c8",
+  "lockSha256": "6f5b211aca580485a41f67fe8807aa46aaae3abfb04b620e8ae722701247cd57",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
     {
@@ -2633,7 +2633,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:42:29.997Z",
       "published": "2026-07-08T15:49:36.897Z",
-      "packageModified": "2026-10-26T08:04:56.047Z",
+      "packageModified": "2026-10-27T08:31:48.528Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -2665,7 +2665,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:42:01.557Z",
       "published": "2026-07-08T15:49:40.886Z",
-      "packageModified": "2026-10-26T08:07:32.922Z",
+      "packageModified": "2026-10-27T08:31:54.779Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -2761,7 +2761,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:51.251Z",
       "published": "2026-07-08T15:49:53.075Z",
-      "packageModified": "2026-10-26T08:04:44.582Z",
+      "packageModified": "2026-10-27T08:32:28.782Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -2793,7 +2793,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:56.270Z",
       "published": "2026-07-08T15:49:57.270Z",
-      "packageModified": "2026-10-26T08:12:43.534Z",
+      "packageModified": "2026-10-27T08:31:45.232Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -2985,7 +2985,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:43.375Z",
       "published": "2026-07-08T15:50:21.639Z",
-      "packageModified": "2026-10-26T08:06:43.539Z",
+      "packageModified": "2026-10-27T08:32:11.263Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3177,7 +3177,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:33.545Z",
       "published": "2026-07-08T15:50:45.825Z",
-      "packageModified": "2026-10-26T08:05:18.378Z",
+      "packageModified": "2026-10-27T08:32:16.288Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3209,7 +3209,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:28.460Z",
       "published": "2026-07-08T15:50:50.403Z",
-      "packageModified": "2026-10-26T08:05:04.462Z",
+      "packageModified": "2026-10-27T08:33:23.485Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3488,6 +3488,37 @@
       ],
       "provenance": null,
       "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/axe-core",
+      "name": "axe-core",
+      "version": "4.11.0",
+      "firstPublished": "2015-06-08T14:56:56.706Z",
+      "published": "2025-10-09T16:39:18.813Z",
+      "packageModified": "2026-10-21T21:13:57.302Z",
+      "repository": {
+        "url": "git+https://github.com/dequelabs/axe-core.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "dylanb",
+        "wilcofiers",
+        "dqlabs",
+        "npmdeque"
+      ],
+      "integrity": "sha512-ilYanEU8vxxBexpJd8cWM4ElSQq4QctCLKih0TSfjIfCQTeyH/6zVrmIJfLPrKTKJRbiG+cfnZbQIjAlJmF1jQ==",
+      "tarball": "https://registry.npmjs.org/axe-core/-/axe-core-4.11.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDpLIM3Hco02h8aaVa4FqvR4bonbKu6+9J7xmqCwMUYQgIhAKUKER1LWATbKhzvN2MpcL2s02J/XNFNuRoAJ6KyKFb3",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {
+        "prepare": "husky && npm run patch"
+      },
       "scriptsDenied": true
     },
     {
@@ -6758,7 +6789,7 @@
       "version": "6.16.1",
       "firstPublished": "2011-02-04T04:40:23.617Z",
       "published": "2026-10-14T22:06:17.002Z",
-      "packageModified": "2026-10-14T22:06:17.142Z",
+      "packageModified": "2026-10-27T06:23:47.131Z",
       "repository": {
         "url": "git+https://github.com/ljharb/qs.git",
         "type": "git"
@@ -6771,8 +6802,8 @@
       "tarball": "https://registry.npmjs.org/qs/-/qs-6.16.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIBD/HODTxSGXW4MI271pfIsMMMbbwHj3MeVovqvY+x3YAiBMpQnp/2uQ85UdZMgXXA6A3QTEwSE//1ueytFwpAC3Zw=="
+          "sig": "MEQCIBD/HODTxSGXW4MI271pfIsMMMbbwHj3MeVovqvY+x3YAiBMpQnp/2uQ85UdZMgXXA6A3QTEwSE//1ueytFwpAC3Zw==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": null,
@@ -6845,7 +6876,7 @@
       "version": "19.3.1",
       "firstPublished": "2011-10-26T17:46:21.942Z",
       "published": "2026-10-14T16:47:15.290Z",
-      "packageModified": "2026-10-26T16:32:11.349Z",
+      "packageModified": "2026-10-27T16:27:02.167Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -6882,7 +6913,7 @@
       "version": "19.3.1",
       "firstPublished": "2014-05-06T18:59:36.160Z",
       "published": "2026-10-14T16:49:10.081Z",
-      "packageModified": "2026-10-26T16:35:44.395Z",
+      "packageModified": "2026-10-27T16:25:14.594Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -7038,7 +7069,7 @@
       "version": "0.28.0",
       "firstPublished": "2011-01-11T11:22:36.888Z",
       "published": "2026-09-09T17:17:30.281Z",
-      "packageModified": "2026-10-26T16:35:20.687Z",
+      "packageModified": "2026-10-27T16:25:15.482Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -7722,7 +7753,7 @@
       "version": "7.0.2",
       "firstPublished": "2012-10-01T15:35:39.553Z",
       "published": "2026-07-08T15:55:18.431Z",
-      "packageModified": "2026-10-26T08:09:26.636Z",
+      "packageModified": "2026-10-27T08:36:55.189Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -7812,7 +7843,7 @@
       "version": "1.7.0",
       "firstPublished": "2021-08-28T16:02:04.800Z",
       "published": "2026-09-09T17:19:07.352Z",
-      "packageModified": "2026-10-26T16:35:12.447Z",
+      "packageModified": "2026-10-27T16:25:01.147Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -8112,15 +8143,5 @@
       "lifecycle": {},
       "scriptsDenied": true
     }
-  ],
-  "workspaceLockRebinding": {
-    "baseline": "c3856ab3021770bb038cd05ddf761c12d420b043",
-    "previousLockSha256": "3ba0e74cffa371e40f264a7d42f11ca9aeb78edddc7b5aa6798f72e17e05c0d8",
-    "reason": "Only the existing @schema-baron/sqlite workspace dependency edge was added to generator; all external artifact lock entries compare unchanged. Original registry observedAt and artifact records are preserved; no download or new registry verification is claimed."
-  },
-  "lockReconciliation": {
-    "previousLockSha256": "5fe5eb7faaa2d87486b12b1a2bd1511d63c07f47ad9ffc4e9d2ed3710ef67d72",
-    "lockSha256": "8158ccfaee5c81d5093c5fea48af92874cce90290b60fd7ba708626067b903c8",
-    "rationale": "Offline merge reconciliation: added generator local workspace dependency @schema-baron/sqlite alongside its existing pinned better-sqlite3 edge. Programmatic equality confirmed every external artifact entry against both merge parents; registry records and observedAt are unchanged. No registry lookup or new registry claim."
-  }
+  ]
 }

@@ -1,3 +1,4 @@
+import { pinnedNpmCli, pinnedBinPath } from '../../../scripts/release/toolchain.mjs';
 import { test, expect } from '@playwright/test';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
@@ -41,7 +42,7 @@ test('real wizard authors Grid/Record/Search, then independent production browse
   expect(project.forms.map(f=>f.kind).sort()).toEqual(['Grid','Record','Search']);expect(project.actions.filter(a=>['insert','update','delete'].includes(a.operation)).every(a=>a.success)).toBe(true);
   await page.getByRole('button',{name:'Generate…',exact:true}).click();await page.getByLabel('Output location').fill('output:app');await page.getByRole('button',{name:'Preview files',exact:true}).click();await expect(page.getByText(/files to create/)).toBeVisible();await page.screenshot({path:'tests/e2e/generated-records/evidence/wizard-preview.png'});await page.getByRole('button',{name:'Create application',exact:true}).click();await expect(page.getByRole('dialog').getByRole('status')).toContainText('Application created');
   studio.kill('SIGTERM');await studioExit;
-  const output=join(root,'output','app'),npm='/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js',env={PATH:'/home/lynn/.nvm/versions/node/v24.22.1/bin:/usr/bin:/bin',HOME:process.env.HOME??'',NODE_PATH:'',npm_config_ignore_scripts:'true',npm_config_workspaces:'false',NEXT_TELEMETRY_DISABLED:'1'};
+  const output=join(root,'output','app'),npm=pinnedNpmCli,env={PATH:pinnedBinPath,HOME:process.env.HOME??'',NODE_PATH:'',npm_config_ignore_scripts:'true',npm_config_workspaces:'false',NEXT_TELEMETRY_DISABLED:'1'};
   for(const args of [['ci','--ignore-scripts','--offline'],...['typecheck','test','build'].map(script=>['run',script])]) {const result=spawnSync(process.execPath,[npm,...args],{cwd:output,env,encoding:'utf8',timeout:90000,maxBuffer:5000000});writeFileSync(join(root,args.at(-1)!+'.log'),(result.stdout??'')+(result.stderr??''));expect(result.status,(result.stdout??'')+(result.stderr??'')).toBe(0);}
   runtime=spawn(process.execPath,[join(output,'node_modules/next/dist/bin/next'),'start','-p','0','-H','127.0.0.1'],{cwd:output,env,stdio:['ignore','pipe','pipe']});runtimeExit=once(runtime,'exit');let runtimeLogs='';
   const appUrl=await new Promise<string>((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('App readiness timeout '+runtimeLogs)),15000);runtime!.stdout!.on('data',chunk=>{runtimeLogs+=String(chunk);const match=runtimeLogs.match(/http:\/\/127\.0\.0\.1:(\d+)/);if(match){clearTimeout(timer);resolve('http://127.0.0.1:'+match[1]);}});runtime!.stderr!.on('data',chunk=>runtimeLogs+=String(chunk));});

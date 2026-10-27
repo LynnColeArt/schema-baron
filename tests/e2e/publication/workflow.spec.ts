@@ -1,3 +1,4 @@
+import { pinnedNpmCli } from '../../../scripts/release/toolchain.mjs';
 import { test, expect, type Page } from '@playwright/test';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
@@ -21,6 +22,7 @@ test.use({
   }
 });
 test.setTimeout(600000);
+let equipmentRoot: string;
 let root: string, catalogRootId: string, catalogOutputRootId: string, url: string, capability: string, child: ReturnType<typeof spawn>, exit: Promise<unknown>;
 test.beforeAll(async () => {
   root = mkdtempSync(join(tmpdir(), 'publication-visible-'));
@@ -29,7 +31,10 @@ test.beforeAll(async () => {
   mkdirSync(join(root, 'outputs'));
   capability = randomBytes(32).toString('base64url');
   const config = join(root, 'owner.json');
-  const equipmentConfig = JSON.parse(readFileSync('/tmp/equipment-visible-IKFKUY/owner.json','utf8'));
+  const prerequisite = process.env.SCHEMA_BARON_EQUIPMENT_STUDY;
+  if (!prerequisite) throw new Error('Run the fresh Equipment study first with SCHEMA_BARON_EQUIPMENT_STUDY set to its location JSON; pass the same path here.');
+  equipmentRoot = JSON.parse(readFileSync(prerequisite, 'utf8')).root;
+  const equipmentConfig = JSON.parse(readFileSync(join(equipmentRoot, 'owner.json'),'utf8'));
   writeFileSync(config, JSON.stringify({
     ownerId: equipmentConfig.ownerId,
     capability,
@@ -64,7 +69,7 @@ test.beforeAll(async () => {
       }
     });
   });
-  writeFileSync('/tmp/wp23-publication-study-location.json', JSON.stringify({
+  writeFileSync(process.env.SCHEMA_BARON_PUBLICATION_STUDY ?? join(root, 'study-location.json'), JSON.stringify({
     root,
     url,
     ownerPid: child.pid
@@ -333,7 +338,7 @@ test('Publication Catalog visibly authors an unrelated composite-key application
 
  p=await snapshot();const contract=p.extensionContracts[0]!;
  await page.getByRole('tab',{name:'Code',exact:true}).click();await label(page,'Source output').fill(catalogOutputRootId+':app');await label(page,'Source module').selectOption(contract.id);await button(page,'Read source').click();await expect(label(page,'Source code')).toHaveValue(/Authored validator interface/);let authored=await label(page,'Source code').inputValue();const annotationField=membership.columns.find(c=>c.physicalName==='annotation')!.id;authored=authored.replace('(_context) => ({})',`(context) => context.values[${JSON.stringify(annotationField)}] === 'forbidden' ? {[${JSON.stringify(annotationField)}]:'Catalog annotation is reserved.'} : ({})`);authored+='\n// Publication Catalog authored preservation marker.\n';await label(page,'Source code').fill(authored);await button(page,'Save authored source').click();await expect(button(page,'Save authored source')).toBeEnabled();
- const output=join(root,'outputs','app'),npm='/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
+ const output=join(root,'outputs','app'),npm=pinnedNpmCli;
  const install=()=>{const r=spawnSync(process.execPath,[npm,'ci','--ignore-scripts','--offline'],{cwd:output,encoding:'utf8',timeout:120000});expect(r.status,r.stdout+r.stderr).toBe(0);};install();
  const port=await new Promise<number>(resolve=>{const server=createServer();server.listen(0,'127.0.0.1',()=>{const a=server.address();const port=typeof a==='object'&&a?a.port:0;server.close(()=>resolve(port));});});
  const start=async()=>{await button(page,'Build generated output').click();await expect(button(page,'Start / retry')).toBeEnabled({timeout:120000});await label(page,'Runtime port').fill(String(port));await button(page,'Start / retry').click();await expect(page.getByRole('region',{name:'Managed generated runtime'}).locator('strong').first()).toHaveText('Generated runtime · running',{timeout:30000});};
@@ -361,7 +366,7 @@ test('Publication Catalog visibly authors an unrelated composite-key application
 
  // Same owner process reopens the retained Equipment study via its supported root registration.
  const equipmentSummary=(await read('projects?approvedRoot=projects')).find((x:{name:string})=>x.name==='Equipment Desk');expect(equipmentSummary).toBeDefined();
- const equipmentRows=()=>{const d=new Database('/tmp/equipment-visible-IKFKUY/definitions/equipment.sqlite',{readonly:true});try{return ['assets','borrowers','loans','loan_lines'].map(t=>d.prepare('SELECT * FROM '+t+' ORDER BY id').all());}finally{d.close();}};const equipmentBefore=equipmentRows();
+ const equipmentRows=()=>{const d=new Database(join(equipmentRoot,'definitions/equipment.sqlite'),{readonly:true});try{return ['assets','borrowers','loans','loan_lines'].map(t=>d.prepare('SELECT * FROM '+t+' ORDER BY id').all());}finally{d.close();}};const equipmentBefore=equipmentRows();
  const switchTo=async(name:string)=>{await button(page,'Open / Switch…').click();await page.getByRole('dialog').getByRole('button',{name:new RegExp(name)}).click();await expect(page.getByRole('dialog')).toBeHidden();};
  await switchTo('Equipment Desk');const equipmentProject=await read('projects/'+equipmentSummary.id)as Project;await select(equipmentProject.pages[0]!.id);await page.getByRole('tab',{name:'Code',exact:true}).click();await button(page,'Login and access…').click();const equipmentSecret=randomBytes(32).toString('base64url');await label(page,'Visitor username').fill(username);await label(page,'Visitor password').fill(equipmentSecret);await button(page,'Provision user').click();await expect(page.getByText('User provisioned. Credentials were cleared.',{exact:true})).toBeVisible();await button(page,'Close').click();
  const eqPort=await new Promise<number>(resolve=>{const s=createServer();s.listen(0,'127.0.0.1',()=>{const a=s.address(),v=typeof a==='object'&&a?a.port:0;s.close(()=>resolve(v));});});
@@ -388,7 +393,7 @@ test('Publication Catalog visibly authors an unrelated composite-key application
  p=await snapshot();const verified=oracle();try{expect(verified.pragma('integrity_check')).toEqual([{integrity_check:'ok'}]);expect(verified.pragma('foreign_key_check')).toEqual([]);writeFileSync(info.outputPath('migration-history.json'),JSON.stringify(verified.prepare("SELECT * FROM __schema_baron_migrations WHERE id <> '@authority' ORDER BY id").all(),null,2));}finally{verified.close();}
  await page.getByText('Portable definition and output export',{exact:true}).click();await label(page,'Export destination').fill(catalogOutputRootId+':portable');await page.getByRole('checkbox',{name:/I reviewed including/}).check();await button(page,'Export portable application').click();await expect(page.getByRole('alert').filter({hasText:'Portable export created'})).toBeVisible();
  writeFileSync(info.outputPath('final-project.json'),JSON.stringify(p,null,2));writeFileSync(info.outputPath('final-rows.json'),JSON.stringify(evolved,null,2));writeFileSync(info.outputPath('expected-authored.json'),JSON.stringify({[contract.relativePath]:authored},null,2));
- const walk=(directory:string):string[]=>readdirSync(directory,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(directory,e.name)):[join(directory,e.name)]);const scanned=[...walk(info.outputDir),...walk(join(output,'.next','static')),...walk('/tmp/equipment-visible-IKFKUY/outputs/app/.next/static')];for(const file of scanned){const bytes=readFileSync(file);for(const value of [secret,equipmentSecret,capability])expect(bytes.includes(Buffer.from(value)),'Secret absent from retained evidence and static clients').toBe(false);}for(const value of [secret,equipmentSecret,capability])expect(JSON.stringify(p).includes(value)).toBe(false);writeFileSync(info.outputPath('credential-scan.json'),JSON.stringify({fileCount:scanned.length,visitorPasswordsAbsent:true,ownerCapabilityAbsent:true,scope:'retained evidence, both static client builds and project model'},null,2));
+ const walk=(directory:string):string[]=>readdirSync(directory,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(directory,e.name)):[join(directory,e.name)]);const scanned=[...walk(info.outputDir),...walk(join(output,'.next','static')),...walk(join(equipmentRoot,'outputs/app/.next/static'))];for(const file of scanned){const bytes=readFileSync(file);for(const value of [secret,equipmentSecret,capability])expect(bytes.includes(Buffer.from(value)),'Secret absent from retained evidence and static clients').toBe(false);}for(const value of [secret,equipmentSecret,capability])expect(JSON.stringify(p).includes(value)).toBe(false);writeFileSync(info.outputPath('credential-scan.json'),JSON.stringify({fileCount:scanned.length,visitorPasswordsAbsent:true,ownerCapabilityAbsent:true,scope:'retained evidence, both static client builds and project model'},null,2));
  await visitor.close();
 
 });

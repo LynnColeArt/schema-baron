@@ -1,3 +1,4 @@
+import { pinnedNpmCli, pinnedBinPath } from '../../../scripts/release/toolchain.mjs';
 import {test,expect} from '@playwright/test';
 import {spawn,spawnSync} from 'node:child_process';
 import {once} from 'node:events';
@@ -72,8 +73,8 @@ test('MCP authored reports, visible canonical properties and standalone exact to
   const plan=await command('generation_preview',{target:p.target,projectRevision:p.revision,outputRoot:'output:app'});await command('generation_apply',{planId:plan.id,hash:plan.hash,acknowledgedImpactIds:[]});
   const persisted=JSON.stringify({queries:p.queries,forms:p.forms,controls:p.controls,actions:p.actions});
   await stopStudio();
-  const output=join(root,'output','app'),npm='/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
-  const env={PATH:'/home/lynn/.nvm/versions/node/v24.22.1/bin:/usr/bin:/bin',HOME:process.env.HOME??'',NODE_PATH:'',npm_config_ignore_scripts:'true',npm_config_workspaces:'false',NEXT_TELEMETRY_DISABLED:'1'};
+  const output=join(root,'output','app'),npm=pinnedNpmCli;
+  const env={PATH:pinnedBinPath,HOME:process.env.HOME??'',NODE_PATH:'',npm_config_ignore_scripts:'true',npm_config_workspaces:'false',NEXT_TELEMETRY_DISABLED:'1'};
   for(const args of [['ci','--ignore-scripts','--offline'],...['typecheck','test','build'].map(script=>['run',script])]){const result=spawnSync(process.execPath,[npm,...args],{cwd:output,env,encoding:'utf8',timeout:90000,maxBuffer:5000000});writeFileSync(join(root,args.at(-1)!+'.log'),result.stdout+result.stderr);expect(result.status,result.stdout+result.stderr).toBe(0);}
   runtime=spawn(process.execPath,[join(output,'node_modules/next/dist/bin/next'),'start','-p','0','-H','127.0.0.1'],{cwd:output,env,stdio:['ignore','pipe','pipe']});runtimeExit=once(runtime,'exit');let runtimeLogs='';runtime.stderr!.on('data',chunk=>runtimeLogs+=String(chunk));
   const app=await new Promise<string>((res,rej)=>{const timer=setTimeout(()=>rej(Error('App readiness timeout '+runtimeLogs)),15000);runtime!.stdout!.on('data',chunk=>{runtimeLogs+=String(chunk);const match=runtimeLogs.match(/http:\/\/127\.0\.0\.1:(\d+)/);if(match){clearTimeout(timer);res('http://127.0.0.1:'+match[1]);}});});

@@ -1,8 +1,9 @@
+import { createRequire } from 'node:module';
 import { chromium, expect } from '@playwright/test';
 import type { Page, TestInfo } from '@playwright/test';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-export const AXE_SOURCE = process.env.AXE_SOURCE ?? '/tmp/wp05-accessibility/node_modules/axe-core/axe.min.js';
+export const AXE_SOURCE = process.env.AXE_SOURCE ?? createRequire(import.meta.url).resolve('axe-core/axe.min.js');
 export async function audit(page: Page, info: TestInfo, name: string) {
   await page.addScriptTag({
     content: readFileSync(AXE_SOURCE, 'utf8')

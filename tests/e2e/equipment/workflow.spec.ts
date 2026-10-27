@@ -1,3 +1,4 @@
+import { pinnedNpmCli, pinnedBinPath } from '../../../scripts/release/toolchain.mjs';
 import { test, expect, type Page } from '@playwright/test';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
@@ -60,7 +61,7 @@ test.beforeAll(async () => {
       }
     });
   });
-  writeFileSync('/tmp/wp22-equipment-study-location.json', JSON.stringify({
+  writeFileSync(process.env.SCHEMA_BARON_EQUIPMENT_STUDY ?? join(root, 'study-location.json'), JSON.stringify({
     root,
     url,
     ownerPid: child.pid
@@ -654,7 +655,7 @@ test('Equipment Desk starts blank and authors schema and forms through supported
     expectedSources[contract.relativePath] = custom;
   }
   const output = join(root, 'outputs', 'app'),
-    npm = '/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
+    npm = pinnedNpmCli;
   const installed = spawnSync(process.execPath, [npm, 'ci', '--ignore-scripts', '--offline'], {
     cwd: output,
     encoding: 'utf8',
@@ -1307,7 +1308,7 @@ test('Equipment Desk starts blank and authors schema and forms through supported
   expect(await fetch(url).then(() => true, () => false)).toBe(false);
   const portable = join(root, 'outputs', 'portable', 'app'),
     cleanEnv = {
-      PATH: '/home/lynn/.nvm/versions/node/v24.22.1/bin:/usr/bin:/bin',
+      PATH: pinnedBinPath,
       HOME: process.env.HOME ?? '',
       NODE_PATH: '',
       npm_config_ignore_scripts: 'true',

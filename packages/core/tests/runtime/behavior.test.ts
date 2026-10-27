@@ -1,3 +1,4 @@
+import { pinnedNpmCli } from '../../../../scripts/release/toolchain.mjs';
 import { test, expect } from 'vitest';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -10,7 +11,7 @@ import { authored, waitJob } from './fixture.js';
 test('real managed Record-only build/run/route, promotion shutdown and separate portable output', async () => {
   const f = await authored();
   try {
-    const npm = '/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
+    const npm = pinnedNpmCli;
     expect(spawnSync(process.execPath, [npm, 'ci', '--ignore-scripts', '--offline'], {
       cwd: f.app,
       encoding: 'utf8'

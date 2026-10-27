@@ -1,3 +1,4 @@
+import { pinnedNpmCli } from '../../../../scripts/release/toolchain.mjs';
 import {afterEach,expect,test} from 'vitest';
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
 import {join} from 'node:path';
@@ -36,7 +37,7 @@ test('production Record output executes supported hooks and rolls back failures;
  for(const file of files){const path=join(output,file.path);mkdirSync(join(path,'..'),{recursive:true});writeFileSync(path,file.content);}
  const signatures={validator:['ValidatorV1','validate'],action:['ActionV1','execute'],service:['ServiceV1','beforeWrite'],event:['EventV1','afterWrite']} as const;
  for(const [kind,[signature,name]] of Object.entries(signatures))writeFileSync(join(output,'authored',kind+'.ts'),`import type {${signature}} from '../server/extension-contracts';\nexport const contractVersion=1 as const;\nexport const ${name}:${signature}=(context)=>{const probe=globalThis as typeof globalThis & {hookCalls:string[];failHook:string};probe.hookCalls.push('${kind}');if(probe.failHook==='${kind}')${kind==='validator'?"return {title:'Validator rejected'}":"throw Error('Rejected by '+probe.failHook)"};${kind==='validator'?'return {};':''}};\n`);
- const npm='/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js';
+ const npm=pinnedNpmCli;
  for(const args of [['ci','--ignore-scripts','--offline'],['run','typecheck']]){const checked=spawnSync(process.execPath,[npm,...args],{cwd:output,encoding:'utf8',timeout:60000});expect(checked.status,checked.stdout+checked.stderr).toBe(0);}
  const proof=`import assert from 'node:assert/strict';
 import Database from 'better-sqlite3';

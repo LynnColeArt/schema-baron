@@ -1,3 +1,4 @@
+import { pinnedNpmCli } from '../../../scripts/release/toolchain.mjs';
 import {test,expect} from 'vitest';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js';
@@ -78,7 +79,7 @@ test('independent real MCP-first and HTTP-first corpora cover implemented comman
  const generatedRevision=promotion.manifest.outputTreeRevision;
  await good('runtime.context',{generatedRevision,pageId:'index'});await run('runtime.route',{generatedRevision,pageId:'index',parameters:{}},{error:'PROJECT_BUSY'});await good('runtime.status',{generatedRevision});
  journal.begin({phase:'offline-install',transport:'child',operation:'npm.ci',arguments:['ci','--ignore-scripts','--offline']});let installCompleted=false,probeFailure:unknown;
- const installation=runChild(process.execPath,['/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js','ci','--ignore-scripts','--offline'],{cwd:join(root,'outputs/app'),timeoutMs:120000}).then(result=>{installCompleted=true;return result;});
+ const installation=runChild(process.execPath,[pinnedNpmCli,'ci','--ignore-scripts','--offline'],{cwd:join(root,'outputs/app'),timeoutMs:120000}).then(result=>{installCompleted=true;return result;});
  const probes=(async()=>{while(!installCompleted){await new Promise(resolve=>setTimeout(resolve,250));if(installCompleted)break;journal.begin({phase:'offline-install-owner-probe',transport:'http',operation:'capabilities',childActiveAtRequest:true});try{const response=await fetch(owner.url+'/api/v1/capabilities',{headers:{cookie,origin:owner.url}});await response.text();journal.observed({httpStatus:response.status});expect(response.status).toBe(200);}catch(error){probeFailure=error;break;}}})();
  const installed=await installation;await probes;journal.begin({phase:'offline-install-completed',operation:'npm.ci',transport:'child'});journal.observed({child:installed});if(probeFailure){journal.begin({phase:'offline-install-owner-probe',operation:'capabilities',transport:'http'});throw probeFailure;}expect(installed.status,installed.stdout+installed.stderr).toBe(0);expect(installed).toMatchObject({signal:null,timedOut:false});expect(installed.error).toBeUndefined();
  const build=await run('runtime.start',{generatedRevision,intent:'build'},{replay:false});const runtime=build.result as {jobId:string};expect(runtime.jobId).toBeTruthy();

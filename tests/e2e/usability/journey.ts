@@ -1,3 +1,4 @@
+import { pinnedNpmCli } from '../../../scripts/release/toolchain.mjs';
 import { test, expect } from '@playwright/test';
 import { spawnSync } from 'node:child_process';
 import { writeFileSync, readFileSync } from 'node:fs';
@@ -221,7 +222,7 @@ export async function keyboardJourney(page: Page, info: TestInfo, native = false
   await expect.poll(() => readFileSync(join(root, 'output', output, contract.relativePath), 'utf8')).toContain('Keyboard-authored validator');
   await generate();
   expect(readFileSync(join(root, 'output', output, contract.relativePath), 'utf8')).toContain('Keyboard-authored validator');
-  const install = spawnSync(process.execPath, ['/home/lynn/.nvm/versions/node/v24.22.1/lib/node_modules/npm/bin/npm-cli.js', 'ci', '--ignore-scripts', '--offline'], {
+  const install = spawnSync(process.execPath, [pinnedNpmCli, 'ci', '--ignore-scripts', '--offline'], {
     cwd: join(root, 'output', output),
     encoding: 'utf8'
   });
