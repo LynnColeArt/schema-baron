@@ -8,6 +8,7 @@ import { CommandRegistry } from '../commands/index.js';
 import { PlanRepository } from '../plans/index.js';
 export interface CoreOptions extends StorageOptions { ownerId: string }
 export type Outcome = { ok: true; revision: number; result: unknown; diagnostics: Diagnostic[] } | { ok: false; revision: number; error: { code: string; message: string; retryable: boolean }; diagnostics: Diagnostic[] };
+interface PendingCommand { payloadHash: string; outcome: Promise<Outcome> }
 const collection = { connection: 'connections', table: 'tables', query: 'queries', page: 'pages', form: 'forms', control: 'controls', action: 'actions', policy: 'policies', extension: 'extensionContracts' } as const;
 export function applyBatch(project: Project, operations: EntityBatchOperation[]): Project {
  const candidate = structuredClone(project);
@@ -21,6 +22,7 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
  candidate.revision++; return parseProject(candidate);
 }
 export class ProjectCore {
+ private pending = new Map<string, PendingCommand>();
  private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
@@ -40,24 +42,37 @@ export class ProjectCore {
  recordJob(actor: string, projectId: string, input: unknown) { this.authorize(actor); const job = jobSchema.parse(input); this.storage.putJob(projectId, job.id, job); return job; }
  operation(actor: string, projectId: string, requestId: string) { this.authorize(actor); return this.storage.operation(projectId, requestId); }
  get recovery() { return structuredClone(this.storage.recovery); }
- /** Async features do their bounded external read outside the owner event loop. Re-enter
-  * the exact synchronous authority after await: idempotency and revision are rechecked
-  * before validating/saving the candidate. No stale effect can finalize. */
+ /** Reserve the canonical key before invoking an async feature, including its first
+  * synchronous effect. The store's writer/root leases exclude another live core.
+  * Completed outcomes remain durable in storage; pending matches share one result. */
  async executeAsync(actor: string, input: unknown): Promise<Outcome> {
-  let command: Command; let project: Project | undefined;
+  let command: Command; let project: Project; let payloadHash: string; let key: string;
   try {
    if (this.closed) return this.execute(actor, input);
    this.authorize(actor); command = commandSchema.parse(input);
-   if (!this.registry.isAsync(command.operation)) return this.execute(actor, input);
-   if (this.storage.lookup(command.projectId, command.requestId)) return this.execute(actor, input);
+   key = JSON.stringify([command.projectId, command.requestId]); payloadHash = hash(command);
+   const pending = this.pending.get(key);
+   if (pending) return pending.payloadHash === payloadHash ? pending.outcome : this.execute(actor, command);
+   if (!this.registry.isAsync(command.operation)) return this.execute(actor, command);
+   if (this.storage.lookup(command.projectId, command.requestId)) return this.execute(actor, command);
    project = this.storage.snapshot(command.projectId);
-   if (command.expectedRevision !== project.revision) return this.execute(actor, input);
+   if (command.expectedRevision !== project.revision) return this.execute(actor, command);
   } catch { return this.execute(actor, input); }
-  try { const effect = await this.registry.runAsync(command, project); return this.executePrepared(actor, input, () => effect); }
-  catch (error) { return this.executePrepared(actor, input, () => { throw error; }); }
+  const reservation: PendingCommand = { payloadHash, outcome: Promise.resolve().then(async () => {
+   // Deferral lets us publish the reservation before any handler code executes.
+   if (this.closed) return this.executePrepared(actor, command, undefined, reservation);
+   try {
+    // A synchronous mutation may have run between reservation and this microtask.
+    if (this.storage.snapshot(command.projectId).revision !== command.expectedRevision) return this.executePrepared(actor, command, undefined, reservation);
+    const effect = await this.registry.runAsync(command, project);
+    return this.executePrepared(actor, command, () => effect, reservation);
+   } catch (error) { return this.executePrepared(actor, command, () => { throw error; }, reservation); }
+  }).finally(() => { this.pending.delete(key); }) };
+  this.pending.set(key, reservation);
+  return reservation.outcome;
  }
  execute(actor: string, input: unknown): Outcome { return this.executePrepared(actor, input); }
- private executePrepared(actor: string, input: unknown, prepared?: () => CommandEffect): Outcome {
+ private executePrepared(actor: string, input: unknown, prepared?: () => CommandEffect, reservation?: PendingCommand): Outcome {
   let revision = 0; let accepted: Command | undefined; let payloadHash: string | undefined;
   try {
    if (this.closed) throw new StorageError('RECOVERY_REQUIRED', 'Owner has closed; no command was committed.');
@@ -65,6 +80,11 @@ export class ProjectCore {
    if (!this.registry.has(command.operation)) throw new StorageError('INVALID_INPUT', 'Operation is not available.');
    payloadHash = hash(command); const retry = this.storage.lookup(command.projectId, command.requestId);
    if (retry) { if (retry.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Request ID already identifies a different payload.'); return retry.outcome as Outcome; }
+   const pending = this.pending.get(JSON.stringify([command.projectId, command.requestId]));
+   if (pending && pending !== reservation) {
+    if (pending.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Request ID already identifies a different payload.');
+    throw new StorageError('PROJECT_BUSY', 'This request is still running. Await executeAsync or retry after completion.');
+   }
    const project = command.operation === 'project.create' || command.operation === 'project.list' ? undefined : command.operation === 'project.open' ? this.storage.open(command.projectId, command.input.locator) : this.storage.snapshot(command.projectId); revision = project?.revision ?? 0;
    if (command.expectedRevision !== revision) throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');
    accepted = command;

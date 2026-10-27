@@ -143,3 +143,76 @@ manual authenticated CUA journey, native 200% zoom or later-feature acceptance i
 claimed. No unrelated existing service was stopped. Independent review is required;
 there is no self-approval. The known missing Python/JUnit gate authority and advisory
 no_coverage warning are not claimed as passing product tests.
+
+## Cycle 1 repair: reserve asynchronous idempotency before external effects
+
+Independent review event `01M5XR7NYN2KTZC7BDJ16RKM3D` rejected source `b355f99`:
+matching concurrent createEmpty calls could both return OUTPUT_CONFLICT after one
+created the file, and conflicting same-key paths both created files before one was
+rejected. The prior post-await check protected model commits but was too late to
+protect external effects. The synthetic commit-arbitration test missed that boundary.
+The unused public quoteIdentifier helper was also identified and has been removed;
+introspection continues binding PRAGMA values without an artificial replacement call.
+
+The shared ProjectCore now reserves the canonical parsed-command hash under the
+(projectId, requestId) pair before invoking any async handler code, including its
+synchronous prefix. Matching async requests share one execution and final outcome;
+conflicting payloads reject before entering the handler. A matching synchronous
+call while the async request is pending returns retryable PROJECT_BUSY without
+writing an operation record; a conflicting synchronous payload also cannot execute
+or poison the pending slot. Completed persisted outcomes retain existing replay
+behavior through both entry points. Caller input is parsed/copied before deferral,
+so later mutation of the caller's object cannot change the reserved effect or hash.
+Revision and owner-close guards run before handler entry and again after the await.
+
+The reservation is per owning core, protected by the existing exclusive metadata
+writer and approved-root leases: tests refuse a second core both against the same
+metadata store and against a separate metadata store targeting the same approved
+root. Completed outcomes replay after close/reopen. A close before handler entry
+runs no effect and records no operation. Close during a real worker cancels and
+joins that worker, then returns RECOVERY_REQUIRED without a late operation/model
+commit. An explicitly created empty file may remain when its authorized initial
+request is interrupted; no conflicting request creates another file. A retry after
+reopen reports the actual existing-file conflict rather than inventing completion.
+
+Test-first evidence: `/tmp/wp06-repair-red.log` records five failures in the six
+initial regressions against the rejected build, including the exact matching and
+conflicting file-creation defects, mixed sync/async poisoning, generic duplicate
+handler execution, and shutdown-before-execution. Desired assertions were retained
+and expanded; `/tmp/wp06-repair-green.log` records the focused passing run before
+final transport coverage was added.
+
+The new public regressions assert outcomes, actual file existence, unchanged project
+revision, operation record status/replay, event counts, and reopening behavior. Both
+exact createEmpty overlap cases run before handler entry and during the worker await.
+Additional cases cover failure replay after repairing the external directory,
+generic canceled-handler sharing, caller-input mutation, stale revision before any
+file creation, both shutdown timings, and simultaneous HTTP/MCP replay/conflict.
+Existing post-await revision, native timeout/cancel/rollback and UI draft tests remain.
+
+The original independent reproduction was left unchanged. Running
+`node docs/reviews/wp06-idempotency-repro.mjs` against the repair exits 1 at its
+intentional old-defect assertion: both matching results now succeed at revision 1,
+the one file exists, the operation is committed with eventSequence 1, and retry
+returns that same success. Exact output: `/tmp/wp06-repair-oldrepro.log`. That exit
+is not represented as a passing test; the new desired-behavior tests cover both
+matching and conflicting cases through completion.
+
+Final observed commands/outcomes on the pinned runtime:
+
+- `npm run verify`: **154 tests in 16 files pass**, all implemented builds/typechecks,
+  native smoke, credentials, lint and 258 exact dependency artifacts pass.
+  Log: `/tmp/wp06-repair-verify.log`.
+- Dedicated strict test-source check for `packages/sqlite/tests/introspection` and
+  strict TypeScript compilation of the browser workflow both pass.
+- All **five browser workflows pass in 12.0 seconds**, including the actual
+  connections journey and all four WP05 invalid-draft/history/focus regressions.
+  Output: `/tmp/wp06-repair-e2e`, with the same connection screenshot names under
+  `connections-workflow-UI-au-d084b-serving-invalid-page-drafts/`.
+- `npm audit --json`: zero vulnerabilities, `/tmp/wp06-repair-audit.json`.
+  `npm run lint` and `git diff --check` pass. No dependencies changed in this repair.
+
+The isolated owner was restarted from the repaired production build at the same
+`http://127.0.0.1:36971`, exec session **77872**, with the same private owner config.
+No unrelated server was stopped. No new manual CUA or later-feature claim is made.
+This is a repair handoff for independent review, not self-approval.

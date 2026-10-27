@@ -6,8 +6,6 @@ export interface PhysicalForeignKey { id: number; seq: number; table: string; fr
 export interface PhysicalIndex { name: string; unique: number; origin: string; partial: number; sql: string | null; columns: { seqno: number; cid: number; name: string | null; desc: number; coll: string; key: number }[] }
 export interface PhysicalTable { name: string; columns: PhysicalColumn[]; foreignKeys: PhysicalForeignKey[]; indexes: PhysicalIndex[] }
 export interface Inspection { sqliteVersion: string; encoding: string; foreignKeys: boolean; objects: SchemaObject[]; tables: PhysicalTable[]; fingerprint: string }
-/** Values are bound; SQLite identifiers are quoted, including embedded double quotes. */
-export const quoteIdentifier = (name: string) => `"${name.replaceAll('"', '""')}"`;
 export function inspectDatabase(db: Database.Database): Inspection {
  const objects = db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all() as SchemaObject[];
  const tables = objects.filter(o => o.type === 'table' && !o.name.startsWith('sqlite_')).map(o => ({ name: o.name,

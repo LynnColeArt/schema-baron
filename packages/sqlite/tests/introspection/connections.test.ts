@@ -54,8 +54,8 @@ test('awaited effects revalidate revision and matching/conflicting idempotency w
  const waitStart=()=>new Promise<void>(resolve=>started.push(resolve));
  const request=command('flow.inspect',{projection:'schema'},1,'overlap'); const start=waitStart(); const pending=http(request); await start;
  expect((await http(command('project.batch',{operations:[{kind:'put',entity:'page',id:'page',value:{id:'page',route:'/page',title:'During worker',document:[],formIds:[]}}]},1))).outcome).toMatchObject({ok:true,revision:2}); releases.shift()!(); expect((await pending).outcome).toMatchObject({ok:false,error:{code:'REVISION_CONFLICT'}});
- const same=command('flow.inspect',{projection:'schema'},2,'same-key'); const aStart=waitStart(); const a=http(same); await aStart; const bStart=waitStart(); const b=http(same); await bStart; releases.shift()!(); const outcome=(await a).outcome; releases.shift()!(); expect((await b).outcome).toEqual(outcome); expect(outcome).toMatchObject({ok:true,revision:3});
- const conflicting=command('flow.inspect',{projection:'schema'},3,'conflict-key'); const cStart=waitStart(); const c=http(conflicting); await cStart; const dStart=waitStart(); const d=http({...conflicting,input:{projection:'application'}}); await dStart; releases.shift()!(); expect((await c).outcome).toMatchObject({ok:true,revision:4}); releases.shift()!(); expect((await d).outcome).toMatchObject({error:{code:'IDEMPOTENCY_CONFLICT'}});
+ const same=command('flow.inspect',{projection:'schema'},2,'same-key'); const aStart=waitStart(); const a=http(same); await aStart; const b=http(same); releases.shift()!(); const outcome=(await a).outcome; expect((await b).outcome).toEqual(outcome); expect(outcome).toMatchObject({ok:true,revision:3});
+ const conflicting=command('flow.inspect',{projection:'schema'},3,'conflict-key'); const cStart=waitStart(); const c=http(conflicting); await cStart; const d=http({...conflicting,input:{projection:'application'}}); expect((await d).outcome).toMatchObject({error:{code:'IDEMPOTENCY_CONFLICT'}}); releases.shift()!(); expect((await c).outcome).toMatchObject({ok:true,revision:4});
  expect(owner.service.core.snapshot('owner','p')).toMatchObject({revision:4,pages:[{id:'page',title:'During worker'}]});
 });
 test('owner close rejects delayed asynchronous finalization and reopening sees only the committed snapshot',async()=>{
@@ -71,4 +71,15 @@ test('actual awaited connection inspect and bind cannot finalize across a synchr
  expect(change(1,'during-inspect')).toMatchObject({ok:true,revision:2});expect(await pending).toMatchObject({error:{code:'REVISION_CONFLICT'}});
  const preview=(await http(command('connection.inspect',{approvedPath:'projects:external.sqlite',mode:'read-only'},2))).outcome.result;
  const binding=core.executeAsync('owner',command('connection.bind',{connectionId:preview.connection.id,fingerprint:preview.connection.fingerprint},2));expect(change(2,'during-bind')).toMatchObject({ok:true,revision:3});expect(await binding).toMatchObject({error:{code:'REVISION_CONFLICT'}});expect(core.snapshot('owner','p').connections).toEqual([]);expect(db.prepare('SELECT * FROM child').all()).toEqual([{id:7,a:'a',b:1,amount:2.35}]);db.close();
+});
+test('actual HTTP and MCP duplicates share one createEmpty execution and conflicting transport payloads create no extra file', async () => {
+ const { root, owner, http, agent } = await setup();
+ const request = command('connection.inspect', { approvedPath: 'projects:transport-once.sqlite', mode: 'read-only', createEmpty: true }, 1, 'transport-once');
+ const first = owner.service.core.executeAsync('owner', request);
+ const [result, browser, mcp] = await Promise.all([first, http(request), agent(request)]);
+ expect(result).toMatchObject({ ok: true, revision: 1 }); expect(browser.outcome).toEqual(result); expect(mcp).toEqual(result);
+ const conflict = { ...request, input: { ...request.input as object, approvedPath: 'projects:transport-rejected.sqlite' } };
+ expect((await http(conflict)).outcome).toMatchObject({ error: { code: 'IDEMPOTENCY_CONFLICT' } }); expect(await agent(conflict)).toEqual((await http(conflict)).outcome);
+ expect(existsSync(join(root, 'definitions', 'transport-once.sqlite'))).toBe(true); expect(existsSync(join(root, 'definitions', 'transport-rejected.sqlite'))).toBe(false);
+ expect(owner.service.core.snapshot('owner', 'p')).toMatchObject({ revision: 1, connections: [] }); expect(owner.service.core.operation('owner', 'p', 'transport-once')).toMatchObject({ outcome: 'committed', baseRevision: 1 });
 });
