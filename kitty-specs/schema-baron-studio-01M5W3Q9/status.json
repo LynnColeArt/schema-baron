@@ -199,6 +199,9 @@
       "last_event_id": "01M5XQZ4AGX17ZHKBWNH4THJK0",
       "last_transition_at": "2026-10-27T03:55:20.272795+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: b355f99898b4c8e9a047edb4eef30f9da0da0173; 142 tests, all implemented builds/types and exact dependency verification passed; five real browser workflows passed; native cancellation confirms process exit and rollback. Evidence packages/core/src/connections/EVIDENCE.md."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
