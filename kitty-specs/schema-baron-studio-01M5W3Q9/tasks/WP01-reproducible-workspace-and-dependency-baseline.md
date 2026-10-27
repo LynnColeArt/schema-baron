@@ -317,3 +317,8 @@ Do not edit a task checkbox or frontmatter lane to manufacture status.
 Track subtask completion with:
 `spec-kitty agent tasks mark-status <Txxx> --status done --mission schema-baron-studio-01M5W3Q9`.
 Use the canonical runtime for WP state transitions and review handoff.
+
+## Activity Log
+
+- 2026-10-27T01:00:37Z – codex – Acknowledged review-cycle-1 R1 [P1]: public npm check:generated inherits workspace and ancestor executable PATH, allowing undeclared tsc. Repairing isolated npm execution environment and adding actual public-entry missing-tool and independently-installed-tool regressions. No product behavior acceptance claimed.
+- 2026-10-27T01:04:25Z – codex – Addressed review-cycle-1 R1 in c084f4e: absolute selected Node/npm CLI; temporary toolchain plus OS PATH; allowlisted environment; isolated npm configs/prefix; ancestor-bin refusal. Public npm regression observed red before repair, now undeclared tsc fails and independently installed pinned TS compiles offline. Full verify passes 11 tests, strict config/harness typecheck, scoped diff lint, native smoke, credentials and dependency match. Wider historical lint base hits absent runtime-managed status snapshots; scoped repair lint passes. No product claims or dependency changes.
