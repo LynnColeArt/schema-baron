@@ -712,6 +712,9 @@
       "last_event_id": "01M5YJXXNNCZEY2AABSVM3MB2X",
       "last_transition_at": "2026-10-27T11:46:32.245888+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: source 2214b32; real managed build/run/cancel/native-child cleanup, tree-revision promotion/restart and typed Live Page; portable export independently installed/built/served with Studio stopped; 425 tests plus strict/browser proof. Evidence packages/core/tests/runtime/EVIDENCE.md."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
