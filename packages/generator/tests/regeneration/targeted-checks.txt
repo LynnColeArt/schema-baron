@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-t
+
+
+ Test Files  4 passed (4)
+      Tests  35 passed (35)
+   Start at  05:48:22
+   Duration  13.40s (tests 98%, import 1%, transform 1%)
+

@@ -37,11 +37,17 @@ export class OwnerService {
   this.secrets.add(options.capability);
   this.core = new ProjectCore(options);
   this.register('job.inspect', (command, project) => { const job = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!job) throw new StorageError('NOT_FOUND', 'Unknown job.'); return { result: jobSchema.parse(job) }; });
-  this.register('job.cancel', (command) => {
+  this.core.registry.registerAsync('job.cancel', async (input) => {
+   if (input.operation !== 'job.cancel') throw new StorageError('INVALID_INPUT', 'Expected job cancellation.');
+   const command = input;
+   const migration = await this.core.cancelMigration(command.projectId, command.input.jobId);
+   if (migration) return { result: migration };
    const value = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!value) throw new StorageError('NOT_FOUND', 'Unknown job.');
    const job = jobSchema.parse(value);
-   // All handlers run synchronously in the same writer. No commit can interleave here.
+   // Generic controllers run before the first await, preserving their synchronous effect boundary.
    if (job.committed || !['pending', 'running'].includes(job.status)) return { result: job };
+   const cancellation = this.core.cancelQueryPreview(options.ownerId, command.projectId, job.id);
+   if (cancellation) { const preview = await cancellation; return { result: preview, job: preview }; }
    const controller = this.cancelers.get(JSON.stringify([command.projectId, job.id]));
    const observed = controller ? jobSchema.parse(controller(structuredClone(job))) : job.status === 'pending' ? { ...job, status: 'canceled' as const } : job;
    if (observed.id !== job.id) throw new StorageError('VALIDATION_FAILED', 'Cancellation must preserve job identity.');
@@ -109,9 +115,9 @@ export class OwnerService {
  }
  private query(url: URL, allowed: string[]) { for (const name of url.searchParams.keys()) if (!allowed.includes(name) || url.searchParams.getAll(name).length !== 1) throw new StorageError('INVALID_INPUT', 'Unknown or repeated query parameter.'); }
  private snapshot(id: string): Outcome { try { const project = this.core.snapshot(this.options.ownerId, id); return { ok: true, revision: project.revision, result: project, diagnostics: [] }; } catch (error) { if (error instanceof StorageError && error.code === 'INVALID_INPUT') return failure('NOT_FOUND', 'Unknown project.'); throw error; } }
- private dispatch(input: unknown): Outcome {
+ private async dispatch(input: unknown): Promise<Outcome> {
   const parsed = commandSchema.safeParse(input); if (!parsed.success) return failure('INVALID_INPUT', 'Command does not match the operation schema.');
-  return this.core.execute(this.options.ownerId, parsed.data);
+  return this.core.executeAsync(this.options.ownerId, parsed.data);
  }
  /** Next's Node adapter normalizes Request URL hostname to localhost. Restore the trusted
   * listening origin; original Host and Origin headers are still checked before authentication. */
@@ -149,14 +155,14 @@ export class OwnerService {
     return this.response({ ok: true, revision: 0, result: { version: 1, operations, approvedRootIds: Object.keys(this.options.approvedRoots) }, diagnostics: [] });
    }
    if (area === 'projects') {
-    if (parts.length === 1 && method === 'GET') { this.query(url, ['approvedRoot']); return this.response(this.dispatch({ requestId: createId(), projectId: 'catalog', operation: 'project.list', expectedRevision: 0, input: { approvedRoot: url.searchParams.get('approvedRoot') ?? '' } })); }
+    if (parts.length === 1 && method === 'GET') { this.query(url, ['approvedRoot']); return this.response(await this.dispatch({ requestId: createId(), projectId: 'catalog', operation: 'project.list', expectedRevision: 0, input: { approvedRoot: url.searchParams.get('approvedRoot') ?? '' } })); }
     if (parts.length === 1 && method === 'POST') {
      this.query(url, []);
      const body = z.strictObject({ requestId: idSchema, name: z.string().min(1), approvedRoot: z.string().min(1), target: z.literal('next-typescript-sqlite') }).safeParse(await this.body(request));
      if (!body.success || /[/\\]/.test(body.data.requestId) || ['.', '..'].includes(body.data.requestId)) return this.response(failure('INVALID_INPUT', 'Invalid project creation request.'));
      // The OpenAPI convenience form uses requestId as project identity, so retries remain stable.
      const { requestId, ...input } = body.data;
-     return this.response(this.dispatch({ requestId, projectId: requestId, operation: 'project.create', expectedRevision: 0, input }));
+     return this.response(await this.dispatch({ requestId, projectId: requestId, operation: 'project.create', expectedRevision: 0, input }));
     }
     if (!idSchema.safeParse(id).success || id?.includes('/') || id?.includes('\\')) return this.response(failure('INVALID_INPUT', 'Invalid project ID.'));
     if (parts.length === 2 && method === 'GET') { this.query(url, []); return this.response(this.snapshot(id!)); }
@@ -165,9 +171,9 @@ export class OwnerService {
      if (!body || typeof body !== 'object' || Array.isArray(body)) return this.response(failure('INVALID_INPUT', 'Command body must be an object.'));
      const value = body as Record<string, unknown>;
      if (value.projectId !== undefined && value.projectId !== id) return this.response(failure('INVALID_INPUT', 'Route and command project must agree.'));
-     return this.response(this.dispatch({ ...value, projectId: id }));
+     return this.response(await this.dispatch({ ...value, projectId: id }));
     }
-    if (parts.length === 3 && action === 'diagnostics' && method === 'GET') { this.query(url, []); const snapshot = this.snapshot(id!); if (!snapshot.ok) return this.response(snapshot); return this.response(this.dispatch({ requestId: createId(), projectId: id, operation: 'project.validate', expectedRevision: snapshot.revision, input: {} })); }
+    if (parts.length === 3 && action === 'diagnostics' && method === 'GET') { this.query(url, []); const snapshot = this.snapshot(id!); if (!snapshot.ok) return this.response(snapshot); return this.response(await this.dispatch({ requestId: createId(), projectId: id, operation: 'project.validate', expectedRevision: snapshot.revision, input: {} })); }
     if (parts.length === 3 && action === 'events' && method === 'GET') {
      this.query(url, ['afterSequence', 'limit']); const snapshot = this.snapshot(id!); if (!snapshot.ok) return this.response(snapshot);
      const replay = this.core.events(this.options.ownerId, id!, queryInteger(url.searchParams.get('afterSequence'), 0), queryInteger(url.searchParams.get('limit'), 100, 1));
@@ -181,7 +187,7 @@ export class OwnerService {
     this.query(url, method === 'DELETE' ? ['projectId', 'requestId', 'expectedRevision'] : ['projectId']);
     const projectId = idSchema.parse(url.searchParams.get('projectId')); const snapshot = this.snapshot(projectId); if (!snapshot.ok) return this.response(snapshot);
     if (method === 'GET') { const job = this.core.job(this.options.ownerId, projectId, id!); return this.response(job ? { ok: true, revision: snapshot.revision, result: jobSchema.parse(job), diagnostics: [] } : failure('NOT_FOUND', 'Unknown job.', snapshot.revision)); }
-    return this.response(this.dispatch({ requestId: url.searchParams.get('requestId'), projectId, operation: 'job.cancel', expectedRevision: queryInteger(url.searchParams.get('expectedRevision'), 0, 1), input: { jobId: id } }));
+    return this.response(await this.dispatch({ requestId: url.searchParams.get('requestId'), projectId, operation: 'job.cancel', expectedRevision: queryInteger(url.searchParams.get('expectedRevision'), 0, 1), input: { jobId: id } }));
    }
    return this.response(failure('NOT_FOUND', 'Unknown endpoint or method.'));
   } catch (error) {
@@ -190,5 +196,5 @@ export class OwnerService {
    return this.response(failure('RECOVERY_REQUIRED', 'Owner request failed; inspect recovery before retrying.'));
   }
  }
- close() { this.sessions.clear(); this.secrets.clear(); this.core.close(); }
+ close() { this.sessions.clear(); this.secrets.clear(); return this.core.close(); }
 }

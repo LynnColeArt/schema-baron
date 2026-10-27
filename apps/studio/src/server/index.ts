@@ -21,9 +21,14 @@ export async function startOwner(options: OwnerOptions, port = 0): Promise<Runni
  const server = createServer((request, response) => { void serve(service, url, request, response); });
  server.requestTimeout = 15000; server.headersTimeout = 10000;
  try { await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(port, '127.0.0.1', resolve); }); }
- catch (error) { service.close(); throw error; }
+ catch (error) { await service.close(); throw error; }
  const address = server.address(); if (!address || typeof address === 'string') throw new Error('Missing owner address.');
  url = `http://127.0.0.1:${address.port}`; service.setOrigin(url);
  let closing: Promise<void> | undefined;
- return { service, url, close: () => closing ??= new Promise<void>((resolve, reject) => { server.close(error => { service.close(); error ? reject(error) : resolve(); }); server.closeIdleConnections(); }) };
+ return { service, url, close: () => closing ??= (async () => {
+  const stopped = new Promise<void>((resolve,reject) => server.close(error => error ? reject(error) : resolve()));
+  server.closeIdleConnections();
+  const results = await Promise.allSettled([stopped,service.close()]);
+  for(const result of results)if(result.status === 'rejected')throw result.reason;
+ })() };
 }

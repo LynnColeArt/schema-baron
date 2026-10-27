@@ -1,0 +1,3 @@
+{"stage":"before-handler","matching":"one success/record/replay","conflicting":"winner only; loser absent","revision":1}
+{"stage":"worker-active","matching":"one success/record/replay","conflicting":"winner only; loser absent","revision":1}
+{"mixedSync":"retryable busy; no poisoning","unauthorized":"access denied","projectIsolation":"same key succeeds in q","reopen":"same durable result/record"}

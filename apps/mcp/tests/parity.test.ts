@@ -25,7 +25,7 @@ const command = (operation: string, input: unknown, expectedRevision = 1, reques
 const page = (id: string, route = '/' + id) => ({ kind: 'put', entity: 'page', id, value: { id, route, title: id, formIds: [], document: [] } });
 test('real SDK stdio client creates and changes the HTTP owner; valid/invalid/stale corpus has identical outcomes and no partial writes', async () => {
  const { client, root, http, mcp, stderr } = await setup();
- const tools = await client.listTools(); expect(tools.tools.map(t => t.name)).toContain('project_batch'); expect(tools.tools.map(t => t.name)).not.toContain('schema_apply');
+ const tools = await client.listTools(); expect(tools.tools.map(t => t.name)).toContain('project_batch'); expect(tools.tools.map(t => t.name)).toContain('schema_apply');
  expect(tools.tools.find(t => t.name === 'project_batch')?.inputSchema).toMatchObject({ type: 'object', additionalProperties: false });
  const create = command('project.create', { name: 'Independent blank', target: 'next-typescript-sqlite', approvedRoot: 'projects' }, 0, 'create');
  const created = await mcp(create); expect(created).toMatchObject({ ok: true, revision: 1, result: { pages: [], schema: { tables: [] } } }); expect((await http(create)).outcome).toEqual(created);
