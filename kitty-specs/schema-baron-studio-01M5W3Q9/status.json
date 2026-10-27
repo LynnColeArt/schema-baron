@@ -435,7 +435,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: visual joined aggregate/typed presets, exact bounded previews, recovery/conflicts and native 200% pointer fix; commit 1f090eb; 256 tests plus 3 real browser scenarios passed.",
-        "Independent review rejected 1f090eb: supported unfinished function/preaggregated query drafts disappear on project switch/reload; structural query edits lack shared model undo/redo. Root-authorized workspace/model/native-zoom integration rationale reviewed; eight-item checklist and reproducible UI evidence in feedback."
+        "Independent review rejected 1f090eb: supported unfinished function/preaggregated query drafts disappear on project switch/reload; structural query edits lack shared model undo/redo. Root-authorized workspace/model/native-zoom integration rationale reviewed; eight-item checklist and reproducible UI evidence in feedback.",
+        "Cycle 2 repair ready for independent review: 8535550; unchanged reviewer heldout red-to-green, recursive editing recovery and rebased bounded structural history; 264 tests and 5 browser scenarios passed."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
