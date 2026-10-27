@@ -284,6 +284,9 @@
       "last_event_id": "01M5XXGZEWJXJEX4PBRD5Y4PT1",
       "last_transition_at": "2026-10-27T05:32:27.996287+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: 0340a59; reviewed SQLite apply/online backup/transaction markers/recovery/restore; 224 tests and real Studio restore E2E passed; evidence packages/sqlite/tests/migrations/EVIDENCE.md"
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
