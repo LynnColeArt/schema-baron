@@ -194,6 +194,8 @@ export function validateProject(input: unknown): ValidationResult {
     const ctx = sourceContext(form.sourceRef, form.id); const fields = ctx.sources.get('root') ?? [];
     for (const key of form.keyMapping) { const target = ref(fields, key.targetFieldId, form.id, 'keyMapping'); const shape = expr(key.expression, ctx, form.id, 'keyMapping.expression'); if (target && shape && !sameType(target.type, shape.type)) error('TYPE_MISMATCH', form.id, 'keyMapping', 'Key expression type must match target.'); }
     unique(form.keyMapping.map(k => k.targetFieldId), form.id, 'keyMapping');
+    for (const id of form.displayFieldIds ?? []) ref(fields, id, form.id, 'displayFieldIds');
+    unique(form.displayFieldIds ?? [], form.id, 'displayFieldIds');
     if (form.kind === 'Record' && form.sourceRef?.kind === 'table') {
       const table = p.schema.tables.find(t => t.id === form.sourceRef!.id);
       if (table && (table.primaryKey.length === 0 || canonicalJson(form.keyMapping.map(k => k.targetFieldId)) !== canonicalJson(table.primaryKey))) error('VALIDATION_FAILED', form.id, 'keyMapping', 'Record key mapping must match the complete ordered primary key.');

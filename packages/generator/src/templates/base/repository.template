@@ -13,9 +13,12 @@ type Field = {
 type Config = {
   readonly table: string;
   readonly fields: readonly Field[];
+  readonly keys?:readonly string[];
+  readonly sortFieldIds?:readonly string[];
   readonly search: readonly { readonly fieldId: string; readonly operator: 'eq' | 'contains' | 'gte' | 'lte' }[];
   readonly sorting: readonly { readonly fieldId: string; readonly direction: 'asc' | 'desc' }[];
   readonly pageSize: number;
+  readonly parents?:readonly {readonly fieldId:string;readonly parameter:string}[];
 };
 type Parameters = Record<string, string | string[] | undefined>;
 type Binding = string | number | bigint;
@@ -64,8 +67,8 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
     const page = z.coerce.number().int().min(1).max(100000).parse(one(parameters, prefix + ':page') ?? '1');
     const requested = one(parameters, prefix + ':sort');
     const direction = z.enum(['asc', 'desc']).parse(one(parameters, prefix + ':direction') ?? 'asc');
-    if (requested && !config.fields.some(f => f.id === requested)) throw new Error('Choose an available sort field.');
-    const allowed = ['page', 'sort', 'direction', ...config.search.map(s => 'filter:' + s.fieldId)];
+    if (requested && !(config.sortFieldIds??config.fields.map(f=>f.id)).includes(requested)) throw new Error('Choose an available sort field.');
+    const allowed = ['page', 'sort', 'direction', ...config.search.map(s => 'filter:' + s.fieldId),...(config.parents??[]).map(p=>p.parameter.startsWith(prefix+':')?p.parameter.slice(prefix.length+1):p.parameter)];
     for (const key of Object.keys(parameters)) {
       if (key.startsWith(prefix + ':') && !allowed.includes(key.slice(prefix.length + 1))) {
         throw new Error('Unknown list parameter.');
@@ -74,6 +77,11 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
 
     const clauses: string[] = [];
     const bindings: Binding[] = [];
+    for(const parent of config.parents??[]) {
+      const field=config.fields.find(f=>f.id===parent.fieldId);const text=one(parameters,parent.parameter);
+      if(!field||text===undefined) throw Error('A parent filter is required.');
+      clauses.push(quote(field.name)+' = ?'); bindings.push(filterValue(field,text));
+    }
     for (const search of config.search) {
       const text = one(parameters, prefix + ':filter:' + search.fieldId);
       if (text === undefined || text === '') continue;
@@ -94,7 +102,8 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
     }
 
     const ordering = requested ? [{ fieldId: requested, direction }] : config.sorting;
-    const orderSql = ordering.map(sort => {
+    const stableOrdering=[...ordering,...(config.keys??[]).filter(id=>!ordering.some(sort=>sort.fieldId===id)).map(fieldId=>({fieldId,direction:'asc' as const}))];
+    const orderSql = stableOrdering.map(sort => {
       const field = config.fields.find(f => f.id === sort.fieldId);
       if (!field) throw new Error('Sort field is unavailable.');
       // Exact decimal text is sorted using a registered deterministic collation seam.
