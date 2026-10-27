@@ -1,0 +1,40 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-j
+
+ ❯ packages/generator/tests/public-list/runtime.test.ts (1 test | 1 failed) 4874ms
+   × emitted production pages preserve NULL decimal comparisons, exact values, sorting and missing-file behavior 4872ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/generator/tests/public-list/runtime.test.ts > emitted production pages preserve NULL decimal comparisons, exact values, sorting and missing-file behavior
+AssertionError: 
+> generated-application@1.0.0 typecheck
+> tsc --noEmit
+
+components/grid-0.tsx(55,83): error TS2353: Object literal may only specify known properties, and '"precision"' does not exist in type 'FieldType'.
+components/grid-1.tsx(55,83): error TS2353: Object literal may only specify known properties, and '"precision"' does not exist in type 'FieldType'.
+components/grid-2.tsx(55,83): error TS2353: Object literal may only specify known properties, and '"precision"' does not exist in type 'FieldType'.
+components/grid-3.tsx(55,83): error TS2353: Object literal may only specify known properties, and '"precision"' does not exist in type 'FieldType'.
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/generator/tests/public-list/runtime.test.ts:51:72
+     49|   writeFileSync(join(root, args.join('-') + '.log'), (result.stdout ??…
+     50|   expect(result.error, args.join(' ')).toBeUndefined();
+     51|   expect(result.status, (result.stdout ?? '') + (result.stderr ?? ''))…
+       |                                                                        ^
+     52|  }
+     53|  const child = spawn(process.execPath, [join(output, 'node_modules/nex…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  01:55:47
+   Duration  5.10s (tests 97%, import 2%, transform 1%)

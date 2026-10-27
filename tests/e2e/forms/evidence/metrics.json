@@ -1,0 +1,36 @@
+[
+  {
+    "factor": 1,
+    "metric": {
+      "innerWidth": 1280,
+      "innerHeight": 800,
+      "outerWidth": 1280,
+      "outerHeight": 800,
+      "devicePixelRatio": 1,
+      "cssZoom": "1",
+      "scrollWidth": 1280,
+      "visualScale": 1
+    },
+    "forms": 4,
+    "revision": 6,
+    "keyboard": "all four Finish; field Space; complete key Enter",
+    "cancel": "pointer + Escape; focus restored"
+  },
+  {
+    "factor": 2,
+    "metric": {
+      "innerWidth": 640,
+      "innerHeight": 400,
+      "outerWidth": 1280,
+      "outerHeight": 800,
+      "devicePixelRatio": 2,
+      "cssZoom": "1",
+      "scrollWidth": 640,
+      "visualScale": 1
+    },
+    "forms": 4,
+    "revision": 6,
+    "keyboard": "all four Finish; field Space; complete key Enter",
+    "cancel": "pointer + Escape; focus restored"
+  }
+]
