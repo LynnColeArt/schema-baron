@@ -29,7 +29,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: 7a6d51c; Node 24.22.1/npm 11.19.1; scripts-denied clean offline ci, 9 harness tests, strict typecheck, diff lint, native SQLite backup smoke and dependency metadata checks passed. Three-lens dependency challenge dispositions retained; product workspaces remain explicitly unimplemented.",
-        "Independent review rejected: R1 generated-app harness inherits workspace executable PATH; clean install and nine existing tests pass, isolation probe falsely succeeds."
+        "Independent review rejected: R1 generated-app harness inherits workspace executable PATH; clean install and nine existing tests pass, isolation probe falsely succeeds.",
+        "Ready for independent re-review: R1 repaired in c084f4e. Public npm generated-check regressions prove undeclared workspace tsc fails and own reviewed offline-installed compiler succeeds; controlled child execution environment, preserved staging protections. Full scoped verify passes 11 tests/typecheck/lint/native/credentials/dependency checks."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
