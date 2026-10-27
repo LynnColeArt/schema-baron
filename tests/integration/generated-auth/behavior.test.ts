@@ -43,6 +43,10 @@ test('blank authored project provisions through HTTP/stdio and runs isolated sec
   const list={pageId:'list',keyMapping:[],filterMapping:[]};
   for(const pageId of ['record','private'])await ok('form.construct',{pageId,kind:'Record',source:{kind:'table',id:table.id},fieldIds:fields,keyIds:key,actions:[],links:[],style:{label:'Record'},actionDefinitions:[{operation:'update',success:list}]});
   await ok('form.construct',{pageId:'login',kind:'Login',fieldIds:[],keyIds:[],actions:[],links:[],style:{label:'Access'},actionDefinitions:[{operation:'login',success:list},{operation:'logout'}]});
+  // WP14 renders the authored action label; declare the label used by the visible login proof.
+  const loginAction=snapshot().actions.find(a=>a.operation==='login')!;
+  const loginButton=snapshot().controls.find(c=>c.events.some(e=>e.actionId===loginAction.id))!;
+  await ok('project.batch',{operations:[{kind:'put',entity:'control',id:loginButton.id,value:{...loginButton,appearance:{...loginButton.appearance,label:'Sign in'}}}]});
   const grid=snapshot().forms.find(f=>f.pageId==='list')!,captionField=table.columns.find(c=>c.physicalName==='caption')!.id;
   await ok('project.batch',{operations:[
    {kind:'put',entity:'action',id:'guarded-search',value:{id:'guarded-search',formId:grid.id,operation:'search',policyId:'guarded-search-policy'}},

@@ -66,7 +66,7 @@ ${[...recordComponents.values()].map(n=>`  const renderRecord${n}=()=>{try {cons
   const saved=(await cookies()).get(${JSON.stringify(flashCookie)})?.value==='1';
   return (
     <>
-${route.identityCaption!==undefined?`      <IdentityHeader caption={${JSON.stringify(route.identityCaption)}} returnTo={pageReturn(${JSON.stringify(route.id)},parameters)} />`:''}
+${route.identityCaption!==undefined?`      <IdentityHeader caption={${JSON.stringify(route.identityCaption)}} returnTo={(() => { try { return pageReturn(${JSON.stringify(route.id)},parameters); } catch { return undefined; } })()} />`:''}
       <h1>{${JSON.stringify(route.title)}}</h1>
       <SavedNotice saved={saved} cookieName={${JSON.stringify(flashCookie)}} />
 ${document}
