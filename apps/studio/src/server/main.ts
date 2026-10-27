@@ -1,18 +1,23 @@
 import { createRequire } from 'node:module';
 import type { NextServerOptions, RequestHandler } from 'next/dist/server/next.js';
 import { createServer } from 'node:http';
-import { readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join, dirname } from 'node:path';
+import { LocalWorkspace, defaultOwnerConfig } from './workspace.js';
 import { fileURLToPath } from 'node:url';
 import { OwnerService } from './service.js';
 import { setOwner, clearOwner } from './runtime.js';
 const next = createRequire(import.meta.url)('next') as (options: NextServerOptions) => { prepare(): Promise<void>; close(): Promise<void>; getRequestHandler(): RequestHandler };
 /** Explicit configuration is private process input, never NEXT_PUBLIC or a URL token. */
 async function main() {
- const configPath = process.env.SCHEMA_BARON_OWNER_CONFIG;
- if (!configPath) throw new Error('SCHEMA_BARON_OWNER_CONFIG must name a private owner JSON configuration file.');
- const config = JSON.parse(readFileSync(configPath, 'utf8'));
+ const configPath = process.env.SCHEMA_BARON_OWNER_CONFIG ?? join(homedir(), '.local', 'share', 'schema-baron-studio', 'owner.json');
+ const config = defaultOwnerConfig(configPath);
+ const browserMode = process.env.SCHEMA_BARON_BROWSER_MODE ?? 'local';
+ if (!['local', 'capability'].includes(browserMode)) throw new Error('Invalid browser mode.');
+ const workspace = browserMode === 'local' ? new LocalWorkspace(join(dirname(configPath), 'workspace.json')) : undefined;
+ config.approvedRoots = { ...config.approvedRoots, ...workspace?.roots };
  const port = Number(process.env.PORT ?? 4317); if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid owner port.');
- const service = new OwnerService(config);
+ const service = new OwnerService({ ...config, localBrowser: browserMode === 'local', ...(workspace ? { workspace } : {}) });
  let handle: RequestHandler | undefined;
  const server = createServer((request, response) => { if (handle) void handle(request, response); else { response.writeHead(503); response.end(); } });
  server.requestTimeout = 15000; server.headersTimeout = 10000;

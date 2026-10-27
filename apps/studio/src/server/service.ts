@@ -5,7 +5,8 @@ import { StorageError } from '@schema-baron/storage';
 import { commandSchema, createId, idSchema, jobSchema, operationInputSchemas, operationResultSchemas } from '@schema-baron/model';
 import type { Command, Job, Operation, OperationResult, Project } from '@schema-baron/model';
 import { z } from 'zod';
-export interface OwnerOptions extends CoreOptions { capability: string; maxPayloadBytes?: number; sessionTtlMs?: number }
+import type { LocalWorkspace } from './workspace.js';
+export interface OwnerOptions extends CoreOptions { localBrowser?: boolean; workspace?: LocalWorkspace; capability: string; maxPayloadBytes?: number; sessionTtlMs?: number }
 export type FeatureEffect<K extends Operation> = Omit<CommandEffect, 'result'> & { result: OperationResult<K> };
 export const failure = (code: string, message: string, revision = 0): Outcome => ({ ok: false, revision, error: { code, message, retryable: code === 'RECOVERY_REQUIRED' || code === 'PROJECT_BUSY' }, diagnostics: [] });
 export function status(outcome: Outcome): number {
@@ -132,7 +133,8 @@ export class OwnerService {
   try {
    this.checkBoundary(request);
    const url = new URL(request.url); const method = request.method;
-   const auth = this.authenticate(request);
+   const localExchange = this.options.localBrowser && url.pathname === '/api/v1/session' && method === 'POST' && request.headers.get('authorization') === null && request.headers.get('origin') === this.origin && request.headers.get('sec-fetch-site') === 'same-origin' && request.headers.get('x-schema-baron-local') === '1';
+   const auth: { session?: string } = localExchange ? {} : this.authenticate(request);
    if (!url.pathname.startsWith('/api/v1/')) return this.response(failure('NOT_FOUND', 'Unknown endpoint.'));
    const parts = url.pathname.slice('/api/v1/'.length).split('/').map(decodeURIComponent);
    const [area, id, action] = parts;
@@ -151,19 +153,32 @@ export class OwnerService {
     }
     if (method === 'DELETE' && auth.session) { this.sessions.delete(auth.session); return this.response({ ok: true, revision: 0, result: { revoked: true }, diagnostics: [] }, { 'set-cookie': 'sb_owner=; HttpOnly; SameSite=Strict; Path=/api/v1; Max-Age=0' }); }
    }
+   if (area === 'workspace' && parts.length === 1 && this.options.workspace) {
+    this.query(url, []);
+    if (method === 'GET') return this.response({ ok: true, revision: 0, result: this.options.workspace.settings(), diagnostics: [] });
+    if (method === 'PUT') {
+     const input = z.strictObject({ projectsFolder: z.string().min(1).max(4096) }).safeParse(await this.body(request));
+     if (!input.success) throw new StorageError('INVALID_INPUT', 'Choose a projects folder.');
+     return this.response({ ok: true, revision: 0, result: this.options.workspace.save(input.data.projectsFolder), diagnostics: [] });
+    }
+   }
    if (area === 'capabilities' && parts.length === 1 && method === 'GET') {
     this.query(url, []);
     const operations = (Object.keys(operationInputSchemas) as Operation[]).filter(op => this.core.registry.has(op)).map(operation => ({ operation, inputSchema: z.toJSONSchema(z.strictObject({ requestId: idSchema, projectId: idSchema, expectedRevision: z.number().int().min(operation === 'project.create' || operation === 'project.list' ? 0 : 1).max(Number.MAX_SAFE_INTEGER), input: operationInputSchemas[operation] }), { io: 'input' }), resultSchema: z.toJSONSchema(operationResultSchemas[operation]) }));
-    return this.response({ ok: true, revision: 0, result: { version: 1, operations, approvedRootIds: Object.keys(this.options.approvedRoots) }, diagnostics: [] });
+    return this.response({ ok: true, revision: 0, result: { version: 1, operations, approvedRootIds: Object.keys(this.options.approvedRoots), ...(this.options.workspace ? { workspace: this.options.workspace.settings() } : {}) }, diagnostics: [] });
    }
    if (area === 'projects') {
     if (parts.length === 1 && method === 'GET') { this.query(url, ['approvedRoot']); return this.response(await this.dispatch({ requestId: createId(), projectId: 'catalog', operation: 'project.list', expectedRevision: 0, input: { approvedRoot: url.searchParams.get('approvedRoot') ?? '' } })); }
     if (parts.length === 1 && method === 'POST') {
      this.query(url, []);
-     const body = z.strictObject({ requestId: idSchema, name: z.string().min(1), approvedRoot: z.string().min(1), target: z.literal('next-typescript-sqlite') }).safeParse(await this.body(request));
+     const body = z.strictObject({ requestId: idSchema, name: z.string().min(1), approvedRoot: z.string(), target: z.literal('next-typescript-sqlite') }).safeParse(await this.body(request));
      if (!body.success || /[/\\]/.test(body.data.requestId) || ['.', '..'].includes(body.data.requestId)) return this.response(failure('INVALID_INPUT', 'Invalid project creation request.'));
      // The OpenAPI convenience form uses requestId as project identity, so retries remain stable.
      const { requestId, ...input } = body.data;
+     if (this.options.workspace && input.approvedRoot === '') {
+      const root = this.options.workspace.project(input.name, requestId, this.core);
+      return this.response(await this.dispatch({ requestId, projectId: requestId, operation: 'project.create', expectedRevision: 0, input: { ...input, approvedRoot: root, outputConfig: { approvedRootId: root, relativePath: 'generated/app' } } }));
+     }
      return this.response(await this.dispatch({ requestId, projectId: requestId, operation: 'project.create', expectedRevision: 0, input }));
     }
     if (!idSchema.safeParse(id).success || id?.includes('/') || id?.includes('\\')) return this.response(failure('INVALID_INPUT', 'Invalid project ID.'));

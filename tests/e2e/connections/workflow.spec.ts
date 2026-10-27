@@ -14,7 +14,7 @@ let root:string,url:string,capability:string,child:ReturnType<typeof spawn>,exit
 test.beforeAll(async()=>{
  root=mkdtempSync(join(tmpdir(),'wp06-browser-'));capability=randomBytes(32).toString('base64url');const config=join(root,'owner.json');
  writeFileSync(config,JSON.stringify({ownerId:'connections-test',capability,metadataRoot:join(root,'metadata'),approvedRoots:{projects:join(root,'definitions')}}),{mode:0o600});
- child=spawn(process.execPath,[resolve('apps/studio/dist/main.js')],{env:{...process.env,PORT:'0',SCHEMA_BARON_OWNER_CONFIG:config},stdio:['ignore','pipe','pipe']});exit=once(child,'exit');
+ child=spawn(process.execPath,[resolve('apps/studio/dist/main.js')],{env:{...process.env,PORT:'0',SCHEMA_BARON_BROWSER_MODE: 'capability', SCHEMA_BARON_OWNER_CONFIG:config},stdio:['ignore','pipe','pipe']});exit=once(child,'exit');
  url=await new Promise<string>((resolve,reject)=>{let logs='';const timeout=setTimeout(()=>reject(new Error('Owner readiness timeout')),20000);child.stderr!.on('data',chunk=>{logs+=String(chunk);const match=logs.match(/owner ready at (http:\/\/127\.0\.0\.1:\d+)/);if(match){clearTimeout(timeout);resolve(match[1]!);}});child.once('exit',()=>{clearTimeout(timeout);reject(new Error('Owner exited before readiness'));});});
  const configMcp=join(root,'mcp.json');writeFileSync(configMcp,JSON.stringify({ownerUrl:url,capability}),{mode:0o600});mcp=new Client({name:'connection-browser-parity',version:'1'});await mcp.connect(new StdioClientTransport({command:process.execPath,args:[resolve('apps/mcp/dist/main.js')],env:{SCHEMA_BARON_MCP_CONFIG:configMcp},stderr:'pipe'}));
 });

@@ -44,7 +44,7 @@ test.beforeAll(async () => {
     env: {
       ...process.env,
       PORT: '0',
-      SCHEMA_BARON_OWNER_CONFIG: config
+      SCHEMA_BARON_BROWSER_MODE: 'capability', SCHEMA_BARON_OWNER_CONFIG: config
     },
     stdio: ['ignore', 'pipe', 'pipe']
   });

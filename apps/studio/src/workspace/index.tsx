@@ -43,6 +43,7 @@ import type { Change, Editor, Kind, ObjectValue, View } from "./state.js";
 import { restore, retain } from "./session.js";
 
 type Modal =
+  | "workspace"
   | "connect"
   | "new"
   | "open"
@@ -68,6 +69,8 @@ const label = (kind: Kind, value: ObjectValue) =>
     : (value as Form | Control).appearance.label ||
       (value as Form | Control).kind;
 export default function Workspace() {
+  const [workspaceFolderDraft, setWorkspaceFolderDraft] = useState("");
+  const [newProjectName, setNewProjectName] = useState("");
   const [selectedAction, setSelectedAction] = useState("");
   const [flowActive, setFlowActive] = useState(false);
   const [schemaActive, setSchemaActive] = useState(false);
@@ -163,7 +166,9 @@ export default function Workspace() {
     notice(message);
     if (error instanceof OwnerError && error.code === "AUTH_REQUIRED") {
       setConnected(false);
-      setModal("connect");
+      if (caps.workspace) {
+        void client.resume().then(ready).catch(() => notice("Studio service is unavailable. Reconnect to continue; drafts are retained."));
+      } else setModal("connect");
     }
     return message;
   }
@@ -233,8 +238,9 @@ export default function Workspace() {
   async function ready() {
     const capabilities = await client.capabilities();
     setCaps(capabilities);
+    setWorkspaceFolderDraft(capabilities.workspace?.projectsFolder ?? "");
     setConnected(true);
-    setModal(null);
+    setModal(capabilities.workspace && !capabilities.workspace.configured ? "workspace" : null);
     notice("Studio service connected");
     const last = sessionStorage.getItem("studio.activeProject");
     if (last && !state.current.project) {
@@ -478,6 +484,17 @@ export default function Workspace() {
       setBusy(false);
     }
   }
+  async function saveWorkspace(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    setBusy(true);
+    try {
+      const settings = await client.saveWorkspace(String(data.get("projectsFolder")));
+      setCaps(current => ({ ...current, workspace: settings }));
+      setModal(null); notice("Workspace settings saved");
+    } catch (error) { setDialogError(report(error)); }
+    finally { setBusy(false); }
+  }
   async function createProject(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -485,9 +502,10 @@ export default function Workspace() {
     try {
       const created = await client.create(
         String(data.get("name")),
-        String(data.get("root")),
+        caps.workspace ? "" : String(data.get("root")),
         createRequest.current,
       );
+      setCaps(await client.capabilities());
       await openProject(created.id);
     } catch (e) {
       setDialogError(report(e));
@@ -855,7 +873,8 @@ export default function Workspace() {
         </span>
       </header>
       <nav className="menubar" aria-label="Studio commands">
-        <button onClick={() => dialog("new")} disabled={!connected || busy}>
+        {caps.workspace && <button onClick={() => { setWorkspaceFolderDraft(caps.workspace?.projectsFolder ?? ""); dialog("workspace"); }} disabled={!connected || busy}>Workspace settings…</button>}
+        <button onClick={() => { setNewProjectName(""); dialog(caps.workspace && !caps.workspace.configured ? "workspace" : "new"); }} disabled={!connected || busy}>
           New project…
         </button>
         <button
@@ -922,6 +941,9 @@ export default function Workspace() {
                 })
                 .catch(report)
                 .finally(() => setBusy(false));
+            } else if (caps.workspace) {
+              setBusy(true);
+              void client.resume().then(ready).catch(report).finally(() => setBusy(false));
             } else dialog("connect");
           }}
           disabled={busy}
@@ -1434,7 +1456,7 @@ export default function Workspace() {
       {modal && (
         <Dialog
           title={
-            modal === "connect"
+            modal === "workspace" ? "Workspace settings" : modal === "connect"
               ? "Connect to Studio service"
               : modal === "new"
                 ? "New blank project"
@@ -1459,7 +1481,20 @@ export default function Workspace() {
           busy={busy}
           onCancel={() => setModal(null)}
         >
-          {modal === "connect" ? (
+          {modal === "workspace" ? (
+            <form onSubmit={saveWorkspace}>
+              <p>{caps.workspace?.configured ? "Choose where future projects are created. Existing projects keep their current folders." : "Welcome to Schema Baron. Choose a folder for your projects to finish workspace setup."}</p>
+              <label className="dialog-field">Projects folder
+                <input autoFocus name="projectsFolder" required value={workspaceFolderDraft} onChange={event => setWorkspaceFolderDraft(event.target.value)} disabled={busy} />
+              </label>
+              <p>New projects are created in a separate folder: <code>{workspaceFolderDraft}/&lt;project name&gt;</code></p>
+              <DialogError message={dialogError} />
+              <div className="dialog-actions">
+                {caps.workspace?.configured && <button type="button" disabled={busy} onClick={() => setModal(null)}>Cancel</button>}
+                <button className="primary" disabled={busy}>Save workspace settings</button>
+              </div>
+            </form>
+          ) : modal === "connect" ? (
             <form onSubmit={connect}>
               <p>
                 Enter the private owner key from this Studio service
@@ -1508,19 +1543,21 @@ export default function Workspace() {
                 <input
                   autoFocus
                   name="name"
+                  value={newProjectName}
+                  onChange={event => setNewProjectName(event.target.value)}
                   required
                   maxLength={120}
                   disabled={busy}
                 />
               </label>
-              <label className="dialog-field">
+              {caps.workspace ? <p>Project folder: <code>{caps.workspace.projectsFolder}/{newProjectName || "<project name>"}</code></p> : <label className="dialog-field">
                 Approved project root
                 <select name="root" disabled={busy}>
                   {caps.approvedRootIds.map((root) => (
                     <option key={root}>{root}</option>
                   ))}
                 </select>
-              </label>
+              </label>}
               <label className="dialog-field">
                 Output target
                 <input value="Next.js · TypeScript · SQLite" readOnly />
@@ -1536,7 +1573,7 @@ export default function Workspace() {
                 </button>
                 <button
                   className="primary"
-                  disabled={busy || !caps.approvedRootIds.length}
+                  disabled={busy || (caps.workspace ? !caps.workspace.configured : !caps.approvedRootIds.length)}
                 >
                   Create project
                 </button>
@@ -1778,7 +1815,8 @@ export default function Workspace() {
             <ConnectionSetup
               project={project}
               client={client}
-              roots={caps.approvedRootIds}
+              roots={caps.workspace ? [project.outputConfig.approvedRootId, ...caps.approvedRootIds.filter(id => id !== project.outputConfig.approvedRootId)] : caps.approvedRootIds}
+              rootLabels={caps.workspace ? { [project.outputConfig.approvedRootId]: `Project folder (${project.name})` } : {}}
               onClose={() => setModal(null)}
               onBound={(snapshot) => {
                 acceptSnapshot(snapshot);

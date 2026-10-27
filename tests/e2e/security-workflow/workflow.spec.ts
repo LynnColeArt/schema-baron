@@ -36,7 +36,7 @@ test.beforeAll(async () => {
   const db=new Database(join(root,"definitions","catalog.sqlite"));
   db.exec("CREATE TABLE visitor_records(user_id TEXT PRIMARY KEY NOT NULL, account TEXT NOT NULL UNIQUE, secret_hash TEXT NOT NULL);CREATE TABLE entries(id TEXT PRIMARY KEY NOT NULL, title TEXT NOT NULL);INSERT INTO entries VALUES ('west','Original');");db.close();
   child = spawn(process.execPath, [resolve("apps/studio/dist/main.js")], {
-    env: { ...process.env, PORT: "0", SCHEMA_BARON_OWNER_CONFIG: config },
+    env: { ...process.env, PORT: "0", SCHEMA_BARON_BROWSER_MODE: 'capability', SCHEMA_BARON_OWNER_CONFIG: config },
     stdio: ["ignore", "pipe", "pipe"],
   });
   exit = once(child, "exit");

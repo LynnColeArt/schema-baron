@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { createId } from '@schema-baron/model';
 import type { OperationResult, Project } from '@schema-baron/model';
 import type { StudioClient } from '../project-ui/api.js';
-export function ConnectionSetup({ project, client, roots, onBound, onClose }: { project: Project; client: StudioClient; roots: string[]; onBound: (snapshot: Project) => void; onClose: () => void }) {
+export function ConnectionSetup({ project, client, roots, rootLabels = {}, onBound, onClose }: { project: Project; client: StudioClient; roots: string[]; rootLabels?: Record<string, string>; onBound: (snapshot: Project) => void; onClose: () => void }) {
  const [mode, setMode] = useState('existing'); const [root, setRoot] = useState(roots[0] ?? ''); const [path, setPath] = useState(''); const [preview, setPreview] = useState<OperationResult<'connection.inspect'> | null>(null); const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
  const [reconnect, setReconnect] = useState(project.connections[0]?.id ?? '');
  const selected = `${root}:${path}`;
@@ -25,7 +25,7 @@ export function ConnectionSetup({ project, client, roots, onBound, onClose }: { 
   <p>Select an owner-approved location. Inspection reads existing objects without running DDL. Binding imports their schema into this project.</p>
   <label className="dialog-field">Database choice<select aria-label="Database choice" value={mode} disabled={busy} onChange={e => { setMode(e.target.value); reset(); }}><option value="existing">Existing SQLite file</option><option value="empty">Create new empty SQLite file</option></select></label>
   {mode === 'empty' && <p>A new empty file is created when you select Inspect. An existing file is never replaced.</p>}
-  <label className="dialog-field">Approved database root<select aria-label="Approved database root" value={root} disabled={busy} onChange={e => { setRoot(e.target.value); reset(); }}>{roots.map(id => <option key={id} value={id}>{id}</option>)}</select></label>
+  <label className="dialog-field">Approved database root<select aria-label="Approved database root" value={root} disabled={busy} onChange={e => { setRoot(e.target.value); reset(); }}>{roots.map(id => <option key={id} value={id}>{rootLabels[id] ?? id}</option>)}</select></label>
   <label className="dialog-field">Relative SQLite file<input aria-label="Relative SQLite file" value={path} disabled={busy} onChange={e => { setPath(e.target.value); reset(); }} placeholder="data/application.sqlite" /></label>
   {project.connections.length > 0 && <label className="dialog-field">Connection identity<select aria-label="Connection identity" disabled={busy} value={reconnect} onChange={e => { setReconnect(e.target.value); reset(); }}>{project.connections.map(c => <option key={c.id} value={c.id}>Reconnect {c.name}</option>)}</select></label>}
 

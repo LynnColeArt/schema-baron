@@ -9,9 +9,17 @@ updated: 2026-10-26
 Use the pinned Node 24.22.1/npm 11.19.1 toolchain from `.nvmrc`. Install with
 `npm ci --ignore-scripts`; `npm run native:verify` verifies the packaged SQLite
 prebuild without enabling lifecycle scripts. `npm run build` builds dependencies
-before consumers, including the Studio Next application and stdio MCP executable. The compact Studio UI is served at `/`; connect with the masked owner dialog. The original WP04 API-only checkpoint is historical. See [current setup](release.md).
+before consumers, including the Studio Next application and stdio MCP executable. The compact Studio UI is served at `/` and connects automatically without a key. The original WP04 API-only checkpoint is historical. See [current setup](release.md).
 
-Create a private JSON file outside the repository, chmod 600, containing:
+Start the local Studio with `npm start --workspace @schema-baron/studio`. It creates
+private state under `~/.local/share/schema-baron-studio` when no configuration is supplied.
+The browser opens first-run Workspace settings until a projects folder is saved.
+The default is `~/projects/schema-baron`; each new project gets its own named folder,
+with generated output under `generated/app`. Existing folders are never overwritten.
+Changing the workspace preference leaves existing projects at their original locations.
+
+For an explicit state location, set `SCHEMA_BARON_OWNER_CONFIG` to a private JSON
+file outside the repository. An existing file can contain:
 
 ```json
 {
@@ -24,8 +32,8 @@ Create a private JSON file outside the repository, chmod 600, containing:
 
 Generate the capability locally using Node `crypto.randomBytes(32).toString('base64url')`.
 Never place it in URLs, `NEXT_PUBLIC_` variables, committed config or client bundles.
-Approved roots are server configuration; API requests identify root IDs, never add
-new roots. Metadata and definitions must be separate directories, with symlink,
+Approved roots remain server-owned. Local workspace creation appends a stable root
+for each new project; existing root IDs cannot be rebound to another path. Metadata and definitions must be separate directories, with symlink,
 traversal, native SQLite companion and existing-file alias protections from storage.
 Configuration files are trusted local process input; protect their ownership and permissions.
 
@@ -41,6 +49,21 @@ free port; stderr prints the chosen loopback URL. The capability is never printe
 Do not run `next start` directly: that bypasses owner configuration and routes return
 503. No automatic dependency install, generated script execution, SQL or arbitrary
 filesystem endpoint exists.
+
+## Browser connection
+
+The production local bootstrap permits an empty `POST /api/v1/session` from its exact
+loopback Origin, with `Sec-Fetch-Site: same-origin` and `X-Schema-Baron-Local: 1`.
+This issues a short-lived HttpOnly SameSite session and CSRF proof without exposing
+the private MCP credential. Host, Origin and CSRF checks still apply. Direct API
+and MCP requests continue to require the capability. Isolated API harnesses retain
+explicit capability exchange unless local-browser mode is enabled.
+
+`GET /api/v1/workspace` reads local preferences; authenticated, CSRF-protected
+`PUT /api/v1/workspace` saves `{projectsFolder}`. `POST /api/v1/projects` with
+`approvedRoot: ""` uses that folder after setup. Filesystem names are validated;
+existing folders and symlink paths are refused. Preferences and project-root
+mappings persist in `workspace.json` beside the private owner configuration.
 
 ## HTTP v1
 
@@ -82,16 +105,16 @@ The service emits no per-command logs. Registered migration, query and generated
 
 ## Browser session exchange
 
-The implemented owner-connect dialog uses the following protocol. On initial load, call
-`GET /api/v1/session` with `credentials: "same-origin"`. A valid session returns
-`result.csrfToken`; 401 shows the connect dialog. Read the capability only from the
-owner pasting their private configuration value into a password field (no autocomplete).
-Keep it only in transient dialog memory and clear both input and variable immediately
-after the exchange, including failures. Never render it into HTML/server props, ship
-it in a bundle, or save it in local/session storage, logs, URLs or browser history.
-The server configuration remains outside the served tree.
+On initial load, Studio calls `GET /api/v1/session` with same-origin credentials.
+If there is no valid session, the local browser exchange described above creates one
+automatically. No credential prompt is shown in the production local bootstrap.
+Explicit capability-only service harnesses retain the masked connection dialog.
+For those harnesses only, `SCHEMA_BARON_BROWSER_MODE=capability` opts into the
+legacy key exchange and configured roots; the normal startup default is `local`.
+The reusable MCP capability is never included in automatic browser exchange,
+HTML/server props, bundles, browser storage, logs, URLs or browser history.
 
-The UI exchanges the capability via `POST /api/v1/session`, same-origin
+Explicit capability clients can exchange the capability via `POST /api/v1/session`, same-origin
 Origin, bearer header, JSON `{}`. The browser supplies Origin/fetch metadata;
 client code must not try to set these forbidden headers. For example:
 

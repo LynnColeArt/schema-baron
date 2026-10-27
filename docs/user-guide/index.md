@@ -1,6 +1,6 @@
 # Author an application
 
-This guide is for an author starting with a blank project. Install and start Studio using the [supported setup](../development/release.md), then connect with the private owner capability in the masked Connect dialog. The capability authorizes Studio; generated visitors have separate accounts and sessions.
+This guide is for an author starting with a blank project. Install and start Studio using the [supported setup](../development/release.md), then open the reported local URL. Studio connects automatically; no key or account is required. On first run, finish Workspace settings. New projects default to `~/projects/schema-baron/<project name>`; choose another absolute folder (or a `~/` path) if you prefer. Workspace settings can be changed later from the command bar. Changing this preference affects future projects; existing projects stay in their saved folders. Generated visitors have separate accounts and sessions.
 
 ## Find your way around
 

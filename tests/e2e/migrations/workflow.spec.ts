@@ -32,7 +32,7 @@ test("Studio history reviews later-data restore, Cancel preserves it, explicit a
     { mode: 0o600 },
   );
   const child = spawn(process.execPath, [resolve("apps/studio/dist/main.js")], {
-    env: { ...process.env, PORT: "0", SCHEMA_BARON_OWNER_CONFIG: config },
+    env: { ...process.env, PORT: "0", SCHEMA_BARON_BROWSER_MODE: 'capability', SCHEMA_BARON_OWNER_CONFIG: config },
     stdio: ["ignore", "pipe", "pipe"],
   });
   const exit = once(child, "exit");

@@ -6,6 +6,7 @@ import type {
 export interface Capabilities {
   operations: { operation: string }[];
   approvedRootIds: string[];
+  workspace?: { projectsFolder: string; configured: boolean };
 }
 export interface Replay {
   lastSequence: number;
@@ -42,6 +43,7 @@ export class StudioClient {
         cache: "no-store",
         headers: {
           ...(body === undefined ? {} : { "content-type": "application/json" }),
+          ...(path === "session" && method === "POST" ? { "x-schema-baron-local": "1" } : {}),
           ...(this.csrf ? { "x-csrf-token": this.csrf } : {}),
         },
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),
@@ -63,12 +65,20 @@ export class StudioClient {
     return outcome.result as T;
   }
   async resume() {
-    const session = await this.read<{ csrfToken: string }>("session");
+    let session: { csrfToken: string };
+    try { session = await this.read<{ csrfToken: string }>("session"); }
+    catch (error) {
+      if (!(error instanceof OwnerError) || error.code !== "AUTH_REQUIRED") throw error;
+      session = await this.read<{ csrfToken: string }>("session", {});
+    }
     this.csrf = session.csrfToken;
   }
   async disconnect() {
     await this.read("session", undefined, "DELETE");
     this.csrf = "";
+  }
+  saveWorkspace(projectsFolder: string) {
+    return this.read<NonNullable<Capabilities["workspace"]>>("workspace", { projectsFolder }, "PUT");
   }
   capabilities() {
     return this.read<Capabilities>("capabilities");

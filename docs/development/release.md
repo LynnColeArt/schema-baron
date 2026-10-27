@@ -17,13 +17,13 @@ npm run build
 
 `.npmrc` denies lifecycle execution throughout the graph. The SQLite package ships the reviewed N-API prebuild; native:verify verifies its loader/binary hashes and executes real insert/transaction/online-backup checks. There is no approved node-gyp/download/source-build exception. Unsupported native platforms fail with a diagnostic; do not enable every script. See [bootstrap evidence and policy](bootstrap.md) for the original dependency review.
 
-Create private existing approved definition/output directories and a separate metadata directory, then create a mode-0600 owner JSON outside the source tree using the [owner-service configuration](operations.md). Generate a random capability locally; never use a demo/default value. Build before starting the owner or MCP because they consume compiled workspace modules.
+Build before starting Studio or MCP because they consume compiled workspace modules. Studio creates its private local configuration automatically. An explicit private owner JSON is optional; see [owner-service configuration](operations.md).
 
 ```sh
-SCHEMA_BARON_OWNER_CONFIG=/absolute/private/owner.json PORT=4317 npm start --workspace @schema-baron/studio
+PORT=4317 npm start --workspace @schema-baron/studio
 ```
 
-Open the reported `http://127.0.0.1:4317` and use the masked owner-connect dialog. Browser session exchange clears the capability and retains an HttpOnly cookie with transient CSRF proof. Do not put the capability in a URL or public environment. Create/open a project and follow the [author guide](../user-guide/index.md). The optional stdio MCP executable forwards to this same owner; its private connection file and direct Node invocation are in operations.md. No hosted account or unpublished service is required.
+Open the reported `http://127.0.0.1:4317` and finish first-run Workspace settings. No key is required in the browser. The default projects folder is `~/projects/schema-baron`; each new project gets a separate named folder. Browser sessions use an HttpOnly cookie with transient CSRF proof. Do not put the capability in a URL or public environment. Create/open a project and follow the [author guide](../user-guide/index.md). The optional stdio MCP executable forwards to this same owner; its private connection file and direct Node invocation are in operations.md. No hosted account or unpublished service is required.
 
 Install browser tooling separately for acceptance:
 

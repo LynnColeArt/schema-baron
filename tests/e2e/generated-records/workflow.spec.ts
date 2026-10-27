@@ -18,7 +18,7 @@ test('real wizard authors Grid/Record/Search, then independent production browse
  db.exec(`CREATE TABLE "catalog "" records"(tenant TEXT NOT NULL,seq INT NOT NULL,title TEXT NOT NULL UNIQUE,PRIMARY KEY(tenant,seq));INSERT INTO "catalog "" records" VALUES('A',1,'Original'),('B',1,'Other');`);db.close();
  const capability=randomBytes(32).toString('base64url'),config=join(root,'owner.json');
  writeFileSync(config,JSON.stringify({ownerId:'wp12-owner',capability,metadataRoot:join(root,'metadata'),approvedRoots:{projects:definitions,output:join(root,'output')}}),{mode:0o600});
- const studio=spawn(process.execPath,[resolve('apps/studio/dist/main.js')],{env:{...process.env,PORT:'0',SCHEMA_BARON_OWNER_CONFIG:config},stdio:['ignore','pipe','pipe']});const studioExit=once(studio,'exit');
+ const studio=spawn(process.execPath,[resolve('apps/studio/dist/main.js')],{env:{...process.env,PORT:'0',SCHEMA_BARON_BROWSER_MODE: 'capability', SCHEMA_BARON_OWNER_CONFIG:config},stdio:['ignore','pipe','pipe']});const studioExit=once(studio,'exit');
  let logs='';const url=await new Promise<string>((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Studio readiness timeout')),20000);studio.stderr!.on('data',chunk=>{logs+=String(chunk);const match=logs.match(/owner ready at (http:\/\/127\.0\.0\.1:\d+)/);if(match){clearTimeout(timer);resolve(match[1]!);}});studio.once('exit',()=>reject(Error('Studio exited before readiness')));});
  let runtime:ReturnType<typeof spawn>|undefined,runtimeExit:Promise<unknown>|undefined;
  try {

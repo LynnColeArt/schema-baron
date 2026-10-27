@@ -42,9 +42,10 @@ interface Journal extends ProjectRow { beforeHash: string | null; record: string
 export interface MigrationJournal { history: MigrationHistory; command: Command; source: Project; backupLocator: { approvedRootId: string; relativePath: string }; actor: string; payloadHash: string; after?: Project }
 export class ProjectStorage {
  private db: Database.Database; private lease: Database.Database; private rootLeases: Database.Database[] = []; private definitionLeases = new Map<string, Database.Database>(); private blocked = false;
- readonly roots: Record<string, string>;
+ private approvedRoots: Readonly<Record<string, string>>;
+ get roots(): Readonly<Record<string, string>> { return this.approvedRoots; }
  constructor(private options: StorageOptions) {
-  this.roots = Object.freeze(Object.fromEntries(Object.entries(options.approvedRoots).map(([id, root]) => [id, safePath(root, '.')])));
+  this.approvedRoots = Object.freeze(Object.fromEntries(Object.entries(options.approvedRoots).map(([id, root]) => [id, safePath(root, '.')])));
   const metadata = safePath(options.metadataRoot, '.');
   for (const root of Object.values(this.roots)) { const r = relative(root, metadata); const inverse = relative(metadata, root); if ((r !== '..' && !r.startsWith(`..${sep}`) && !isAbsolute(r)) || (inverse !== '..' && !inverse.startsWith(`..${sep}`) && !isAbsolute(inverse))) throw new StorageError('PATH_OUTSIDE_ROOT', 'Metadata and definitions need separate roots.'); mkdirSync(root, { recursive: true }); }
   mkdirSync(metadata, { recursive: true, mode: 0o700 });
@@ -69,6 +70,23 @@ export class ProjectStorage {
     CREATE TABLE IF NOT EXISTS migrations(project TEXT NOT NULL, id TEXT NOT NULL, body TEXT NOT NULL, PRIMARY KEY(project,id));`);
    this.recover();
   } catch (error) { this.db.close(); for (const lock of this.definitionLeases.values()) lock.close(); for (const lock of this.rootLeases) lock.close(); this.lease.close(); throw error; }
+ }
+ /** Local workspace setup may add roots, but can never rebind an existing root ID. */
+ addApprovedRoot(id: string, directory: string) {
+  this.assertReady();
+  const root = safePath(directory, '.');
+  if (Object.hasOwn(this.roots, id)) {
+   if (this.roots[id] !== root) throw new StorageError('PATH_OUTSIDE_ROOT', 'An approved root cannot be relocated.');
+   return;
+  }
+  const metadata = safePath(this.options.metadataRoot, '.');
+  for (const [from, to] of [[root, metadata], [metadata, root]]) {
+   const rel = relative(from!, to!);
+   if (rel !== '..' && !rel.startsWith(`..${sep}`) && !isAbsolute(rel)) throw new StorageError('PATH_OUTSIDE_ROOT', 'Metadata and definitions need separate roots.');
+  }
+  mkdirSync(root, { recursive: true });
+  if (!Object.values(this.roots).includes(root)) this.rootLeases.push(exclusiveLease(databasePath(root, '.schema-baron-writer.sqlite'), 'Another writer owns an approved project root.'));
+  this.approvedRoots = Object.freeze({ ...this.roots, [id]: root });
  }
  /** Key exclusion by the resolved file path, not by a configurable root ID or boundary.
   * The stable sidecar survives atomic JSON replacement and works across metadata stores. */
