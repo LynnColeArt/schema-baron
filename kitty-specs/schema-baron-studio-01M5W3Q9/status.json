@@ -538,7 +538,8 @@
       "notes": [
         "Ready for independent review: canonical HTML/Design model editing, isolated current-draft Preview, session preservation and honest WP20/21 capability seams; commit 963ed0c, seven available browser regressions pass, final focused 33 tests pass.",
         "Independent review requests P2 literal-brace serializer roundtrip fix. Shared workspace/session/state/core export edits coordinated with root and required for real mode registration, draft recovery, Save guards, and browser-safe codec integration. Eight-item checklist and observed evidence in feedback.",
-        "Review-cycle-1 repair ready: b7054a0 encodes literal text braces without relaxing dynamic source rejection. Decimal/hex/direct Design codec controls and real Design-to-HTML apply/save/owner persistence/reopen regression pass. Full284 tests, focused36,3 available browser cases plus explicit WP20/21 gate; production build/typechecks/diff lint pass."
+        "Review-cycle-1 repair ready: b7054a0 encodes literal text braces without relaxing dynamic source rejection. Decimal/hex/direct Design codec controls and real Design-to-HTML apply/save/owner persistence/reopen regression pass. Full284 tests, focused36,3 available browser cases plus explicit WP20/21 gate; production build/typechecks/diff lint pass.",
+        "Independent repair review passed at b7054a0941f4134df577e40c567717b4b24251c7: literal braces roundtrip through codec/Design/HTML/owner persistence/reload/reopen/Preview; dynamic raw rejection retained.36 focused tests and3 browser cases pass,1 explicit WP20/21 skip. Eight checklist PASS in approval artifact. Shared workspace/session/state/core export integration coordinated with root for registration, recovery and Save guards."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
