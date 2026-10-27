@@ -1,0 +1,27 @@
+[
+  {
+    "ok": true,
+    "diagnostics": []
+  },
+  {
+    "ok": true,
+    "diagnostics": []
+  },
+  {
+    "ok": false,
+    "error": {
+      "code": "TYPE_MISMATCH",
+      "message": "Result type/nullability must match expression including outer joins.",
+      "retryable": false
+    },
+    "diagnostics": [
+      {
+        "code": "TYPE_MISMATCH",
+        "severity": "error",
+        "objectId": "7db86525-1526-4871-9e8b-8df8b62d2051",
+        "field": "type",
+        "message": "Result type/nullability must match expression including outer joins."
+      }
+    ]
+  }
+]

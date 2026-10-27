@@ -1,0 +1,3427 @@
+{
+  "id": "28a6525a-620e-4473-8a75-4296a5209aca",
+  "formatVersion": 1,
+  "revision": 71,
+  "name": "Equipment Desk",
+  "target": "next-typescript-sqlite",
+  "targetVersion": "1",
+  "connectionRefs": [
+    "f5494e0a-6acd-4fde-aa00-b73794e50fa2"
+  ],
+  "connections": [
+    {
+      "id": "f5494e0a-6acd-4fde-aa00-b73794e50fa2",
+      "name": "equipment.sqlite",
+      "locator": {
+        "approvedRootId": "projects",
+        "relativePath": "equipment.sqlite"
+      },
+      "fingerprint": "21a56c932441d9192473d9b9b5715e76fce202ad7d0b1cd7941f5ceac93d22de",
+      "capabilities": {
+        "sqliteVersion": "3.53.4",
+        "foreignKeys": true,
+        "returning": true,
+        "strictTables": true,
+        "unsupportedObjects": []
+      },
+      "inspectedSchema": {
+        "id": "e82752cd-f988-48fd-80bc-e78c5c2b825b",
+        "revision": 2,
+        "tables": [
+          {
+            "id": "b3118e05-2727-4662-b175-14fd6dea38a5",
+            "physicalName": "assets",
+            "columns": [
+              {
+                "id": "0f05d867-bceb-41f5-923d-51833b057c83",
+                "physicalName": "id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431",
+                "physicalName": "label",
+                "type": {
+                  "kind": "text"
+                },
+                "nullable": false
+              },
+              {
+                "id": "80c559a1-3df6-4458-9c0a-f3e4e27bed08",
+                "physicalName": "daily_rate",
+                "type": {
+                  "kind": "decimal",
+                  "scale": 2,
+                  "precision": 18,
+                  "encoding": "text",
+                  "rounding": "half-even"
+                },
+                "nullable": false
+              }
+            ],
+            "primaryKey": [
+              "0f05d867-bceb-41f5-923d-51833b057c83"
+            ],
+            "foreignKeys": [],
+            "uniqueConstraints": [],
+            "checks": [],
+            "indexes": []
+          },
+          {
+            "id": "799c3491-0377-499b-adc7-c9c101e23bb8",
+            "physicalName": "borrowers",
+            "columns": [
+              {
+                "id": "6dba8ad1-e77e-4166-a040-e21beba8969d",
+                "physicalName": "id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "e266eadd-1db7-481f-b1a0-f27bb5a896c4",
+                "physicalName": "name",
+                "type": {
+                  "kind": "text"
+                },
+                "nullable": false
+              },
+              {
+                "id": "7c99b1c9-03ba-4f84-89c0-e7584cb727cb",
+                "physicalName": "email",
+                "type": {
+                  "kind": "text"
+                },
+                "nullable": false
+              }
+            ],
+            "primaryKey": [
+              "6dba8ad1-e77e-4166-a040-e21beba8969d"
+            ],
+            "foreignKeys": [],
+            "uniqueConstraints": [
+              {
+                "id": "1fc29f43-e6c4-45ad-a789-1acb627d955b",
+                "columnIds": [
+                  "7c99b1c9-03ba-4f84-89c0-e7584cb727cb"
+                ]
+              }
+            ],
+            "checks": [],
+            "indexes": []
+          },
+          {
+            "id": "7afab0d2-de6d-4b89-90f1-36466aff9924",
+            "physicalName": "loans",
+            "columns": [
+              {
+                "id": "a6e2569f-5377-4018-bc07-53cd58e4d1d8",
+                "physicalName": "id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "47737bbe-a940-4e48-b821-d1d01d21a7cb",
+                "physicalName": "borrower_id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "1ec5db5e-dd82-4c18-bdbd-108f6ae9b0de",
+                "physicalName": "asset_id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "77b546db-f46f-44a6-8b88-2d6366ea89a0",
+                "physicalName": "starts_on",
+                "type": {
+                  "kind": "date",
+                  "encoding": "iso-date"
+                },
+                "nullable": false
+              },
+              {
+                "id": "a104942c-48c8-4fd2-b353-a7e699da4ac5",
+                "physicalName": "status",
+                "type": {
+                  "kind": "text"
+                },
+                "nullable": false
+              }
+            ],
+            "primaryKey": [
+              "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+            ],
+            "foreignKeys": [
+              {
+                "id": "2b7e1749-7c57-4664-b243-2f1c54c25f8c",
+                "columnIds": [
+                  "47737bbe-a940-4e48-b821-d1d01d21a7cb"
+                ],
+                "referencedTableId": "799c3491-0377-499b-adc7-c9c101e23bb8",
+                "referencedColumnIds": [
+                  "6dba8ad1-e77e-4166-a040-e21beba8969d"
+                ],
+                "onUpdate": "restrict",
+                "onDelete": "restrict",
+                "deferrable": false
+              },
+              {
+                "id": "5a0ca4eb-9ead-493b-8db7-a2dc70cdbcb9",
+                "columnIds": [
+                  "1ec5db5e-dd82-4c18-bdbd-108f6ae9b0de"
+                ],
+                "referencedTableId": "b3118e05-2727-4662-b175-14fd6dea38a5",
+                "referencedColumnIds": [
+                  "0f05d867-bceb-41f5-923d-51833b057c83"
+                ],
+                "onUpdate": "restrict",
+                "onDelete": "restrict",
+                "deferrable": false
+              }
+            ],
+            "uniqueConstraints": [],
+            "checks": [],
+            "indexes": []
+          },
+          {
+            "id": "580c44f0-c8e9-4849-92da-7937645182ac",
+            "physicalName": "loan_lines",
+            "columns": [
+              {
+                "id": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc",
+                "physicalName": "id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398",
+                "physicalName": "loan_id",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "9ec65f41-fb24-4a8f-88a3-2a6aabc73e9b",
+                "physicalName": "description",
+                "type": {
+                  "kind": "text"
+                },
+                "nullable": false
+              },
+              {
+                "id": "daa6237c-2c01-42dd-9308-172a64724023",
+                "physicalName": "quantity",
+                "type": {
+                  "kind": "integer"
+                },
+                "nullable": false
+              },
+              {
+                "id": "2ce44645-10ac-4d95-8f98-71119e30d749",
+                "physicalName": "unit_price",
+                "type": {
+                  "kind": "decimal",
+                  "scale": 2,
+                  "precision": 18,
+                  "encoding": "text",
+                  "rounding": "half-even"
+                },
+                "nullable": false
+              }
+            ],
+            "primaryKey": [
+              "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+            ],
+            "foreignKeys": [
+              {
+                "id": "7dab7348-8878-4848-aff5-834fe4daf0d8",
+                "columnIds": [
+                  "d0dde92f-cc33-4bfc-bc5d-48ef15fec398"
+                ],
+                "referencedTableId": "7afab0d2-de6d-4b89-90f1-36466aff9924",
+                "referencedColumnIds": [
+                  "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+                ],
+                "onUpdate": "restrict",
+                "onDelete": "restrict",
+                "deferrable": false
+              }
+            ],
+            "uniqueConstraints": [],
+            "checks": [],
+            "indexes": []
+          }
+        ],
+        "opaqueObjects": []
+      },
+      "inspectedForConnectionId": "f5494e0a-6acd-4fde-aa00-b73794e50fa2",
+      "physical": {
+        "encoding": "UTF-8",
+        "objects": [
+          {
+            "type": "table",
+            "name": "assets",
+            "tbl_name": "assets",
+            "rootpage": 2,
+            "sql": "CREATE TABLE \"assets\" (\"id\" INTEGER NOT NULL, \"label\" TEXT NOT NULL, \"daily_rate\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          },
+          {
+            "type": "table",
+            "name": "borrowers",
+            "tbl_name": "borrowers",
+            "rootpage": 3,
+            "sql": "CREATE TABLE \"borrowers\" (\"id\" INTEGER NOT NULL, \"name\" TEXT NOT NULL, \"email\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC), CONSTRAINT \"1fc29f43-e6c4-45ad-a789-1acb627d955b\" UNIQUE (\"email\"))"
+          },
+          {
+            "type": "table",
+            "name": "loan_lines",
+            "tbl_name": "loan_lines",
+            "rootpage": 6,
+            "sql": "CREATE TABLE \"loan_lines\" (\"id\" INTEGER NOT NULL, \"loan_id\" INTEGER NOT NULL, \"description\" TEXT NOT NULL, \"quantity\" INTEGER NOT NULL, \"unit_price\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC), CONSTRAINT \"7dab7348-8878-4848-aff5-834fe4daf0d8\" FOREIGN KEY (\"loan_id\") REFERENCES \"loans\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT)"
+          },
+          {
+            "type": "table",
+            "name": "loans",
+            "tbl_name": "loans",
+            "rootpage": 5,
+            "sql": "CREATE TABLE \"loans\" (\"id\" INTEGER NOT NULL, \"borrower_id\" INTEGER NOT NULL, \"asset_id\" INTEGER NOT NULL, \"starts_on\" TEXT NOT NULL, \"status\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC), CONSTRAINT \"2b7e1749-7c57-4664-b243-2f1c54c25f8c\" FOREIGN KEY (\"borrower_id\") REFERENCES \"borrowers\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT, CONSTRAINT \"5a0ca4eb-9ead-493b-8db7-a2dc70cdbcb9\" FOREIGN KEY (\"asset_id\") REFERENCES \"assets\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT)"
+          },
+          {
+            "type": "index",
+            "name": "sqlite_autoindex_borrowers_1",
+            "tbl_name": "borrowers",
+            "rootpage": 4,
+            "sql": null
+          }
+        ],
+        "tables": [
+          {
+            "name": "assets",
+            "columns": [
+              {
+                "cid": 0,
+                "name": "id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 1,
+                "hidden": 0
+              },
+              {
+                "cid": 1,
+                "name": "label",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 2,
+                "name": "daily_rate",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              }
+            ],
+            "foreignKeys": [],
+            "indexes": []
+          },
+          {
+            "name": "borrowers",
+            "columns": [
+              {
+                "cid": 0,
+                "name": "id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 1,
+                "hidden": 0
+              },
+              {
+                "cid": 1,
+                "name": "name",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 2,
+                "name": "email",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              }
+            ],
+            "foreignKeys": [],
+            "indexes": [
+              {
+                "name": "sqlite_autoindex_borrowers_1",
+                "unique": 1,
+                "origin": "u",
+                "partial": 0,
+                "sql": null,
+                "columns": [
+                  {
+                    "seqno": 0,
+                    "cid": 2,
+                    "name": "email",
+                    "desc": 0,
+                    "coll": "BINARY",
+                    "key": 1
+                  },
+                  {
+                    "seqno": 1,
+                    "cid": -1,
+                    "name": null,
+                    "desc": 0,
+                    "coll": "BINARY",
+                    "key": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "loan_lines",
+            "columns": [
+              {
+                "cid": 0,
+                "name": "id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 1,
+                "hidden": 0
+              },
+              {
+                "cid": 1,
+                "name": "loan_id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 2,
+                "name": "description",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 3,
+                "name": "quantity",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 4,
+                "name": "unit_price",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              }
+            ],
+            "foreignKeys": [
+              {
+                "id": 0,
+                "seq": 0,
+                "table": "loans",
+                "from": "loan_id",
+                "to": "id",
+                "on_update": "RESTRICT",
+                "on_delete": "RESTRICT",
+                "match": "NONE"
+              }
+            ],
+            "indexes": []
+          },
+          {
+            "name": "loans",
+            "columns": [
+              {
+                "cid": 0,
+                "name": "id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 1,
+                "hidden": 0
+              },
+              {
+                "cid": 1,
+                "name": "borrower_id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 2,
+                "name": "asset_id",
+                "type": "INTEGER",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 3,
+                "name": "starts_on",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              },
+              {
+                "cid": 4,
+                "name": "status",
+                "type": "TEXT",
+                "notnull": 1,
+                "dflt_value": null,
+                "pk": 0,
+                "hidden": 0
+              }
+            ],
+            "foreignKeys": [
+              {
+                "id": 0,
+                "seq": 0,
+                "table": "assets",
+                "from": "asset_id",
+                "to": "id",
+                "on_update": "RESTRICT",
+                "on_delete": "RESTRICT",
+                "match": "NONE"
+              },
+              {
+                "id": 1,
+                "seq": 0,
+                "table": "borrowers",
+                "from": "borrower_id",
+                "to": "id",
+                "on_update": "RESTRICT",
+                "on_delete": "RESTRICT",
+                "match": "NONE"
+              }
+            ],
+            "indexes": []
+          }
+        ]
+      }
+    }
+  ],
+  "schema": {
+    "id": "e82752cd-f988-48fd-80bc-e78c5c2b825b",
+    "revision": 2,
+    "tables": [
+      {
+        "id": "b3118e05-2727-4662-b175-14fd6dea38a5",
+        "physicalName": "assets",
+        "columns": [
+          {
+            "id": "0f05d867-bceb-41f5-923d-51833b057c83",
+            "physicalName": "id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431",
+            "physicalName": "label",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "80c559a1-3df6-4458-9c0a-f3e4e27bed08",
+            "physicalName": "daily_rate",
+            "type": {
+              "kind": "decimal",
+              "scale": 2,
+              "precision": 18,
+              "encoding": "text",
+              "rounding": "half-even"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "0f05d867-bceb-41f5-923d-51833b057c83"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      },
+      {
+        "id": "799c3491-0377-499b-adc7-c9c101e23bb8",
+        "physicalName": "borrowers",
+        "columns": [
+          {
+            "id": "6dba8ad1-e77e-4166-a040-e21beba8969d",
+            "physicalName": "id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "e266eadd-1db7-481f-b1a0-f27bb5a896c4",
+            "physicalName": "name",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "7c99b1c9-03ba-4f84-89c0-e7584cb727cb",
+            "physicalName": "email",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "6dba8ad1-e77e-4166-a040-e21beba8969d"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [
+          {
+            "id": "1fc29f43-e6c4-45ad-a789-1acb627d955b",
+            "columnIds": [
+              "7c99b1c9-03ba-4f84-89c0-e7584cb727cb"
+            ]
+          }
+        ],
+        "checks": [],
+        "indexes": []
+      },
+      {
+        "id": "7afab0d2-de6d-4b89-90f1-36466aff9924",
+        "physicalName": "loans",
+        "columns": [
+          {
+            "id": "a6e2569f-5377-4018-bc07-53cd58e4d1d8",
+            "physicalName": "id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "47737bbe-a940-4e48-b821-d1d01d21a7cb",
+            "physicalName": "borrower_id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "1ec5db5e-dd82-4c18-bdbd-108f6ae9b0de",
+            "physicalName": "asset_id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "77b546db-f46f-44a6-8b88-2d6366ea89a0",
+            "physicalName": "starts_on",
+            "type": {
+              "kind": "date",
+              "encoding": "iso-date"
+            },
+            "nullable": false
+          },
+          {
+            "id": "a104942c-48c8-4fd2-b353-a7e699da4ac5",
+            "physicalName": "status",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+        ],
+        "foreignKeys": [
+          {
+            "id": "2b7e1749-7c57-4664-b243-2f1c54c25f8c",
+            "columnIds": [
+              "47737bbe-a940-4e48-b821-d1d01d21a7cb"
+            ],
+            "referencedTableId": "799c3491-0377-499b-adc7-c9c101e23bb8",
+            "referencedColumnIds": [
+              "6dba8ad1-e77e-4166-a040-e21beba8969d"
+            ],
+            "onUpdate": "restrict",
+            "onDelete": "restrict",
+            "deferrable": false
+          },
+          {
+            "id": "5a0ca4eb-9ead-493b-8db7-a2dc70cdbcb9",
+            "columnIds": [
+              "1ec5db5e-dd82-4c18-bdbd-108f6ae9b0de"
+            ],
+            "referencedTableId": "b3118e05-2727-4662-b175-14fd6dea38a5",
+            "referencedColumnIds": [
+              "0f05d867-bceb-41f5-923d-51833b057c83"
+            ],
+            "onUpdate": "restrict",
+            "onDelete": "restrict",
+            "deferrable": false
+          }
+        ],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      },
+      {
+        "id": "580c44f0-c8e9-4849-92da-7937645182ac",
+        "physicalName": "loan_lines",
+        "columns": [
+          {
+            "id": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc",
+            "physicalName": "id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398",
+            "physicalName": "loan_id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "9ec65f41-fb24-4a8f-88a3-2a6aabc73e9b",
+            "physicalName": "description",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "daa6237c-2c01-42dd-9308-172a64724023",
+            "physicalName": "quantity",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "2ce44645-10ac-4d95-8f98-71119e30d749",
+            "physicalName": "unit_price",
+            "type": {
+              "kind": "decimal",
+              "scale": 2,
+              "precision": 18,
+              "encoding": "text",
+              "rounding": "half-even"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+        ],
+        "foreignKeys": [
+          {
+            "id": "7dab7348-8878-4848-aff5-834fe4daf0d8",
+            "columnIds": [
+              "d0dde92f-cc33-4bfc-bc5d-48ef15fec398"
+            ],
+            "referencedTableId": "7afab0d2-de6d-4b89-90f1-36466aff9924",
+            "referencedColumnIds": [
+              "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+            ],
+            "onUpdate": "restrict",
+            "onDelete": "restrict",
+            "deferrable": false
+          }
+        ],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      }
+    ],
+    "opaqueObjects": []
+  },
+  "queries": [
+    {
+      "id": "0e77310c-33bb-4e67-8ad0-4bf8d11c1451",
+      "name": "Loan totals",
+      "sources": [
+        {
+          "alias": "x",
+          "source": {
+            "kind": "table",
+            "id": "580c44f0-c8e9-4849-92da-7937645182ac"
+          }
+        }
+      ],
+      "joins": [],
+      "projections": [
+        {
+          "id": "50d8b8ed-7fe2-4a98-913f-f029e2fbc2f6",
+          "name": "loan_id",
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "x",
+            "fieldId": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398"
+          }
+        },
+        {
+          "id": "e94fdeca-0700-49cc-bd68-daf0d1cff9e2",
+          "name": "total",
+          "type": {
+            "kind": "decimal",
+            "scale": 2,
+            "precision": 18,
+            "encoding": "text",
+            "rounding": "half-even"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "binary",
+              "operator": "*",
+              "left": {
+                "kind": "field",
+                "alias": "x",
+                "fieldId": "2ce44645-10ac-4d95-8f98-71119e30d749"
+              },
+              "right": {
+                "kind": "field",
+                "alias": "x",
+                "fieldId": "daa6237c-2c01-42dd-9308-172a64724023"
+              }
+            },
+            "zeroChildren": "zero"
+          }
+        }
+      ],
+      "parameters": [],
+      "groupBy": [
+        {
+          "kind": "field",
+          "alias": "x",
+          "fieldId": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398"
+        }
+      ],
+      "orderBy": [],
+      "grain": {
+        "strategy": "grouped",
+        "keys": [
+          "50d8b8ed-7fe2-4a98-913f-f029e2fbc2f6"
+        ]
+      }
+    },
+    {
+      "id": "08d87f4f-0248-42f0-a0a5-e8b4f7e25f2f",
+      "name": "Borrower totals",
+      "sources": [
+        {
+          "alias": "b",
+          "source": {
+            "kind": "table",
+            "id": "799c3491-0377-499b-adc7-c9c101e23bb8"
+          }
+        },
+        {
+          "alias": "l",
+          "source": {
+            "kind": "table",
+            "id": "7afab0d2-de6d-4b89-90f1-36466aff9924"
+          }
+        },
+        {
+          "alias": "x",
+          "source": {
+            "kind": "query",
+            "id": "0e77310c-33bb-4e67-8ad0-4bf8d11c1451"
+          }
+        }
+      ],
+      "joins": [
+        {
+          "leftAlias": "b",
+          "rightAlias": "l",
+          "kind": "left",
+          "cardinality": "one-to-many",
+          "on": {
+            "kind": "binary",
+            "operator": "=",
+            "left": {
+              "kind": "field",
+              "alias": "b",
+              "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+            },
+            "right": {
+              "kind": "field",
+              "alias": "l",
+              "fieldId": "47737bbe-a940-4e48-b821-d1d01d21a7cb"
+            }
+          }
+        },
+        {
+          "leftAlias": "l",
+          "rightAlias": "x",
+          "kind": "left",
+          "cardinality": "one-to-one",
+          "on": {
+            "kind": "binary",
+            "operator": "=",
+            "left": {
+              "kind": "field",
+              "alias": "l",
+              "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+            },
+            "right": {
+              "kind": "field",
+              "alias": "x",
+              "fieldId": "50d8b8ed-7fe2-4a98-913f-f029e2fbc2f6"
+            }
+          }
+        }
+      ],
+      "projections": [
+        {
+          "id": "c60dbef2-1075-4e1a-82bd-632dd5c78f51",
+          "name": "borrower_id",
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "b",
+            "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+          }
+        },
+        {
+          "id": "922bef3c-5499-4c90-8e5a-1dceb1f2e382",
+          "name": "borrower",
+          "type": {
+            "kind": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "b",
+            "fieldId": "e266eadd-1db7-481f-b1a0-f27bb5a896c4"
+          }
+        },
+        {
+          "id": "5707d34e-5aad-467b-a88f-4c84a4092f60",
+          "name": "total",
+          "type": {
+            "kind": "decimal",
+            "scale": 2,
+            "precision": 18,
+            "encoding": "text",
+            "rounding": "half-even"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "field",
+              "alias": "x",
+              "fieldId": "e94fdeca-0700-49cc-bd68-daf0d1cff9e2"
+            },
+            "zeroChildren": "zero"
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "id": "521d74f1-f031-4f5d-9d60-3ae6b353f3c8",
+          "name": "minimum",
+          "type": {
+            "kind": "decimal",
+            "scale": 2,
+            "precision": 18,
+            "encoding": "text",
+            "rounding": "half-even"
+          },
+          "nullable": false,
+          "default": "0.00"
+        }
+      ],
+      "groupBy": [
+        {
+          "kind": "field",
+          "alias": "b",
+          "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+        },
+        {
+          "kind": "field",
+          "alias": "b",
+          "fieldId": "e266eadd-1db7-481f-b1a0-f27bb5a896c4"
+        }
+      ],
+      "having": {
+        "kind": "binary",
+        "operator": ">=",
+        "left": {
+          "kind": "aggregate",
+          "function": "sum",
+          "argument": {
+            "kind": "field",
+            "alias": "x",
+            "fieldId": "e94fdeca-0700-49cc-bd68-daf0d1cff9e2"
+          },
+          "zeroChildren": "zero"
+        },
+        "right": {
+          "kind": "parameter",
+          "parameterId": "521d74f1-f031-4f5d-9d60-3ae6b353f3c8"
+        }
+      },
+      "orderBy": [],
+      "grain": {
+        "strategy": "grouped",
+        "keys": [
+          "c60dbef2-1075-4e1a-82bd-632dd5c78f51",
+          "922bef3c-5499-4c90-8e5a-1dceb1f2e382"
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "id": "2c4acdb4-83a2-4f6c-9ad8-b1cc3dc4759d",
+      "route": "/",
+      "title": "Assets",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46"
+        }
+      ],
+      "formIds": [
+        "fa14cf25-c8fe-4478-8999-daa13af4cb46"
+      ]
+    },
+    {
+      "id": "5be45511-24cf-4a99-8cf2-4b2655b4cbda",
+      "route": "/borrowers",
+      "title": "Borrowers",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64"
+        }
+      ],
+      "formIds": [
+        "8f23f060-ea62-49e4-a16b-9bfbc01a4e64"
+      ]
+    },
+    {
+      "id": "2f30af12-f802-4361-9293-d741df3a4058",
+      "route": "/loans",
+      "title": "Loans",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "52d83040-440f-44d2-b766-12c84a41ff4c"
+        }
+      ],
+      "formIds": [
+        "52d83040-440f-44d2-b766-12c84a41ff4c"
+      ]
+    },
+    {
+      "id": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+      "route": "/lines",
+      "title": "Lines",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed"
+        }
+      ],
+      "formIds": [
+        "724476f1-cc78-420c-ba3c-2b4886ce60ed"
+      ]
+    },
+    {
+      "id": "02f76ceb-8535-4e9f-af0c-7363ae55629f",
+      "route": "/asset",
+      "title": "Edit asset",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69"
+        }
+      ],
+      "formIds": [
+        "e030457c-a37b-42ed-9fd0-e33b217b8c69"
+      ],
+      "policyId": "ac42b46a-114a-4fe2-bdcb-ba066142f57d"
+    },
+    {
+      "id": "b1c6dbf6-e2c9-42f6-93e8-3a53cce5dafe",
+      "route": "/borrower",
+      "title": "Edit borrower",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc"
+        }
+      ],
+      "formIds": [
+        "b880f5fc-4452-47c9-8677-12bb65ca03fc"
+      ],
+      "policyId": "bd381629-ca0a-4e66-9f00-d4f17db317fd"
+    },
+    {
+      "id": "271eb292-6886-4433-915b-bfa100b454a2",
+      "route": "/loan",
+      "title": "Edit loan",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6"
+        }
+      ],
+      "formIds": [
+        "27ffcf57-f94b-43a5-a440-3d595f07f3e6"
+      ],
+      "policyId": "e5695430-8cac-40f9-8710-37584384d0b2"
+    },
+    {
+      "id": "b3abece2-fc80-4445-9d48-2e10f9a2156d",
+      "route": "/line",
+      "title": "Edit line",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "836167c5-4595-4288-95be-7969d95f0436"
+        }
+      ],
+      "formIds": [
+        "836167c5-4595-4288-95be-7969d95f0436"
+      ],
+      "policyId": "6f6fd9e7-d92a-4f83-b5cf-519d701ddbf9"
+    },
+    {
+      "id": "c2e0d8c1-91b1-4ece-aee2-deb24f4a6d91",
+      "route": "/login",
+      "title": "Login",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067"
+        }
+      ],
+      "formIds": [
+        "7041cd20-f1bb-4327-97b3-4a1bdc34d067"
+      ],
+      "policyId": "36650100-259d-4c45-baa6-59f158a702fb"
+    },
+    {
+      "id": "4119ae45-9294-4b12-9ede-abd09d82c92c",
+      "route": "/search",
+      "title": "Asset search",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "cbcb328e-daa7-4842-b0d1-600ad0963898"
+        }
+      ],
+      "formIds": [
+        "cbcb328e-daa7-4842-b0d1-600ad0963898"
+      ]
+    },
+    {
+      "id": "0295432b-7952-41fc-a96c-76b7df3e81c0",
+      "route": "/report",
+      "title": "Borrower report",
+      "document": [
+        {
+          "kind": "form",
+          "formId": "83817c20-08fe-47b0-b87b-c08b95606e49"
+        }
+      ],
+      "formIds": [
+        "83817c20-08fe-47b0-b87b-c08b95606e49"
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "id": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "pageId": "2c4acdb4-83a2-4f6c-9ad8-b1cc3dc4759d",
+      "kind": "Grid",
+      "sourceRef": {
+        "kind": "table",
+        "id": "b3118e05-2727-4662-b175-14fd6dea38a5"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "0f05d867-bceb-41f5-923d-51833b057c83",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+          }
+        }
+      ],
+      "controlIds": [
+        "4330ca6c-4e69-47dd-9d9b-e296c668b3f6",
+        "6aac0f4b-8a93-4084-af4a-ade1e99e5a4e",
+        "c96a4879-4e99-4471-9968-a4641ac2ba3a",
+        "1d1d41bf-12d5-445b-95ed-2c41b46c5eca",
+        "cb65c65e-c1f2-4491-baa8-8196ecb24daa"
+      ],
+      "actionIds": [
+        "938c9e69-d52c-45d1-9773-71671a45add6",
+        "36313c1e-42b0-4518-8d88-0ffe39b2e931"
+      ],
+      "search": [
+        {
+          "fieldId": "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431",
+          "operator": "contains"
+        }
+      ],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Assets list",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "pageId": "02f76ceb-8535-4e9f-af0c-7363ae55629f",
+      "kind": "Record",
+      "sourceRef": {
+        "kind": "table",
+        "id": "b3118e05-2727-4662-b175-14fd6dea38a5"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "0f05d867-bceb-41f5-923d-51833b057c83",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+          }
+        }
+      ],
+      "displayFieldIds": [
+        "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431"
+      ],
+      "controlIds": [
+        "35a7bbc0-bce7-43f6-b207-b064429c819a",
+        "518fc24b-b9e2-4358-bc74-b9e8d7efad47",
+        "db2d7301-3e6e-4ef8-8ccf-358767f288ff",
+        "3cb6e513-b5cc-450e-8c1f-0a0c1cbe3516",
+        "b8d78720-df48-4090-9ef5-6575b24fec61",
+        "0cad3c2b-6891-41b9-b1ea-fb3c14134eaf",
+        "28e8565d-a839-4d8e-b5bf-c73ec139beea",
+        "a1476214-019e-44ec-8913-4dc7fddcd6d5"
+      ],
+      "actionIds": [
+        "915b33db-47a5-4682-ab6a-a1f3937dffca",
+        "32964582-3788-4f20-b832-24bf868d3439",
+        "c74839ae-2bf4-431c-af76-416e3d3c01c4",
+        "c7a15bd1-9032-4a8a-b7db-c48e428eadb6"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Assets list record",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "pageId": "5be45511-24cf-4a99-8cf2-4b2655b4cbda",
+      "kind": "Grid",
+      "sourceRef": {
+        "kind": "table",
+        "id": "799c3491-0377-499b-adc7-c9c101e23bb8"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+          }
+        }
+      ],
+      "controlIds": [
+        "2aea5f2c-56fc-4d16-b4cd-1e1bbf47e746",
+        "ead088ad-2406-441a-bf24-06220c6a9e55",
+        "3d3f3adb-a99f-4df6-a56c-fbc537997e45",
+        "82000a27-f92a-4e0e-ba06-d880c2df408d",
+        "2e24b846-5259-432b-a8b2-9dfc0336e319"
+      ],
+      "actionIds": [
+        "4af828b3-fef6-4e62-bf35-7296b67450cc",
+        "844f55c6-0fc7-45c4-992d-7dd70475d81e",
+        "47fd22ae-90bd-4247-8e55-2ea5a47a8957"
+      ],
+      "search": [
+        {
+          "fieldId": "e266eadd-1db7-481f-b1a0-f27bb5a896c4",
+          "operator": "contains"
+        }
+      ],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Borrowers list",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "pageId": "b1c6dbf6-e2c9-42f6-93e8-3a53cce5dafe",
+      "kind": "Record",
+      "sourceRef": {
+        "kind": "table",
+        "id": "799c3491-0377-499b-adc7-c9c101e23bb8"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+          }
+        }
+      ],
+      "displayFieldIds": [
+        "e266eadd-1db7-481f-b1a0-f27bb5a896c4"
+      ],
+      "controlIds": [
+        "fee4ba6c-a7b5-4884-b71b-a9c06de94734",
+        "03c6ae0e-42cc-4088-af50-d1542c5ca809",
+        "214783ef-062a-4e29-9abf-c6497b1cba2c",
+        "9cfe14e3-62ff-4291-8ea6-cb8a96b79cc7",
+        "e7efe6fb-57d5-4ebf-b89f-5d7335b4ba39",
+        "eff1535c-f7e8-48a5-a16a-295684fc225b",
+        "4228a65f-787f-4cab-b12a-c85df2ee7d48",
+        "e0af764d-944f-4a36-a106-cb420d6700c9"
+      ],
+      "actionIds": [
+        "827ce2db-f083-48b6-a4ca-69a53fba8a1e",
+        "f9442525-a476-4abc-9c18-edeefc1f9561",
+        "62f3cf5e-6a49-4873-9552-0cf452fcaf8f",
+        "11b90782-615d-497b-9c78-6316c9fc605c"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Borrowers list record",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+      "kind": "Grid",
+      "sourceRef": {
+        "kind": "table",
+        "id": "7afab0d2-de6d-4b89-90f1-36466aff9924"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+          }
+        }
+      ],
+      "controlIds": [
+        "072bb63e-4a2c-4e5a-82a8-92d49eb42c06",
+        "47b57c23-22c0-4cf5-acdc-a59048211238",
+        "4a803011-92c7-4746-86a1-81f4e794fc15",
+        "b7e3b091-06be-4f69-bff0-008425d896d9",
+        "fc61b3a4-2c63-41b1-9723-61984a6066f2",
+        "84485099-c3e7-466a-bcf5-1e7c14a79d17",
+        "b645aa6a-725d-4b90-b130-9adfb98a34c8"
+      ],
+      "actionIds": [
+        "22722ca8-1e40-443a-b9f0-c3873b27bf19",
+        "e489afb8-703c-47b8-9902-444e41abfc1c",
+        "481be33d-68ac-4fe3-8214-70a98d22d383"
+      ],
+      "search": [
+        {
+          "fieldId": "a104942c-48c8-4fd2-b353-a7e699da4ac5",
+          "operator": "contains"
+        },
+        {
+          "fieldId": "47737bbe-a940-4e48-b821-d1d01d21a7cb",
+          "operator": "eq"
+        }
+      ],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Loans list",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "pageId": "271eb292-6886-4433-915b-bfa100b454a2",
+      "kind": "Record",
+      "sourceRef": {
+        "kind": "table",
+        "id": "7afab0d2-de6d-4b89-90f1-36466aff9924"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+          }
+        }
+      ],
+      "displayFieldIds": [
+        "a104942c-48c8-4fd2-b353-a7e699da4ac5"
+      ],
+      "controlIds": [
+        "353d251e-d46d-42d0-bc02-4358d426cf05",
+        "534149ac-ac8d-4716-9ab8-b0b0f1dddc15",
+        "34dcf6f8-269b-47c0-af82-b9eb0386669a",
+        "2465e95f-e2ec-472d-9ee1-a123c64cf07d",
+        "0184e9f1-b0fa-4170-b90c-2e1e489aec68",
+        "467b534c-b948-4ee7-9de3-65b27213d18b",
+        "9fd5451d-2b41-4aae-96b0-cbf606947168",
+        "c0a9de2d-8b6d-47e2-a154-81530199b686",
+        "a8d538c2-b5ed-4acd-9338-12a2006a230a",
+        "2501093c-c1db-486d-a0ae-e57273c2d6bd"
+      ],
+      "actionIds": [
+        "5cbd64f4-3384-45f3-8cf6-b9be4e1d97b4",
+        "b9b43ee3-8ab5-466a-8bfb-d28cd13d49a8",
+        "f3d3b66f-c8e5-4981-babb-591bbd5fba74",
+        "ca715ff8-662c-45ac-ac1d-f61501127e17"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Loans list record",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+      "kind": "Grid",
+      "sourceRef": {
+        "kind": "table",
+        "id": "580c44f0-c8e9-4849-92da-7937645182ac"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+          }
+        }
+      ],
+      "controlIds": [
+        "9f9f364d-932f-4e94-b7ad-cb2f690eaedb",
+        "221c1dd1-5f27-4c31-879f-f37f643c4ecb",
+        "4acea13e-ad1e-4f69-9ae6-d93df9c28813",
+        "0c2aa5eb-abab-4062-af98-7a0689fdb13a",
+        "dc761f41-789f-4dfc-b81c-0286829b4893",
+        "6b8b81c4-3ab6-46a3-86c3-095ab3dbb7f5",
+        "d15d1240-0d86-4597-bbb0-5cb4c29815bf"
+      ],
+      "actionIds": [
+        "e60822cc-a9c9-416f-9962-c32351719290",
+        "2a582885-35cb-4042-92cb-f6c3f71bf8ee"
+      ],
+      "search": [
+        {
+          "fieldId": "9ec65f41-fb24-4a8f-88a3-2a6aabc73e9b",
+          "operator": "contains"
+        },
+        {
+          "fieldId": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398",
+          "operator": "eq"
+        }
+      ],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Lines list",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "836167c5-4595-4288-95be-7969d95f0436",
+      "pageId": "b3abece2-fc80-4445-9d48-2e10f9a2156d",
+      "kind": "Record",
+      "sourceRef": {
+        "kind": "table",
+        "id": "580c44f0-c8e9-4849-92da-7937645182ac"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+          }
+        }
+      ],
+      "displayFieldIds": [
+        "9ec65f41-fb24-4a8f-88a3-2a6aabc73e9b"
+      ],
+      "controlIds": [
+        "880466be-1729-4475-89f1-a532bf22b0c6",
+        "b69a984c-3189-4339-bcc3-c36ba9565f0a",
+        "940dad78-f29a-49d4-a453-1cbca04b5acb",
+        "5d9d1fd1-f707-4820-81ce-22dcba47c6f5",
+        "561911ee-1083-4e0d-9740-1cd1d18414ab",
+        "60c8a306-a016-48cc-99db-d0a6251c3607",
+        "251f6594-7880-4967-a39b-b8b10399fd37",
+        "5d08d069-6d0b-46e7-9d30-7cc15ebe7d73",
+        "23aae34c-41d5-40b5-b28a-d0068d98aad7",
+        "1ca6029e-eba8-47e4-9a99-4c90696918b0"
+      ],
+      "actionIds": [
+        "25ddd452-f17b-4d00-bae9-833883f8d715",
+        "e901b4cd-244f-494d-b2cf-80db4ee79004",
+        "90b90cce-671f-4794-bd57-fe6a434bc691",
+        "06e53021-6934-4274-9639-630c007bc7f7"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Lines list record",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "cbcb328e-daa7-4842-b0d1-600ad0963898",
+      "pageId": "4119ae45-9294-4b12-9ede-abd09d82c92c",
+      "kind": "Search",
+      "sourceRef": {
+        "kind": "table",
+        "id": "b3118e05-2727-4662-b175-14fd6dea38a5"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "0f05d867-bceb-41f5-923d-51833b057c83",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+          }
+        }
+      ],
+      "controlIds": [
+        "13f3366e-4c6b-4d73-b765-5549aabb7ae1",
+        "718f00e2-f54d-47af-a9da-91168bb2b488",
+        "d07e88fd-332c-4aab-a04b-5fb46a7b66d9",
+        "a65e91ab-2601-466b-acd0-7be2a3030072"
+      ],
+      "actionIds": [
+        "925408d2-115e-4208-b6ad-c55e1cddbeca"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Asset search",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "pageId": "c2e0d8c1-91b1-4ece-aee2-deb24f4a6d91",
+      "kind": "Login",
+      "keyMapping": [],
+      "controlIds": [
+        "ead93e0c-49f0-46ba-9bf3-73faecebeaec",
+        "423c0090-b943-42aa-b5fa-af416a219905",
+        "752f228a-6988-4c33-9216-68e6898bd500",
+        "40986751-48bc-42ac-8e21-f0e19cf64af9",
+        "56b48cf0-5a14-440a-b5aa-6fc452dcf47f"
+      ],
+      "actionIds": [
+        "420a7cf2-c4db-41df-a9a2-a202021c130d",
+        "6fd37eb8-c214-4b20-b4f9-128399337de9",
+        "e69e03d4-44dc-4b42-b303-406bf5a64631"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Visitor access",
+        "className": "",
+        "format": "plain"
+      }
+    },
+    {
+      "id": "83817c20-08fe-47b0-b87b-c08b95606e49",
+      "pageId": "0295432b-7952-41fc-a96c-76b7df3e81c0",
+      "kind": "Grid",
+      "sourceRef": {
+        "kind": "query",
+        "id": "08d87f4f-0248-42f0-a0a5-e8b4f7e25f2f"
+      },
+      "keyMapping": [],
+      "queryParameters": [
+        {
+          "parameterId": "521d74f1-f031-4f5d-9d60-3ae6b353f3c8",
+          "runtime": {
+            "name": "minimum"
+          }
+        }
+      ],
+      "controlIds": [
+        "540b3bce-52e3-46b8-a2f4-bcff605deec6",
+        "7e3030c0-71db-4b2d-915c-61d854457003",
+        "49891487-1a76-47c9-9515-41c5b8304675"
+      ],
+      "actionIds": [
+        "f485da4c-519a-4241-a7b6-2ff2f6c640d8"
+      ],
+      "search": [],
+      "paging": {
+        "pageSize": 20
+      },
+      "sorting": [],
+      "appearance": {
+        "label": "Borrower totals report",
+        "className": "",
+        "format": "plain"
+      }
+    }
+  ],
+  "controls": [
+    {
+      "id": "4330ca6c-4e69-47dd-9d9b-e296c668b3f6",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "6aac0f4b-8a93-4084-af4a-ade1e99e5a4e",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "label"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "c96a4879-4e99-4471-9968-a4641ac2ba3a",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "80c559a1-3df6-4458-9c0a-f3e4e27bed08"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "daily_rate"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "35a7bbc0-bce7-43f6-b207-b064429c819a",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "518fc24b-b9e2-4358-bc74-b9e8d7efad47",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "text",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "label"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "db2d7301-3e6e-4ef8-8ccf-358767f288ff",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "80c559a1-3df6-4458-9c0a-f3e4e27bed08"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "daily_rate"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "3cb6e513-b5cc-450e-8c1f-0a0c1cbe3516",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "insert"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "915b33db-47a5-4682-ab6a-a1f3937dffca"
+        }
+      ]
+    },
+    {
+      "id": "b8d78720-df48-4090-9ef5-6575b24fec61",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "update"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "32964582-3788-4f20-b832-24bf868d3439"
+        }
+      ]
+    },
+    {
+      "id": "0cad3c2b-6891-41b9-b1ea-fb3c14134eaf",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "delete"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "c74839ae-2bf4-431c-af76-416e3d3c01c4"
+        }
+      ]
+    },
+    {
+      "id": "28e8565d-a839-4d8e-b5bf-c73ec139beea",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "cancel"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "c7a15bd1-9032-4a8a-b7db-c48e428eadb6"
+        }
+      ]
+    },
+    {
+      "id": "1d1d41bf-12d5-445b-95ed-2c41b46c5eca",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "kind": "link",
+      "readOnly": true,
+      "appearance": {
+        "label": "Edit record"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "938c9e69-d52c-45d1-9773-71671a45add6"
+        }
+      ]
+    },
+    {
+      "id": "2aea5f2c-56fc-4d16-b4cd-1e1bbf47e746",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "ead088ad-2406-441a-bf24-06220c6a9e55",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "kind": "link",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "e266eadd-1db7-481f-b1a0-f27bb5a896c4"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "name"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "47fd22ae-90bd-4247-8e55-2ea5a47a8957"
+        }
+      ]
+    },
+    {
+      "id": "3d3f3adb-a99f-4df6-a56c-fbc537997e45",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "7c99b1c9-03ba-4f84-89c0-e7584cb727cb"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "email"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "fee4ba6c-a7b5-4884-b71b-a9c06de94734",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "03c6ae0e-42cc-4088-af50-d1542c5ca809",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "text",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "e266eadd-1db7-481f-b1a0-f27bb5a896c4"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "name"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "214783ef-062a-4e29-9abf-c6497b1cba2c",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "text",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "7c99b1c9-03ba-4f84-89c0-e7584cb727cb"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "email"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "9cfe14e3-62ff-4291-8ea6-cb8a96b79cc7",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "insert"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "827ce2db-f083-48b6-a4ca-69a53fba8a1e"
+        }
+      ]
+    },
+    {
+      "id": "e7efe6fb-57d5-4ebf-b89f-5d7335b4ba39",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "update"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "f9442525-a476-4abc-9c18-edeefc1f9561"
+        }
+      ]
+    },
+    {
+      "id": "eff1535c-f7e8-48a5-a16a-295684fc225b",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "delete"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "62f3cf5e-6a49-4873-9552-0cf452fcaf8f"
+        }
+      ]
+    },
+    {
+      "id": "4228a65f-787f-4cab-b12a-c85df2ee7d48",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "cancel"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "11b90782-615d-497b-9c78-6316c9fc605c"
+        }
+      ]
+    },
+    {
+      "id": "82000a27-f92a-4e0e-ba06-d880c2df408d",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "kind": "link",
+      "readOnly": true,
+      "appearance": {
+        "label": "Edit record"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "4af828b3-fef6-4e62-bf35-7296b67450cc"
+        }
+      ]
+    },
+    {
+      "id": "072bb63e-4a2c-4e5a-82a8-92d49eb42c06",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "47b57c23-22c0-4cf5-acdc-a59048211238",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "47737bbe-a940-4e48-b821-d1d01d21a7cb"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "borrower_id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "4a803011-92c7-4746-86a1-81f4e794fc15",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "1ec5db5e-dd82-4c18-bdbd-108f6ae9b0de"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "asset_id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "b7e3b091-06be-4f69-bff0-008425d896d9",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "77b546db-f46f-44a6-8b88-2d6366ea89a0"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "starts_on"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "fc61b3a4-2c63-41b1-9723-61984a6066f2",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "link",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "a104942c-48c8-4fd2-b353-a7e699da4ac5"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "status"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "481be33d-68ac-4fe3-8214-70a98d22d383"
+        }
+      ]
+    },
+    {
+      "id": "353d251e-d46d-42d0-bc02-4358d426cf05",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "534149ac-ac8d-4716-9ab8-b0b0f1dddc15",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "47737bbe-a940-4e48-b821-d1d01d21a7cb"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "borrower_id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "34dcf6f8-269b-47c0-af82-b9eb0386669a",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "1ec5db5e-dd82-4c18-bdbd-108f6ae9b0de"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "asset_id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "2465e95f-e2ec-472d-9ee1-a123c64cf07d",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "date",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "77b546db-f46f-44a6-8b88-2d6366ea89a0"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "starts_on"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "0184e9f1-b0fa-4170-b90c-2e1e489aec68",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "text",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "a104942c-48c8-4fd2-b353-a7e699da4ac5"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "status"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "467b534c-b948-4ee7-9de3-65b27213d18b",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "insert"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "5cbd64f4-3384-45f3-8cf6-b9be4e1d97b4"
+        }
+      ]
+    },
+    {
+      "id": "9fd5451d-2b41-4aae-96b0-cbf606947168",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "update"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "b9b43ee3-8ab5-466a-8bfb-d28cd13d49a8"
+        }
+      ]
+    },
+    {
+      "id": "c0a9de2d-8b6d-47e2-a154-81530199b686",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "delete"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "f3d3b66f-c8e5-4981-babb-591bbd5fba74"
+        }
+      ]
+    },
+    {
+      "id": "a8d538c2-b5ed-4acd-9338-12a2006a230a",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "cancel"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "ca715ff8-662c-45ac-ac1d-f61501127e17"
+        }
+      ]
+    },
+    {
+      "id": "84485099-c3e7-466a-bcf5-1e7c14a79d17",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "link",
+      "readOnly": true,
+      "appearance": {
+        "label": "Edit record"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "22722ca8-1e40-443a-b9f0-c3873b27bf19"
+        }
+      ]
+    },
+    {
+      "id": "9f9f364d-932f-4e94-b7ad-cb2f690eaedb",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "221c1dd1-5f27-4c31-879f-f37f643c4ecb",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "loan_id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "4acea13e-ad1e-4f69-9ae6-d93df9c28813",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "9ec65f41-fb24-4a8f-88a3-2a6aabc73e9b"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "description"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "0c2aa5eb-abab-4062-af98-7a0689fdb13a",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "daa6237c-2c01-42dd-9308-172a64724023"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "quantity"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "dc761f41-789f-4dfc-b81c-0286829b4893",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "2ce44645-10ac-4d95-8f98-71119e30d749"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "unit_price"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "880466be-1729-4475-89f1-a532bf22b0c6",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "b69a984c-3189-4339-bcc3-c36ba9565f0a",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "loan_id"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "940dad78-f29a-49d4-a453-1cbca04b5acb",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "text",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "9ec65f41-fb24-4a8f-88a3-2a6aabc73e9b"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "description"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "5d9d1fd1-f707-4820-81ce-22dcba47c6f5",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "daa6237c-2c01-42dd-9308-172a64724023"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "quantity"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "561911ee-1083-4e0d-9740-1cd1d18414ab",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "2ce44645-10ac-4d95-8f98-71119e30d749"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "unit_price"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "60c8a306-a016-48cc-99db-d0a6251c3607",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "insert"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "25ddd452-f17b-4d00-bae9-833883f8d715"
+        }
+      ]
+    },
+    {
+      "id": "251f6594-7880-4967-a39b-b8b10399fd37",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "update"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "e901b4cd-244f-494d-b2cf-80db4ee79004"
+        }
+      ]
+    },
+    {
+      "id": "5d08d069-6d0b-46e7-9d30-7cc15ebe7d73",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "delete"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "90b90cce-671f-4794-bd57-fe6a434bc691"
+        }
+      ]
+    },
+    {
+      "id": "23aae34c-41d5-40b5-b28a-d0068d98aad7",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "cancel"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "06e53021-6934-4274-9639-630c007bc7f7"
+        }
+      ]
+    },
+    {
+      "id": "6b8b81c4-3ab6-46a3-86c3-095ab3dbb7f5",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "link",
+      "readOnly": true,
+      "appearance": {
+        "label": "Edit record"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "e60822cc-a9c9-416f-9962-c32351719290"
+        }
+      ]
+    },
+    {
+      "id": "13f3366e-4c6b-4d73-b765-5549aabb7ae1",
+      "formId": "cbcb328e-daa7-4842-b0d1-600ad0963898",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "718f00e2-f54d-47af-a9da-91168bb2b488",
+      "formId": "cbcb328e-daa7-4842-b0d1-600ad0963898",
+      "kind": "text",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "2d3bf5d8-4e8b-4dba-be6b-1f70baf49431"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "label"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "d07e88fd-332c-4aab-a04b-5fb46a7b66d9",
+      "formId": "cbcb328e-daa7-4842-b0d1-600ad0963898",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "80c559a1-3df6-4458-9c0a-f3e4e27bed08"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "daily_rate"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "a65e91ab-2601-466b-acd0-7be2a3030072",
+      "formId": "cbcb328e-daa7-4842-b0d1-600ad0963898",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "search"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "925408d2-115e-4208-b6ad-c55e1cddbeca"
+        }
+      ]
+    },
+    {
+      "id": "ead93e0c-49f0-46ba-9bf3-73faecebeaec",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "credentialRole": "username",
+      "kind": "identity",
+      "readOnly": false,
+      "appearance": {
+        "label": "Username"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "423c0090-b943-42aa-b5fa-af416a219905",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "credentialRole": "password",
+      "kind": "text",
+      "readOnly": false,
+      "appearance": {
+        "label": "Password"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": []
+    },
+    {
+      "id": "752f228a-6988-4c33-9216-68e6898bd500",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "Sign in"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "420a7cf2-c4db-41df-a9a2-a202021c130d"
+        }
+      ]
+    },
+    {
+      "id": "40986751-48bc-42ac-8e21-f0e19cf64af9",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "Sign out"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "6fd37eb8-c214-4b20-b4f9-128399337de9"
+        }
+      ]
+    },
+    {
+      "id": "56b48cf0-5a14-440a-b5aa-6fc452dcf47f",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "kind": "button",
+      "readOnly": false,
+      "appearance": {
+        "label": "cancel"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "e69e03d4-44dc-4b42-b303-406bf5a64631"
+        }
+      ]
+    },
+    {
+      "id": "cb65c65e-c1f2-4491-baa8-8196ecb24daa",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "a1476214-019e-44ec-8913-4dc7fddcd6d5",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "2e24b846-5259-432b-a8b2-9dfc0336e319",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "e0af764d-944f-4a36-a106-cb420d6700c9",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "b645aa6a-725d-4b90-b130-9adfb98a34c8",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "2501093c-c1db-486d-a0ae-e57273c2d6bd",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "d15d1240-0d86-4597-bbb0-5cb4c29815bf",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "1ca6029e-eba8-47e4-9a99-4c90696918b0",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "kind": "identity",
+      "readOnly": true,
+      "appearance": {
+        "label": "Signed in as"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "540b3bce-52e3-46b8-a2f4-bcff605deec6",
+      "formId": "83817c20-08fe-47b0-b87b-c08b95606e49",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "c60dbef2-1075-4e1a-82bd-632dd5c78f51"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "borrower_id"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    },
+    {
+      "id": "7e3030c0-71db-4b2d-915c-61d854457003",
+      "formId": "83817c20-08fe-47b0-b87b-c08b95606e49",
+      "kind": "link",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "922bef3c-5499-4c90-8e5a-1dceb1f2e382"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "borrower"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": [
+        {
+          "event": "click",
+          "actionId": "f485da4c-519a-4241-a7b6-2ff2f6c640d8"
+        }
+      ]
+    },
+    {
+      "id": "49891487-1a76-47c9-9515-41c5b8304675",
+      "formId": "83817c20-08fe-47b0-b87b-c08b95606e49",
+      "kind": "label",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "5707d34e-5aad-467b-a88f-4c84a4092f60"
+      },
+      "readOnly": true,
+      "appearance": {
+        "label": "total"
+      },
+      "validation": {
+        "required": false
+      },
+      "events": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "915b33db-47a5-4682-ab6a-a1f3937dffca",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "operation": "insert",
+      "policyId": "56fd1af7-c194-4f7d-8d1c-1636578c0a64",
+      "success": {
+        "pageId": "2c4acdb4-83a2-4f6c-9ad8-b1cc3dc4759d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "32964582-3788-4f20-b832-24bf868d3439",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "operation": "update",
+      "policyId": "96a8ca89-e756-4db7-9c9d-32011abd156e",
+      "success": {
+        "pageId": "2c4acdb4-83a2-4f6c-9ad8-b1cc3dc4759d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "c74839ae-2bf4-431c-af76-416e3d3c01c4",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "operation": "delete",
+      "policyId": "bf5a9350-a55d-4395-afe5-4b83bcb22443",
+      "success": {
+        "pageId": "2c4acdb4-83a2-4f6c-9ad8-b1cc3dc4759d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "c7a15bd1-9032-4a8a-b7db-c48e428eadb6",
+      "formId": "e030457c-a37b-42ed-9fd0-e33b217b8c69",
+      "operation": "cancel",
+      "destination": {
+        "pageId": "2c4acdb4-83a2-4f6c-9ad8-b1cc3dc4759d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "938c9e69-d52c-45d1-9773-71671a45add6",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "02f76ceb-8535-4e9f-af0c-7363ae55629f",
+        "keyMapping": [
+          {
+            "targetFieldId": "0f05d867-bceb-41f5-923d-51833b057c83",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "0f05d867-bceb-41f5-923d-51833b057c83"
+            }
+          }
+        ],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "36313c1e-42b0-4518-8d88-0ffe39b2e931",
+      "formId": "fa14cf25-c8fe-4478-8999-daa13af4cb46",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "02f76ceb-8535-4e9f-af0c-7363ae55629f",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "827ce2db-f083-48b6-a4ca-69a53fba8a1e",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "operation": "insert",
+      "policyId": "c2d9c7f6-8c94-40ff-a126-f761dd048bd2",
+      "success": {
+        "pageId": "5be45511-24cf-4a99-8cf2-4b2655b4cbda",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "f9442525-a476-4abc-9c18-edeefc1f9561",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "operation": "update",
+      "policyId": "fad236e3-9ea6-4532-a613-234accf4e70b",
+      "success": {
+        "pageId": "5be45511-24cf-4a99-8cf2-4b2655b4cbda",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "62f3cf5e-6a49-4873-9552-0cf452fcaf8f",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "operation": "delete",
+      "policyId": "ba531c70-b0c4-4f20-8dae-3a2373a6fc4e",
+      "success": {
+        "pageId": "5be45511-24cf-4a99-8cf2-4b2655b4cbda",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "11b90782-615d-497b-9c78-6316c9fc605c",
+      "formId": "b880f5fc-4452-47c9-8677-12bb65ca03fc",
+      "operation": "cancel",
+      "destination": {
+        "pageId": "5be45511-24cf-4a99-8cf2-4b2655b4cbda",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "4af828b3-fef6-4e62-bf35-7296b67450cc",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "b1c6dbf6-e2c9-42f6-93e8-3a53cce5dafe",
+        "keyMapping": [
+          {
+            "targetFieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+            }
+          }
+        ],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "844f55c6-0fc7-45c4-992d-7dd70475d81e",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "b1c6dbf6-e2c9-42f6-93e8-3a53cce5dafe",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "5cbd64f4-3384-45f3-8cf6-b9be4e1d97b4",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "operation": "insert",
+      "policyId": "98ad6c21-26b0-4754-b8ea-0743a34b3152",
+      "success": {
+        "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "b9b43ee3-8ab5-466a-8bfb-d28cd13d49a8",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "operation": "update",
+      "policyId": "4c6297e1-2909-49bc-a60e-87bcff0998c1",
+      "success": {
+        "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "f3d3b66f-c8e5-4981-babb-591bbd5fba74",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "operation": "delete",
+      "policyId": "b4a703f4-fae3-4c75-b218-2de033189666",
+      "success": {
+        "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "ca715ff8-662c-45ac-ac1d-f61501127e17",
+      "formId": "27ffcf57-f94b-43a5-a440-3d595f07f3e6",
+      "operation": "cancel",
+      "destination": {
+        "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "22722ca8-1e40-443a-b9f0-c3873b27bf19",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "271eb292-6886-4433-915b-bfa100b454a2",
+        "keyMapping": [
+          {
+            "targetFieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+            }
+          }
+        ],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "e489afb8-703c-47b8-9902-444e41abfc1c",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "271eb292-6886-4433-915b-bfa100b454a2",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "25ddd452-f17b-4d00-bae9-833883f8d715",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "operation": "insert",
+      "policyId": "0f7b0763-7a64-41b9-9f1f-8ad15b63b865",
+      "success": {
+        "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "e901b4cd-244f-494d-b2cf-80db4ee79004",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "operation": "update",
+      "policyId": "95cc2154-f3bc-4620-9dcb-611b0065b1e9",
+      "success": {
+        "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+        "keyMapping": [],
+        "filterMapping": []
+      },
+      "extensionHookRef": "8f5fa7b4-c777-40b2-aa92-b1c280f36888"
+    },
+    {
+      "id": "90b90cce-671f-4794-bd57-fe6a434bc691",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "operation": "delete",
+      "policyId": "12c327b1-fd59-4ad9-adef-246464b0712a",
+      "success": {
+        "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "06e53021-6934-4274-9639-630c007bc7f7",
+      "formId": "836167c5-4595-4288-95be-7969d95f0436",
+      "operation": "cancel",
+      "destination": {
+        "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "e60822cc-a9c9-416f-9962-c32351719290",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "b3abece2-fc80-4445-9d48-2e10f9a2156d",
+        "keyMapping": [
+          {
+            "targetFieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "9cf259af-23b4-4a4e-b0ff-0df5735fb6bc"
+            }
+          }
+        ],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "2a582885-35cb-4042-92cb-f6c3f71bf8ee",
+      "formId": "724476f1-cc78-420c-ba3c-2b4886ce60ed",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "b3abece2-fc80-4445-9d48-2e10f9a2156d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "925408d2-115e-4208-b6ad-c55e1cddbeca",
+      "formId": "cbcb328e-daa7-4842-b0d1-600ad0963898",
+      "operation": "search"
+    },
+    {
+      "id": "420a7cf2-c4db-41df-a9a2-a202021c130d",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "operation": "login"
+    },
+    {
+      "id": "6fd37eb8-c214-4b20-b4f9-128399337de9",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "operation": "logout"
+    },
+    {
+      "id": "e69e03d4-44dc-4b42-b303-406bf5a64631",
+      "formId": "7041cd20-f1bb-4327-97b3-4a1bdc34d067",
+      "operation": "cancel",
+      "destination": {
+        "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+        "keyMapping": [],
+        "filterMapping": []
+      }
+    },
+    {
+      "id": "f485da4c-519a-4241-a7b6-2ff2f6c640d8",
+      "formId": "83817c20-08fe-47b0-b87b-c08b95606e49",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+        "keyMapping": [],
+        "filterMapping": [
+          {
+            "targetFieldId": "47737bbe-a940-4e48-b821-d1d01d21a7cb",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "c60dbef2-1075-4e1a-82bd-632dd5c78f51"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "47fd22ae-90bd-4247-8e55-2ea5a47a8957",
+      "formId": "8f23f060-ea62-49e4-a16b-9bfbc01a4e64",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "2f30af12-f802-4361-9293-d741df3a4058",
+        "keyMapping": [],
+        "filterMapping": [
+          {
+            "targetFieldId": "47737bbe-a940-4e48-b821-d1d01d21a7cb",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "6dba8ad1-e77e-4166-a040-e21beba8969d"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "481be33d-68ac-4fe3-8214-70a98d22d383",
+      "formId": "52d83040-440f-44d2-b766-12c84a41ff4c",
+      "operation": "navigate",
+      "destination": {
+        "pageId": "55aeb8b8-4ac6-4e36-a827-0961e9e96d5d",
+        "keyMapping": [],
+        "filterMapping": [
+          {
+            "targetFieldId": "d0dde92f-cc33-4bfc-bc5d-48ef15fec398",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "a6e2569f-5377-4018-bc07-53cd58e4d1d8"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "policies": [
+    {
+      "id": "9a0781fd-74e6-4c3c-b3e0-2de8c7ec1051",
+      "scope": "global",
+      "ownerId": "28a6525a-620e-4473-8a75-4296a5209aca",
+      "access": "public"
+    },
+    {
+      "id": "36650100-259d-4c45-baa6-59f158a702fb",
+      "scope": "page",
+      "ownerId": "c2e0d8c1-91b1-4ece-aee2-deb24f4a6d91",
+      "access": "public"
+    },
+    {
+      "id": "ac42b46a-114a-4fe2-bdcb-ba066142f57d",
+      "scope": "page",
+      "ownerId": "02f76ceb-8535-4e9f-af0c-7363ae55629f",
+      "access": "authenticated"
+    },
+    {
+      "id": "56fd1af7-c194-4f7d-8d1c-1636578c0a64",
+      "scope": "action",
+      "ownerId": "915b33db-47a5-4682-ab6a-a1f3937dffca",
+      "access": "authenticated"
+    },
+    {
+      "id": "96a8ca89-e756-4db7-9c9d-32011abd156e",
+      "scope": "action",
+      "ownerId": "32964582-3788-4f20-b832-24bf868d3439",
+      "access": "authenticated"
+    },
+    {
+      "id": "bf5a9350-a55d-4395-afe5-4b83bcb22443",
+      "scope": "action",
+      "ownerId": "c74839ae-2bf4-431c-af76-416e3d3c01c4",
+      "access": "authenticated"
+    },
+    {
+      "id": "bd381629-ca0a-4e66-9f00-d4f17db317fd",
+      "scope": "page",
+      "ownerId": "b1c6dbf6-e2c9-42f6-93e8-3a53cce5dafe",
+      "access": "authenticated"
+    },
+    {
+      "id": "c2d9c7f6-8c94-40ff-a126-f761dd048bd2",
+      "scope": "action",
+      "ownerId": "827ce2db-f083-48b6-a4ca-69a53fba8a1e",
+      "access": "authenticated"
+    },
+    {
+      "id": "fad236e3-9ea6-4532-a613-234accf4e70b",
+      "scope": "action",
+      "ownerId": "f9442525-a476-4abc-9c18-edeefc1f9561",
+      "access": "authenticated"
+    },
+    {
+      "id": "ba531c70-b0c4-4f20-8dae-3a2373a6fc4e",
+      "scope": "action",
+      "ownerId": "62f3cf5e-6a49-4873-9552-0cf452fcaf8f",
+      "access": "authenticated"
+    },
+    {
+      "id": "e5695430-8cac-40f9-8710-37584384d0b2",
+      "scope": "page",
+      "ownerId": "271eb292-6886-4433-915b-bfa100b454a2",
+      "access": "authenticated"
+    },
+    {
+      "id": "98ad6c21-26b0-4754-b8ea-0743a34b3152",
+      "scope": "action",
+      "ownerId": "5cbd64f4-3384-45f3-8cf6-b9be4e1d97b4",
+      "access": "authenticated"
+    },
+    {
+      "id": "4c6297e1-2909-49bc-a60e-87bcff0998c1",
+      "scope": "action",
+      "ownerId": "b9b43ee3-8ab5-466a-8bfb-d28cd13d49a8",
+      "access": "authenticated"
+    },
+    {
+      "id": "b4a703f4-fae3-4c75-b218-2de033189666",
+      "scope": "action",
+      "ownerId": "f3d3b66f-c8e5-4981-babb-591bbd5fba74",
+      "access": "authenticated"
+    },
+    {
+      "id": "6f6fd9e7-d92a-4f83-b5cf-519d701ddbf9",
+      "scope": "page",
+      "ownerId": "b3abece2-fc80-4445-9d48-2e10f9a2156d",
+      "access": "authenticated"
+    },
+    {
+      "id": "0f7b0763-7a64-41b9-9f1f-8ad15b63b865",
+      "scope": "action",
+      "ownerId": "25ddd452-f17b-4d00-bae9-833883f8d715",
+      "access": "authenticated"
+    },
+    {
+      "id": "95cc2154-f3bc-4620-9dcb-611b0065b1e9",
+      "scope": "action",
+      "ownerId": "e901b4cd-244f-494d-b2cf-80db4ee79004",
+      "access": "authenticated"
+    },
+    {
+      "id": "12c327b1-fd59-4ad9-adef-246464b0712a",
+      "scope": "action",
+      "ownerId": "90b90cce-671f-4794-bd57-fe6a434bc691",
+      "access": "authenticated"
+    }
+  ],
+  "globalPolicyId": "9a0781fd-74e6-4c3c-b3e0-2de8c7ec1051",
+  "outputConfig": {
+    "approvedRootId": "output",
+    "relativePath": "app"
+  },
+  "extensionContracts": [
+    {
+      "id": "cad1ff27-60a1-47e3-bae0-504fff08ceb1",
+      "relativePath": "authored/equipment-validator.ts",
+      "version": 1,
+      "kind": "validator"
+    },
+    {
+      "id": "8f5fa7b4-c777-40b2-aa92-b1c280f36888",
+      "relativePath": "authored/equipment-action.ts",
+      "version": 1,
+      "kind": "action"
+    }
+  ],
+  "identity": {
+    "kind": "managed",
+    "storeRef": "b97607d2-c892-4172-9086-e7d1bfc7ad57"
+  }
+}

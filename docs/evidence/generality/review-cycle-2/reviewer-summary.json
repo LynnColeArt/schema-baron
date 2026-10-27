@@ -1,0 +1,64 @@
+{
+  "mcp": {
+    "status": "succeeded",
+    "installDurationMs": 5206.244767,
+    "inChildHTTP200": 16,
+    "allProbeStatus200": true,
+    "probeCount": 16,
+    "operationCount": 31,
+    "negativeCodes": [
+      "IDEMPOTENCY_CONFLICT",
+      "IMPACT_NOT_ACKNOWLEDGED",
+      "INVALID_INPUT",
+      "OUTPUT_CONFLICT",
+      "PROJECT_BUSY",
+      "REVISION_CONFLICT",
+      "VALIDATION_FAILED"
+    ],
+    "cleanup": [
+      {
+        "resource": "mcp",
+        "closed": true
+      },
+      {
+        "resource": "owner",
+        "closed": true
+      },
+      {
+        "resource": "scratch",
+        "closed": true
+      }
+    ]
+  },
+  "http": {
+    "status": "succeeded",
+    "installDurationMs": 3987.7268879999974,
+    "inChildHTTP200": 13,
+    "allProbeStatus200": true,
+    "probeCount": 13,
+    "operationCount": 31,
+    "negativeCodes": [
+      "IDEMPOTENCY_CONFLICT",
+      "IMPACT_NOT_ACKNOWLEDGED",
+      "INVALID_INPUT",
+      "OUTPUT_CONFLICT",
+      "PROJECT_BUSY",
+      "REVISION_CONFLICT",
+      "VALIDATION_FAILED"
+    ],
+    "cleanup": [
+      {
+        "resource": "mcp",
+        "closed": true
+      },
+      {
+        "resource": "owner",
+        "closed": true
+      },
+      {
+        "resource": "scratch",
+        "closed": true
+      }
+    ]
+  }
+}

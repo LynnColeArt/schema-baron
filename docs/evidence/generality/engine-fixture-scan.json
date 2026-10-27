@@ -1,0 +1,26 @@
+{
+  "fileCount": 126,
+  "scope": "Studio/MCP app source and package src/templates; tests and docs excluded",
+  "identifiers": "\\b(authors|publications|categories|publication_categories|pen_name|royalty|annotation|assets|borrowers|loans|loan_lines|daily_rate)\\b",
+  "genericPropertyNamesExcluded": [
+    "id",
+    "title",
+    "caption",
+    "email"
+  ],
+  "schemaSpecificMatches": 0,
+  "matches": [
+    {
+      "path": "apps/studio/src/workspace/index.tsx",
+      "line": 1253,
+      "text": "                  label=\"Toolbox categories\"",
+      "classification": "Generic accessibility label for UI tab categories; no table lookup, route dispatch or fixture-specific branch"
+    },
+    {
+      "path": "apps/studio/src/workspace/index.tsx",
+      "line": 1330,
+      "text": "                  label=\"Property categories\"",
+      "classification": "Generic accessibility label for UI tab categories; no table lookup, route dispatch or fixture-specific branch"
+    }
+  ]
+}

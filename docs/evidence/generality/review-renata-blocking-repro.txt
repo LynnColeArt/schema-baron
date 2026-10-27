@@ -1,0 +1,22 @@
+Review-only reproduction. To execute, place this file at tests/contracts/parity/reviewer-blocking.test.ts and run the single Vitest file. Delete that temporary test afterward. No production changes.
+
+import {test,expect} from 'vitest';
+import {mkdtempSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {spawnSync} from 'node:child_process';
+import {startOwner} from '../../../apps/studio/src/server/index.js';
+test('reviewer: determine blocking-owner idle-socket boundary',async()=>{
+ const observations=[];
+ for(const blocking of [false,true]){
+  const root=mkdtempSync(join(tmpdir(),'renata-idle-'));mkdirSync(join(root,'projects'));
+  const owner=await startOwner({ownerId:'probe',capability:'x'.repeat(64),metadataRoot:join(root,'metadata'),approvedRoots:{projects:join(root,'projects')}});
+  try{
+   const fetchOwner=async()=>{const response=await fetch(owner.url+'/api/v1/capabilities',{headers:{authorization:'Bearer '+'x'.repeat(64)}});await response.text();return response.status;};
+   for(let i=0;i<3;i++){expect(await fetchOwner()).toBe(200);await new Promise(resolve=>setTimeout(resolve,20));}
+   if(blocking)spawnSync(process.execPath,['-e','Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,7200)']);else await new Promise(resolve=>setTimeout(resolve,7200));
+   try{observations.push({blocking,status:await fetchOwner()});}catch(error){observations.push({blocking,error:String(error),cause:String((error as {cause?:unknown}).cause)});}
+  }finally{await owner.close();rmSync(root,{recursive:true,force:true});}
+ }
+ writeFileSync('/tmp/wp23-renata-blocking-observations.json',JSON.stringify(observations,null,2));
+},30000);

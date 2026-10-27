@@ -1,0 +1,5 @@
+
+> schema-baron@0.0.0 lint
+> node scripts/workspace/verify.mjs lint
+
+Diff-scoped syntax/JSON/whitespace lint checked 37 files; TypeScript semantic validation is separate
