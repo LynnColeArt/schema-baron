@@ -47,3 +47,58 @@ Reviewed tests/code cover ordinary create/list/open/switch/export/reopen, invali
 8. **Production fragility — PASS.** Fail-loud conditions enforce ownership, semantic validity, revision/hash/freshness, lease contention and recovery. Registry invariant throws are guarded by parsed discriminants and handler registration. No unsupported later handler is claimed as available.
 
 Verdict: **REJECT**. Preserve the working single-root recovery/plan behavior while closing both storage boundary gaps. WP04 depends on this package and should consume/rebase only after the corrected WP03 review passes.
+
+## Exact disposable-data regression probes
+
+Run from the lane root after the model, storage and core builds. Each probe uses only the public built package, temporary SQLite/files, and Node assertions. These currently reproduce the defects. After correction, the overlap must be refused before the second writer can mutate the shared file; the symlink constructor must refuse before touching the outside file.
+
+```sh
+PATH=/home/lynn/.nvm/versions/node/v24.22.1/bin:$PATH node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import { ProjectCore } from '@schema-baron/core';
+import Database from 'better-sqlite3';
+import { mkdtempSync, mkdirSync, readFileSync, symlinkSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+const root = mkdtempSync(join(tmpdir(), 'wp03-review-'));
+const defs = join(root, 'defs'); const nested = join(defs, 'nested');
+mkdirSync(nested, { recursive: true });
+const base = { ownerId: 'o', metadataRoot: join(root, 'seed'), approvedRoots: { projects: nested } };
+const edit = id => ({ requestId: id, projectId: 'p', operation: 'project.batch', expectedRevision: 1,
+ input: { operations: [{ kind: 'put', entity: 'page', id, value: { id, route: `/${id}`, title: id, formIds: [], document: [] } }] } });
+let seed = new ProjectCore(base);
+assert.equal(seed.execute('o', { requestId: 'create', projectId: 'p', operation: 'project.create', expectedRevision: 0,
+ input: { name: 'P', approvedRoot: 'projects', target: 'next-typescript-sqlite' } }).ok, true);
+seed.close();
+let second, secondResult;
+const first = new ProjectCore({ ...base, metadataRoot: join(root, 'first'), approvedRoots: { projects: defs },
+ fault: stage => { if (stage === 'metadata') secondResult = second.execute('o', edit('second')); } });
+second = new ProjectCore({ ...base, metadataRoot: join(root, 'second') });
+const open = (core, locator) => core.execute('o', { requestId: 'open', projectId: 'p', operation: 'project.open', expectedRevision: 1, input: { locator } });
+assert.equal(open(first, 'projects:nested/p.json').ok, true);
+assert.equal(open(second, 'projects:p.json').ok, true);
+const firstResult = first.execute('o', edit('first'));
+assert.equal(firstResult.ok, true); assert.equal(secondResult.ok, true);
+const final = JSON.parse(readFileSync(join(nested, 'p.json'), 'utf8'));
+assert.deepEqual(final.pages.map(p => p.id), ['first']);
+console.log('REPRODUCED: both stores acknowledge revision 2, final file loses second');
+// Required invariant: two conflicting writes from revision 1 must never both succeed.
+// A successful command must not lose its acknowledged edit to another revision-1 write.
+first.close(); second.close();
+
+const metadata = join(root, 'linked-meta'); mkdirSync(metadata);
+const outside = join(root, 'outside.sqlite');
+const db = new Database(outside); db.exec("CREATE TABLE sentinel(value TEXT); INSERT INTO sentinel VALUES('keep')"); db.close();
+const before = readFileSync(outside);
+symlinkSync(outside, join(metadata, 'metadata.sqlite'));
+const linked = new ProjectCore({ ...base, metadataRoot: metadata }); linked.close();
+const oracle = new Database(outside, { readonly: true });
+assert.equal(oracle.prepare("SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name IN ('projects','journal','operations','events','plans','jobs')").get().n, 6);
+assert.equal(before.equals(readFileSync(outside)), false);
+oracle.close();
+console.log('REPRODUCED: constructor follows metadata symlink and creates six tables outside root');
+// Required invariant: constructor rejects PATH_OUTSIDE_ROOT, before == after bytes,
+// and only the original sentinel table exists in the independent outside SQLite oracle.
+rmSync(root, { recursive: true, force: true });
+JS
+```
