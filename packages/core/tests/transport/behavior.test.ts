@@ -1,7 +1,4 @@
 import Database from 'better-sqlite3';
-import { idSchema } from '@schema-baron/model';
-import { hash } from '@schema-baron/storage';
-import { planHash } from '../../src/index.js';
 import { afterEach, expect, test } from 'vitest';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -113,21 +110,13 @@ test('job metadata rolls back with failed command completion and stale/duplicate
  expect(recovered.service.core.operation('owner', 'p', 'cancel-ok')).toMatchObject({ eventSequence: recovered.service.core.events('owner', 'p', 0).events.at(-1)!.sequence });
  expect(recovered.service.core.operation('owner', 'p', 'cancel-fail')).toBeUndefined();
 });
-test('reviewed feature registration checks plan kind, hash, revision and observed state under lease before effects', async () => {
+test('production generation apply cannot be replaced by an injected reviewed handler', async () => {
  const { owner, request } = await fixture(); await create(request);
- const project = owner.service.core.snapshot('owner', 'p');
- const content = { id: 'plan', kind: 'generation', sourceRevision: 1, modelHash: hash(project), createdAt: '2026-01-01T00:00:00Z', expiresAt: '2026-01-02T00:00:00Z', impact: [], requiredAcknowledgementIds: [], generatorVersion: '1', outputFingerprint: '0'.repeat(64), outputRootId: 'output', extensionHashes: {}, steps: [] };
- const plan = { ...content, hash: planHash(content) }; owner.service.core.plans.record('owner', 'p', plan);
- let applied = 0; let leased = false; let fingerprint = '1'.repeat(64);
- owner.service.registerReviewedApply('generation.apply', {
-  withLease: (_command, work) => { leased = true; try { return work({ fingerprint, now: '2026-01-01T12:00:00Z' }); } finally { leased = false; } },
-  apply: () => { expect(leased).toBe(true); applied++; return { result: { planId: idSchema.parse('plan'), committed: true, recoveryRequired: false, manifest: { generatorVersion: '1', modelVersion: 1, modelHash: hash(project), ownedFileHashes: {}, authoredContractVersions: {}, outputTreeRevision: 1 } } }; },
- });
- const input = { planId: 'plan', hash: plan.hash, acknowledgedImpactIds: [] };
- expect(await (await post(request, command('generation.apply', input))).json()).toMatchObject({ error: { code: 'OUTPUT_CONFLICT' } }); expect(applied).toBe(0);
- fingerprint = '0'.repeat(64);
- expect(await (await post(request, command('generation.apply', { ...input, hash: 'f'.repeat(64) }))).json()).toMatchObject({ error: { code: 'PLAN_HASH_MISMATCH' } }); expect(applied).toBe(0);
- expect((await post(request, command('generation.apply', input))).status).toBe(200); expect(applied).toBe(1);
- await post(request, command('project.batch', { operations: [page()] }));
- expect(await (await post(request, command('generation.apply', input, 2))).json()).toMatchObject({ error: { code: 'REVISION_CONFLICT' } }); expect(applied).toBe(1);
+ let applied=0;
+ expect(()=>owner.service.registerReviewedApply('generation.apply', {
+  withLease: (_command,work)=>work({fingerprint:'0'.repeat(64),now:new Date().toISOString()}),
+  apply:()=>{applied++;throw Error('Injected handler must never run');}
+ })).toThrow('Operation already registered');
+ expect(await(await post(request,command('generation.apply',{planId:'missing',hash:'0'.repeat(64),acknowledgedImpactIds:[]}))).json()).toMatchObject({ok:false,error:{code:'INVALID_INPUT'}});
+ expect(applied).toBe(0);
 });

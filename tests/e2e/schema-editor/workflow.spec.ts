@@ -376,9 +376,18 @@ test('blank SQLite is authored visibly with constraints and ordered composite FK
   }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByRole('dialog')).toContainText('CREATE TABLE');
+  // WP09 advertises apply; WP08 alone exposes a read-only review. This fresh
+  // CREATE-only proposal has no required acknowledgements in either baseline.
+  const capabilities = await (await fetch(url + '/api/v1/capabilities', {
+    headers: { authorization: `Bearer ${capability}` }
+  })).json();
+  expect(capabilities.ok).toBe(true);
+  const canApply = capabilities.result.operations.some((o: { operation: string }) => o.operation === 'schema.apply');
+  await expect(page.getByRole('dialog').getByRole('checkbox')).toHaveCount(0);
+  await expect(page.getByRole('dialog').getByRole('alert').filter({ hasText: 'This plan is stale' })).toBeHidden();
   await expect(page.getByRole('button', {
     name: 'Apply reviewed migration'
-  })).toBeDisabled();
+  })).toBeEnabled({ enabled: canApply });
   await page.screenshot({
     path: info.outputPath('review-1280x800.png')
   });
@@ -405,6 +414,7 @@ test('blank SQLite is authored visibly with constraints and ordered composite FK
     ok: true
   });
   await expect(page.getByRole('dialog')).toContainText('This plan is stale');
+  await expect(page.getByRole('button', { name: 'Apply reviewed migration' })).toBeDisabled();
   await page.getByRole('button', {
     name: 'Cancel review'
   }).click();

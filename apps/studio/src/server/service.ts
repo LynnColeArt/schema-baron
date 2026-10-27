@@ -37,7 +37,11 @@ export class OwnerService {
   this.secrets.add(options.capability);
   this.core = new ProjectCore(options);
   this.register('job.inspect', (command, project) => { const job = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!job) throw new StorageError('NOT_FOUND', 'Unknown job.'); return { result: jobSchema.parse(job) }; });
-  this.register('job.cancel', (command) => {
+  this.core.registry.registerAsync('job.cancel', async (input) => {
+   if (input.operation !== 'job.cancel') throw new StorageError('INVALID_INPUT', 'Expected job cancellation.');
+   const command = input;
+   const migration = await this.core.cancelMigration(command.projectId, command.input.jobId);
+   if (migration) return { result: migration };
    const value = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!value) throw new StorageError('NOT_FOUND', 'Unknown job.');
    const job = jobSchema.parse(value);
    // All handlers run synchronously in the same writer. No commit can interleave here.

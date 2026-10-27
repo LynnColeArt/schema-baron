@@ -3,13 +3,15 @@ import type { Command, Diagnostic, EntityBatchOperation, Project } from '@schema
 import { ProjectStorage, StorageError, hash } from '@schema-baron/storage';
 import type { StorageOptions } from '@schema-baron/storage';
 import type { CommandEffect } from '../commands/index.js';
+import { registerSchemaApply, CommittedMigrationError } from '../schema-apply/index.js';
 import { registerSchemaPreview, SchemaPreviewError } from '../schema-preview/index.js';
+import { registerGeneration, GenerationError } from '../generation/index.js';
 import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { PlanRepository } from '../plans/index.js';
-export interface CoreOptions extends StorageOptions { ownerId: string }
+export interface CoreOptions extends StorageOptions { ownerId: string; generationFault?: (phase:string)=>void; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
 export type Outcome = { ok: true; revision: number; result: unknown; diagnostics: Diagnostic[] } | { ok: false; revision: number; error: { code: string; message: string; retryable: boolean }; diagnostics: Diagnostic[] };
-interface PendingCommand { payloadHash: string; outcome: Promise<Outcome> }
+interface PendingCommand { operation: string; payloadHash: string; outcome: Promise<Outcome> }
 const collection = { connection: 'connections', table: 'tables', query: 'queries', page: 'pages', form: 'forms', control: 'controls', action: 'actions', policy: 'policies', extension: 'extensionContracts' } as const;
 export function applyBatch(project: Project, operations: EntityBatchOperation[]): Project {
  const candidate = structuredClone(project);
@@ -24,11 +26,15 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
  candidate.revision++; return parseProject(candidate);
 }
 export class ProjectCore {
+ private migration: ReturnType<typeof registerSchemaApply>;
  private pending = new Map<string, PendingCommand>();
+ private closeGeneration:()=>Promise<void>;
  private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>; private closeSchemaPreview: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
+  this.closeGeneration=registerGeneration(this.registry, options, this.plans, this.storage);
+  this.migration = registerSchemaApply(this.registry, options, this.storage, this.plans);
   this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.closeSchemaPreview = registerSchemaPreview(this.registry, options, this.plans, id => this.closed ? undefined : this.storage.snapshot(id), (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.registry.register('project.create', c => { if (c.operation !== 'project.create') throw new Error(); if (c.input.emptyDatabaseLocation) throw new StorageError('INVALID_INPUT', 'Database creation belongs to the connection adapter.'); const id = c.projectId; const policy = createId(); const candidate = parseProject({ id, formatVersion: FORMAT_VERSION, revision: 1, name: c.input.name, target: c.input.target, targetVersion: '1', connectionRefs: [], connections: [], schema: { id: createId(), revision: 1, tables: [], opaqueObjects: [] }, queries: [], pages: [], forms: [], controls: [], actions: [], policies: [{ id: policy, ownerId: id, scope: 'global', access: 'public' }], globalPolicyId: policy, outputConfig: { approvedRootId: 'output', relativePath: 'app' }, extensionContracts: [] }); return { result: candidate, candidate, root: c.input.approvedRoot }; });
@@ -61,15 +67,16 @@ export class ProjectCore {
    project = this.storage.snapshot(command.projectId);
    if (command.expectedRevision !== project.revision) return this.execute(actor, command);
   } catch { return this.execute(actor, input); }
-  const reservation: PendingCommand = { payloadHash, outcome: Promise.resolve().then(async () => {
+  const reservation: PendingCommand = { operation: command.operation, payloadHash, outcome: Promise.resolve().then(async () => {
    // Deferral lets us publish the reservation before any handler code executes.
    if (this.closed) return this.executePrepared(actor, command, undefined, reservation);
    try {
     // A synchronous mutation may have run between reservation and this microtask.
     if (this.storage.snapshot(command.projectId).revision !== command.expectedRevision) return this.executePrepared(actor, command, undefined, reservation);
+    this.migration.guard(command.projectId, command.operation);
     const effect = await this.registry.runAsync(command, project);
     return this.executePrepared(actor, command, () => effect, reservation);
-   } catch (error) { return this.executePrepared(actor, command, () => { throw error; }, reservation); }
+   } catch (error) { if (error instanceof CommittedMigrationError) return { ok: true as const, revision: command.expectedRevision, result: error.result, diagnostics: [] }; return this.executePrepared(actor, command, () => { throw error; }, reservation); }
   }).finally(() => { this.pending.delete(key); }) };
   this.pending.set(key, reservation);
   return reservation.outcome;
@@ -78,16 +85,18 @@ export class ProjectCore {
  private executePrepared(actor: string, input: unknown, prepared?: () => CommandEffect, reservation?: PendingCommand): Outcome {
   let revision = 0; let accepted: Command | undefined; let payloadHash: string | undefined;
   try {
-   if (this.closed) throw new StorageError('RECOVERY_REQUIRED', 'Owner has closed; no command was committed.');
+   if (this.closed && !(reservation && ['schema.apply','schema.restoreApply'].includes(reservation.operation))) throw new StorageError('RECOVERY_REQUIRED', 'Owner has closed; inspect the durable outcome after restart.');
    this.authorize(actor); const parsed = commandSchema.safeParse(input); if (!parsed.success) throw new StorageError('INVALID_INPUT', 'Command does not match the operation schema.'); const command: Command = parsed.data;
    if (!this.registry.has(command.operation)) throw new StorageError('INVALID_INPUT', 'Operation is not available.');
    payloadHash = hash(command); const retry = this.storage.lookup(command.projectId, command.requestId);
    if (retry) { if (retry.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Request ID already identifies a different payload.'); return retry.outcome as Outcome; }
+   const recovering = this.migration.retry(command.projectId,command.requestId,payloadHash); if (recovering) return recovering;
    const pending = this.pending.get(JSON.stringify([command.projectId, command.requestId]));
    if (pending && pending !== reservation) {
     if (pending.payloadHash !== payloadHash) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Request ID already identifies a different payload.');
     throw new StorageError('PROJECT_BUSY', 'This request is still running. Await executeAsync or retry after completion.');
    }
+   this.migration.guard(command.projectId, command.operation);
    const project = command.operation === 'project.create' || command.operation === 'project.list' ? undefined : command.operation === 'project.open' ? this.storage.open(command.projectId, command.input.locator) : this.storage.snapshot(command.projectId); revision = project?.revision ?? 0;
    if (command.expectedRevision !== revision) throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');
    accepted = command;
@@ -98,11 +107,13 @@ export class ProjectCore {
    else if (project) this.storage.complete(command.projectId, { requestId: command.requestId, payloadHash, actor, baseRevision: revision, outcome }, null, effect.job);
    return outcome;
   } catch (error) {
-   const diagnostics = error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : [];
-   const outcome: Outcome = { ok: false, revision, error: { code: error instanceof StorageError ? error.code : error instanceof ModelValidationError ? 'VALIDATION_FAILED' : 'RECOVERY_REQUIRED', message: error instanceof StorageError ? error.message : error instanceof ModelValidationError ? 'Candidate project is invalid.' : 'Operation failed; inspect recovery before retrying.', retryable: error instanceof StorageError && ['PROJECT_BUSY', 'RECOVERY_REQUIRED'].includes(error.code) }, diagnostics };
+   if (error instanceof CommittedMigrationError) return { ok: true, revision, result: error.result, diagnostics: [] };
+   const diagnostics = error instanceof GenerationError || error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : [];
+   const outcome: Outcome = { ok: false, revision, error: { code: error instanceof StorageError ? error.code : error instanceof ModelValidationError || error instanceof GenerationError ? 'VALIDATION_FAILED' : 'RECOVERY_REQUIRED', message: error instanceof StorageError ? error.message : error instanceof ModelValidationError || error instanceof GenerationError ? error.message : 'Operation failed; inspect recovery before retrying.', retryable: error instanceof StorageError && ['PROJECT_BUSY', 'RECOVERY_REQUIRED'].includes(error.code) }, diagnostics };
    if (accepted && payloadHash && revision > 0 && !(error instanceof StorageError && error.code === 'RECOVERY_REQUIRED')) { try { this.storage.complete(accepted.projectId, { requestId: accepted.requestId, payloadHash, actor, baseRevision: revision, outcome }, { revision, kind: 'diagnostic', objectIds: diagnostics.flatMap(d => d.objectId ? [d.objectId] : []), diagnostics }); } catch { return { ok: false, revision, error: { code: 'RECOVERY_REQUIRED', message: 'Outcome could not be recorded; restart before retrying.', retryable: true }, diagnostics: [] }; } }
    return outcome;
   }
  }
- close() { this.closed = true; const closed = Promise.all([this.closeConnections(), this.closeSchemaPreview()]).then(() => {}); this.storage.close(); return closed; }
+ cancelMigration(projectId: string, jobId: string) { return this.migration.cancel(projectId, jobId); }
+ close() { if (this.closed) return Promise.resolve(); this.closed = true; const active = this.migration.active; const settling = Promise.all([this.migration.close(),this.closeConnections(),this.closeSchemaPreview(),this.closeGeneration()]); if (!active) { this.storage.close(); return settling.then(() => {}); } return settling.then(async () => { await Promise.all([...this.pending.values()].filter(p => ['schema.apply','schema.restoreApply'].includes(p.operation)).map(p => p.outcome)); this.storage.close(); }); }
 }

@@ -5,6 +5,8 @@ import { createId } from "@schema-baron/model";
 import type { Control, Form, Page, Project } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
+import { GenerationReview } from '../generation/index.js';
+import { MigrationHistory } from "../migration-history/index.js";
 import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
@@ -31,6 +33,8 @@ type Modal =
   | "form"
   | "settings"
   | "connection"
+  | "generation"
+  | "history"
   | "close"
   | null;
 type Message = {
@@ -765,10 +769,7 @@ export default function Workspace() {
     const control = selected as Control;
     return (
       <>
-        <div className="property-row">
-          <span>Binding</span>
-          <span>{control.binding?.kind ?? "Unbound"}</span>
-        </div>
+        <label className="property-row"><span>Bound field</span><select aria-label="Bound field" disabled={busy} value={control.binding?.kind === "stored" ? control.binding.fieldId : ""} onChange={e => {const {binding:_binding,...unbound}=control;change([{entity:"control",value:e.target.value?{...control,binding:{kind:"stored",fieldId:createId(()=>e.target.value)}}:unbound}]);}}><option value="">Unbound</option>{(() => {const form=model.forms.find(f=>f.id===control.formId);return (form?.sourceRef?.kind==="table"?model.schema.tables.find(t=>t.id===form.sourceRef?.id)?.columns.map(c=>({id:c.id,name:c.physicalName})):model.queries.find(q=>q.id===form?.sourceRef?.id)?.projections)?.map(f=><option key={f.id} value={f.id}>{f.name}</option>);})()}</select></label>
         <label className="property-row">
           <span>Read only</span>
           <input
@@ -944,6 +945,8 @@ export default function Workspace() {
         <button onClick={() => dialog("connection")} disabled={!project}>
           Connections…
         </button>
+        <button onClick={() => dialog("history")} disabled={!project || !caps.operations.some(c => c.operation === "schema.history")}>Migration history…</button>
+        <button onClick={() => dialog("generation")} disabled={!project || !caps.operations.some(c => c.operation === "generation.preview") || Object.keys(editor.drafts).length > 0}>Generate…</button>
         <button disabled={!project} aria-pressed={schemaActive} onClick={() => setSchemaActive(v => !v)}>Schema</button>
         <span className="menu-spacer" />
         <button
@@ -1535,7 +1538,7 @@ export default function Workspace() {
                         ? "Unsaved document changes"
                         : modal === "settings"
                           ? "Project settings"
-                          : "Connection setup"
+                          : modal === "generation" ? "Generate application" : modal === "history" ? "Migration history and restore" : "Connection setup"
           }
           busy={busy}
           onCancel={() => setModal(null)}
@@ -1811,6 +1814,10 @@ export default function Workspace() {
                 <button onClick={() => setModal(null)}>Close</button>
               </div>
             </>
+          ) : modal === "generation" ? (
+            project ? <GenerationReview project={project} client={client} caps={caps} onBusy={setBusy} onClose={() => setModal(null)} /> : <p>Open a project first.</p>
+          ) : modal === "history" ? (
+            project ? <MigrationHistory project={project} client={client} onClose={() => setModal(null)} onChanged={acceptSnapshot} /> : <p>Open a project to view migration history.</p>
           ) : (
             project ? <ConnectionSetup project={project} client={client} roots={caps.approvedRootIds} onClose={() => setModal(null)} onBound={(snapshot) => { acceptSnapshot(snapshot); setModal(null); notice("SQLite connection bound. Schema refreshed."); }} /> : <p>Open a project before setting up a database.</p>
           )}
