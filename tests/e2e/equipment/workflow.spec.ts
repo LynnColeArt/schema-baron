@@ -836,7 +836,7 @@ test('Equipment Desk starts blank and authors schema and forms through supported
   }).click();
   expect(new URL(app.url()).searchParams.get(gridFor(loan.id).id + ':filter:' + loan.columns.find(c => c.physicalName === 'borrower_id')!.id)).toBe('1');
   await app.getByRole('link', {
-    name: 'status',
+    name: 'Open',
     exact: true
   }).click();
   expect(new URL(app.url()).searchParams.get(gridFor(line.id).id + ':filter:' + line.columns.find(c => c.physicalName === 'loan_id')!.id)).toBe('1');
@@ -922,7 +922,7 @@ test('Equipment Desk starts blank and authors schema and forms through supported
     exact: true
   }).click();
   await app.getByRole('link', {
-    name: 'status',
+    name: 'Open',
     exact: true
   }).click();
   const filteredLines = app.url();

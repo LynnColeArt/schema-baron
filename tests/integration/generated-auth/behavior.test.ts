@@ -53,8 +53,9 @@ test('blank authored project provisions through HTTP/stdio and runs isolated sec
    {kind:'put',entity:'action',id:'guarded-navigation',value:{id:'guarded-navigation',formId:grid.id,operation:'navigate',policyId:'guarded-navigation-policy',destination:{pageId:'record',keyMapping:[{targetFieldId:key[0],expression:{kind:'field',alias:'root',fieldId:key[0]}}],filterMapping:[]}}},
    {kind:'put',entity:'policy',id:'guarded-search-policy',value:{id:'guarded-search-policy',ownerId:'guarded-search',scope:'action',access:'authenticated'}},
    {kind:'put',entity:'policy',id:'guarded-navigation-policy',value:{id:'guarded-navigation-policy',ownerId:'guarded-navigation',scope:'action',access:'authenticated'}},
+   {kind:'put',entity:'control',id:'search-submit',value:{id:'search-submit',formId:grid.id,kind:'button',readOnly:false,appearance:{label:'Find \"records\" <&>'},validation:{required:false},events:[{event:'submit',actionId:'guarded-search'}]}},
    {kind:'put',entity:'control',id:'navigation-link',value:{id:'navigation-link',formId:grid.id,kind:'link',readOnly:true,appearance:{label:'Open'},validation:{required:false},events:[{event:'click',actionId:'guarded-navigation'}]}},
-   {kind:'put',entity:'form',id:grid.id,value:{...grid,actionIds:['guarded-search','guarded-navigation'],controlIds:[...grid.controlIds,'navigation-link'],search:[{fieldId:captionField,operator:'contains'}]}}
+   {kind:'put',entity:'form',id:grid.id,value:{...grid,actionIds:['guarded-search','guarded-navigation'],controlIds:[...grid.controlIds,'navigation-link','search-submit'],search:[{fieldId:captionField,operator:'contains'}]}}
   ]});
   // Exercise report input modes and Record creation modes through the same auth return boundary.
   const reportQuery={id:'return-report-query',name:'Return report',sources:[{alias:'root',source:{kind:'table',id:table.id}}],joins:[],projections:table.columns.map(c=>({id:'report-'+c.id,name:c.physicalName,type:c.type,nullable:c.nullable,expression:{kind:'field',alias:'root',fieldId:c.id}})),parameters:[{id:'report-minimum',name:'Minimum sequence',type:{kind:'integer'},nullable:true,default:0}],where:{kind:'binary',operator:'>=',left:{kind:'field',alias:'root',fieldId:table.columns.find(c=>c.physicalName==='sequence')!.id},right:{kind:'parameter',parameterId:'report-minimum'}},groupBy:[],orderBy:[],grain:{strategy:'rows',keys:[]}};
@@ -87,7 +88,7 @@ test('blank authored project provisions through HTTP/stdio and runs isolated sec
   const roles=project.controls.filter(c=>c.credentialRole);expect(roles.map(c=>c.credentialRole).sort()).toEqual(['password','username']);
   writeFileSync(join(root,'coordinates.json'),JSON.stringify({projectId,record,protectedForm,table,project}));
  }finally {await client.close().catch(()=>{});await owner.close();}
- const output=join(outputRoot,'app');writeFileSync('/tmp/wp13-runtime-root.txt',root);
+ const output=join(outputRoot,'app');const emittedSearch=readFileSync(join(output,'components/grid-0.tsx'),'utf8');expect(emittedSearch).toContain('<button>{'+JSON.stringify('Find \"records\" <&>')+'}</button>');expect(emittedSearch).not.toContain('<th>{'+JSON.stringify('Find \"records\" <&>'));writeFileSync('/tmp/wp13-runtime-root.txt',root);
  const env={PATH:dirname(process.execPath)+':/usr/bin:/bin',HOME:process.env.HOME??'',NODE_PATH:'',npm_config_ignore_scripts:'true',npm_config_workspaces:'false',NEXT_TELEMETRY_DISABLED:'1'};
  const npm=join(dirname(process.execPath),'../lib/node_modules/npm/bin/npm-cli.js');
  const run=(args:string[],log:string)=>{const result=spawnSync(process.execPath,args,{cwd:output,env,encoding:'utf8',timeout:120000,maxBuffer:5000000});writeFileSync(join(root,log),(result.stdout??'')+(result.stderr??''));expect(result.error).toBeUndefined();expect(result.status,(result.stdout??'')+(result.stderr??'')).toBe(0);};

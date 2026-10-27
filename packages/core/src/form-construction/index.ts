@@ -185,7 +185,7 @@ export function constructForm(original: Project, input: FormConstruction) {
         formId: form.id,
         kind: action.operation === "navigate" ? "link" : "button",
         readOnly: false,
-        appearance: { label: action.operation },
+        appearance: { label: kind === "Record" ? ({ insert: "Save", update: "Save", delete: "Delete", cancel: "Cancel" } as Record<string,string>)[action.operation] ?? action.operation : action.operation },
         validation: { required: false },
         events: [{ event: "click", actionId: action.id }],
       };

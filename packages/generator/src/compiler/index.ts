@@ -15,6 +15,21 @@ export function compileProject(input:Project):GenerationIR {
  let mapping;try {mapping=compatibleMapping(project);}catch(error){fail(project.id,error instanceof Error?error.message:'Identity mapping is incompatible.');}
  if(!project.identity&&project.policies.some(p=>p.access==='authenticated'))fail(project.id,'Configure identity before generating authenticated policies.');
  if(project.identity&&project.policies.some(p=>p.access==='authenticated')&&!project.forms.some(f=>f.kind==='Login'&&effectiveAccess(project,f.pageId).access==='public'&&f.actionIds.some(id=>{const a=project.actions.find(a=>a.id===id);return a?.operation==='login'&&effectiveAccess(project,f.pageId,id).access==='public';})))fail(project.id,'Provide a public Login form and login action before generating authenticated policies.');
+ for(const control of project.controls) {
+  const form=project.forms.find(f=>f.id===control.formId)!;
+  for(const event of control.events){
+   const action=project.actions.find(a=>a.id===event.actionId)!;
+   const nativeSubmit=control.kind==='button'&&['click','submit'].includes(event.event);
+   const supported=form.kind==='Record'?nativeSubmit&&['insert','update','delete','cancel','extension'].includes(action.operation)
+    :form.kind==='Login'?nativeSubmit&&['login','logout'].includes(action.operation)||['button','link'].includes(control.kind)&&event.event==='click'&&action.operation==='cancel'
+    :control.kind==='link'&&event.event==='click'&&action.operation==='navigate'||nativeSubmit&&action.operation==='search'&&form.sourceRef?.kind==='table';
+   if(!supported)diagnostics.push({code:'UNSUPPORTED_SCHEMA_OBJECT',severity:'error',objectId:control.id,field:'events',message:'This control event is not consumed by the generated target.',recoveryAction:'Use a click navigation link, a native Record/Login action button, or one table Search submit button. Remove input change handlers and other unsupported bindings.'});
+  }
+ }
+ for(const form of project.forms.filter(f=>f.kind==='Grid'||f.kind==='Search')){
+  const submissions=project.controls.filter(c=>c.formId===form.id).flatMap(c=>c.events.filter(e=>project.actions.find(a=>a.id===e.actionId)?.operation==='search').map(e=>({control:c,event:e})));
+  if(submissions.length>1)for(const {control}of submissions)diagnostics.push({code:'UNSUPPORTED_SCHEMA_OBJECT',severity:'error',objectId:control.id,field:'events',message:'The native GET filter form supports one declared Search submit binding.',recoveryAction:'Keep one compatible click or submit Search button, or remove declared bindings to use the built-in filter button.'});
+ }
  for(const extension of project.extensionContracts) if(extension.version!==1||!['validator','action','service','event'].includes(extension.kind)||!/^authored\/[A-Za-z0-9_-]+\.ts$/.test(extension.relativePath))fail(extension.id,'Declare a supported validator/action/service/event v1 hook in authored/name.ts.');
  for(const action of project.actions) if(action.extensionHookRef) {
   const form=project.forms.find(form=>form.id===action.formId)!;
@@ -59,7 +74,8 @@ export function compileProject(input:Project):GenerationIR {
     if(source.kind==='query'&&effectiveAccess(project,page.id,action.id).access==='authenticated'&&['navigate','search'].includes(action.operation))fail(action.id,'Authenticated query navigation or Search requires a proven keyed-query read guard. Keep report navigation public and protect the destination Record page, or remove this action before generation.');
     if(!['navigate','cancel','search','insert','update','delete','extension'].includes(action.operation)) fail(action.id,'This action requires a later runtime capability.');
     if(form.kind!=='Record'&&['insert','update','delete','extension'].includes(action.operation)) fail(action.id,'Writes require a Record form.');
-    const result:ActionIR={id:action.id,operation:action.operation,access:effectiveAccess(project,page.id,action.id).access,...(action.extensionHookRef?{extensionHookRef:action.extensionHookRef}:{})};
+    const button=project.controls.find(c=>c.formId===form.id&&c.events.some(e=>e.actionId===action.id));
+    const result:ActionIR={id:action.id,operation:action.operation,...(button?.appearance.label!==undefined?{label:button.appearance.label}:{}),access:effectiveAccess(project,page.id,action.id).access,...(action.extensionHookRef?{extensionHookRef:action.extensionHookRef}:{})};
     for(const slot of ['destination','success','cancel'] as const) if(action[slot]) try {result[slot]=compileDestination(project,sources,action[slot]!,action.operation);}catch(error){fail(action.id,error instanceof Error?error.message:'Invalid destination.');}
     if(['insert','update','delete','extension'].includes(action.operation)&&!action.success&&!action.destination) fail(action.id,'Declare a success destination for this write.');
     return result;

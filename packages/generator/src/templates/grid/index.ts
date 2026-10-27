@@ -9,7 +9,10 @@ export function gridFiles(grid: GridIR, index: number) {
  const prefix = grid.id;
  const parameter = (key: string) => literal(`${prefix}:${key}`);
  const links=(grid.actions??[]).filter(a=>a.operation==='navigate');
- const controls = grid.controls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${literal(c.label)}}</NavigationLink>`).join('')}</td>`:`<td>{${c.fieldId ? `formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f => f.id === c.fieldId)?.type)}, ${literal(c.format)})` : literal(c.label)}}</td>`).join('\n                  ');
+ const searchBinding=grid.controls.find(c=>c.kind==='button'&&c.events?.some(e=>(grid.actions??[]).find(a=>a.id===e.actionId)?.operation==='search'));
+ const displayedControls=grid.controls.filter(c=>c.id!==searchBinding?.id);
+ const value=(c:GridIR['controls'][number])=>c.fieldId?`formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f=>f.id===c.fieldId)?.type)}, ${literal(c.format)})`:literal(c.label);
+ const controls = displayedControls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${value(c)}}</NavigationLink>`).join('')}</td>`:`<td>{${value(c)}}</td>`).join('\n                  ');
  const rowKey = grid.source.keys.length ? `JSON.stringify([${grid.source.keys.map(k => `row[${literal(k)}]`).join(', ')}].map(value => String(value)))` : 'rowIndex';
  return [
   {path:`app${handlerPath('navigation',index)}/route.ts`,content:`import {cookies} from 'next/headers';
@@ -102,7 +105,7 @@ ${fields.filter(f=>sortFieldIds.includes(f.id)).map(f => `            <option va
             <option value="desc">Descending</option>
           </select>
         </label>
-        <button>Filter and sort</button>
+        <button>{${literal(searchBinding?.label??'Filter and sort')}}</button>
       </form>
       {rows.length === 0 ? (
         <p>No records found.</p>
@@ -110,7 +113,7 @@ ${fields.filter(f=>sortFieldIds.includes(f.id)).map(f => `            <option va
         <table>
           <thead>
             <tr>
-${grid.controls.map(c => `              <th>{${literal(c.label)}}</th>`).join('\n')}
+${displayedControls.map(c => `              <th>{${literal(c.label)}}</th>`).join('\n')}
             </tr>
           </thead>
           <tbody>
