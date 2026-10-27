@@ -1,0 +1,6 @@
+
+> schema-baron@0.0.0 lint
+> node scripts/workspace/verify.mjs lint
+
+docs/evidence/generality/lint.log:4: new blank line at EOF.
+git failed (2)

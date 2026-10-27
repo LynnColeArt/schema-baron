@@ -1,0 +1,18 @@
+{
+  "studioUnreachable": true,
+  "node": "v24.22.1",
+  "cleanEnvironment": true,
+  "sqlOracle": [
+    {
+      "name": "Octavia",
+      "total": "1.35"
+    },
+    {
+      "name": "Silent",
+      "total": "0.00"
+    }
+  ],
+  "authoredBytesPreserved": true,
+  "sourceFileCount": 18,
+  "standaloneRuntimeHttp200": true
+}
