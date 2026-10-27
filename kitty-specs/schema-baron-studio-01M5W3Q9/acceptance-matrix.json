@@ -67,11 +67,11 @@
     {
       "criterion_id": "FR-007",
       "description": "Verify FR-007 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-007; tests/e2e/schema-editor/workflow.spec.ts; docs/evidence/equipment/report.md T106,T109; docs/evidence/generality/report.md. Visible table/column/type/default/nullability/unique/check/index authoring and ordered composite PK; explicit refusal of opaque expression rewrites, preserving imported constructs. Reviewed against mission spec FR-007; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:11:59.845429+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
