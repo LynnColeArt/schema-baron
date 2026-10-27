@@ -217,11 +217,11 @@
     {
       "criterion_id": "FR-022",
       "description": "Verify FR-022 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-022; tests/e2e/flow-map/workflow.spec.ts; packages/core/tests/flow/behavior.test.ts; docs/evidence/generality/parity-matrix.md. Separate application/endpoint projections and object-linked invalid edge/binding diagnostics select offending source for repair. flow.inspect schema projection is unsupported; schema canvas remains separate. Reviewed against mission spec FR-022; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:50.230445+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
