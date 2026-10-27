@@ -1,0 +1,55 @@
+[
+  {
+    "name": "strict-clean-install",
+    "args": [
+      "/home/lynn/.nvm/versions/node/v24.22.1/bin/node",
+      "scripts/workspace/verify.mjs",
+      "module",
+      "tests/integration/clean-install"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "strict-performance",
+    "args": [
+      "/home/lynn/.nvm/versions/node/v24.22.1/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--project",
+      "tests/performance/tsconfig.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "strict-active-tests",
+    "args": [
+      "/home/lynn/.nvm/versions/node/v24.22.1/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--strict",
+      "--noUncheckedIndexedAccess",
+      "--exactOptionalPropertyTypes",
+      "--target",
+      "ES2023",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--types",
+      "node",
+      "--lib",
+      "ES2024,DOM,DOM.Iterable",
+      "--skipLibCheck",
+      "tests/e2e/equipment/workflow.spec.ts",
+      "tests/e2e/publication/workflow.spec.ts",
+      "tests/e2e/regeneration/workflow.spec.ts",
+      "tests/e2e/reports/workflow.spec.ts",
+      "tests/e2e/first-output/workflow.spec.ts",
+      "tests/e2e/generated-records/workflow.spec.ts",
+      "tests/e2e/runtime-export/workflow.spec.ts",
+      "tests/contracts/parity/behavior.test.ts",
+      "packages/generator/tests/regeneration/hook-bindings.test.ts",
+      "packages/core/tests/runtime/behavior.test.ts"
+    ],
+    "exit": 0
+  }
+]

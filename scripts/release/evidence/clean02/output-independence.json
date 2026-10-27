@@ -1,0 +1,27 @@
+{
+  "outputs": [
+    {
+      "application": "equipment",
+      "node": "24.22.1",
+      "npm": "11.19.1",
+      "forbiddenWorkspaceDependencies": [],
+      "nonregistryLockEntries": [],
+      "manifestSha256": "076d40f315f2ca79af3aabeb1b00d95de7b0745728d6314aa5f685e4ba56d3ec",
+      "lockSha256": "56e223a6783b51849aa1f31026a2e1bedecec56ca9cc5dec06685e98ac080c2e",
+      "identityStoreSourceSha256": "13a1cc16fae631f19d0c353205dd081967daf56ae22717931a121bfe8d5f9344",
+      "authConfigSourceSha256": "ec526b453447cfc13fc345c1ddf4cb2ba387ceecf1b546934c7c048373dd3ca6"
+    },
+    {
+      "application": "publication",
+      "node": "24.22.1",
+      "npm": "11.19.1",
+      "forbiddenWorkspaceDependencies": [],
+      "nonregistryLockEntries": [],
+      "manifestSha256": "076d40f315f2ca79af3aabeb1b00d95de7b0745728d6314aa5f685e4ba56d3ec",
+      "lockSha256": "56e223a6783b51849aa1f31026a2e1bedecec56ca9cc5dec06685e98ac080c2e",
+      "identityStoreSourceSha256": "13a1cc16fae631f19d0c353205dd081967daf56ae22717931a121bfe8d5f9344",
+      "authConfigSourceSha256": "d0bd337a78759e5710d5f264ee8d44c05181f93a1f3c55806b60a490e57ea4c9"
+    }
+  ],
+  "productionSourceDeltaAfterArchive": []
+}

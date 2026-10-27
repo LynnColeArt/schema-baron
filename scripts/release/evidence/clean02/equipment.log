@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ✓  1 tests/e2e/equipment/workflow.spec.ts:177:1 › Equipment Desk starts blank and authors schema and forms through supported controls (4.0m)
+
+  1 passed (4.0m)

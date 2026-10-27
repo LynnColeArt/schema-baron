@@ -1,0 +1,174 @@
+{
+  "environment": {
+    "capturedAt": "2026-10-27T16:55:49.287Z",
+    "hostLoadAverage": [
+      4.23,
+      4.93,
+      4.79
+    ],
+    "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
+    "logicalCpus": 12,
+    "ramBytes": 67299147776,
+    "os": "linux 7.0.0-38-generic x64",
+    "node": "v24.22.1",
+    "browser": "156.0.8078.4",
+    "warmupOperations": 5,
+    "percentile": "nearest-rank",
+    "timing": "Playwright action through observed rendered state, including automation overhead; query HTTP round trip through actual owner SQLite worker"
+  },
+  "tables": 50,
+  "columns": 500,
+  "edits": 20,
+  "lostDrafts": 0,
+  "lostSelections": 0,
+  "sizes": [
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    },
+    {
+      "x": 238,
+      "y": 232,
+      "width": 230,
+      "height": 320
+    }
+  ],
+  "durations": {
+    "samplesMs": [
+      51.032608000001346,
+      26.602059999999256,
+      22.64294300000074,
+      25.787802999999258,
+      24.420596999998452,
+      22.91095099999984,
+      22.91617199999928,
+      20.83536699999968,
+      21.156107000000702,
+      25.044024999999237,
+      21.661604999999327,
+      21.062646999998833,
+      24.131687999999485,
+      25.885913000000073,
+      24.660766000000876,
+      20.365969000000405,
+      23.505769999999757,
+      22.496083,
+      23.22357000000011,
+      21.32764700000007
+    ],
+    "count": 20,
+    "p95Ms": 26.602059999999256,
+    "minMs": 20.365969000000405,
+    "maxMs": 51.032608000001346
+  }
+}

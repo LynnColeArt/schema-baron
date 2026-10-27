@@ -1,0 +1,16 @@
+{
+  "node": "v24.22.1",
+  "managedMapping": null,
+  "initialManagedIdentities": 0,
+  "protectedStdin": true,
+  "adapterProvisioned": true,
+  "duplicateUsernameRefused": true,
+  "duplicateRequestRefused": true,
+  "wrongPasswordRefused": true,
+  "sessionCsrf": true,
+  "revocation": true,
+  "reopenLogin": true,
+  "mode": "0600",
+  "actualPortableBrowserLoginAndLogout": true,
+  "protectedRoute": "/asset"
+}

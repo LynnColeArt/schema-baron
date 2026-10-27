@@ -1,0 +1,31 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 1568.382651,
+  "context": {
+    "point": "before-ddl",
+    "revision": 6
+  },
+  "events": [
+    {
+      "elapsedMs": 1419.412725,
+      "point": "before-ddl",
+      "revision": 6,
+      "state": "started"
+    },
+    {
+      "elapsedMs": 1551.904068,
+      "point": "before-ddl",
+      "revision": 6,
+      "committed": false,
+      "rows": [
+        {
+          "id": 1,
+          "title": "original"
+        }
+      ],
+      "initialOutcome": "success",
+      "cancelStatus": "canceled",
+      "state": "observed"
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 /** Reproduce a release from tracked source in a new private directory. Linux x64. */
 import { spawn } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync, chmodSync } from 'node:fs';
-import { resolve, join, dirname } from 'node:path';
+import { mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { resolve, join, dirname, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 const source = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const destination = resolve(process.argv[2] ?? '');
-if (!process.argv[2] || destination.startsWith(source + '/') || destination === source || existsSync(destination)) throw Error('Supply a new absolute directory outside the checkout; existing directories are refused.');
+if (!process.argv[2] || !isAbsolute(process.argv[2]) || destination.startsWith(source + '/') || destination === source || existsSync(destination)) throw Error('Supply a new absolute directory outside the checkout; existing directories are refused.');
 mkdirSync(destination, {mode:0o700});
 const logRoot=join(destination,'logs'); mkdirSync(logRoot);
 let environment={...process.env,NEXT_TELEMETRY_DISABLED:'1'};
@@ -20,7 +20,8 @@ async function run(name, command, args, cwd=destination, env=environment) {
   if(code!==0)throw Error(name+' failed; inspect '+join(logRoot,name+'.log'));
   console.log(name+' passed');return log;
 }
-await run('archive','git',['archive','--format=tar','-o',join(destination,'source.tar'),'HEAD'],source);
+const sourceRevision=(await run('source-revision','git',['rev-parse','HEAD'],source)).trim();
+await run('archive','git',['archive','--format=tar','-o',join(destination,'source.tar'),sourceRevision],source);
 const checkout=join(destination,'source');mkdirSync(checkout);
 await run('extract-source','tar',['-xf',join(destination,'source.tar'),'-C',checkout]);
 await run('source-git-init','git',['init','-q'],checkout);
@@ -68,5 +69,5 @@ for(const name of ['equipment','publication']){const study=JSON.parse(readFileSy
 await run('behavior',node,['node_modules/vitest/vitest.mjs','run','--maxWorkers=2'],checkout);
 await run('usability',node,['node_modules/@playwright/test/cli.js','test','tests/e2e/usability','--workers=1','--retries=0','--output='+join(destination,'usability-evidence')],checkout);
 await run('dependency-check',node,[npm,'run','check:dependencies'],checkout);
-writeFileSync(join(logRoot,'result.json'),JSON.stringify({completed:true,sourceRevision:await run('revision','git',['rev-parse','HEAD'],source),runtimeArchiveSha256:runtime.expectedSha256,coldAcquisition:'online',warmInstall:'npm ci --offline',networkEvidence:'unshare -Urn with loopback only; failed external probe and connect syscall traces retained',source:checkout,home,cache,environmentKeys:Object.keys(environment)},null,2));
+writeFileSync(join(logRoot,'result.json'),JSON.stringify({completed:true,sourceRevision,runtimeArchiveSha256:runtime.expectedSha256,coldAcquisition:'online',warmInstall:'npm ci --offline',networkEvidence:'unshare -Urn with loopback only; failed external probe and connect syscall traces retained',source:checkout,home,cache,environmentKeys:Object.keys(environment)},null,2));
 console.log('Release proof retained at '+destination);

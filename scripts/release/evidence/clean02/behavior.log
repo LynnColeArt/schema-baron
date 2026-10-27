@@ -1,0 +1,256 @@
+
+ RUN  v5.0.5 /tmp/schema-baron-wp26-clean-02/source
+
+ ✓ packages/sqlite/tests/schema-plans/behavior.test.ts (22 tests) 11108ms
+   ✓ stable-ID rename plus required backfill preserves rows in preview and emits independently executable SQL 595ms
+   ✓ reviewed plan rejects data/schema/revision/hash/expiry and exact acknowledgements 682ms
+   ✓ opaque dependency blocks unsafe changes: CREATE TRIGGER audit AFTER UPDATE ON "order" BEGIN SELECT NEW.id; END 380ms
+   ✓ opaque dependency blocks unsafe changes: CREATE VIEW reporting AS SELECT * FROM "order" 380ms
+   ✓ real rows reject duplicate unique, null, CHECK, FK and unconverted type changes 821ms
+   ✓ quoted composite keys, FK, partial index, literal defaults and checks are independently enforced 503ms
+   ✓ foreign-key orphans are detected from projected data without enabling DDL 488ms
+   ✓ unsupported SQL remains opaque and blocks rebuild: CREATE TABLE t(id INTEGER PRIMARY KEY,a INTEGER,b INTEGER GENERATED ALWAYS AS (a*2) STORED) 445ms
+   ✓ unsupported SQL remains opaque and blocks rebuild: CREATE VIRTUAL TABLE t USING fts5(value) 420ms
+   ✓ unsupported SQL remains opaque and blocks rebuild: CREATE TABLE t(id INTEGER PRIMARY KEY,a INTEGER CHECK(a>0)) 435ms
+   ✓ drop discloses exact row loss, native rename preserves data fingerprint including unsafe-size integers 710ms
+   ✓ client cannot poison an observed baseline or save orphan bindings; coordinated model repair remains possible 436ms
+   ✓ a target rename repairs existing inbound FK SQL and preserves implicit rowids during rebuild 450ms
+   ✓ explicit conversion, exact decimal and blob backfills produce actual intended encodings 395ms
+   ✓ an untouched opaque table retains exact SQL and unrelated rows during an executable rebuild 408ms
+   ✓ native source worker and built worker both execute read-only planning successfully 432ms
+   ✓ backfill typing rejects implicit SQLite coercion and integer overflow before recording a plan 411ms
+   ✓ public project.open rejects imported baseline forgery and requires a fresh actual inspection 636ms
+   ✓ inspection provenance survives owner restart and a legitimate relocation preserves stable identities 1079ms
+   ✓ zero-row defaults are evaluated and reject null-producing arithmetic before any DDL 450ms
+ ✓ tests/integration/generated-auth/behavior.test.ts (1 test) 24015ms
+   ✓ blank authored project provisions through HTTP/stdio and runs isolated secure production routes 24014ms
+ ✓ packages/sqlite/tests/schema-plans/primary-key-semantics.test.ts (20 tests) 9035ms
+   ✓ public add-column rebuild preserves physical key/rowid and future NULL behavior: INT independent key 516ms
+   ✓ public add-column rebuild preserves physical key/rowid and future NULL behavior: INTEGER inline DESC independent key 460ms
+   ✓ public add-column rebuild preserves physical key/rowid and future NULL behavior: INT table primary key 442ms
+   ✓ public add-column rebuild preserves physical key/rowid and future NULL behavior: ordinary INTEGER rowid alias 498ms
+   ✓ public add-column rebuild preserves physical key/rowid and future NULL behavior: INTEGER table DESC remains a rowid alias 400ms
+   ✓ public add-column rebuild preserves physical key/rowid and future NULL behavior: composite rowid-table key 402ms
+   ✓ WITHOUT ROWID composite keys remain opaque and cannot be silently converted by add-column planning 398ms
+   ✓ a new INTEGER alias cannot silently replace an existing independent row identity 392ms
+   ✓ an explicit conversion away from a rowid alias still enforces the desired non-null key 417ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: INT inline DESC 443ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: INT table DESC 430ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: composite DESC/ASC 433ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: composite ASC/DESC 466ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: composite DESC/DESC 658ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: composite ASC/ASC control 471ms
+   ✓ preserves full physical PK metadata and actual ORDER BY plan: quoted composite mixed direction 476ms
+   ✓ unsupported PK collation NOCASE blocks instead of silently normalizing its descriptor 443ms
+   ✓ unsupported PK collation RTRIM blocks instead of silently normalizing its descriptor 436ms
+   ✓ an imported descending UNIQUE absent from the logical model must not disappear in a rebuild 435ms
+   ✓ a represented ASC UNIQUE and ordinary index remain enforced and present after a supported rebuild 415ms
+ ✓ packages/generator/tests/record/navigation.test.ts (1 test) 22984ms
+   ✓ declared child keys and mixed empty typed searches survive generated production navigation 22983ms
+ ✓ packages/generator/tests/public-list/behavior.test.ts (15 tests) 9664ms
+   ✓ real preview/apply preserve rows and idempotency; unchanged regeneration is reviewed without rewriting source 735ms
+   ✓ a caller-created lookalike tree cannot be adopted; changed output remains untouched 385ms
+   ✓ canonical apply intent recovers promotion after an uncertain outcome without redoing output 823ms
+   ✓ schema/file drift blocks output while ordinary row changes remain legitimate live data 1241ms
+   ✓ matching async generation requests share one outcome and conflicting payloads do no writes 485ms
+   ✓ replacement with the same schema and owner cancellation both refuse first promotion 5452ms
+ ✓ packages/model/tests/index.test.ts (49 tests) 95ms
+ ✓ tests/contracts/parity/behavior.test.ts (1 test) 56365ms
+   ✓ independent real MCP-first and HTTP-first corpora cover implemented commands and atomic refusals 56363ms
+ ✓ packages/sqlite/tests/introspection/connections.test.ts (6 tests) 3571ms
+   ✓ real HTTP and MCP inspect/bind exact WAL schema; stale fingerprints reject and relocation preserves connection and schema identities 1421ms
+   ✓ missing, corrupt, permissions, locks, escapes, aliases and explicit empty creation share safe transport failures 1235ms
+   ✓ actual awaited connection inspect and bind cannot finalize across a synchronous project revision 315ms
+   ✓ actual HTTP and MCP duplicates share one createEmpty execution and conflicting transport payloads create no extra file 375ms
+ ✓ packages/generator/tests/regeneration/commands.test.ts (8 tests) 11720ms
+   ✓ public commands preserve exact authored bytes and independently queried SQLite through two cycles; stale writes/apply refuse 2397ms
+   ✓ modified owned, unknown, symlink and removed-interface files block without deletion 888ms
+   ✓ lifecycle stop is awaited before promotion and a refusal preserves complete active output 971ms
+   ✓ row-only external edits survive apply and a database rebound inside runtime artifacts is refused 1562ms
+   ✓ page removal requires exact reviewed acknowledgement; custom interface changes cannot be overwritten 1549ms
+   ✓ interrupted promotion is reconciled from its canonical intent, preserving the original committed retry after a later model edit 1403ms
+   ✓ generation preserves nonempty canonical migration history and data independently 1438ms
+   ✓ recovery refuses a later in-output data rebind before moving the reviewed old tree 1510ms
+ ✓ packages/core/tests/transport/behavior.test.ts (6 tests) 386ms
+ ✓ packages/sqlite/tests/query/chains.test.ts (11 tests) 4646ms
+   ✓ prefix expansion preserves pairwise alias cardinality: one-to-one 316ms
+   ✓ public saved/draft HTTP and fresh MCP preserve valid expanded chain one-to-one 1226ms
+   ✓ public saved/draft HTTP and fresh MCP preserve valid expanded chain one-to-many 1514ms
+ ✓ packages/sqlite/tests/query/grain.test.ts (13 tests) 5533ms
+   ✓ reject actual semantic key collisions before returning totals: decimal 309ms
+   ✓ reject actual semantic key collisions before returning totals: collation 339ms
+   ✓ a single normalized decimal join cannot silently double an aggregate 303ms
+   ✓ complete composite tuples and canonical/scaled keys preserve valid joins 798ms
+   ✓ grouped child queries normalize decimal grain before joining and retain independent equal amounts 342ms
+   ✓ public saved and draft HTTP plus fresh MCP fail closed on numeric-equivalent TEXT unique keys 1681ms
+   ✓ actual multiplicity proof obeys the worker timeout and cancellation budget 435ms
+ ✓ packages/core/tests/project/behavior.test.ts (10 tests) 336ms
+ ✓ packages/generator/tests/record/runtime.test.ts (1 test) 20863ms
+   ✓ authored Search and Record modules transact against independent quoted/composite SQLite, and build outside Studio 20862ms
+ ✓ tests/integration/recovery-matrix/challenges.test.ts (4 tests) 5687ms
+   ✓ actual migration cancellation at before-ddl reports durable truth 1333ms
+   ✓ actual migration cancellation at before-reconcile reports durable truth 1372ms
+   ✓ busy WAL writer and external data/schema invalidate reviewed plans without overwriting external state 1761ms
+   ✓ recovery output conflicts and transport challenges preserve authored bytes and secrets 1218ms
+ ✓ packages/sqlite/tests/query/behavior.test.ts (8 tests) 1128ms
+ ✓ packages/sqlite/tests/introspection/idempotency.test.ts (11 tests) 6239ms
+   ✓ close settles matching reservations and the writer lease excludes a second core: during worker 5029ms
+ ✓ packages/sqlite/tests/migrations/failure-matrix.test.ts (12 tests) 8405ms
+   ✓ real process exit at before-backup preserves exactly one coherent outcome 678ms
+   ✓ real process exit at after-backup preserves exactly one coherent outcome 677ms
+   ✓ real process exit at during-rebuild preserves exactly one coherent outcome 754ms
+   ✓ real process exit at before-db-commit preserves exactly one coherent outcome 721ms
+   ✓ real process exit at after-db-commit preserves exactly one coherent outcome 678ms
+   ✓ real process exit at before-reconcile preserves exactly one coherent outcome 840ms
+   ✓ real process exit at metadata-save preserves exactly one coherent outcome 705ms
+   ✓ real process exit at after-reconcile preserves exactly one coherent outcome 658ms
+   ✓ reserved marker namespace collision refuses even a schema-shaped forged table without overwriting it 410ms
+   ✓ external schema change after committed crash leaves recovery unresolved and blocks mutations without restoring 708ms
+   ✓ restore interruption at restore-after-db-commit reconciles one restore and keeps both backups 804ms
+   ✓ restore interruption at restore-before-reconcile reconciles one restore and keeps both backups 769ms
+ ✓ apps/studio/src/workspace/session.test.ts (9 tests) 32ms
+ ✓ tests/integration/recovery-matrix/behavior.test.ts (10 tests) 34154ms
+   ✓ save → WAL migration → promotion hard restart stage-complete 4085ms
+   ✓ save → WAL migration → promotion hard restart before-journal-write 3920ms
+   ✓ save → WAL migration → promotion hard restart after-journal-write 3878ms
+   ✓ save → WAL migration → promotion hard restart before-old-rename 3953ms
+   ✓ save → WAL migration → promotion hard restart after-old-rename 3748ms
+   ✓ save → WAL migration → promotion hard restart before-new-rename 3280ms
+   ✓ save → WAL migration → promotion hard restart after-new-rename 3257ms
+   ✓ save → WAL migration → promotion hard restart before-journal-clear 3216ms
+   ✓ save → WAL migration → promotion hard restart after-journal-clear 3260ms
+   ✓ external schema changes after committed owner exit block recovery and preserve both states 1555ms
+ ✓ packages/sqlite/tests/migrations/namespace-race.test.ts (4 tests) 11317ms
+   ✓ external matching-DDL namespace during migration backup refuses all reviewed SQL and preserves foreign evidence 3532ms
+   ✓ external matching-DDL namespace during restore backup refuses all reviewed SQL and preserves foreign evidence 6682ms
+   ✓ owner-proven marker namespace remains valid across migration and restore transactions 618ms
+   ✓ an uncertain commit response still probes the durable marker instead of claiming rollback 484ms
+ ✓ packages/storage/tests/boundaries.test.ts (20 tests) 532ms
+ ✓ packages/generator/tests/regeneration/hook-bindings.test.ts (30 tests) 4919ms
+   ✓ production Record output executes supported hooks and rolls back failures; Cancel invokes none 4884ms
+ ✓ tests/contracts/parity/output-fidelity.test.ts (7 tests) 41ms
+ ✓ apps/mcp/tests/parity.test.ts (3 tests) 1817ms
+   ✓ real SDK stdio client creates and changes the HTTP owner; valid/invalid/stale corpus has identical outcomes and no partial writes 1025ms
+   ✓ MCP job tools/resources see committed and running owner jobs with stale/duplicate cancel protection 541ms
+stdout | packages/core/tests/runtime/review-concurrency.test.ts > concurrent distinct runtime starts cannot replace owned process authority
+{"fulfilled":1,"pids":[2367491],"liveAfterClose":[]}
+
+stdout | packages/core/tests/runtime/review-concurrency.test.ts > project mutation while includeData awaits must not publish stale export
+{"exportStatus":"rejected","published":false,"currentRevision":5}
+
+ ✓ packages/sqlite/tests/query/transports.test.ts (3 tests) 10550ms
+   ✓ saved and draft preview share actual HTTP/MCP values, shape, rejection and immutable SQLite bytes 1579ms
+   ✓ public cancel waits for worker exit; stale/conflicting cancellations have no effects and service remains responsive 5442ms
+   ✓ owner shutdown confirms preview exit and persists terminal cancellation before reopening 3529ms
+ ✓ packages/core/tests/form-construction/behavior.test.ts (7 tests) 96ms
+ ✓ packages/core/tests/runtime/review-concurrency.test.ts (7 tests) 6442ms
+   ✓ concurrent distinct runtime starts cannot replace owned process authority 914ms
+   ✓ project mutation while includeData awaits must not publish stale export 980ms
+   ✓ a pending launch can be canceled at the probe boundary without executing or losing its job 706ms
+   ✓ core.close fences a pending probe and awaits the failed command and all job callbacks 741ms
+   ✓ source promotion fences a pending start through its source swap 1227ms
+   ✓ stale export refusal is durable and retry leaves no destination or staging 885ms
+   ✓ authored source edit during data export invalidates the exact captured bytes without changing model revision 987ms
+ ✓ packages/core/tests/runtime/processes.test.ts (5 tests) 6118ms
+   ✓ real failure, bounded redacted logs, port conflict and native descendant cancellation 2735ms
+   ✓ no execution on open; symlink and stale output cannot launch jobs 682ms
+   ✓ probe-to-launch directory swap cannot execute the replacement 668ms
+   ✓ an unrelated HTTP200 between probe and launch never becomes managed readiness 866ms
+   ✓ promotion refusal preserves the active source tree after managed process shutdown 1166ms
+ ✓ packages/sqlite/tests/migrations/transport.test.ts (1 test) 1724ms
+   ✓ HTTP and real stdio MCP share apply/history/restore authority and immutable retry outcomes 1722ms
+ ✓ packages/generator/tests/reports/deadline.test.ts (2 tests) 6387ms
+   ✓ compiler-accepted 90k-row native join is dead before its deadline error settles 5198ms
+   ✓ success, cancellation, process failure and shutdown reap isolated report execution 1187ms
+ ✓ packages/generator/tests/public-list/runtime.test.ts (1 test) 18318ms
+   ✓ emitted production pages preserve NULL decimal comparisons, exact values, sorting and missing-file behavior 18317ms
+ ✓ packages/sqlite/tests/migrations/behavior.test.ts (4 tests) 2285ms
+   ✓ reviewed rebuild preserves rows/index/FK and one committed retry outcome; restore reviews later data 728ms
+   ✓ external row change, wrong hash and missing acknowledgements refuse effects 469ms
+   ✓ reviewed backfill executes only after exact acknowledgement and preserves dependent rows 598ms
+   ✓ postcommit reconciliation error and matching retry honestly report committed/recovery-pending 489ms
+ ✓ scripts/workspace/verify.test.ts (11 tests) 3088ms
+   ✓ standalone harness runs real package checks and propagates a failing test 1064ms
+   ✓ public npm generated check cannot borrow undeclared workspace executables 427ms
+   ✓ public npm generated check installs and uses its own declared compiler offline 1078ms
+ ✓ packages/sqlite/tests/migrations/lease-cancel.test.ts (2 tests) 1233ms
+   ✓ constraint failure after actual rebuild rolls back every SQL step and preserves the validated backup 540ms
+   ✓ public cancellation validates owner/revision/idempotency before stopping the isolated child; concurrent mutations are leased 692ms
+ ✓ packages/core/tests/identity/behavior.test.ts (2 tests) 1259ms
+   ✓ mapped provisioning uses explicit compatible physical fields, retains transient safety, and rejects changed sources 834ms
+   ✓ identity session hashes, project isolation, expiry, fixed-cost incompatible hashes and file alias checks 423ms
+ ✓ apps/studio/src/workspace/state.test.ts (6 tests) 15ms
+ ✓ packages/core/tests/flow/behavior.test.ts (9 tests) 77ms
+ ✓ packages/generator/tests/reports/behavior.test.ts (7 tests) 85ms
+stdout | packages/sqlite/tests/introspection/behavior.test.ts > prepared writes enforce foreign keys and rollback all statements; canceling a running write confirms exit and rollback before reuse
+SQLite canceled write exited in 57.8ms; rollback and integrity verified below
+
+stdout | packages/sqlite/tests/introspection/behavior.test.ts > timeout confirms worker exit, backup refuses an existing destination, and read-only SQL cannot write
+SQLite timed-out read exited in 57.2ms
+
+ ✓ packages/sqlite/tests/introspection/behavior.test.ts (4 tests) 902ms
+   ✓ prepared writes enforce foreign keys and rollback all statements; canceling a running write confirms exit and rollback before reuse 311ms
+ ✓ packages/sqlite/tests/migrations/restore-boundaries.test.ts (3 tests) 2506ms
+   ✓ restore rejects either a changed destination or a changed backup after review without destroying later data 1340ms
+   ✓ expired or stale-source reviewed plans cannot create a migration journal or backup 439ms
+   ✓ restore holds both destination and attached backup against external writes through commit 725ms
+ ✓ packages/core/tests/export/behavior.test.ts (3 tests) 3124ms
+   ✓ default portable export excludes data, credentials, absolute locators and runtime artifacts; reviewed snapshot is consistent 1077ms
+   ✓ mapped credential data is explicitly refused, preserving relational schema/data 1123ms
+   ✓ export parent swap during real SQLite snapshot cannot publish into the replacement 923ms
+ ✓ packages/core/tests/page-document/behavior.test.ts (18 tests) 9ms
+ ✓ packages/model/tests/review-regressions.test.ts (14 tests) 36ms
+ ✓ apps/studio/src/query-designer/history.test.ts (8 tests) 24ms
+ ✓ packages/core/tests/transport/bootstrap.test.ts (1 test) 913ms
+   ✓ built Next owner bootstrap serves actual authenticated API and built stdio client against the same writer 911ms
+ ✓ packages/sqlite/tests/query/mixed-numeric.test.ts (2 tests) 26ms
+ ✓ packages/storage/tests/recovery.test.ts (5 tests) 697ms
+ ✓ packages/sqlite/tests/schema-plans/nullable-backfill.test.ts (3 tests) 1244ms
+   ✓ nullable conversion backfill 0 previews read-only then applies exactly the reviewed value 542ms
+   ✓ nullable conversion backfill null previews read-only then applies exactly the reviewed value 439ms
+ ✓ packages/sqlite/tests/query/shutdown.test.ts (1 test) 4015ms
+   ✓ built production Next owner SIGTERM interrupts a live preview and releases its writer after terminal observation 4013ms
+ ✓ packages/sqlite/tests/schema-plans/transport.test.ts (1 test) 927ms
+   ✓ real authenticated HTTP and MCP author and inspect the same immutable migration preview 926ms
+ ✓ tests/contracts/parity/responsiveness.test.ts (2 tests) 15178ms
+   ✓ warmed real owner stays responsive during asynchronous child work and idle socket expiry 15137ms
+ ✓ apps/studio/src/query-designer/state.test.ts (7 tests) 15ms
+ ✓ apps/studio/src/document-modes/state.test.ts (3 tests) 20ms
+ ✓ packages/generator/tests/regeneration/recovery.test.ts (10 tests) 1569ms
+ ✓ packages/generator/tests/record/behavior.test.ts (5 tests) 21ms
+ ✓ packages/generator/tests/auth/behavior.test.ts (2 tests) 516ms
+   ✓ versioned salts differ and verification rejects malformed/legacy encodings 492ms
+ ✓ apps/studio/src/schema-editor/state.test.ts (6 tests) 17ms
+ ✓ apps/studio/src/query-designer/parameter-contract.test.ts (8 tests) 34ms
+ ✓ packages/generator/src/templates/identity-controls/behavior.test.ts (2 tests) 25ms
+ ✓ packages/sqlite/tests/migrations/physical-preservation.test.ts (5 tests) 2452ms
+   ✓ actual apply retains physical keys, independent rowids, directions and future NULL behavior: k INT NOT NULL PRIMARY KEY,v TEXT 551ms
+   ✓ actual apply retains physical keys, independent rowids, directions and future NULL behavior: k INTEGER PRIMARY KEY DESC NOT NULL,v TEXT 520ms
+   ✓ actual apply retains physical keys, independent rowids, directions and future NULL behavior: k INTEGER PRIMARY KEY,v TEXT 448ms
+   ✓ actual apply retains physical keys, independent rowids, directions and future NULL behavior: k INTEGER NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k DESC,v ASC) 466ms
+   ✓ actual apply retains physical keys, independent rowids, directions and future NULL behavior: k INTEGER NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k ASC,v DESC) 465ms
+stdout | packages/sqlite/tests/migrations/reviewer-namespace.test.ts > reviewer: externally created reserved namespace during online backup is never adopted
+{"before":{"columns":[{"cid":0,"name":"id","type":"INTEGER","notnull":0,"dflt_value":null,"pk":1},{"cid":1,"name":"title","type":"TEXT","notnull":1,"dflt_value":null,"pk":0}],"rows":{"n":100000,"first":1,"last":100000}},"result":{"ok":false,"revision":3,"error":{"code":"UNSUPPORTED_SCHEMA_OBJECT","message":"Migration did not complete. Inspect migration history before retrying.","retryable":false},"diagnostics":[]},"after":{"columns":["id","title"],"rows":{"n":100000,"first":1,"last":100000},"markerSQL":{"sql":"CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"},"markerRows":0,"authority":{"n":0},"revision":3},"restartHistory":{"ok":true,"revision":3,"result":[{"id":"61858fdc-2c83-4aeb-8395-538555be2216","planId":"d6680b76-205c-48ee-b09e-fba6a67e77a5","requestId":"907c368f-f855-44fd-a4fe-8e25d0cf0776","connectionId":"33a710cc-0d10-439f-8672-291a82cd492a","backupRef":"f229bcbe-80ee-48de-9193-27df1a898c93","kind":"migration","createdAt":"2026-10-27T16:55:25.666Z","baseRevision":3,"outcome":"rolled-back","backupValidated":true,"message":"No commit marker; SQLite transaction rolled back."}],"diagnostics":[]},"blockedAfterRestart":{"ok":true,"revision":3,"result":{"id":"41dd2393-dbe8-4a43-a836-4c9edb80947d","sourceRevision":3,"modelHash":"f22c0328f09138b94baf4bf587f8bc01cb139f59c04d7876f939f815876f29e2","hash":"75949a8e38e64f3f6d8e1af24a2426dd464ad8913e0063a83f02c98a72ab9607","createdAt":"2026-10-27T16:55:27.310Z","expiresAt":"2026-10-27T17:00:27.310Z","impact":[{"id":"e85989de-cea3-4e05-9c49-7ce9ab4ebde4","objectId":"9916e9b3-763e-436d-a55c-ae3417dca485","kind":"change","description":"Rename column title to caption; preserve values","requiresAcknowledgement":false,"affectedCount":100000}],"requiredAcknowledgementIds":[],"kind":"migration","connectionId":"33a710cc-0d10-439f-8672-291a82cd492a","schemaFingerprint":"32b1b4a439130e7a0a79b7cf07c49104319bb0fa3bbb3a00016ec7535d26b94a","dataFingerprint":"87a6e0f174a897a01b6d3890f42b823f53ec5e229afb3ae7942b2532cf5bce65","backupPolicy":{"required":true,"approvedRootId":"projects"},"recovery":{"backupMethod":"sqlite-online-backup","instructions":["Acquire the migration lease and recheck schema/data fingerprints under a write transaction before changing data.","Create and verify an SQLite online backup in the disclosed owner-approved root before DDL.","Set foreign_keys OFF before BEGIN for a rebuild; execute all reviewed steps in one transaction and reject failed foreign_key_check or integrity_check before commit. Restore the original connection settings.","On failure roll back the transaction. Inspect the durable migration journal and database marker to distinguish rollback from a committed migration before retrying.","Restoring a backup requires a separately reviewed restore plan and exact acknowledgements; preview never performs a restore."],"foreignKeysBeforeTransaction":false,"verifyBeforeCommit":["foreign_key_check","integrity_check"],"restoreRequiresReview":true,"sqliteVersion":"3.53.4","strategy":"native"},"changes":[{"objectId":"9916e9b3-763e-436d-a55c-ae3417dca485","tableId":"9a8a1f69-fe2c-4b33-8d73-75c4b373467e","kind":"rename","description":"Rename column title to caption; preserve values"}],"steps":[{"id":"79764e47-30ec-4c3b-8ec5-55b0621c6c71","sql":"ALTER TABLE \"parent\" RENAME COLUMN \"title\" TO \"caption\"","objectIds":["9916e9b3-763e-436d-a55c-ae3417dca485"],"transactional":true}]},"diagnostics":[]}}
+
+ ✓ packages/sqlite/tests/migrations/reviewer-namespace.test.ts (1 test) 3140ms
+   ✓ reviewer: externally created reserved namespace during online backup is never adopted 3139ms
+ ✓ apps/studio/src/flow-map/state.test.ts (3 tests) 5ms
+ ✓ packages/sqlite/tests/decimal/behavior.test.ts (2 tests) 11ms
+ ✓ packages/core/tests/commands/behavior.test.ts (1 test) 64ms
+ ✓ packages/generator/tests/regeneration/behavior.test.ts (2 tests) 23ms
+ ✓ apps/studio/src/runtime-ui/context.test.ts (1 test) 3ms
+ ✓ packages/core/tests/runtime/context.test.ts (1 test) 844ms
+   ✓ generated context labels/types stay bound to generated snapshot after later saved model edits 842ms
+ ✓ apps/studio/src/project-ui/api.test.ts (2 tests) 23ms
+ ✓ tests/integration/clean-install/behavior.test.ts (2 tests) 110ms
+ ✓ apps/studio/src/security-editor/state.test.ts (2 tests) 5ms
+ ✓ apps/studio/src/runtime-ui/diagnostics.test.ts (1 test) 3ms
+ ✓ apps/studio/src/forms/scalars.test.ts (1 test) 4ms
+ ✓ packages/core/tests/runtime/behavior.test.ts (1 test) 55391ms
+   ✓ real managed Record-only build/run/route, promotion shutdown and separate portable output 55389ms
+
+ Test Files  74 passed (74)
+      Tests  482 passed (482)
+   Start at  11:52:00
+   Duration  213.14s (tests 98%, import 2%)
+

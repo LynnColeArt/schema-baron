@@ -1,0 +1,34 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 1585.2912129999968,
+  "context": {
+    "point": "before-reconcile",
+    "externalMutation": true
+  },
+  "events": [
+    {
+      "elapsedMs": 0.5120289999977103,
+      "point": "before-reconcile",
+      "externalMutation": true,
+      "state": "started"
+    },
+    {
+      "elapsedMs": 1584.4191429999992,
+      "point": "before-reconcile",
+      "externalMutation": true,
+      "history": "recovery-pending",
+      "committedRows": [
+        {
+          "id": 1,
+          "caption": "original"
+        }
+      ],
+      "externalRows": [
+        {
+          "id": 42
+        }
+      ],
+      "state": "observed"
+    }
+  ]
+}

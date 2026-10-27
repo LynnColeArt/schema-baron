@@ -1,0 +1,1382 @@
+[
+  {
+    "id": "corpus",
+    "formatVersion": 1,
+    "revision": 16,
+    "name": "Transport corpus",
+    "target": "next-typescript-sqlite",
+    "targetVersion": "1",
+    "connectionRefs": [
+      "opaque-0"
+    ],
+    "connections": [
+      {
+        "id": "opaque-0",
+        "name": "corpus.sqlite",
+        "locator": {
+          "approvedRootId": "projects",
+          "relativePath": "corpus.sqlite"
+        },
+        "fingerprint": "<fingerprint>",
+        "capabilities": {
+          "sqliteVersion": "3.53.4",
+          "foreignKeys": true,
+          "returning": true,
+          "strictTables": true,
+          "unsupportedObjects": []
+        },
+        "inspectedSchema": {
+          "id": "opaque-1",
+          "revision": 2,
+          "tables": [
+            {
+              "id": "entries",
+              "physicalName": "corpus_entries",
+              "columns": [
+                {
+                  "id": "entry-id",
+                  "physicalName": "entry_id",
+                  "type": {
+                    "kind": "integer"
+                  },
+                  "nullable": false
+                },
+                {
+                  "id": "entry-title",
+                  "physicalName": "heading",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "nullable": false
+                }
+              ],
+              "primaryKey": [
+                "entry-id"
+              ],
+              "foreignKeys": [],
+              "uniqueConstraints": [],
+              "checks": [],
+              "indexes": []
+            }
+          ],
+          "opaqueObjects": []
+        },
+        "inspectedForConnectionId": "opaque-0",
+        "physical": {
+          "encoding": "UTF-8",
+          "objects": [
+            {
+              "type": "table",
+              "name": "corpus_entries",
+              "tbl_name": "corpus_entries",
+              "rootpage": 2,
+              "sql": "CREATE TABLE \"corpus_entries\" (\"entry_id\" INTEGER NOT NULL, \"heading\" TEXT NOT NULL, PRIMARY KEY (\"entry_id\" ASC))"
+            }
+          ],
+          "tables": [
+            {
+              "name": "corpus_entries",
+              "columns": [
+                {
+                  "cid": 0,
+                  "name": "entry_id",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "dflt_value": null,
+                  "pk": 1,
+                  "hidden": 0
+                },
+                {
+                  "cid": 1,
+                  "name": "heading",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "dflt_value": null,
+                  "pk": 0,
+                  "hidden": 0
+                }
+              ],
+              "foreignKeys": [],
+              "indexes": []
+            }
+          ]
+        }
+      }
+    ],
+    "schema": {
+      "id": "opaque-1",
+      "revision": 2,
+      "tables": [
+        {
+          "id": "entries",
+          "physicalName": "corpus_entries",
+          "columns": [
+            {
+              "id": "entry-id",
+              "physicalName": "entry_id",
+              "type": {
+                "kind": "integer"
+              },
+              "nullable": false
+            },
+            {
+              "id": "entry-title",
+              "physicalName": "heading",
+              "type": {
+                "kind": "text"
+              },
+              "nullable": false
+            }
+          ],
+          "primaryKey": [
+            "entry-id"
+          ],
+          "foreignKeys": [],
+          "uniqueConstraints": [],
+          "checks": [],
+          "indexes": []
+        }
+      ],
+      "opaqueObjects": []
+    },
+    "queries": [
+      {
+        "id": "titles",
+        "name": "Titles",
+        "sources": [
+          {
+            "alias": "e",
+            "source": {
+              "kind": "table",
+              "id": "entries"
+            }
+          }
+        ],
+        "joins": [],
+        "projections": [
+          {
+            "id": "title-result",
+            "name": "heading",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false,
+            "expression": {
+              "kind": "field",
+              "alias": "e",
+              "fieldId": "entry-title"
+            }
+          }
+        ],
+        "parameters": [],
+        "groupBy": [],
+        "orderBy": [],
+        "grain": {
+          "strategy": "rows",
+          "keys": []
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "index",
+        "route": "/",
+        "title": "Corpus entries",
+        "document": [
+          {
+            "kind": "form",
+            "formId": "opaque-2"
+          }
+        ],
+        "formIds": [
+          "opaque-2"
+        ]
+      },
+      {
+        "id": "record",
+        "route": "/entry",
+        "title": "Entry",
+        "document": [
+          {
+            "kind": "form",
+            "formId": "opaque-3"
+          }
+        ],
+        "formIds": [
+          "opaque-3"
+        ]
+      },
+      {
+        "id": "access",
+        "route": "/access",
+        "title": "Access",
+        "document": [
+          {
+            "kind": "form",
+            "formId": "opaque-4"
+          }
+        ],
+        "formIds": [
+          "opaque-4"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "id": "opaque-2",
+        "pageId": "index",
+        "kind": "Grid",
+        "sourceRef": {
+          "kind": "table",
+          "id": "entries"
+        },
+        "keyMapping": [
+          {
+            "targetFieldId": "entry-id",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "entry-id"
+            }
+          }
+        ],
+        "controlIds": [
+          "opaque-5",
+          "opaque-6",
+          "opaque-7"
+        ],
+        "actionIds": [
+          "opaque-8",
+          "opaque-9"
+        ],
+        "search": [],
+        "paging": {
+          "pageSize": 20
+        },
+        "sorting": [],
+        "appearance": {
+          "label": "Corpus list"
+        }
+      },
+      {
+        "id": "opaque-3",
+        "pageId": "record",
+        "kind": "Record",
+        "sourceRef": {
+          "kind": "table",
+          "id": "entries"
+        },
+        "keyMapping": [
+          {
+            "targetFieldId": "entry-id",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "entry-id"
+            }
+          }
+        ],
+        "displayFieldIds": [
+          "entry-title"
+        ],
+        "controlIds": [
+          "opaque-10",
+          "opaque-11",
+          "opaque-12",
+          "opaque-13",
+          "opaque-14",
+          "opaque-15"
+        ],
+        "actionIds": [
+          "opaque-16",
+          "opaque-17",
+          "opaque-18",
+          "opaque-19"
+        ],
+        "search": [],
+        "paging": {
+          "pageSize": 20
+        },
+        "sorting": [],
+        "appearance": {
+          "label": "Corpus record"
+        }
+      },
+      {
+        "id": "opaque-4",
+        "pageId": "access",
+        "kind": "Login",
+        "keyMapping": [],
+        "controlIds": [
+          "opaque-20",
+          "opaque-21",
+          "opaque-22",
+          "opaque-23",
+          "opaque-24"
+        ],
+        "actionIds": [
+          "opaque-25",
+          "opaque-26",
+          "opaque-27"
+        ],
+        "search": [],
+        "paging": {
+          "pageSize": 20
+        },
+        "sorting": [],
+        "appearance": {
+          "label": "Access"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "id": "opaque-5",
+        "formId": "opaque-2",
+        "kind": "label",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-id"
+        },
+        "readOnly": true,
+        "appearance": {
+          "label": "entry_id"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-6",
+        "formId": "opaque-2",
+        "kind": "label",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-title"
+        },
+        "readOnly": true,
+        "appearance": {
+          "label": "Headline"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-10",
+        "formId": "opaque-3",
+        "kind": "number",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-id"
+        },
+        "readOnly": false,
+        "appearance": {
+          "label": "entry_id"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-11",
+        "formId": "opaque-3",
+        "kind": "text",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-title"
+        },
+        "readOnly": false,
+        "appearance": {
+          "label": "heading"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-12",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Save"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-16"
+          }
+        ]
+      },
+      {
+        "id": "opaque-13",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Save"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-17"
+          }
+        ]
+      },
+      {
+        "id": "opaque-14",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Delete"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-18"
+          }
+        ]
+      },
+      {
+        "id": "opaque-15",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Cancel"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-19"
+          }
+        ]
+      },
+      {
+        "id": "opaque-7",
+        "formId": "opaque-2",
+        "kind": "link",
+        "readOnly": true,
+        "appearance": {
+          "label": "Edit record"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-8"
+          }
+        ]
+      },
+      {
+        "id": "opaque-20",
+        "formId": "opaque-4",
+        "credentialRole": "username",
+        "kind": "identity",
+        "readOnly": false,
+        "appearance": {
+          "label": "Username"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-21",
+        "formId": "opaque-4",
+        "credentialRole": "password",
+        "kind": "text",
+        "readOnly": false,
+        "appearance": {
+          "label": "Password"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-22",
+        "formId": "opaque-4",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "login"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-25"
+          }
+        ]
+      },
+      {
+        "id": "opaque-23",
+        "formId": "opaque-4",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "logout"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-26"
+          }
+        ]
+      },
+      {
+        "id": "opaque-24",
+        "formId": "opaque-4",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "cancel"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-27"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "opaque-16",
+        "formId": "opaque-3",
+        "operation": "insert",
+        "success": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-17",
+        "formId": "opaque-3",
+        "operation": "update",
+        "success": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-18",
+        "formId": "opaque-3",
+        "operation": "delete",
+        "success": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-19",
+        "formId": "opaque-3",
+        "operation": "cancel",
+        "destination": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-8",
+        "formId": "opaque-2",
+        "operation": "navigate",
+        "destination": {
+          "pageId": "record",
+          "keyMapping": [
+            {
+              "targetFieldId": "entry-id",
+              "expression": {
+                "kind": "field",
+                "alias": "root",
+                "fieldId": "entry-id"
+              }
+            }
+          ],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-9",
+        "formId": "opaque-2",
+        "operation": "navigate",
+        "destination": {
+          "pageId": "record",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-25",
+        "formId": "opaque-4",
+        "operation": "login"
+      },
+      {
+        "id": "opaque-26",
+        "formId": "opaque-4",
+        "operation": "logout"
+      },
+      {
+        "id": "opaque-27",
+        "formId": "opaque-4",
+        "operation": "cancel"
+      }
+    ],
+    "policies": [
+      {
+        "id": "opaque-28",
+        "scope": "global",
+        "ownerId": "corpus",
+        "access": "public"
+      },
+      {
+        "id": "protected",
+        "scope": "page",
+        "ownerId": "record",
+        "access": "authenticated"
+      }
+    ],
+    "globalPolicyId": "opaque-28",
+    "outputConfig": {
+      "approvedRootId": "output",
+      "relativePath": "app"
+    },
+    "extensionContracts": [
+      {
+        "id": "rules",
+        "relativePath": "authored/rules.ts",
+        "version": 1,
+        "kind": "validator"
+      }
+    ],
+    "identity": {
+      "kind": "managed",
+      "storeRef": "corpus-users"
+    }
+  },
+  {
+    "id": "corpus",
+    "formatVersion": 1,
+    "revision": 16,
+    "name": "Transport corpus",
+    "target": "next-typescript-sqlite",
+    "targetVersion": "1",
+    "connectionRefs": [
+      "opaque-0"
+    ],
+    "connections": [
+      {
+        "id": "opaque-0",
+        "name": "corpus.sqlite",
+        "locator": {
+          "approvedRootId": "projects",
+          "relativePath": "corpus.sqlite"
+        },
+        "fingerprint": "<fingerprint>",
+        "capabilities": {
+          "sqliteVersion": "3.53.4",
+          "foreignKeys": true,
+          "returning": true,
+          "strictTables": true,
+          "unsupportedObjects": []
+        },
+        "inspectedSchema": {
+          "id": "opaque-1",
+          "revision": 2,
+          "tables": [
+            {
+              "id": "entries",
+              "physicalName": "corpus_entries",
+              "columns": [
+                {
+                  "id": "entry-id",
+                  "physicalName": "entry_id",
+                  "type": {
+                    "kind": "integer"
+                  },
+                  "nullable": false
+                },
+                {
+                  "id": "entry-title",
+                  "physicalName": "heading",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "nullable": false
+                }
+              ],
+              "primaryKey": [
+                "entry-id"
+              ],
+              "foreignKeys": [],
+              "uniqueConstraints": [],
+              "checks": [],
+              "indexes": []
+            }
+          ],
+          "opaqueObjects": []
+        },
+        "inspectedForConnectionId": "opaque-0",
+        "physical": {
+          "encoding": "UTF-8",
+          "objects": [
+            {
+              "type": "table",
+              "name": "corpus_entries",
+              "tbl_name": "corpus_entries",
+              "rootpage": 2,
+              "sql": "CREATE TABLE \"corpus_entries\" (\"entry_id\" INTEGER NOT NULL, \"heading\" TEXT NOT NULL, PRIMARY KEY (\"entry_id\" ASC))"
+            }
+          ],
+          "tables": [
+            {
+              "name": "corpus_entries",
+              "columns": [
+                {
+                  "cid": 0,
+                  "name": "entry_id",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "dflt_value": null,
+                  "pk": 1,
+                  "hidden": 0
+                },
+                {
+                  "cid": 1,
+                  "name": "heading",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "dflt_value": null,
+                  "pk": 0,
+                  "hidden": 0
+                }
+              ],
+              "foreignKeys": [],
+              "indexes": []
+            }
+          ]
+        }
+      }
+    ],
+    "schema": {
+      "id": "opaque-1",
+      "revision": 2,
+      "tables": [
+        {
+          "id": "entries",
+          "physicalName": "corpus_entries",
+          "columns": [
+            {
+              "id": "entry-id",
+              "physicalName": "entry_id",
+              "type": {
+                "kind": "integer"
+              },
+              "nullable": false
+            },
+            {
+              "id": "entry-title",
+              "physicalName": "heading",
+              "type": {
+                "kind": "text"
+              },
+              "nullable": false
+            }
+          ],
+          "primaryKey": [
+            "entry-id"
+          ],
+          "foreignKeys": [],
+          "uniqueConstraints": [],
+          "checks": [],
+          "indexes": []
+        }
+      ],
+      "opaqueObjects": []
+    },
+    "queries": [
+      {
+        "id": "titles",
+        "name": "Titles",
+        "sources": [
+          {
+            "alias": "e",
+            "source": {
+              "kind": "table",
+              "id": "entries"
+            }
+          }
+        ],
+        "joins": [],
+        "projections": [
+          {
+            "id": "title-result",
+            "name": "heading",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false,
+            "expression": {
+              "kind": "field",
+              "alias": "e",
+              "fieldId": "entry-title"
+            }
+          }
+        ],
+        "parameters": [],
+        "groupBy": [],
+        "orderBy": [],
+        "grain": {
+          "strategy": "rows",
+          "keys": []
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "index",
+        "route": "/",
+        "title": "Corpus entries",
+        "document": [
+          {
+            "kind": "form",
+            "formId": "opaque-2"
+          }
+        ],
+        "formIds": [
+          "opaque-2"
+        ]
+      },
+      {
+        "id": "record",
+        "route": "/entry",
+        "title": "Entry",
+        "document": [
+          {
+            "kind": "form",
+            "formId": "opaque-3"
+          }
+        ],
+        "formIds": [
+          "opaque-3"
+        ]
+      },
+      {
+        "id": "access",
+        "route": "/access",
+        "title": "Access",
+        "document": [
+          {
+            "kind": "form",
+            "formId": "opaque-4"
+          }
+        ],
+        "formIds": [
+          "opaque-4"
+        ]
+      }
+    ],
+    "forms": [
+      {
+        "id": "opaque-2",
+        "pageId": "index",
+        "kind": "Grid",
+        "sourceRef": {
+          "kind": "table",
+          "id": "entries"
+        },
+        "keyMapping": [
+          {
+            "targetFieldId": "entry-id",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "entry-id"
+            }
+          }
+        ],
+        "controlIds": [
+          "opaque-5",
+          "opaque-6",
+          "opaque-7"
+        ],
+        "actionIds": [
+          "opaque-8",
+          "opaque-9"
+        ],
+        "search": [],
+        "paging": {
+          "pageSize": 20
+        },
+        "sorting": [],
+        "appearance": {
+          "label": "Corpus list"
+        }
+      },
+      {
+        "id": "opaque-3",
+        "pageId": "record",
+        "kind": "Record",
+        "sourceRef": {
+          "kind": "table",
+          "id": "entries"
+        },
+        "keyMapping": [
+          {
+            "targetFieldId": "entry-id",
+            "expression": {
+              "kind": "field",
+              "alias": "root",
+              "fieldId": "entry-id"
+            }
+          }
+        ],
+        "displayFieldIds": [
+          "entry-title"
+        ],
+        "controlIds": [
+          "opaque-10",
+          "opaque-11",
+          "opaque-12",
+          "opaque-13",
+          "opaque-14",
+          "opaque-15"
+        ],
+        "actionIds": [
+          "opaque-16",
+          "opaque-17",
+          "opaque-18",
+          "opaque-19"
+        ],
+        "search": [],
+        "paging": {
+          "pageSize": 20
+        },
+        "sorting": [],
+        "appearance": {
+          "label": "Corpus record"
+        }
+      },
+      {
+        "id": "opaque-4",
+        "pageId": "access",
+        "kind": "Login",
+        "keyMapping": [],
+        "controlIds": [
+          "opaque-20",
+          "opaque-21",
+          "opaque-22",
+          "opaque-23",
+          "opaque-24"
+        ],
+        "actionIds": [
+          "opaque-25",
+          "opaque-26",
+          "opaque-27"
+        ],
+        "search": [],
+        "paging": {
+          "pageSize": 20
+        },
+        "sorting": [],
+        "appearance": {
+          "label": "Access"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "id": "opaque-5",
+        "formId": "opaque-2",
+        "kind": "label",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-id"
+        },
+        "readOnly": true,
+        "appearance": {
+          "label": "entry_id"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-6",
+        "formId": "opaque-2",
+        "kind": "label",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-title"
+        },
+        "readOnly": true,
+        "appearance": {
+          "label": "Headline"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-10",
+        "formId": "opaque-3",
+        "kind": "number",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-id"
+        },
+        "readOnly": false,
+        "appearance": {
+          "label": "entry_id"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-11",
+        "formId": "opaque-3",
+        "kind": "text",
+        "binding": {
+          "kind": "stored",
+          "fieldId": "entry-title"
+        },
+        "readOnly": false,
+        "appearance": {
+          "label": "heading"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-12",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Save"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-16"
+          }
+        ]
+      },
+      {
+        "id": "opaque-13",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Save"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-17"
+          }
+        ]
+      },
+      {
+        "id": "opaque-14",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Delete"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-18"
+          }
+        ]
+      },
+      {
+        "id": "opaque-15",
+        "formId": "opaque-3",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "Cancel"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-19"
+          }
+        ]
+      },
+      {
+        "id": "opaque-7",
+        "formId": "opaque-2",
+        "kind": "link",
+        "readOnly": true,
+        "appearance": {
+          "label": "Edit record"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-8"
+          }
+        ]
+      },
+      {
+        "id": "opaque-20",
+        "formId": "opaque-4",
+        "credentialRole": "username",
+        "kind": "identity",
+        "readOnly": false,
+        "appearance": {
+          "label": "Username"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-21",
+        "formId": "opaque-4",
+        "credentialRole": "password",
+        "kind": "text",
+        "readOnly": false,
+        "appearance": {
+          "label": "Password"
+        },
+        "validation": {
+          "required": true
+        },
+        "events": []
+      },
+      {
+        "id": "opaque-22",
+        "formId": "opaque-4",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "login"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-25"
+          }
+        ]
+      },
+      {
+        "id": "opaque-23",
+        "formId": "opaque-4",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "logout"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-26"
+          }
+        ]
+      },
+      {
+        "id": "opaque-24",
+        "formId": "opaque-4",
+        "kind": "button",
+        "readOnly": false,
+        "appearance": {
+          "label": "cancel"
+        },
+        "validation": {
+          "required": false
+        },
+        "events": [
+          {
+            "event": "click",
+            "actionId": "opaque-27"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "opaque-16",
+        "formId": "opaque-3",
+        "operation": "insert",
+        "success": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-17",
+        "formId": "opaque-3",
+        "operation": "update",
+        "success": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-18",
+        "formId": "opaque-3",
+        "operation": "delete",
+        "success": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-19",
+        "formId": "opaque-3",
+        "operation": "cancel",
+        "destination": {
+          "pageId": "index",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-8",
+        "formId": "opaque-2",
+        "operation": "navigate",
+        "destination": {
+          "pageId": "record",
+          "keyMapping": [
+            {
+              "targetFieldId": "entry-id",
+              "expression": {
+                "kind": "field",
+                "alias": "root",
+                "fieldId": "entry-id"
+              }
+            }
+          ],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-9",
+        "formId": "opaque-2",
+        "operation": "navigate",
+        "destination": {
+          "pageId": "record",
+          "keyMapping": [],
+          "filterMapping": []
+        }
+      },
+      {
+        "id": "opaque-25",
+        "formId": "opaque-4",
+        "operation": "login"
+      },
+      {
+        "id": "opaque-26",
+        "formId": "opaque-4",
+        "operation": "logout"
+      },
+      {
+        "id": "opaque-27",
+        "formId": "opaque-4",
+        "operation": "cancel"
+      }
+    ],
+    "policies": [
+      {
+        "id": "opaque-28",
+        "scope": "global",
+        "ownerId": "corpus",
+        "access": "public"
+      },
+      {
+        "id": "protected",
+        "scope": "page",
+        "ownerId": "record",
+        "access": "authenticated"
+      }
+    ],
+    "globalPolicyId": "opaque-28",
+    "outputConfig": {
+      "approvedRootId": "output",
+      "relativePath": "app"
+    },
+    "extensionContracts": [
+      {
+        "id": "rules",
+        "relativePath": "authored/rules.ts",
+        "version": 1,
+        "kind": "validator"
+      }
+    ],
+    "identity": {
+      "kind": "managed",
+      "storeRef": "corpus-users"
+    }
+  }
+]
