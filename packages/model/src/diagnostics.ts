@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { idSchema, revisionSchema } from './schemas.js';
-export const diagnosticCodeSchema = z.enum(['INVALID_INPUT', 'UNSUPPORTED_FORMAT', 'UNSUPPORTED_SCHEMA_OBJECT', 'BROKEN_REFERENCE', 'TYPE_MISMATCH', 'INVALID_QUERY_GRAIN', 'UNSAFE_EXPRESSION', 'REVISION_CONFLICT', 'DATABASE_CHANGED', 'PLAN_EXPIRED', 'PLAN_HASH_MISMATCH', 'IMPACT_NOT_ACKNOWLEDGED', 'OUTPUT_CONFLICT', 'PATH_OUTSIDE_ROOT', 'AUTH_REQUIRED', 'ACCESS_DENIED', 'VALIDATION_FAILED', 'RELATED_RECORDS_EXIST', 'PROJECT_BUSY', 'IDEMPOTENCY_CONFLICT', 'RECOVERY_REQUIRED']);
+export const diagnosticCodeSchema = z.enum(['INVALID_INPUT', 'NOT_FOUND', 'UNSUPPORTED_FORMAT', 'UNSUPPORTED_SCHEMA_OBJECT', 'BROKEN_REFERENCE', 'TYPE_MISMATCH', 'INVALID_QUERY_GRAIN', 'UNSAFE_EXPRESSION', 'REVISION_CONFLICT', 'DATABASE_CHANGED', 'PLAN_EXPIRED', 'PLAN_HASH_MISMATCH', 'IMPACT_NOT_ACKNOWLEDGED', 'OUTPUT_CONFLICT', 'PATH_OUTSIDE_ROOT', 'AUTH_REQUIRED', 'ACCESS_DENIED', 'VALIDATION_FAILED', 'RELATED_RECORDS_EXIST', 'PROJECT_BUSY', 'IDEMPOTENCY_CONFLICT', 'RECOVERY_REQUIRED']);
 export const diagnosticSchema = z.strictObject({ code: diagnosticCodeSchema, severity: z.enum(['info', 'warning', 'error']), message: z.string().min(1), objectId: idSchema.optional(), path: z.string().optional(), field: z.string().optional(), retryable: z.boolean().optional(), recoveryAction: z.string().optional() });
 export type Diagnostic = z.infer<typeof diagnosticSchema>;
 export type DiagnosticCode = Diagnostic['code'];

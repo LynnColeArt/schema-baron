@@ -25,20 +25,36 @@ function runtime() {
   if (process.versions.node !== expected) fail(`Use Node ${expected}; found ${process.versions.node}`);
 }
 function workspaceCheck(kind) {
-  for (const group of ['apps', 'packages']) {
-    for (const name of readdirSync(join(root, group))) {
-      const directory = join(root, group, name);
-      const manifest = json(join(directory, 'package.json'));
-      const source = files(directory).filter(path => /\.(ts|tsx)$/.test(path) && !path.endsWith('next.config.ts'));
-      if (!source.length) { console.log(`NOT IMPLEMENTED: ${manifest.name} (${kind})`); continue; }
-      if (kind === 'typecheck') run(process.execPath, [tool('typescript/bin/tsc'), '--project', join(directory, 'tsconfig.json')]);
-      else {
-        if (!manifest.scripts?.build) fail(`${manifest.name} has source but no build script`);
-        run('npm', ['run', 'build', '--workspace', manifest.name]);
-      }
+  const workspaces = new Map();
+  for (const group of ['apps', 'packages']) for (const name of readdirSync(join(root, group))) {
+    const directory = join(root, group, name);
+    const manifest = json(join(directory, 'package.json'));
+    workspaces.set(manifest.name, { directory, manifest });
+  }
+  const visiting = new Set(), visited = new Set(), ordered = [];
+  function visit(name) {
+    if (visited.has(name)) return;
+    if (visiting.has(name)) fail(`Workspace dependency cycle: ${name}`);
+    const workspace = workspaces.get(name);
+    if (!workspace) fail(`Unknown local workspace dependency: ${name}`);
+    visiting.add(name);
+    for (const dependency of Object.keys({ ...workspace.manifest.dependencies, ...workspace.manifest.devDependencies })) {
+      if (dependency.startsWith('@schema-baron/')) visit(dependency);
+    }
+    visiting.delete(name); visited.add(name); ordered.push(workspace);
+  }
+  for (const name of workspaces.keys()) visit(name);
+  for (const { directory, manifest } of ordered) {
+    const source = files(directory).filter(path => /\.(ts|tsx)$/.test(path) && !path.endsWith('next.config.ts') && !path.endsWith('next-env.d.ts'));
+    if (!source.length) { console.log(`NOT IMPLEMENTED: ${manifest.name} (${kind})`); continue; }
+    if (kind === 'typecheck') run(process.execPath, [tool('typescript/bin/tsc'), '--project', join(directory, 'tsconfig.json')]);
+    else {
+      if (!manifest.scripts?.build) fail(`${manifest.name} has source but no build script`);
+      run('npm', ['run', 'build', '--workspace', manifest.name]);
     }
   }
 }
+
 function moduleCheck(path) {
   path = resolve(path ?? fail('module requires a directory'));
   const sources = files(path).filter(file => file.endsWith('.ts'));
