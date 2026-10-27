@@ -782,6 +782,9 @@
       "last_event_id": "01M5YXSYRGW7SA2F6AM1PTT7ZY",
       "last_transition_at": "2026-10-27T14:56:36.624996+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: UI-authored Publication composite-key acceptance, all 31 real MCP/Studio HTTP operations, original Equipment isolation and draft recovery, portable output; 464 tests and strict builds passed. Sources 4f0fe29, 7da1819, 0a9f770."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
