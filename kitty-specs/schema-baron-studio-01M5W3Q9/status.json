@@ -677,7 +677,8 @@
       "last_transition_at": "2026-10-27T11:08:01.016274+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for review: 99822a0; final two-worker full verify 386 tests/54 files, 35 focused checks, real Code/MCP/two-cycle SQLite preservation and independent production output; canonical journal recovery and monotonic output revision. Actual WP21 process-manager stop integration remains explicitly pending."
+        "Ready for review: 99822a0; final two-worker full verify 386 tests/54 files, 35 focused checks, real Code/MCP/two-cycle SQLite preservation and independent production output; canonical journal recovery and monotonic output revision. Actual WP21 process-manager stop integration remains explicitly pending.",
+        "Review cycle 1 corrected in 0cf327a: unsupported Action hook bindings diagnose before emission; Properties restricts new bindings and preserves explicit removal. 70 focused tests, workspace typecheck, production generator build, independently installed/typechecked emitted Record hook execution/rollback and Cancel proof, diff lint passed. Prior full/browser evidence remains historical; separate bare-Record TS2339 gap retained for root WP21 follow-up; actual WP21 manager stopping remains pending."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
