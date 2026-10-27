@@ -25,5 +25,5 @@ export async function startOwner(options: OwnerOptions, port = 0): Promise<Runni
  const address = server.address(); if (!address || typeof address === 'string') throw new Error('Missing owner address.');
  url = `http://127.0.0.1:${address.port}`; service.setOrigin(url);
  let closing: Promise<void> | undefined;
- return { service, url, close: () => closing ??= new Promise<void>((resolve, reject) => { server.close(error => { service.close(); error ? reject(error) : resolve(); }); server.closeIdleConnections(); }) };
+ return { service, url, close: () => closing ??= new Promise<void>((resolve, reject) => { server.close(error => { void service.close().then(() => error ? reject(error) : resolve(), reject); }); server.closeIdleConnections(); }) };
 }
