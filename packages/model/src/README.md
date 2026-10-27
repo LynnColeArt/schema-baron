@@ -28,6 +28,15 @@ fanouts, cyclic query references, nested aggregates and aggregate WHERE clauses
 are rejected. There is no executable SQL or JavaScript expression node. Imported
 opaque SQLite objects retain their SQL as read-only schema metadata.
 
+Forms may optionally declare `queryParameters: [{ parameterId, value }]` for a saved
+query source. These are per-form literal presets available before execution; values
+use the parameter's declared logical type/nullability. Absent mappings leave the
+query default or required-input check in force; explicit null is distinct from
+absence. IDs survive query/parameter renames. Duplicates, removed IDs, incompatible
+values and presets on a table source are rejected. This field does not implement
+dynamic request/control mappings or allow circular query-result expressions.
+Form key mappings and appearance remain separate from presets and editor layout.
+
 `commandSchema` discriminates every registered operation and validates its input.
 `operationInputSchemas` and `operationResultSchemas` let adapters/registries bind
 strict matching boundaries. `EntityBatchOperation` preserves entity-specific

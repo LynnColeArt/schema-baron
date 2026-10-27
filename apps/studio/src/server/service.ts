@@ -44,8 +44,10 @@ export class OwnerService {
    if (migration) return { result: migration };
    const value = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!value) throw new StorageError('NOT_FOUND', 'Unknown job.');
    const job = jobSchema.parse(value);
-   // All handlers run synchronously in the same writer. No commit can interleave here.
+   // Generic controllers run before the first await, preserving their synchronous effect boundary.
    if (job.committed || !['pending', 'running'].includes(job.status)) return { result: job };
+   const cancellation = this.core.cancelQueryPreview(options.ownerId, command.projectId, job.id);
+   if (cancellation) { const preview = await cancellation; return { result: preview, job: preview }; }
    const controller = this.cancelers.get(JSON.stringify([command.projectId, job.id]));
    const observed = controller ? jobSchema.parse(controller(structuredClone(job))) : job.status === 'pending' ? { ...job, status: 'canceled' as const } : job;
    if (observed.id !== job.id) throw new StorageError('VALIDATION_FAILED', 'Cancellation must preserve job identity.');

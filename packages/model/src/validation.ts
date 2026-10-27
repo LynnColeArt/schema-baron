@@ -196,6 +196,17 @@ export function validateProject(input: unknown): ValidationResult {
     unique(form.keyMapping.map(k => k.targetFieldId), form.id, 'keyMapping');
     for (const id of form.displayFieldIds ?? []) ref(fields, id, form.id, 'displayFieldIds');
     unique(form.displayFieldIds ?? [], form.id, 'displayFieldIds');
+    // Literal inputs are available before executing the source; result-row expressions would be circular.
+    if (form.queryParameters?.length) {
+      const query = form.sourceRef?.kind === 'query' ? p.queries.find(q => q.id === form.sourceRef!.id) : undefined;
+      if (!query) error('BROKEN_REFERENCE', form.id, 'queryParameters', 'Parameter inputs require a saved query source.');
+      unique(form.queryParameters.map(mapping => mapping.parameterId), form.id, 'queryParameters');
+      for (const mapping of form.queryParameters) {
+        const parameter = ref(query?.parameters ?? [], mapping.parameterId, form.id, 'queryParameters.parameterId');
+        if (parameter && !isLiteralValue(mapping.value, parameter.type, parameter.nullable)) error('TYPE_MISMATCH', form.id, 'queryParameters.value', 'Query parameter input does not match its declared type or nullability.');
+      }
+    }
+
     if (form.kind === 'Record' && form.sourceRef?.kind === 'table') {
       const table = p.schema.tables.find(t => t.id === form.sourceRef!.id);
       if (table && (table.primaryKey.length === 0 || canonicalJson(form.keyMapping.map(k => k.targetFieldId)) !== canonicalJson(table.primaryKey))) error('VALIDATION_FAILED', form.id, 'keyMapping', 'Record key mapping must match the complete ordered primary key.');
