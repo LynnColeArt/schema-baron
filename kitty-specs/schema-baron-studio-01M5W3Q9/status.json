@@ -556,6 +556,9 @@
       "last_event_id": "01M5YC3NV6817F6Z3DSSDEY0C0",
       "last_transition_at": "2026-10-27T09:47:20.806469+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: 14375ba; canonical MCP/Studio-authored reports and independent production CRUD totals/minimum/filter returns/reopen passed; 338 tests/45 files, strict builds, lint/native/dependency checks passed. Final auth13/14 integration and two WP20 regeneration cycles explicitly pending."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
