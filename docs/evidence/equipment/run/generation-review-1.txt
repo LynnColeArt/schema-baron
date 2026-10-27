@@ -1,0 +1,108 @@
+Generate application
+
+Create an independent Next.js application against the connected database. Generation writes source files; data migration is separate.
+
+Output location
+
+Choose an approved source output. Regeneration preserves declared authored modules; conflicts require resolution and a fresh preview. The old tree remains in a recoverable backup. Reinstall dependencies and rebuild runtime artifacts after promotion.
+
+88 files to create/change/delete or preserve
+
+Remove .next from active source. The complete old tree remains in a recoverable backup; runtime artifacts must be explicitly rebuilt.Acknowledge removal from active output
+
+Remove node_modules from active source. The complete old tree remains in a recoverable backup; runtime artifacts must be explicitly rebuilt.Acknowledge removal from active output
+
+Promote a complete reviewed source tree to output:app. Database, identity, secrets and migration history remain external.
+
+preserve .gitignore
+delete .next
+preserve .npmrc
+preserve .nvmrc
+preserve app/asset/page.tsx
+preserve app/borrower/page.tsx
+preserve app/borrowers/page.tsx
+preserve app/layout.tsx
+preserve app/line/page.tsx
+preserve app/lines/page.tsx
+preserve app/loan/page.tsx
+preserve app/loans/page.tsx
+preserve app/login/page.tsx
+replace app/page.tsx
+preserve app/report/page.tsx
+preserve app/runtime/auth/csrf/route.ts
+preserve app/runtime/auth/route.ts
+replace app/runtime/navigation-0/route.ts
+replace app/runtime/navigation-1/route.ts
+replace app/runtime/navigation-2/route.ts
+replace app/runtime/navigation-3/route.ts
+replace app/runtime/navigation-8/route.ts
+preserve app/runtime/record-4/route.ts
+preserve app/runtime/record-5/route.ts
+preserve app/runtime/record-6/route.ts
+preserve app/runtime/record-7/route.ts
+preserve app/search/page.tsx
+preserve app/styles.css
+preserve AUTH.md
+preserve authored/equipment-action.ts
+preserve authored/equipment-validator.ts
+preserve components/csrf.tsx
+replace components/grid-0.tsx
+replace components/grid-1.tsx
+replace components/grid-2.tsx
+replace components/grid-3.tsx
+replace components/grid-8.tsx
+replace components/grid-9.tsx
+preserve components/identity-header.tsx
+preserve components/login.tsx
+replace components/record-4.tsx
+preserve components/record-5.tsx
+preserve components/record-6.tsx
+preserve components/record-7.tsx
+preserve components/saved-notice.tsx
+preserve components/sign-out.tsx
+preserve next-env.d.ts
+preserve next.config.ts
+delete node_modules
+preserve package-lock.json
+preserve package.json
+preserve README.md
+replace server/auth-config.ts
+preserve server/auth.ts
+preserve server/connection.ts
+preserve server/extension-contracts.ts
+preserve server/extensions.ts
+preserve server/format.ts
+replace server/grid-0.ts
+replace server/grid-1.ts
+replace server/grid-2.ts
+replace server/grid-3.ts
+replace server/grid-8.ts
+preserve server/identity-store.ts
+preserve server/navigation.ts
+preserve server/query-decimal.js
+preserve server/query-execute.js
+preserve server/query-runtime.ts
+preserve server/query-scalar.js
+preserve server/query-support.js
+preserve server/query-worker.mjs
+replace server/record-4.ts
+replace server/record-5.ts
+replace server/record-6.ts
+replace server/record-7.ts
+preserve server/record-action-4.ts
+preserve server/record-action-5.ts
+preserve server/record-action-6.ts
+preserve server/record-action-7.ts
+preserve server/record-repository.ts
+preserve server/record-service.ts
+preserve server/record-validation.ts
+replace server/report-9.ts
+preserve server/repository.ts
+preserve tests/identity.test.mjs
+preserve tests/output.test.mjs
+preserve tsconfig.json
+replace .schema-baron-generation.json
+Technical details
+Cancel
+Preview files
+Create application

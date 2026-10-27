@@ -64,6 +64,14 @@ function setup(reverse: boolean, operator: '*' | '/' = '*') {
       keys: []
     }
   };
+  q.orderBy = [{
+    expression: {
+      kind: 'field',
+      alias: 'r',
+      fieldId: 'lid' as never
+    },
+    direction: 'asc'
+  }];
   p.queries = [q];
   return {
     p,
@@ -108,6 +116,7 @@ test('compiled SQLite executes both orders with exact INTEGER boundaries and nul
   put.run(2, '0.01', 9007199254740993n);
   put.run(3, '0.01', 9223372036854775807n);
   put.run(4, null, 2);
+  put.run(5, '0.01', -9223372036854775808n);
   try {
     for (const reverse of [false, true]) {
       const {
@@ -124,6 +133,8 @@ test('compiled SQLite executes both orders with exact INTEGER boundaries and nul
         result: '92233720368547758.07'
       }, {
         result: null
+      }, {
+        result: '-92233720368547758.08'
       }]);
     }
     const {

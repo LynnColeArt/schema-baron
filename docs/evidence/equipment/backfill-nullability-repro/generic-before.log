@@ -31,4 +31,3 @@ AssertionError: expected { ok: false, revision: 3, …(2) } to match object { ok
       Tests  1 failed (1)
    Start at  08:15:17
    Duration  780ms (tests 48%, transform 34%, import 17%)
-

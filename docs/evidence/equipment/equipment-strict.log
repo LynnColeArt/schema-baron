@@ -1,0 +1,3 @@
+Command: node scripts/workspace/verify.mjs module tests/e2e/equipment
+Exit status: 0
+No console output.
