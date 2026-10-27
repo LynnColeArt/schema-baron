@@ -609,24 +609,26 @@
       "last_transition_at": "2026-10-27T11:02:37.335324+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for review: canonical behavior/typed parameter and endpoint projections; contextual Action Properties, source diagnostics and separate layout state; 357 tests, 31 focused tests, 2 browser standalone/pointer/100-node/native-200 cases; evidence under tests/e2e/flow-map/evidence. Source commits 30c2bb0 and bf1750c."
+        "Ready for review: canonical behavior/typed parameter and endpoint projections; contextual Action Properties, source diagnostics and separate layout state; 357 tests, 31 focused tests, 2 browser standalone/pointer/100-node/native-200 cases; evidence under tests/e2e/flow-map/evidence. Source commits 30c2bb0 and bf1750c.",
+        "Independent review requests one P2 repair: annotate invalid source/type mappings on their normal semantic edges (or suppress only invalid mapping edges). Current31 focused tests, production build, browser2/2 pass. Coordinated shared integration: workspace/forms reuse ActionProperties; generator metadata+emitter exports; core registry/model result; corrected async transport fixtures. See review artifact for eight checks and heldouts."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP18-application-behavior-map-and-endpoint-projection/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP18-application-behavior-map-and-endpoint-projection/review-cycle-1.md",
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T086": "done",
-        "T087": "done",
-        "T088": "done",
-        "T089": "done",
-        "T090": "done"
+        "T086": "planned",
+        "T087": "planned",
+        "T088": "planned",
+        "T089": "planned",
+        "T090": "planned"
       }
     },
     "WP19": {
