@@ -3,6 +3,9 @@ project:
   slug: schema-baron
   node_id: 752e6076aa27
   build_id: f81f4c17-d3c7-5e4e-a60a-8f5586264667
+  path_conventions:
+    workspace: apps/
+    tests: tests/
 mission_type_activations:
 - software-dev
 - documentation
