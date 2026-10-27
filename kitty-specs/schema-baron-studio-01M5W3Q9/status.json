@@ -236,7 +236,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: 570a5b8; full verify 177 tests, strict test-source checks, actual HTTP/MCP parity, SQLite preservation/provenance/fingerprint/constraint safety. Evidence fixtures/schema-plans/evidence.md. Shared integration corrections authorized and coordinated; no UI/apply executor claim.",
-        "Cycle 1 P1 repaired in 8aaba8a: preserve observed INT/inline INTEGER PK DESC declaration, rowids, NULL behavior and PK metadata; exact original probe desired-green unchanged. Full verify 186 tests plus strict all schema-plan test-source checks/lint/audit0. Evidence fixtures/schema-plans/evidence.md. Ready for independent cycle 2 review."
+        "Cycle 1 P1 repaired in 8aaba8a: preserve observed INT/inline INTEGER PK DESC declaration, rowids, NULL behavior and PK metadata; exact original probe desired-green unchanged. Full verify 186 tests plus strict all schema-plan test-source checks/lint/audit0. Evidence fixtures/schema-plans/evidence.md. Ready for independent cycle 2 review.",
+        "Cycle 2 P2 repaired in 80e4341: retain complete inspected PK part direction/identity and verified collation, preserve prior rowid/NULL fixes; block unrepresented unsupported UNIQUE. Exact unchanged original and variations probes pass supported preservation cases. Full verify 197 tests, strict all planning-test source checks, lint/audit0. Evidence fixtures/schema-plans/evidence.md. Ready for independent cycle 3 review."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
