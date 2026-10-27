@@ -16,6 +16,12 @@ export function compileProject(input:Project):GenerationIR {
  if(!project.identity&&project.policies.some(p=>p.access==='authenticated'))fail(project.id,'Configure identity before generating authenticated policies.');
  if(project.identity&&project.policies.some(p=>p.access==='authenticated')&&!project.forms.some(f=>f.kind==='Login'&&effectiveAccess(project,f.pageId).access==='public'&&f.actionIds.some(id=>{const a=project.actions.find(a=>a.id===id);return a?.operation==='login'&&effectiveAccess(project,f.pageId,id).access==='public';})))fail(project.id,'Provide a public Login form and login action before generating authenticated policies.');
  for(const extension of project.extensionContracts) if(extension.version!==1||!['validator','action','service','event'].includes(extension.kind)||!/^authored\/[A-Za-z0-9_-]+\.ts$/.test(extension.relativePath))fail(extension.id,'Declare a supported validator/action/service/event v1 hook in authored/name.ts.');
+ for(const action of project.actions) if(action.extensionHookRef) {
+  const form=project.forms.find(form=>form.id===action.formId)!;
+  const supported=form.kind==='Record'&&['insert','update','delete','extension'].includes(action.operation);
+  const message=!supported?`Authored action hooks run only on Record insert, update, delete or extension actions. ${form.kind} ${action.operation} does not execute hooks.`:project.extensionContracts.find(contract=>contract.id===action.extensionHookRef)?.kind!=='action'?'An action binding requires an authored action v1 contract.':undefined;
+  if(message)diagnostics.push({code:'UNSUPPORTED_SCHEMA_OBJECT',severity:'error',objectId:action.id,field:'extensionHookRef',message,recoveryAction:'Remove this source-hook binding or bind an action v1 module to a Record insert/update/delete/extension action. Cancel never invokes hooks.'});
+ }
 
  const sources:SourceIR[]=project.schema.tables.map(t=>({id:t.id,kind:'table',name:t.physicalName,fields:t.columns.map(c=>({id:c.id,name:c.physicalName,type:c.type,nullable:c.nullable,...(c.generated?{generated:true}:{}),...(c.default?{hasDefault:true}:{})})),keys:t.primaryKey}));
  sources.push(...project.queries.map(q=>({id:q.id,kind:'query' as const,name:q.name,fields:q.projections.map(f=>({id:f.id,name:f.id,type:f.type,nullable:f.nullable})),keys:q.grain.keys})));
@@ -52,7 +58,6 @@ export function compileProject(input:Project):GenerationIR {
     if(form.kind!=='Record'&&['insert','update','delete','extension'].includes(action.operation)) fail(action.id,'Writes require a Record form.');
     const result:ActionIR={id:action.id,operation:action.operation,access:effectiveAccess(project,page.id,action.id).access,...(action.extensionHookRef?{extensionHookRef:action.extensionHookRef}:{})};
     for(const slot of ['destination','success','cancel'] as const) if(action[slot]) try {result[slot]=compileDestination(project,sources,action[slot]!,action.operation);}catch(error){fail(action.id,error instanceof Error?error.message:'Invalid destination.');}
-    if(action.extensionHookRef&&project.extensionContracts.find(c=>c.id===action.extensionHookRef)?.kind!=='action')fail(action.id,'An action binding requires an authored action v1 contract.');
     if(['insert','update','delete','extension'].includes(action.operation)&&!action.success&&!action.destination) fail(action.id,'Declare a success destination for this write.');
     return result;
    });
