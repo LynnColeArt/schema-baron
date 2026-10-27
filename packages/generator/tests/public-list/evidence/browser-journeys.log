@@ -1,0 +1,26 @@
+
+Running 11 tests using 5 workers
+
+(node:2079973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2079965) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2079982) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2079966) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2079957) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 tests/e2e/workspace/workflow.spec.ts:136:1 › real blank lifecycle, atomic Cancel, keyboard authoring, contextual controls, undo/redo, dirty close and reopen (6.0s)
+  ✓   1 tests/e2e/migrations/workflow.spec.ts:11:1 › Studio history reviews later-data restore, Cancel preserves it, explicit apply restores and retains both backups (8.1s)
+  ✓   3 tests/e2e/connections/workflow.spec.ts:23:1 › UI authors blank project, inspects and binds an existing WAL file, reconnects relocation, then creates a new empty DB while preserving invalid page drafts (8.0s)
+  ✓   6 tests/e2e/workspace/workflow.spec.ts:290:1 › two drafts survive project switches and MCP edits; conflict resolution, invalid atomic save, focus, resizing and reduced viewport (6.1s)
+  ✓   4 tests/e2e/schema-editor/workflow.spec.ts:186:1 › blank SQLite is authored visibly with constraints and ordered composite FK, preview/cancel is read-only; drafts and layout survive reload and MCP changes (12.3s)
+  ✓   7 tests/e2e/workspace/workflow.spec.ts:430:1 › incomplete and corrected drafts with invalid history survive switch, reload and undo without weakening Save (2.2s)
+  ✓   9 tests/e2e/workspace/workflow.spec.ts:523:1 › damaged browser recovery preserves unrelated UI-authored drafts and reports safe partial recovery (1.0s)
+  ✓   8 tests/e2e/schema-editor/workflow.spec.ts:621:1 › 50 tables and 500 columns remain searchable; 20 edits retain selection, invalid drafts and keyboard navigation (11.1s)
+  ✓  10 tests/e2e/schema-editor/workflow.spec.ts:713:1 › destructive preview discloses exact impacts and cancellation leaves existing rows intact (2.3s)
+  ✓  11 tests/e2e/schema-editor/workflow.spec.ts:804:1 › imported opaque view is clearly read-only and blocks unsafe migration without losing the draft (1.6s)
+  ✓   2 tests/e2e/first-output/workflow.spec.ts:204:1 › two visibly authored applications build and read real SQLite after Studio stops (54.2s)
+
+  11 passed (57.8s)
