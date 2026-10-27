@@ -161,11 +161,13 @@ export function constructForm(original: Project, input: FormConstruction) {
       put("control", control);
     }
     if (kind === "Login")
-      for (const label of ["Username", "Password"]) {
+      for (const credentialRole of ["username", "password"] as const) {
+        const label=credentialRole === "username" ? "Username" : "Password";
         const control: Control = {
           id: createId(),
           formId: form.id,
-          kind: label === "Username" ? "identity" : "text",
+          kind: credentialRole === "username" ? "identity" : "text",
+          credentialRole,
           readOnly: false,
           appearance: { label },
           validation: { required: true },

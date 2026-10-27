@@ -6,7 +6,7 @@ function recordProject() {
 }
 test('a protected action fails closed before emitting any application',()=>{
  const project=recordProject();project.policies.push(parseProject({...project,policies:[...project.policies,{id:'protected-action',scope:'action',ownerId:'delete',access:'authenticated'}]}).policies.at(-1)!);project.actions[0]!.policyId=project.policies.at(-1)!.id;
- expect(()=>compileProject(project)).toThrow('Authenticated action runtime is unavailable');
+ expect(()=>compileProject(project)).toThrow('Configure identity before generating authenticated policies');
 });
 test('delete needs explicit source display fields and a declared successful destination',()=>{
  const project=recordProject();project.forms[0]!.displayFieldIds=[];

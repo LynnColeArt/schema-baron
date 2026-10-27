@@ -1,3 +1,4 @@
+import { authFiles } from '../auth/index.js';
 import { searchFiles } from '../search/index.js';
 import { createHash } from 'node:crypto';
 import { recordFiles } from '../record/index.js';
@@ -11,7 +12,7 @@ export const outputPackage={name:'generated-application',version:'1.0.0',private
 const pretty=(value:unknown)=>JSON.stringify(value,null,2)+'\n';
 export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFile[] {
  const flashCookie='record_saved_'+createHash('sha256').update(ir.projectId).digest('hex').slice(0,20);
- const files:GeneratedFile[]=[];const add=(path:string,content:string)=>files.push({path,content});
+ const files:GeneratedFile[]=authFiles(ir);const add=(path:string,content:string)=>files.push({path,content});
  add('package.json',pretty(outputPackage));add('package-lock.json',readFileSync(new URL('./package-lock.template',import.meta.url),'utf8'));
  add('.npmrc','registry=https://registry.npmjs.org/\nignore-scripts=true\nsave-exact=true\nengine-strict=true\n');add('.nvmrc','24.22.1\n');add('.gitignore','node_modules/\n.next/\n.env*\n');
  add('tsconfig.json',pretty({compilerOptions:{target:'ES2023',lib:['dom','dom.iterable','es2023'],strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,noEmit:true,allowImportingTsExtensions:true,skipLibCheck:true,esModuleInterop:true,module:'esnext',moduleResolution:'bundler',resolveJsonModule:true,isolatedModules:true,jsx:'react-jsx',plugins:[{name:'next'}]},include:['next-env.d.ts','**/*.ts','**/*.tsx','.next/types/**/*.ts'],exclude:['node_modules']}));
@@ -39,6 +40,7 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
    if (node.kind === 'text') return `${indent}{${JSON.stringify(node.text)}}`;
    if (node.kind === 'form') {
     placed.add(node.formId);
+    const login=route.logins.find(l=>l.id===node.formId);if(login)return `${indent}<Login username={${JSON.stringify(login.username)}} password={${JSON.stringify(login.password)}} actions={${JSON.stringify(login.actions.map(a=>({id:a.id,operation:a.operation})))}} returnTo={typeof parameters.returnTo==='string'?parameters.returnTo:''} />`;
     return recordComponents.has(node.formId)?`${indent}{renderRecord${recordComponents.get(node.formId)}()}`:`${indent}<Grid${components.get(node.formId)} parameters={parameters} />`;
    }
    return `${indent}<${node.tag}>\n${node.children.map(child => render(child, indent + '  ')).join('\n')}\n${indent}</${node.tag}>`;
@@ -47,13 +49,14 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
   const unplaced = route.grids.filter(g => !placed.has(g.id)).map(g => `      <Grid${components.get(g.id)} parameters={parameters} />`).join('\n');
   const depth = route.path === '/' ? 0 : route.path.slice(1).split('/').length;
   const relative = '../'.repeat(depth + 1);
-  add(`app${route.path === '/' ? '' : route.path}/page.tsx`, [...components.values()].map(n => `import { Grid${n} } from '${relative}components/grid-${n}';`).join('\n') + [...recordComponents.values()].map(n=>`\nimport { Record${n} } from '${relative}components/record-${n}';\nimport { loadRecord as loadRecord${n}, config as config${n} } from '${relative}server/record-${n}';`).join('')+`\nimport { cookies } from 'next/headers';\nimport { SavedNotice } from '${relative}components/saved-notice';\nimport { context } from '${relative}server/navigation';` + `
+  add(`app${route.path === '/' ? '' : route.path}/page.tsx`, [...components.values()].map(n => `import { Grid${n} } from '${relative}components/grid-${n}';`).join('\n') + [...recordComponents.values()].map(n=>`\nimport { Record${n} } from '${relative}components/record-${n}';\nimport { loadRecord as loadRecord${n}, config as config${n} } from '${relative}server/record-${n}';`).join('')+`\nimport { guardPage } from '${relative}server/auth';\nimport { Login } from '${relative}components/login';\nimport { cookies } from 'next/headers';\nimport { SavedNotice } from '${relative}components/saved-notice';\nimport { context } from '${relative}server/navigation';` + `
 
 export const dynamic = 'force-dynamic';
 type Parameters = Record<string, string | string[] | undefined>;
 
 export default async function Page({ searchParams }: { searchParams: Promise<Parameters> }) {
   const parameters = await searchParams;
+  await guardPage(${JSON.stringify(route.id)},parameters);
 ${[...recordComponents.values()].map(n=>`  const renderRecord${n}=()=>{try {const data=loadRecord${n}(parameters);const params:Record<string,string>={...context(parameters,config${n}.context)};for(const key of [...config${n}.keyParameters,config${n}.id+':mode']) {const text=parameters[key];if(typeof text==='string')params[key]=text;}return <Record${n} parameters={params} initial={data.values} isNew={data.isNew} name={data.name} impacts={data.impacts} options={data.options} />;}catch{return <p role="alert">The record could not be loaded. Check its complete key and the configured database.</p>;}};`).join('\n')}
   const saved=(await cookies()).get(${JSON.stringify(flashCookie)})?.value==='1';
   return (

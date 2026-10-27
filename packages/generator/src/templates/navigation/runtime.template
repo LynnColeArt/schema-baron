@@ -3,7 +3,7 @@ import { one, value, entered, type Field, type Parameters } from './record-valid
 export type Expression = { readonly kind:'field'; readonly fieldId:string } | { readonly kind:'parameter'; readonly parameterId:string } | { readonly kind:'literal'; readonly value:string|number|boolean|null };
 export type Mapping = { readonly parameter:string; readonly field:Field; readonly expression:Expression };
 export type Destination = { readonly path:string; readonly mappings:readonly Mapping[]; readonly newForms:readonly string[] };
-export type ContextField = { readonly parameter:string; readonly field?:Field; readonly kind?:'page'|'sort'|'direction'|'search'|'key'; readonly allowed?:readonly string[] };
+export type ContextField = { readonly parameter:string; readonly field?:Field; readonly kind?:'page'|'sort'|'direction'|'search'|'key'|'mode'; readonly allowed?:readonly string[] };
 export function context(parameters:Parameters, allowed:readonly ContextField[]):Record<string,string> {
  const result:Record<string,string>={};
  for(const item of allowed) {
