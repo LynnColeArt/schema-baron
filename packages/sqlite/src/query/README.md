@@ -15,8 +15,17 @@ bound row-limit-plus-one used to determine `truncated`.
 `grouped` grain requires grouped nonaggregate expressions. Multiple expanding child
 relations must first become grouped saved query sources and join on the entire declared
 grain tuple. Cardinality declarations do not establish uniqueness: the compiler proves
-complete equality-key coverage and the worker checks the key claims against actual
-SQLite primary/unique indexes inside the same read snapshot. Outer-join nullable fields
+complete equality-key coverage and the worker checks both the physical
+SQLite indexes and actual join multiplicity inside the same read snapshot. Decimal
+normalization, native affinity, and collation can equate physically distinct key values;
+a physical index alone is not a semantic uniqueness proof. Each inferred nonexpanding
+join uses its exact compiled source subqueries, bindings, operand order and ON condition
+to look for a second match before result execution. These full-relation checks are
+independent of the 200-row sample and share its worker scan budget/deadline/cancellation.
+Checks conservatively cover the join relation before the containing query's WHERE;
+source-subquery filters and parameters are preserved. A collision returns
+`INVALID_QUERY_GRAIN`; grouping a child query by the logical key can establish safe
+preaggregation without discarding equal monetary amounts. Outer-join nullable fields
 must declare nullable results; aggregate `zeroChildren: 'zero'` and explicit `coalesce`
 provide the chosen zero behavior. `COUNT(*)` counts joined rows, including an unmatched
 outer row; use `COUNT(childKey)` to count matching children.
@@ -58,5 +67,6 @@ physical encoding when decoding stored data. Text supports precision through 38 
 scaled INTEGER supports 18. Inputs reject excess scale; arithmetic rounds at every
 operation using the declared half-up, half-even or toward-zero (`down`) policy.
 Overflow, noncanonical input, binary-float monetary inputs and division by zero fail.
-The generator can emit these helpers beside compiled SQL; generated-runtime integration
+The generator can emit these helpers beside compiled SQL and grain checks, evaluating
+checks and results in one read transaction; generated-runtime integration
 and the query designer belong to later packages and are not claimed here.

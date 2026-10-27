@@ -27,6 +27,11 @@ export function executeQueryPreview(db: Database.Database, compiled: CompiledQue
   const count=db.prepare(`SELECT count(*) AS n FROM (SELECT 1 FROM ${quoteIdentifier(t.name)} LIMIT ?)`).get(max+1) as {n:number};scanned+=count.n;
   if(scanned>max)throw new QueryError('QUERY_COST_EXCEEDED','Preview scan budget exceeded. Filter or preaggregate a smaller source before previewing.');
  }
+ // A physical unique index does not prove uniqueness after logical normalization
+ // or SQLite affinity/collation. Prove the actual join relation in this same read
+ // transaction, before the result LIMIT can hide a counterexample. Worker cost and
+ // cancellation/deadline bounds include these statements.
+ for(const check of compiled.grainChecks)if(db.prepare(check).get(compiled.parameters))throw new QueryError('INVALID_QUERY_GRAIN','Join comparison matches multiple rows despite its declared unique grain. Group the child query by the logical key or correct the source encoding and cardinality.');
  // Prepare both explanation and execution with exactly the same bound parameters.
  db.prepare('EXPLAIN QUERY PLAN '+compiled.sql).all(compiled.parameters);
  const statement=db.prepare(compiled.sql);if(!statement.readonly)throw new QueryError('ACCESS_DENIED','Preview cannot mutate SQLite.');

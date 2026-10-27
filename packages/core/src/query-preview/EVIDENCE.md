@@ -63,3 +63,68 @@ The final scope contains 14 focused query/decimal cases across four suites, incl
 the 168-test workspace run. Production SIGTERM and public cancellation used actual child
 processes and HTTP/MCP operations, not substituted handlers. No scripts were enabled;
 lock SHA-256 is `0c63551491f8eb7d1d819e68d558d86139a3d4fa26e68a8a0166bdcbb41b226a`.
+
+## Review cycle 1 — semantic join grain repair
+
+Read the full renewed execution prompt, re-resolved Node Norris, and read canonical
+`review-cycle-1.md` plus `/tmp/wp15-review-feedback-renata.md`. Canonical rejection event
+`01M5XTEP5GD7RC1ZSJRA5FX94D` identifies the single P1: a physical decimal TEXT primary
+key can contain numerically equivalent strings. `sb_compare` equates them, so two
+purported many-to-one joins returned `40.00` for one `10.00` parent.
+
+Before changing production code, the unchanged reviewer probes reproduced the old
+result through the package interface, saved/draft HTTP, and a fresh MCP execution.
+Outputs: `/tmp/wp15-cycle2-before-probe.jsonl` and
+`/tmp/wp15-cycle2-before-public.jsonl`. Seven desired new regression tests failed with
+successful wrong totals (including negative/signed-zero decimal keys, a single join,
+SQLite affinity and collation). Two positive preaggregation/encoding cases passed.
+
+The static complete-key proof is now provisional. The compiler emits counterexample
+checks for every inferred nonexpanding join, and for the left side of claimed
+one-to-one/one-to-many joins. Checks reuse exactly the same source subqueries, named
+bindings, operand order and full ON expression as execution. They examine every
+relevant row before the preview LIMIT; counting stops after a second match. The existing
+SQLite worker transaction encloses physical inspection, budget checks, semantic checks
+and result execution, preserving one read snapshot. Semantic-check work shares worker
+timeout/cancellation and the physical source-row budget. Containing WHERE filters do not
+weaken declared cardinality; source-subquery WHERE/HAVING and parameters remain intact.
+A counterexample returns actionable `INVALID_QUERY_GRAIN`, with no result rows or
+application-data mutations. No DISTINCT monetary workaround or decimal semantic change
+was introduced.
+
+The root authorized two minimal shared transport corrections: allow the existing
+`INVALID_QUERY_GRAIN` code through worker error classification, and supply its static
+safe recovery message in SQLiteError. No registration, lifecycle, model, dependency,
+WP07, or ownership-glob changes were made in this repair.
+
+The new 13-case real-SQLite suite passes: positive/negative/signed-zero collisions,
+single-join inflation, native affinity/collation collisions, composite collision beyond
+the first sampled group, left one-to-one uniqueness, operand-order-sensitive valid
+collation, canonical TEXT/scaled INTEGER/composite valid joins, normalized grouped child
+queries that retain two equal parent amounts (`20.00`), proof timeout/cancellation, and
+public saved/draft HTTP plus fresh/replayed MCP rejection with unchanged database bytes.
+
+Unchanged reviewer probes now return `INVALID_QUERY_GRAIN` through every tested route,
+with HTTP/MCP parity and unchanged DB bytes; outputs are
+`/tmp/wp15-cycle2-after-probe.txt` and `/tmp/wp15-cycle2-after-public.jsonl`.
+`sha256sum --check /tmp/wp15-cycle2-probe-checksums.txt` confirms both original probe
+scripts remained unchanged. The original reviewer expectation is retained, not edited
+into a pass assertion. Re-running the independent arithmetic probe produced matching
+aggregate/average/min/max/composition/empty results and all 36 decimal.js oracle cases
+(`/tmp/wp15-cycle2-arithmetic.jsonl`).
+
+Cycle 1 repair final verification, using pinned Node 24.22.1 / npm 11.19.1:
+
+- `npm run verify` — exit 0: SQLite 3.53.4 native smoke, strict workspace types,
+  diff-scoped lint, all production builds including Next, credential heuristic scan,
+  21 suites / 181 tests passed, unchanged 258-artifact dependency verification.
+- `node scripts/workspace/verify.mjs module packages/sqlite/tests/query` — exit 0.
+- `node scripts/workspace/verify.mjs module packages/sqlite/src/query` — exit 0.
+- `node scripts/workspace/verify.mjs module packages/sqlite/tests/decimal` — exit 0.
+- `npm audit --ignore-scripts --json` — exit 0, zero vulnerabilities; transient output
+  `/tmp/wp15-cycle2-audit.json`. No dependency or lock/evidence changes in the repair.
+
+Existing future generator/ui implementation notices remain explicit; no generated runtime
+or UI numeric acceptance is claimed. The known Python coverage-authority advisory is not
+product verification. The repair adds only query proof/runtime checks, behavior tests,
+API explanation, this evidence, and the two approved shared diagnostic transport lines.

@@ -8,6 +8,8 @@ export interface CompiledQuery {
  sql: string; parameters: Record<string, BoundValue>; fields: Omit<Query['projections'][number], 'expression'>[]; rowLimit: number;
  /** Physical tables and key claims are checked against the actual read transaction before execution. */
  tables: { name: string; columns: string[]; uniqueKeys: string[][] }[];
+ /** Counterexamples to provisional uniqueness, evaluated in the execution read snapshot. */
+ grainChecks: string[];
 }
 export interface QueryPreviewResult { fields: CompiledQuery['fields']; rows: Record<string,string | number | boolean | null>[]; sql: string; truncated: boolean }
 export interface QueryCostOptions { maxScannedRows?: number }
@@ -29,7 +31,7 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
   const name='v'+binding++; parameters[name]=value; return '@'+name;
  };
  const config=(t: Extract<ScalarType,{kind:'decimal'}>)=>`${t.precision},${t.scale},'${t.rounding}'`;
- const path=new Set<string>(); let queriesCompiled=0;
+ const path=new Set<string>(); let queriesCompiled=0; const grainChecks:string[]=[];
  function compile(q: Query): string {
   if(path.has(q.id))throw new QueryError('INVALID_QUERY_GRAIN','Cyclic query sources cannot be compiled.');
   if(path.size>12 || ++queriesCompiled>64 || q.sources.length>12)throw new QueryError('QUERY_COST_EXCEEDED','Query dependencies exceed bounded preview limits.'); path.add(q.id);
@@ -44,7 +46,9 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    return {sql:quoteIdentifier(e.alias)+'.'+quoteIdentifier('physicalName' in column?column.physicalName:column.id),type:column.type,physical:!!t};
   }
   // Prove right-side uniqueness from equality conjunctions and declared schema keys.
-  // The worker rechecks the physical key claims, so a client cannot forge cardinality.
+  // Physical keys are provisional: normalization, affinity or collation can change
+  // equality. The worker checks actual ON multiplicity before relying on this proof.
+  const joinProofs=new Map<Query['joins'][number],{rightUnique:boolean;leftUnique:boolean}>();
   let expansions=0;
   for(const j of q.joins) {
    const equalities: Extract<Expression,{kind:'binary'}>[]=[];
@@ -54,6 +58,7 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    const right=joinedKeys(j.rightAlias,j.leftAlias),left=joinedKeys(j.leftAlias,j.rightAlias);
    const isUnique=(alias:string,keys:Set<string>)=>uniqueKeys(alias).some(k=>k.every(id=>keys.has(id)));
    const rightUnique=isUnique(j.rightAlias,right),leftUnique=isUnique(j.leftAlias,left);
+   joinProofs.set(j,{rightUnique,leftUnique});
    if((['many-to-one','one-to-one'].includes(j.cardinality) && !rightUnique) || (['one-to-many','one-to-one'].includes(j.cardinality) && !leftUnique))throw new QueryError('INVALID_QUERY_GRAIN','Join cardinality requires equality on a complete unique key, including composite grain keys.');
    if(!rightUnique)expansions++;
   }
@@ -93,8 +98,17 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    return '('+compile(child)+') AS '+quoteIdentifier(alias);
   }
   const select=q.projections.map(p=>expression(p.expression).sql+' AS '+quoteIdentifier(p.id));
-  let sql='SELECT '+select.join(',')+' FROM '+source(q.sources[0]!.alias);
-  for(const join of q.joins)sql+=` ${join.kind==='left'?'LEFT':'INNER'} JOIN ${source(join.rightAlias)} ON ${expression(join.on).sql}`;
+  let prefix=' FROM '+source(q.sources[0]!.alias);
+  for(const join of q.joins) {
+   const rightSource=source(join.rightAlias),on=expression(join.on).sql,proof=joinProofs.get(join)!;
+   // These checks contain the exact source subqueries, bindings, operand order and
+   // ON expression used below. They scan the full relation, independent of the
+   // preview LIMIT, and stop counting each candidate after a second match.
+   if(proof.rightUnique)grainChecks.push(`SELECT 1${prefix} WHERE (SELECT count(*) FROM (SELECT 1 FROM ${rightSource} WHERE ${on} LIMIT 2)) > 1 LIMIT 1`);
+   if(proof.leftUnique && ['one-to-one','one-to-many'].includes(join.cardinality))grainChecks.push(`SELECT 1 FROM ${rightSource} WHERE (SELECT count(*) FROM (SELECT 1${prefix} WHERE ${on} LIMIT 2)) > 1 LIMIT 1`);
+   prefix+=` ${join.kind==='left'?'LEFT':'INNER'} JOIN ${rightSource} ON ${on}`;
+  }
+  let sql='SELECT '+select.join(',')+prefix;
   if(q.where)sql+=' WHERE '+expression(q.where).sql;
   if(q.groupBy.length)sql+=' GROUP BY '+q.groupBy.map(g=>expression(g).sql).join(',');
   if(q.having)sql+=' HAVING '+expression(q.having).sql;
@@ -102,5 +116,5 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
   path.delete(q.id);return sql;
  }
  const sql=compile(root);if(Object.keys(values).some(id=>!declared.has(id)))throw new QueryError('INVALID_INPUT','Unknown parameter ID. Parameters use stable IDs, including child-query parameters.');
- return {sql:sql+' LIMIT '+bind(rowLimit+1,{kind:'integer'},false),parameters,fields:root.projections.map(({expression:_,...field})=>field),rowLimit,tables:[...tables.values()]};
+ return {sql:sql+' LIMIT '+bind(rowLimit+1,{kind:'integer'},false),parameters,fields:root.projections.map(({expression:_,...field})=>field),rowLimit,tables:[...tables.values()],grainChecks};
 }
