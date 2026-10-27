@@ -650,7 +650,7 @@
     },
     "WP20": {
       "actor": "user",
-      "agent": "codex",
+      "agent": null,
       "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
@@ -662,6 +662,7 @@
         "Ready for review: 99822a0; final two-worker full verify 386 tests/54 files, 35 focused checks, real Code/MCP/two-cycle SQLite preservation and independent production output; canonical journal recovery and monotonic output revision. Actual WP21 process-manager stop integration remains explicitly pending."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP20-regeneration-ownership-authored-extensions-and-recovery/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP20-regeneration-ownership-authored-extensions-and-recovery/review-cycle-1.md",
@@ -669,14 +670,14 @@
         "verdict": "changes_requested"
       },
       "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T096": "done",
-        "T097": "done",
-        "T098": "done",
-        "T099": "done",
-        "T100": "done"
+        "T096": "planned",
+        "T097": "planned",
+        "T098": "planned",
+        "T099": "planned",
+        "T100": "planned"
       }
     },
     "WP21": {
