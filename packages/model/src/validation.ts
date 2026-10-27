@@ -9,6 +9,15 @@ type Context = { sources: Map<string, Field[]>; parameters: Query['parameters'];
 export type ValidationResult = { ok: true; project: Project; diagnostics: [] } | { ok: false; diagnostics: Diagnostic[] };
 export const sameType = (a: ScalarType, b: ScalarType): boolean => canonicalJson(a) === canonicalJson(b);
 const numeric = (type: ScalarType) => ['integer', 'real', 'decimal'].includes(type.kind);
+/** Arithmetic only: exact integer operands adopt the decimal operand's full format.
+ * Comparisons, keys and two differently configured decimals remain strict. */
+export function arithmeticResultType(left: ScalarType, right: ScalarType): ScalarType | undefined {
+  if (sameType(left, right) && numeric(left)) return left;
+  if (left.kind === 'decimal' && right.kind === 'integer') return left;
+  if (left.kind === 'integer' && right.kind === 'decimal') return right;
+  return undefined;
+}
+
 export function isLiteralValue(value: unknown, type: ScalarType, nullable: boolean): boolean {
   if (value === null) return nullable;
   switch (type.kind) {
@@ -88,8 +97,9 @@ export function validateProject(input: unknown): ValidationResult {
       const left = expr(e.left, ctx, owner, field, insideAggregate); const right = expr(e.right, ctx, owner, field, insideAggregate);
       if (!left || !right) return undefined;
       const boolean = ['and', 'or'].includes(e.operator); const arithmetic = ['+', '-', '*', '/'].includes(e.operator);
-      if (!sameType(left.type, right.type) || (boolean && left.type.kind !== 'boolean') || (arithmetic && !numeric(left.type))) return fail();
-      return { type: arithmetic ? left.type : { kind: 'boolean' }, nullable: left.nullable || right.nullable, aggregate: left.aggregate || right.aggregate };
+      const result = arithmetic ? arithmeticResultType(left.type, right.type) : undefined;
+      if (arithmetic ? !result : !sameType(left.type, right.type) || (boolean && left.type.kind !== 'boolean')) return fail();
+      return { type: arithmetic ? result! : { kind: 'boolean' }, nullable: left.nullable || right.nullable, aggregate: left.aggregate || right.aggregate };
     }
     const args = e.args.map(a => expr(a, ctx, owner, field, insideAggregate));
     if (args.some(a => !a)) return undefined;

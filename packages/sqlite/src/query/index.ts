@@ -1,4 +1,4 @@
-import { isLiteralValue, parseProject, querySchema } from '@schema-baron/model';
+import { arithmeticResultType, isLiteralValue, parseProject, querySchema } from '@schema-baron/model';
 import type { Expression, Project, Query, ScalarType, Table } from '@schema-baron/model';
 import { decimalCodec } from '../decimal/index.js';
 import { QueryError, quoteIdentifier } from './support.js';
@@ -71,9 +71,10 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    if(e.kind==='field'){const f=field(e);return {...f,sql:f.type.kind==='decimal' && f.physical?`sb_decimal(${f.sql},${config(f.type)},'${f.type.encoding}')`:f.sql};}
    if(e.kind==='binary') {
     const a=expression(e.left),b=expression(e.right);const arithmetic=['+','-','*','/'].includes(e.operator);
-    if(a.type.kind==='decimal') {
-     const cfg=config(a.type);const operation={'+':'add','-':'subtract','*':'multiply','/':'divide'} as const;
-     return arithmetic?{sql:`sb_${operation[e.operator as keyof typeof operation]}(${a.sql},${b.sql},${cfg})`,type:a.type}:{sql:`(sb_compare(${a.sql},${b.sql},${cfg}) ${e.operator} 0)`,type:{kind:'boolean'}};
+    const resultType=arithmetic?arithmeticResultType(a.type,b.type):a.type;
+    if(resultType?.kind==='decimal') {
+     const cfg=config(resultType);const operation={'+':'add','-':'subtract','*':'multiply','/':'divide'} as const;
+     return arithmetic?{sql:`sb_${operation[e.operator as keyof typeof operation]}(${a.sql},${b.sql},${cfg})`,type:resultType}:{sql:`(sb_compare(${a.sql},${b.sql},${cfg}) ${e.operator} 0)`,type:{kind:'boolean'}};
     }
     return {sql:`(${a.sql} ${e.operator.toUpperCase()} ${b.sql})`,type:arithmetic?a.type:{kind:'boolean'}};
    }
