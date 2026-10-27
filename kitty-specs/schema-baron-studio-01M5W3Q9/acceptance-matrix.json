@@ -2,7 +2,7 @@
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_number": "",
   "mission_type": "software-dev",
-  "overall_verdict": "pending",
+  "overall_verdict": "pass",
   "criteria": [
     {
       "criterion_id": "FR-001",
@@ -297,11 +297,11 @@
     {
       "criterion_id": "FR-030",
       "description": "Verify FR-030 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-030; docs/evidence/equipment/report.md; docs/evidence/generality/report.md; docs/evidence/generality/parity-matrix.md; scripts/release/evidence/report.md; tests/e2e/publication/workflow.spec.ts. Unrelated Equipment and Publication visibly authored from blank with ordered composite key, same-owner switching and equivalent complete transport corpus; clean source repeats ordered journeys with no copied models/private setup. Identifier scan is bounded plus source review, not exhaustive lexical proof. Reviewed against mission spec FR-030; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:13:14.957471+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     }
   ],
