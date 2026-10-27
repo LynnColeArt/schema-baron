@@ -277,11 +277,11 @@
     {
       "criterion_id": "FR-028",
       "description": "Verify FR-028 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-028; docs/evidence/generality/report.md Complete transport corpus; docs/evidence/generality/parity-matrix.md; docs/evidence/generality/review-cycle-2/report.md; tests/contracts/parity/behavior.test.ts. All 31 advertised operations executed independently over SDK stdio MCP and Studio-session HTTP with matching normalized state/outcomes and real database/source/runtime effects; same owner validation/revisions/review. Not every negative input is claimed. Reviewed against mission spec FR-028; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:13:08.655684+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
