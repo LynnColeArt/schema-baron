@@ -1,0 +1,16 @@
+docs/evidence/generality/review-cycle-2/reviewer-concurrent.log:9: new blank line at EOF.
+docs/evidence/generality/review-cycle-2/reviewer-heldout.log:9: new blank line at EOF.
+docs/evidence/generality/review-renata-blocking-warm.log:9: new blank line at EOF.
+docs/evidence/generality/review-renata-diagnostic.log:9: new blank line at EOF.
+docs/evidence/generality/review-renata-heldout-fixed.log:9: new blank line at EOF.
+docs/evidence/generality/review-renata-parity.log:9: new blank line at EOF.
+packages/generator/tests/public-list/evidence/cycle1/desired-runtime-red.log:10: trailing whitespace.
++AssertionError: 
+packages/generator/tests/public-list/evidence/generator-boundaries.log:9: new blank line at EOF.
+packages/generator/tests/public-list/evidence/isolated-instruments.log:49: new blank line at EOF.
+packages/generator/tests/public-list/evidence/isolated-publications.log:49: new blank line at EOF.
+packages/sqlite/tests/migrations/evidence/cycle1/desired-red.log:67: new blank line at EOF.
+packages/sqlite/tests/migrations/evidence/cycle1/focused-green.log:9: new blank line at EOF.
+packages/sqlite/tests/migrations/evidence/cycle1/original-red.log:24: new blank line at EOF.
+packages/sqlite/tests/migrations/evidence/cycle1/tests.log:13: new blank line at EOF.
+packages/sqlite/tests/migrations/evidence/tests.log:13: new blank line at EOF.

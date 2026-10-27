@@ -175,16 +175,21 @@ async function sqlite() {
   } finally { db.close(); rmSync(path, { recursive: true, force: true }); }
 }
 function lint() {
-  run('git', ['diff', '--check', process.env.SCHEMA_BARON_LINT_BASE ?? 'HEAD', '--']);
-  const result = spawnSync('git', ['diff', '--name-only', '--diff-filter=ACMR', process.env.SCHEMA_BARON_LINT_BASE ?? 'HEAD', '--'], { cwd: root, encoding: 'utf8' });
-  const untracked = spawnSync('git', ['ls-files', '--others', '--exclude-standard'], { cwd: root, encoding: 'utf8' });
+  // Verbatim console/strace captures retain original whitespace. Limit this exemption
+  // to .log/.trace in the repository's documented evidence roots; authored source,
+  // Markdown, JSON and other extensions (including files inside evidence/) stay checked.
+  const captureRoots = ['docs/evidence', 'packages/*/tests/**/evidence', 'tests/e2e/*/evidence', 'scripts/release/evidence'];
+  const captureExclusions = captureRoots.flatMap(directory => ['log', 'trace'].map(extension => `:(glob,exclude)${directory}/**/*.${extension}`));
+  run('git', ['diff', '--check', process.env.SCHEMA_BARON_LINT_BASE ?? 'HEAD', '--', '.', ...captureExclusions]);
+  const result = spawnSync('git', ['diff', '--name-only', '-z', '--diff-filter=ACMR', process.env.SCHEMA_BARON_LINT_BASE ?? 'HEAD', '--'], { cwd: root, encoding: 'utf8' });
+  const untracked = spawnSync('git', ['ls-files', '-z', '--others', '--exclude-standard'], { cwd: root, encoding: 'utf8' });
   for (const check of [result, untracked]) if (check.error || check.status !== 0) fail(`Git lint discovery failed: ${check.error?.message ?? check.stderr.trim()}`);
-  const changed = [...new Set((result.stdout + '\n' + untracked.stdout).split('\n').filter(Boolean))];
+  const changed = [...new Set((result.stdout + untracked.stdout).split('\0').filter(Boolean))];
   for (const path of changed) {
     if (/\.mjs$/.test(path)) run(process.execPath, ['--check', join(root, path)]);
     if (/\.json$/.test(path)) json(join(root, path));
   }
-  console.log(`Diff-scoped syntax/JSON/whitespace lint checked ${changed.length} files; TypeScript semantic validation is separate`);
+  console.log(`Diff-scoped syntax/JSON/whitespace lint checked ${changed.length} files; documented verbatim evidence .log/.trace whitespace excluded; TypeScript semantic validation is separate`);
 }
 async function main() {
   runtime();

@@ -1,7 +1,7 @@
 import { afterEach, expect, test } from 'vitest';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const temporary: string[] = [];
@@ -108,4 +108,70 @@ test('public npm generated check installs and uses its own declared compiler off
   const result = spawnSync('npm', ['run', 'check:generated', '--', path], { encoding: 'utf8', env: { ...process.env, NODE_PATH: resolve('node_modules'), NODE_OPTIONS: '--no-warnings' } });
   expect(result.status, result.stdout + result.stderr).toBe(0);
   expect(result.stdout).toContain('Version 7.0.2');
+});
+
+
+test('real Git lint preserves verbatim evidence captures while rejecting authored whitespace', () => {
+  const fixture = directory();
+  const script = join(fixture, 'scripts/workspace/verify.mjs');
+  mkdirSync(dirname(script), { recursive: true });
+  copyFileSync(resolve('scripts/workspace/verify.mjs'), script);
+  writeFileSync(join(fixture, '.nvmrc'), process.versions.node + '\n');
+  const git = (...args: string[]) => spawnSync('git', args, { cwd: fixture, encoding: 'utf8' });
+  const write = (path: string, content: string) => {
+    const full = join(fixture, path);
+    mkdirSync(dirname(full), { recursive: true });
+    writeFileSync(full, content);
+  };
+  const captures = [
+    'docs/evidence/legacy/output.log', 'docs/evidence/legacy/worker.trace',
+    'packages/example/tests/roundtrip/evidence/nested/output.log', 'packages/example/tests/roundtrip/evidence/worker.trace',
+    'scripts/release/evidence/output.log', 'scripts/release/evidence/worker.trace',
+    'tests/e2e/roundtrip/evidence/output.log', 'tests/e2e/roundtrip/evidence/worker.trace'
+  ];
+  const authored = ['docs/evidence/notes.ts', 'docs/evidence/notes.md', 'docs/evidence/notes with spaces.md', 'docs/evidence/notes\nline.md', 'docs/evidence/notes.txt', 'docs/outside-evidence.log', 'docs/evidence-ish/output.log', 'packages/example/tests/roundtrip/evidence-ish/output.log', 'tests/e2e/roundtrip/evidence-ish/output.log', 'scripts/release/evidence-ish/output.log'];
+  const sourceFiles = ['docs/evidence/source with spaces.mjs', 'docs/evidence/source\nline.mjs'];
+  const jsonFiles = ['docs/evidence/result with spaces.json', 'docs/evidence/result\nline.json'];
+  for (const path of [...captures, ...authored]) write(path, 'initial\n');
+  for (const path of sourceFiles) write(path, 'export const value = 1;\n');
+  for (const path of jsonFiles) write(path, '{}\n');
+  expect(git('init', '-q').status).toBe(0);
+  expect(git('add', '.').status).toBe(0);
+  expect(git('-c', 'user.name=Lint regression', '-c', 'user.email=lint@localhost', '-c', 'commit.gpgsign=false', 'commit', '-qm', 'baseline').status).toBe(0);
+  const baseline = git('rev-parse', 'HEAD').stdout.trim();
+  const verbatim = 'verbatim result \n\n';
+  for (const path of captures) write(path, verbatim);
+  // Establish actual Git whitespace violations independently of the verifier's classification.
+  expect(git('diff', '--check', baseline, '--').status).not.toBe(0);
+  const lint = () => spawnSync(process.execPath, [script, 'lint'], { cwd: fixture, encoding: 'utf8', env: { ...process.env, SCHEMA_BARON_LINT_BASE: baseline } });
+  const captured = lint();
+  expect(captured.status, captured.stdout + captured.stderr).toBe(0);
+  for (const path of captures) expect(readFileSync(join(fixture, path), 'utf8')).toBe(verbatim);
+  for (const path of authored) {
+    write(path, verbatim);
+    const rejected = lint();
+    expect(rejected.status, path).not.toBe(0);
+    expect(rejected.stdout + rejected.stderr).toContain(path);
+    write(path, 'initial\n');
+  }
+  expect(lint().status).toBe(0);
+  for (const path of sourceFiles) {
+    write(path, 'export const value = 2;\n');
+    const valid = lint();
+    expect(valid.status, valid.stdout + valid.stderr).toBe(0);
+    write(path, 'export const = ;\n');
+    const invalid = lint();
+    expect(invalid.status).not.toBe(0);
+    expect(invalid.stdout + invalid.stderr).toContain(path);
+    write(path, 'export const value = 1;\n');
+  }
+  for (const path of jsonFiles) {
+    write(path, '{"value":2}\n');
+    const valid = lint();
+    expect(valid.status, valid.stdout + valid.stderr).toBe(0);
+    write(path, '{ invalid }\n');
+    expect(lint().status).not.toBe(0);
+    write(path, '{}\n');
+  }
+  expect(lint().status).toBe(0);
 });
