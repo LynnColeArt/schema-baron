@@ -187,11 +187,11 @@
     {
       "criterion_id": "FR-019",
       "description": "Verify FR-019 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-019; docs/evidence/equipment/report.md T108,T109; docs/evidence/generality/report.md; packages/generator/tests/reports/behavior.test.ts. Named queries and query-backed reports persist formatting/filter/row links across reopen and two regenerations in both apps; independent SQLite/BigInt results and refresh after writes verified. Reviewed against mission spec FR-019; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:40.750494+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
