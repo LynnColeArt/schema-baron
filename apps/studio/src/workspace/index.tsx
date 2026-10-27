@@ -6,6 +6,7 @@ import type { Control, Form, Page, Project } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
 import { MigrationHistory } from "../migration-history/index.js";
+import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
 import {
@@ -46,6 +47,7 @@ const label = (kind: Kind, value: ObjectValue) =>
     : (value as Form | Control).appearance.label ||
       (value as Form | Control).kind;
 export default function Workspace() {
+  const [schemaActive, setSchemaActive] = useState(false);
   const client = useRef(new StudioClient()).current;
   const [caps, setCaps] = useState<Capabilities>({
     operations: [],
@@ -350,7 +352,7 @@ export default function Workspace() {
   }
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey) || modal) return;
+      if (!(event.ctrlKey || event.metaKey) || modal || schemaActive) return;
       if (event.key.toLowerCase() === "s") {
         event.preventDefault();
         if (!busy && connected) void save();
@@ -375,7 +377,7 @@ export default function Workspace() {
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [modal, busy, connected]);
+  }, [modal, busy, connected, schemaActive]);
   async function connect(event: FormEvent) {
     event.preventDefault();
     setBusy(true);
@@ -945,6 +947,7 @@ export default function Workspace() {
           Connections…
         </button>
         <button onClick={() => dialog("history")} disabled={!project || !caps.operations.some(c => c.operation === "schema.history")}>Migration history…</button>
+        <button disabled={!project} aria-pressed={schemaActive} onClick={() => setSchemaActive(v => !v)}>Schema</button>
         <span className="menu-spacer" />
         <button
           onClick={() => setHidden((h) => ({ ...h, explorer: !h.explorer }))}
@@ -979,7 +982,7 @@ export default function Workspace() {
           {connected ? "Disconnect service" : "Connect service…"}
         </button>
       </nav>
-      <div className="toolbar" role="toolbar" aria-label="Model editing">
+      <div className="toolbar" role="toolbar" aria-label="Model editing" style={{display:schemaActive?"none":undefined}}>
         <button
           disabled={
             !project || !connected || busy || !dirty || conflicts.length > 0
@@ -1039,10 +1042,12 @@ export default function Workspace() {
         </span>
       </div>
       <div className="workspace-scroll">
+        {project && <div style={{height:"100%",display:schemaActive?"block":"none"}}><SchemaEditor key={project.id} active={schemaActive} onConnection={()=>dialog("connection")} project={project} client={client} caps={caps} onChanged={acceptSnapshot}/></div>}
         <div
           className="docks"
           style={
             {
+              display: schemaActive ? "none" : undefined,
               "--explorer": hidden.explorer ? "0px" : `${sizes.left}px`,
               "--inspector": hidden.inspector ? "0px" : `${sizes.right}px`,
               "--messages": `${sizes.messages}px`,
