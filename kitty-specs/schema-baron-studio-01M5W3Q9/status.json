@@ -370,6 +370,9 @@
       "last_event_id": "01M5Y5TNGQA6NWHPX4FKQD12VG",
       "last_transition_at": "2026-10-27T07:57:34.103797+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: atomic ordinary form construction and focused wizards; canonical bindings/actions and bounded scalar drafts; verify263 tests, five browser journeys, strict sources, native100/200 keyboard and zero-violation axe evidence. Commit ab00032."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
