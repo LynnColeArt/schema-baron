@@ -1,4 +1,5 @@
 "use client";
+import {SourceEditor} from '../source-editor/index.js';
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, FormEvent } from "react";
 import { createId } from "@schema-baron/model";
@@ -1121,6 +1122,7 @@ export default function Workspace() {
                 <DocumentModes
                   key={project.id + ":" + activePage.id}
                   project={project} model={model} page={activePage}
+                  capabilities={{sourceEditor:<SourceEditor project={project} client={client} onChanged={refresh}/>}}
                   editor={editor} setEditor={setEditor}
                   selected={view.selected} select={select}
                   mode={view.documentModes?.[activePage.id] ?? "Design"}

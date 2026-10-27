@@ -1,10 +1,11 @@
+import {validateHooks,beforeHooks,afterHooks} from './extensions.ts';
 import 'server-only';
 import Decimal from 'decimal.js';
 import { connect, read, insert, update, remove, impacts, automaticKey, type Source } from './record-repository.ts';
 import { value, entered, one, message, type Parameters, type Input, type Binding } from './record-validation.ts';
 import { destination, context, type ContextField, type Destination } from './navigation.ts';
 export type Control = { readonly kind?:string; readonly fieldId?:string; readonly label:string; readonly readOnly:boolean; readonly validation:{readonly required:boolean;readonly min?:number;readonly max?:number;readonly maxLength?:number}; readonly lookup?:{ readonly source:Source;readonly valueFieldId:string;readonly labelFieldId:string } };
-export type Action = {readonly id:string;readonly operation:string;readonly destination?:Destination;readonly success?:Destination;readonly cancel?:Destination};
+export type Action = {readonly id:string;readonly operation:string;readonly extensionHookRef?:string;readonly destination?:Destination;readonly success?:Destination;readonly cancel?:Destination};
 export type Config = {readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
 export type State = {values:Input;errors:Record<string,string>;summary:string;location?:string;saved?:boolean};
 function keys(config:Config,parameters:Parameters) {
@@ -49,8 +50,8 @@ export function execute(config:Config,actionId:string,parameters:Parameters,inpu
    }
    return {...state,location:destination(target,row,parameters,config.context)};
   }
-  if(!['insert','update','delete'].includes(action.operation)) throw Error('This action is unavailable.');
-  if((action.operation==='insert')!==isNew) throw Error('This action does not match the record mode.');
+  if(!['insert','update','delete','extension'].includes(action.operation)) throw Error('This action is unavailable.');
+  if(action.operation!=='extension'&&(action.operation==='insert')!==isNew) throw Error('This action does not match the record mode.');
   db=connect(); const database=db;
   return database.transaction(()=>{
    const tuple=isNew?[]:keys(config,parameters), prior=isNew?undefined:read(database,config.source,tuple);
@@ -78,13 +79,17 @@ export function execute(config:Config,actionId:string,parameters:Parameters,inpu
     }
     if(Object.keys(state.errors).length) return {...state,summary:'Correct the highlighted fields.'};
    }
+   const hookContext={version:1 as const,formId:config.id,actionId:action.id,operation:action.operation,values:Object.freeze({...values}),parameters:Object.freeze(Object.fromEntries(Object.keys(parameters).map(key=>[key,one(parameters,key)])))};
+   if(action.operation!=='delete'){Object.assign(state.errors,validateHooks(hookContext));if(Object.keys(state.errors).length)return {...state,summary:'Correct the highlighted fields.'};}
+   beforeHooks(hookContext,action.extensionHookRef);
    let row:Record<string,unknown>={...prior,...values};
    if(action.operation==='insert') {const result=insert(database,config.source,values); if(auto) row[auto]=result.lastInsertRowid;}
    if(action.operation==='update') update(database,config.source,tuple,values);
    if(action.operation==='delete') remove(database,config.source,tuple);
+   afterHooks(hookContext);
    const target=action.success??action.destination; if(!target) throw Error('Declare a destination before using this action.');
    let location=destination(target,row,parameters,config.context);
-   return {...state,location,...(action.operation!=='delete'?{saved:true}:{})};
+   return {...state,location,...(['insert','update'].includes(action.operation)?{saved:true}:{})};
   }).immediate();
  } catch(error) {
   const code=error&&typeof error==='object'&&'code' in error?String(error.code):'';

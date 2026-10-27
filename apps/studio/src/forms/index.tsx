@@ -917,7 +917,7 @@ export function FormProperties({
                   { value: "", label: "None" },
                   ...project.extensionContracts
                     .filter(
-                      (e) => e.kind === "action" || e.kind === "validator",
+                      (e) => e.kind === "action",
                     )
                     .map((e) => ({ value: e.id, label: e.relativePath })),
                 ],

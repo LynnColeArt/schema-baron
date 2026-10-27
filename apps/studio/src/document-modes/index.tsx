@@ -1,6 +1,6 @@
 "use client";
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction, ReactNode } from 'react';
 import type { DocumentNode, Form, Page, Project } from '@schema-baron/model';
 import { moveForm, parseDocument, previewDocument, serializeDocument } from '@schema-baron/core/page-document';
 import { edit, visible } from '../workspace/state.js';
@@ -14,6 +14,7 @@ export type DocumentMode = typeof documentModes[number];
 /** WP20/21 supply actual approved source/runtime interfaces here. No filesystem
  * path, arbitrary fetch or process-start fallback is provided by document modes. */
 export interface ModeCapabilities {
+  sourceEditor?:ReactNode;
   generated?: { content: string; revision: number; path: string };
   openExtensions?: (pageId: string) => void;
   openLivePage?: (pageId: string) => Promise<void>;
@@ -181,7 +182,8 @@ export function DocumentModes({ project, model, page, editor, setEditor, selecte
         <div className="document-actions"><button disabled={!parsed.ok || !pending || conflict} onClick={applyHTML}>Apply HTML to draft</button><button disabled={!pending} onClick={() => updateBuffer(freshBuffer(canonical))}>Discard pending HTML</button></div>
       </div>
       {mode === 'Preview' && <div className="draft-preview"><p className="mode-notice"><strong>{parsed.ok ? 'Current draft preview' : 'Invalid HTML · last valid model draft fallback'}</strong> · {pending ? 'unsaved HTML' : 'shared model draft'} · no live data, scripts, requests, submissions or server hooks.</p><iframe title="Isolated current draft preview" sandbox="" referrerPolicy="no-referrer" srcDoc={preview} /></div>}
-      {mode === 'Code' && <div className="mode-capability"><h3>Generated source · read-only ownership</h3>{capabilities.generated ? <><p>Last generated content · revision {capabilities.generated.revision} · {capabilities.generated.path}. Current unsaved draft is separate.</p><pre tabIndex={0}>{capabilities.generated.content}</pre></> : <p>Generated source inspection requires the WP20 source editor. Save your draft, review generation, then inspect the owned output there. No generated content is currently available through an approved source interface.</p>}{capabilities.openExtensions ? <button onClick={() => capabilities.openExtensions!(page.id)}>Open authored extensions</button> : <p>Authored extension editing becomes available with WP20. Generated files remain read-only.</p>}</div>}
+      {capabilities.sourceEditor && <div hidden={mode !== 'Code'}>{capabilities.sourceEditor}</div>}
+      {mode === 'Code' && !capabilities.sourceEditor && <div className="mode-capability"><h3>Generated source · read-only ownership</h3>{capabilities.generated ? <><p>Last generated content · revision {capabilities.generated.revision} · {capabilities.generated.path}. Current unsaved draft is separate.</p><pre tabIndex={0}>{capabilities.generated.content}</pre></> : <p>Generated source inspection requires the WP20 source editor. Save your draft, review generation, then inspect the owned output there. No generated content is currently available through an approved source interface.</p>}{capabilities.openExtensions ? <button onClick={() => capabilities.openExtensions!(page.id)}>Open authored extensions</button> : <p>Authored extension editing becomes available with WP20. Generated files remain read-only.</p>}</div>}
       {mode === 'Live Page' && <div className="mode-capability"><h3>Live Page · managed generated application</h3><p>This view targets the generated application route, separate from the current draft preview. Save, generate, and start the application with the WP21 managed runtime.</p>{capabilities.openLivePage ? <button onClick={() => { void capabilities.openLivePage!(page.id).catch(e => setError(e instanceof Error ? e.message : 'Managed route unavailable.')); }}>Open managed page route</button> : <p>Managed route resolution is unavailable until WP21 is integrated. Use Preview to inspect the current draft now.</p>}<button onClick={() => setMode('Preview')}>Preview current draft</button>{error && <p role="alert">{error}</p>}</div>}
     </div>
     <div className="modebar" role="region" aria-label="Document modes and status" tabIndex={0}><div role="tablist" aria-label="Document modes">{documentModes.map(value => <button key={value} role="tab" aria-selected={mode === value} tabIndex={mode === value ? 0 : -1} onClick={event => { switchingByKeyboard.current = event.detail === 0; setMode(value); }} onKeyDown={event => {

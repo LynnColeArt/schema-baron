@@ -28,6 +28,7 @@ export const operationInputSchemas = {
   'schema.restoreApply': applyInput,
   'query.preview': z.union([z.strictObject({ queryId: idSchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() }), z.strictObject({ draft: querySchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() })]),
   'form.construct': z.strictObject({ pageId: idSchema, kind: formSchema.shape.kind, source: sourceRefSchema.optional(), fieldIds: ids, keyIds: ids, actions: z.array(actionSchema.shape.operation), links: z.array(actionSchema.shape.destination.unwrap()), style: formSchema.shape.appearance, search: formSchema.shape.search.optional(), sorting: formSchema.shape.sorting.optional(), actionDefinitions: z.array(actionSchema.omit({ id: true, formId: true })).optional(), linkedRecord: z.strictObject({ pageId: idSchema, label: text, fieldIds: ids, keyIds: ids }).optional(), pendingOperations: z.array(entityBatchOperationSchema.refine(op => ['page', 'form', 'control', 'action'].includes(op.entity), 'Construction pending operations must be ordinary page/form/control/action edits')).max(1000).optional() }),
+  'source.read': z.strictObject({ outputRoot: text, relativePath: text }),
   'extension.read': z.strictObject({ extensionId: idSchema, approvedPath: text }),
   'extension.write': z.strictObject({ extensionId: idSchema, approvedPath: text, content: z.string(), expectedFileHash: hashSchema }),
   // Transient only. Never serialize this input into Project, OperationRecord or diagnostics.
@@ -105,6 +106,7 @@ export const operationResultSchemas = {
   'schema.restoreApply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), backupRef: idSchema }),
   'query.preview': z.strictObject({ fields: z.array(querySchema.shape.projections.element.omit({ expression: true })), rows: z.array(z.record(idSchema, scalar)).max(200), sql: text, truncated: z.boolean() }),
   'form.construct': changedResult,
+  'source.read': z.strictObject({path:text,content:z.string(),hash:hashSchema,readOnly:z.literal(true)}),
   'extension.read': z.strictObject({ extensionId: idSchema, content: z.string(), hash: hashSchema }),
   'extension.write': z.strictObject({ extensionId: idSchema, hash: hashSchema }),
   'identity.configure': z.strictObject({ configured: z.literal(true) }),

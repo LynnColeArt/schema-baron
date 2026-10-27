@@ -1,3 +1,5 @@
+import {registerExtensions} from '../extensions/index.js';
+import type {RuntimeLifecyclePort} from '@schema-baron/generator';
 import { createHmac, randomBytes } from 'node:crypto';
 import { registerIdentity } from '../identity/index.js';
 import { commandSchema, jobSchema, createId, parseProject, validateProject, ModelValidationError, FORMAT_VERSION } from '@schema-baron/model';
@@ -13,7 +15,7 @@ import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { constructForm } from '../form-construction/index.js';
 import { PlanRepository } from '../plans/index.js';
-export interface CoreOptions extends StorageOptions { ownerId: string; generationFault?: (phase:string)=>void; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
+export interface CoreOptions extends StorageOptions { ownerId: string; runtimeLifecycle?:RuntimeLifecyclePort; generationFault?: (phase:string)=>void; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
 export type Outcome = { ok: true; revision: number; result: unknown; diagnostics: Diagnostic[] } | { ok: false; revision: number; error: { code: string; message: string; retryable: boolean }; diagnostics: Diagnostic[] };
 interface PendingCommand { operation: string; payloadHash: string; outcome: Promise<Outcome> }
 const collection = { connection: 'connections', table: 'tables', query: 'queries', page: 'pages', form: 'forms', control: 'controls', action: 'actions', policy: 'policies', extension: 'extensionContracts' } as const;
@@ -44,6 +46,7 @@ export class ProjectCore {
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
   registerIdentity(this.registry,options,id=>this.storage.snapshot(id),(id,c)=>this.storage.hasInspectedConnection(id,c));
+  registerExtensions(this.registry,options,this.storage);
   this.closeGeneration=registerGeneration(this.registry, options, this.plans, this.storage);
   this.migration = registerSchemaApply(this.registry, options, this.storage, this.plans);
   this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
