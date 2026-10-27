@@ -47,11 +47,11 @@
     {
       "criterion_id": "FR-005",
       "description": "Verify FR-005 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-005; docs/evidence/generality/report.md Project identity and draft isolation; docs/evidence/usability/report.md; tests/e2e/document-modes/workflow.spec.ts. Incomplete/unrelated drafts survive live MCP rebases, gap/reconnect/reload, modes and conflict resolution; model undo/redo and unsaved state; 20 map/schema edits retain selection. Reviewed against mission spec FR-005; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:11:53.269637+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
