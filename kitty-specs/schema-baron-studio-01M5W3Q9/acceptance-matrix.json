@@ -257,11 +257,11 @@
     {
       "criterion_id": "FR-026",
       "description": "Verify FR-026 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-026; docs/evidence/equipment/report.md T109; docs/evidence/generality/report.md; docs/evidence/recovery/report.md; packages/generator/tests/regeneration/recovery.test.ts. Both visible apps preserve exact authored bytes/data/migration history through two real promotions; deterministic ownership tests and nine source-promotion crash boundaries preserve recoverable complete trees, external database/secrets. Per-crash source completeness is distinct from runtime-build proof. Reviewed against mission spec FR-026; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:13:02.338121+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
