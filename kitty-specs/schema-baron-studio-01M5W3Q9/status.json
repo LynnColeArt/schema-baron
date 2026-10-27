@@ -1,7 +1,7 @@
 {
-  "event_count": 221,
-  "last_event_id": "01M5YN6KGRN3QR0KWXY4VF9XYQ",
-  "materialized_at": "2026-10-27T12:26:13.912068+00:00",
+  "event_count": 223,
+  "last_event_id": "01M5YNXBGFBDXXCQ10R5A5BHA5",
+  "materialized_at": "2026-10-27T12:38:39.364637+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
@@ -12,9 +12,9 @@
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 0,
+    "in_progress": 1,
     "in_review": 0,
-    "planned": 5
+    "planned": 4
   },
   "work_packages": {
     "WP01": {
@@ -738,11 +738,19 @@
       }
     },
     "WP22": {
-      "actor": "finalize-tasks",
+      "actor": "codex",
+      "agent": "codex",
+      "agent_profile": "implementer-ivan",
+      "agent_profile_version": "1.0",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W7XVT2B2FK2KXBXBMB754Y",
-      "last_transition_at": "2026-10-26T13:55:47.138857+00:00"
+      "lane": "in_progress",
+      "last_event_id": "01M5YNXBGFBDXXCQ10R5A5BHA5",
+      "last_transition_at": "2026-10-27T12:38:39.364637+00:00",
+      "model": "__resolved_model_absent__",
+      "provider": "__resolved_provider_absent__",
+      "role": "implementer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54"
     },
     "WP23": {
       "actor": "finalize-tasks",
