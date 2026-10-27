@@ -715,7 +715,8 @@
       "notes": [
         "Ready for review: source 2214b32; real managed build/run/cancel/native-child cleanup, tree-revision promotion/restart and typed Live Page; portable export independently installed/built/served with Studio stopped; 425 tests plus strict/browser proof. Evidence packages/core/tests/runtime/EVIDENCE.md.",
         "Independent review rejected source2214b32: concurrent runtime starts orphan an owned process; asynchronous stale export publishes despite revision rejection. Eight checks and actual test evidence in feedback.",
-        "Review cycle 1 repaired in 2b320cc: pending runtime ownership/callback drain, stale export no publication+durable retry, generated typed context/top CTA and obsolete status diagnostics. 435 tests/62 files and exact-build browser45.2s passed; failed-before/after heldouts and screenshot in runtime evidence."
+        "Review cycle 1 repaired in 2b320cc: pending runtime ownership/callback drain, stale export no publication+durable retry, generated typed context/top CTA and obsolete status diagnostics. 435 tests/62 files and exact-build browser45.2s passed; failed-before/after heldouts and screenshot in runtime evidence.",
+        "Independent re-review passed source2b320cc: both original P1 repros fixed; extended4heldouts, focused10tests, actual8process/export tests and fresh browser/offline export passed. P2 stale Messages and generated context UI verified. Eight checks: dead code PASS; synthetic fixtures PASS; silent empty returns PASS; FR coverage PASS; frozen surface N/A; locked decisions PASS; shared ownership PASS (authorized narrow core/model/UI integration rationale EVIDENCE.md); production fragility PASS. Full reviewer evidence /tmp/wp21-rereview-renata.md; fresh browser artifacts /tmp/wp21-rereview-browser-results. Inspected435-test final verify; no broad rerun or later feature acceptance claimed."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
