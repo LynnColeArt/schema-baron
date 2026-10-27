@@ -13,6 +13,7 @@
   "accepted_at": "2026-10-27T17:17:28.315710+00:00",
   "accepted_by": "codex",
   "accepted_from_commit": "fb2660571b36eff192a199aa0ef1542aa68a71bb",
+  "baseline_merge_commit": "0690035de82e68e068e4f94690a51081413f1030",
   "coordination_branch": "kitty/mission-schema-baron-studio-01M5W3Q9",
   "created_at": "2026-10-26T12:42:18.166623+00:00",
   "flattened": false,
