@@ -176,3 +176,88 @@ p95 **86.64 ms**; the complete raw distribution is in the local `latency.json`.
 These small-workspace measurements include automation overhead and do not claim
 full-scale editing/reopen budgets. All T021–T025 implementation evidence is ready
 for independent review; native 200% zoom remains explicitly unexecuted.
+
+## Review cycle 1 repair — incomplete draft recovery (P1)
+
+The independent rejection at source `523c17b` identified a real preservation defect:
+`restore` used committed entity schemas for every current/past/future draft, then
+returned an empty editor/view if one temporary empty title failed validation. The
+normal retain effect subsequently replaced the recovery source. Correcting the
+current title did not help while an empty value remained in undo history.
+
+The repair is limited to recovery, its workspace integration and regression tests:
+
+- Recovery validates its bounded envelope, stable identity and supported editable
+  shapes. Page title/route can be empty and paging can be temporarily out of range.
+  Shared model schemas, owner command validation and committed snapshots are unchanged.
+- Well-formed incomplete current/past/future values and navigation restore intact.
+  Malformed entries are recovered independently so unrelated drafts remain. Unsafe
+  partial undo history is explicitly reset with a recovery warning, rather than
+  exposing a partially missing snapshot as a destructive undo target. Independent
+  valid navigation fields survive a damaged field.
+- Messages visibly reports `DRAFT_RECOVERY` with an explanation and next action.
+  The raw malformed source is preserved before automatic replacement. There is at
+  most one backup slot per project, bounded to 2,000,000 characters; an existing
+  distinct backup is never overwritten. Oversized sources, a protected prior backup,
+  or failed backup writes block replacement of the live source. Retain applies the
+  same size bound. Project switching stops with a visible error if current drafts
+  cannot be retained safely. Backups are tab-local model recovery data; auth proof
+  and owner keys do not enter them.
+
+Observed red/green verification:
+
+1. Six test-first recovery cases failed against the original module. Seven final
+   focused tests pass: incomplete mixed drafts and navigation; corrected current
+   values with invalid past/future history; incomplete route/numeric values;
+   malformed-entry isolation; malformed navigation; failed backup protection; and
+   bounded/protected backup behavior.
+2. Before rebuilding, the added real-owner browser regression failed against the
+   old production output at the exact project-switch point: the Title input was
+   missing because the workspace had reset. Command:
+   `npm run test:e2e -- tests/e2e/workspace/workflow.spec.ts -g "incomplete and corrected" --output=/tmp/wp05-red-recovery`.
+3. After rebuilding, the reviewer workflow passes through visible UI authoring of
+   Orchard, Welcome Login form, Guest name text control and unsaved Meadow. Empty
+   Title survives project switches and same-tab reload, as do stable IDs, selection,
+   both drafts and undo/redo. Invalid Save rejects atomically and owner inspection
+   remains exactly equal to the saved baseline. Corrected Title with invalid history
+   also survives switching, reload and future-stack redo; final Save preserves the
+   original form/control identities and commits both pages.
+4. A separate real-browser storage fault injection adds one malformed recovery entry
+   and navigation field to a UI-authored disposable project. Reload retains the
+   unrelated valid draft, shows recovery/history warnings, preserves the original
+   raw recovery record, and successfully saves only the valid authored model.
+
+Final commands (pinned Node/npm and the same denied lifecycle-script policy):
+
+```sh
+npm test -- apps/studio/src/workspace/session.test.ts
+npm run verify
+node node_modules/typescript/bin/tsc --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --target ES2023 --module NodeNext --moduleResolution NodeNext --noEmit --skipLibCheck --types node tests/e2e/workspace/workflow.spec.ts
+STUDIO_AXE_SCRIPT=/tmp/wp05-accessibility/node_modules/axe-core/axe.min.js npm run test:e2e -- tests/e2e/workspace/workflow.spec.ts --output=/tmp/wp05-repair-e2e
+npm run lint
+git diff --check
+```
+
+Clean-output verification archived earlier generated outputs under
+`/tmp/wp05-cycle1-build-output-c6jen9jt`, then passed all builds/typechecks, native
+SQLite smoke, credential/diff checks, **133 tests in 13 files**, and exact dependency
+validation. Final browser run passed **all four workflows in 13.1 seconds**; the
+existing WCAG2/2.1 AA axe audit again reports `[]`. Strict browser-test TypeScript
+and final diff lint pass. No production dependency or lockfile changed.
+
+Repair screenshots inspected at 1280×800:
+
+- `/tmp/wp05-repair-e2e/workspace-workflow-incompl-ec0c4-undo-without-weakening-Save/invalid-drafts-recovered.png`
+- Same directory: `corrected-drafts-saved.png`.
+- `/tmp/wp05-repair-e2e/workspace-workflow-damaged-0fc72-ports-safe-partial-recovery/partial-recovery-warning.png`
+
+The rebuilt owner remains at `http://127.0.0.1:35719` using the same private
+`/tmp/wp05-studio-handoff/owner.json`. A fresh live CUA attempt found browser 2
+unavailable and an empty app/browser inventory; no fresh live-CUA pass is claimed.
+The real repository Playwright workflows and screenshot inspection above completed.
+Native 200% zoom and full-scale budgets remain unclaimed as before.
+
+The actual recorded baseline failure was inspected: pytest's
+`<gate-coverage-junit>` lacked a JUnit artifact. It is the known unavailable Python
+gate authority, not a product test failure and not an excuse for this defect.
+Independent review is requested again after this repair; no self-approval is recorded.

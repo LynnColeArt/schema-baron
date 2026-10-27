@@ -426,3 +426,161 @@ test("two drafts survive project switches and MCP edits; conflict resolution, in
     page.getByRole("tabpanel", { name: "Design document" }),
   ).toBeVisible();
 });
+
+test("incomplete and corrected drafts with invalid history survive switch, reload and undo without weakening Save", async ({
+  page,
+}, info) => {
+  await connect(page);
+  await create(page, "Draft recovery regression");
+  await addPage(page, "Orchard", "/orchard");
+  await addForm(page, "Welcome");
+  await page.getByRole("tab", { name: "Controls", exact: true }).click();
+  await page.getByRole("button", { name: "◇ Text input", exact: true }).click();
+  await page.getByLabel("Label", { exact: true }).fill("Guest name");
+  await save(page);
+  const summaries = await owner("projects?approvedRoot=projects");
+  const projectId = summaries.find(
+    (p: { name: string }) => p.name === "Draft recovery regression",
+  ).id;
+  const committed: Project = await owner("projects/" + projectId);
+  await addPage(page, "Meadow draft", "/meadow");
+  await page.getByRole("treeitem", { name: "Orchard", exact: true }).dblclick();
+  await page.getByLabel("Title", { exact: true }).fill("");
+  await create(page, "Recovery switch target");
+  const switchBack = async (name: string) => {
+    await page
+      .getByRole("button", { name: "Open / Switch…", exact: true })
+      .click();
+    await page.getByRole("button", { name: new RegExp(name) }).click();
+  };
+  await switchBack("Draft recovery regression");
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+  await expect(
+    page.getByRole("treeitem", { name: /Meadow draft/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(`r${committed.revision} · 2 dirty objects`, { exact: true }),
+  ).toBeVisible();
+  expect(await owner("projects/" + projectId)).toEqual(committed);
+  await page.getByLabel("Title", { exact: true }).press("ControlOrMeta+s");
+  await expect(
+    page
+      .getByRole("region", { name: "Messages", exact: true })
+      .getByRole("button"),
+  ).toContainText("INVALID_INPUT");
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+  expect(await owner("projects/" + projectId)).toEqual(committed);
+  page.on("dialog", (dialog) => void dialog.accept());
+  await page.reload();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+  await expect(
+    page.getByRole("treeitem", { name: /Meadow draft/ }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "↶ Undo", exact: true }).click();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
+    "Orchard",
+  );
+  await page.getByRole("button", { name: "↷ Redo", exact: true }).click();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+  await page.screenshot({
+    path: info.outputPath("invalid-drafts-recovered.png"),
+    fullPage: true,
+  });
+  await page
+    .getByLabel("Title", { exact: true })
+    .fill("Orchard corrected valid");
+  await switchBack("Recovery switch target");
+  await switchBack("Draft recovery regression");
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
+    "Orchard corrected valid",
+  );
+  await page.getByRole("button", { name: "↶ Undo", exact: true }).click();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+  // Persist and recover the future stack, which contains the corrected value.
+  await page.reload();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+  await page.getByRole("button", { name: "↷ Redo", exact: true }).click();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
+    "Orchard corrected valid",
+  );
+  await expect(
+    page.getByRole("treeitem", { name: /Meadow draft/ }),
+  ).toBeVisible();
+  await save(page);
+  const saved: Project = await owner("projects/" + projectId);
+  expect(saved.pages).toHaveLength(2);
+  expect(saved.pages.find((p) => p.id === committed.pages[0]!.id)!.title).toBe(
+    "Orchard corrected valid",
+  );
+  expect(saved.forms).toEqual(committed.forms);
+  expect(saved.controls).toEqual(committed.controls);
+  await page.screenshot({
+    path: info.outputPath("corrected-drafts-saved.png"),
+    fullPage: true,
+  });
+});
+
+test("damaged browser recovery preserves unrelated UI-authored drafts and reports safe partial recovery", async ({
+  page,
+}, info) => {
+  await connect(page);
+  await create(page, "Damaged recovery regression");
+  await addPage(page, "Saved anchor", "/anchor");
+  await save(page);
+  const projects = await owner("projects?approvedRoot=projects");
+  const projectId = projects.find(
+    (p: { name: string }) => p.name === "Damaged recovery regression",
+  ).id;
+  const before: Project = await owner("projects/" + projectId);
+  await addPage(page, "Retained valid draft", "/valid-draft");
+  // Fault injection targets this test's browser recovery record, not authored project/model data.
+  await page.evaluate((id) => {
+    const key = `studio.workspace.${id}`,
+      data = JSON.parse(sessionStorage.getItem(key)!);
+    data.editor.drafts.broken = { entity: "page", value: { id: "broken" } };
+    data.view.propertyTab = 42;
+    sessionStorage.setItem(key, JSON.stringify(data));
+  }, projectId);
+  page.on("dialog", (dialog) => void dialog.accept());
+  await page.reload();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
+    "Retained valid draft",
+  );
+  await expect(
+    page.getByRole("treeitem", { name: /Retained valid draft/ }),
+  ).toBeVisible();
+  const messages = page.getByRole("region", { name: "Messages", exact: true });
+  await expect(
+    messages
+      .getByRole("button")
+      .filter({ hasText: "Unrelated recoverable drafts were kept" }),
+  ).toBeVisible();
+  await expect(
+    messages
+      .getByRole("button")
+      .filter({ hasText: "undo history could not be restored safely" }),
+  ).toBeVisible();
+  expect(await owner("projects/" + projectId)).toEqual(before);
+  const recovery = await page.evaluate((id) => {
+    const key = `studio.workspace.${id}`;
+    return {
+      current: JSON.parse(sessionStorage.getItem(key)!),
+      original: JSON.parse(sessionStorage.getItem(key + ".recovery")!),
+    };
+  }, projectId);
+  expect(Object.values(recovery.current.editor.drafts)).toHaveLength(1);
+  expect(recovery.original.editor.drafts.broken).toMatchObject({
+    value: { id: "broken" },
+  });
+  await page.screenshot({
+    path: info.outputPath("partial-recovery-warning.png"),
+    fullPage: true,
+  });
+  await save(page);
+  const saved: Project = await owner("projects/" + projectId);
+  expect(saved.pages.map((p) => p.title)).toEqual([
+    "Saved anchor",
+    "Retained valid draft",
+  ]);
+  expect(saved.revision).toBe(before.revision + 1);
+});

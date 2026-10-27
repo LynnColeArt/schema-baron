@@ -174,17 +174,27 @@ export default function Workspace() {
     }
   }
   async function openProject(id: string) {
-    const snapshot = await client.snapshot(id),
-      saved = restore(id);
-    // Retain the previous project's work before switching; navigation is not a model edit.
+    const snapshot = await client.snapshot(id);
+    // Never leave a project's newest drafts behind when recovery storage cannot retain them.
     const prior = state.current;
-    if (prior.project) retain(prior.project.id, prior.editor, prior.view);
+    if (prior.project && !retain(prior.project.id, prior.editor, prior.view))
+      throw new OwnerError(
+        "DRAFT_STORAGE_UNAVAILABLE",
+        "Cannot switch projects because draft recovery data could not be safely retained. Keep this project open, save your drafts, and review any recovery messages.",
+      );
+    const saved = restore(id);
     setProject(snapshot);
     setEditor(reconcile(saved.editor, snapshot));
     setView(saved.view);
     sessionStorage.setItem("studio.activeProject", id);
-    setMessages([]);
-    notice(`Opened ${snapshot.name} · revision ${snapshot.revision}`);
+    setMessages(
+      saved.issues.map((message) => ({ code: "DRAFT_RECOVERY", message })),
+    );
+    notice(
+      saved.issues.length
+        ? "Draft recovery needs attention. Review Messages; recoverable drafts were retained."
+        : `Opened ${snapshot.name} · revision ${snapshot.revision}`,
+    );
     setModal(null);
   }
   async function ready() {
