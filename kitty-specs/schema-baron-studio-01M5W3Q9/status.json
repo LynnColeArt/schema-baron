@@ -394,7 +394,7 @@
     },
     "WP12": {
       "actor": "user",
-      "agent": "codex",
+      "agent": null,
       "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
@@ -403,9 +403,11 @@
       "last_transition_at": "2026-10-27T08:49:16.938111+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: generated Search and transactional Record lifecycle; 269 workspace tests, 6 focused generated-runtime tests, real wizard-to-production browser CRUD, strict output builds and SQLite assertions. Commit 2207735; evidence in packages/generator/tests/record/EVIDENCE.md."
+        "Ready for independent review: generated Search and transactional Record lifecycle; 269 workspace tests, 6 focused generated-runtime tests, real wizard-to-production browser CRUD, strict output builds and SQLite assertions. Commit 2207735; evidence in packages/generator/tests/record/EVIDENCE.md.",
+        "Independent review source2207735/baseab00032: P1 key-based child returns fail generated production HTTP; P1 empty typed filters disable Record navigation. Eight checklist items in feedback. Shared integration explicitly authorized and reviewed."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP12-generated-search-and-complete-record-lifecycle/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP12-generated-search-and-complete-record-lifecycle/review-cycle-1.md",
@@ -413,14 +415,14 @@
         "verdict": "changes_requested"
       },
       "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T056": "done",
-        "T057": "done",
-        "T058": "done",
-        "T059": "done",
-        "T060": "done"
+        "T056": "planned",
+        "T057": "planned",
+        "T058": "planned",
+        "T059": "planned",
+        "T060": "planned"
       }
     },
     "WP13": {
