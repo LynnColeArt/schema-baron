@@ -1,12 +1,13 @@
 import type {
+  Action,
   Control,
   EntityBatchOperation,
   Form,
   Page,
   Project,
 } from "@schema-baron/model";
-export type Kind = "page" | "form" | "control";
-export type ObjectValue = Page | Form | Control;
+export type Kind = "page" | "form" | "control" | "action";
+export type ObjectValue = Page | Form | Control | Action;
 export type Change = { entity: Kind; value: ObjectValue };
 export interface Draft {
   entity: Kind;
@@ -21,7 +22,10 @@ interface Step {
   before: Drafts;
   after: Drafts;
 }
+import { incompleteScalars } from "../forms/scalars.js";
+import type { ScalarBuffers } from "../forms/scalars.js";
 export interface Editor {
+  buffers?: ScalarBuffers;
   drafts: Drafts;
   past: Step[];
   future: Step[];
@@ -35,6 +39,7 @@ const collections = {
   page: "pages",
   form: "forms",
   control: "controls",
+  action: "actions",
 } as const;
 const same = (a: unknown, b: unknown) =>
   JSON.stringify(a) === JSON.stringify(b);
@@ -78,6 +83,7 @@ export function edit(
   }
   if (same(drafts, editor.drafts)) return editor;
   return {
+    ...editor,
     drafts,
     past: [...editor.past.slice(-99), { before: editor.drafts, after: drafts }],
     future: [],
@@ -162,6 +168,7 @@ function rebase(drafts: Drafts, project: Project): Drafts {
 }
 export function reconcile(editor: Editor, project: Project): Editor {
   return {
+    ...editor,
     drafts: rebase(editor.drafts, project),
     past: editor.past.map((s) => ({
       before: rebase(s.before, project),
@@ -177,6 +184,7 @@ export function undo(editor: Editor): Editor {
   const step = editor.past.at(-1);
   return step
     ? {
+        ...editor,
         drafts: step.before,
         past: editor.past.slice(0, -1),
         future: [...editor.future, step],
@@ -187,6 +195,7 @@ export function redo(editor: Editor): Editor {
   const step = editor.future.at(-1);
   return step
     ? {
+        ...editor,
         drafts: step.after,
         past: [...editor.past, step],
         future: editor.future.slice(0, -1),
@@ -211,9 +220,13 @@ export function resolveDraft(
       conflicts: [],
     };
   // Resolution is an explicit boundary: undo cannot silently resurrect an unresolved comparison.
-  return { drafts, past: [], future: [] };
+  return { ...editor, drafts, past: [], future: [] };
 }
 export function operations(editor: Editor): EntityBatchOperation[] {
+  if (incompleteScalars(editor.buffers))
+    throw new Error(
+      "Complete the unfinished numeric properties before saving. Your text buffers are retained.",
+    );
   if (Object.values(editor.drafts).some((d) => d.conflicts.length))
     throw new Error("Resolve conflicting drafts before saving.");
   return Object.values(editor.drafts).map(
@@ -277,6 +290,103 @@ export function checkpoint(
   return {
     drafts: {},
     past: Object.keys(inverse).length ? [{ before: inverse, after: {} }] : [],
+    future: [],
+  };
+}
+
+/** Acknowledges only submitted values; newer input stays dirty against the accepted snapshot. */
+export function afterSave(
+  latest: Editor,
+  submitted: Editor,
+  before: Project,
+  saved: Project,
+): Editor {
+  latest = reconcile(latest, before);
+  const history = checkpoint(submitted, before, saved);
+  const remaining: Drafts = {};
+  for (const id of new Set([
+    ...Object.keys(latest.drafts),
+    ...Object.keys(submitted.drafts),
+  ])) {
+    const draft = latest.drafts[id],
+      sent = submitted.drafts[id];
+    if (!sent) {
+      if (draft) remaining[id] = draft;
+      continue;
+    }
+    if (!draft) {
+      const value = object(before, sent.entity, id),
+        base = object(saved, sent.entity, id);
+      if (value && !same(value, base))
+        remaining[id] = {
+          ...sent,
+          value,
+          base,
+          baseRevision: saved.revision,
+          conflicts: [],
+        };
+      continue;
+    }
+    if (same(draft.value, sent.value) && draft.removed === sent.removed)
+      continue;
+    const conflicts = [...draft.conflicts],
+      remote = object(saved, draft.entity, id);
+    const value = merge(
+      sent.value,
+      draft.value,
+      remote,
+      "",
+      conflicts,
+    ) as ObjectValue;
+    if (!same(value, remote))
+      remaining[id] = {
+        ...draft,
+        value,
+        base: remote,
+        baseRevision: saved.revision,
+        conflicts,
+      };
+  }
+  const rebased = reconcile({ ...latest, drafts: remaining }, saved);
+  return {
+    ...rebased,
+    past: [
+      ...history.past,
+      ...(Object.keys(rebased.drafts).length
+        ? [{ before: {}, after: rebased.drafts }]
+        : []),
+    ],
+    future: [],
+  };
+}
+
+/** Construction is one model-history step, including inverse document/child references. */
+export function afterConstruction(
+  latest: Editor,
+  submitted: Editor,
+  before: Project,
+  saved: Project,
+  changedIds: string[],
+): Editor {
+  const result = afterSave(latest, submitted, before, saved);
+  const changes: Change[] = [];
+  for (const entity of Object.keys(collections) as Kind[])
+    for (const value of saved[collections[entity]])
+      if (changedIds.includes(value.id)) changes.push({ entity, value });
+  const committed = edit(initialEditor(), before, changes);
+  const inverse = checkpoint(committed, before, saved).past[0]?.before ?? {};
+  const contextual = rebase(inverse, visible(saved, result));
+  for (const draft of Object.values(contextual)) {
+    draft.base = object(saved, draft.entity, draft.value.id);
+    draft.baseRevision = saved.revision;
+    draft.conflicts = [];
+  }
+  return {
+    ...result,
+    past: [
+      ...result.past,
+      { before: { ...result.drafts, ...contextual }, after: result.drafts },
+    ],
     future: [],
   };
 }

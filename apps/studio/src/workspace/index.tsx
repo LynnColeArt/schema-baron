@@ -5,13 +5,21 @@ import { createId } from "@schema-baron/model";
 import type { Control, Form, Page, Project } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
-import { GenerationReview } from '../generation/index.js';
+import {
+  incompleteScalars,
+  scalarIssues,
+  scalarObjectId,
+  completeScalar as completeScalarForPage,
+} from "../forms/scalars.js";
+import { FormWizard, FormProperties } from "../forms/index.js";
+import { GenerationReview } from "../generation/index.js";
 import { MigrationHistory } from "../migration-history/index.js";
 import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
 import {
-  checkpoint,
+  afterSave,
+  afterConstruction,
   edit,
   initialEditor,
   initialView,
@@ -110,7 +118,8 @@ export default function Workspace() {
         ].find((v) => v.id === view.selected)
       : undefined;
   const activePage = model?.pages.find((p) => p.id === view.activePage);
-  const dirty = Object.keys(editor.drafts).length > 0;
+  const dirty =
+    Object.keys(editor.drafts).length > 0 || incompleteScalars(editor.buffers);
   const conflicts = Object.values(editor.drafts).filter(
     (d) => d.conflicts.length,
   );
@@ -269,11 +278,14 @@ export default function Workspace() {
   function select(id: string, open = true) {
     if (!model) return;
     const control = model.controls.find((c) => c.id === id),
-      form = model.forms.find((f) => f.id === (control?.formId ?? id));
+      action = model.actions.find((a) => a.id === id),
+      form = model.forms.find(
+        (f) => f.id === (control?.formId ?? action?.formId ?? id),
+      );
     const page = model.pages.find((p) => p.id === (form?.pageId ?? id));
     setView((v) => ({
       ...v,
-      selected: id,
+      selected: action?.formId ?? id,
       ...(open && page
         ? { activePage: page.id, open: [...new Set([...v.open, page.id])] }
         : {}),
@@ -285,7 +297,7 @@ export default function Workspace() {
     }));
   }
   function change(changes: Change[]) {
-    if (!project || busy) return;
+    if (!project) return;
     setEditor((current) => edit(current, project, changes));
   }
   useEffect(() => {
@@ -297,10 +309,7 @@ export default function Workspace() {
       !prior.element.isConnected
     )
       return;
-    if (
-      document.activeElement === document.body ||
-      document.activeElement === prior.element
-    ) {
+    if (document.activeElement === document.body) {
       prior.element.focus();
       if (prior.start !== null && prior.end !== null)
         prior.element.setSelectionRange(prior.start, prior.end);
@@ -309,8 +318,28 @@ export default function Workspace() {
   async function save(): Promise<boolean> {
     if (saving.current) return false;
     const current = state.current;
-    if (!current.project || !Object.keys(current.editor.drafts).length)
+    if (
+      !current.project ||
+      (!Object.keys(current.editor.drafts).length &&
+        !incompleteScalars(current.editor.buffers))
+    )
       return true;
+    const scalarErrors = scalarIssues(current.editor.buffers);
+    if (scalarErrors.length) {
+      report(
+        new OwnerError(
+          "INVALID_INPUT",
+          "Correct the highlighted numeric properties before saving.",
+          scalarErrors.map((issue) => ({
+            ...issue,
+            code: "INVALID_INPUT",
+            severity: "error",
+            objectId: createId(() => issue.objectId),
+          })),
+        ),
+      );
+      return false;
+    }
     saving.current = true;
     const focused = document.activeElement;
     if (
@@ -330,14 +359,13 @@ export default function Workspace() {
       const snapshot = await client.snapshot(current.project.id),
         merged = reconcile(current.editor, snapshot);
       setProject(snapshot);
-      setEditor(merged);
+
       const ops = operations(merged);
       if (ops.length) await client.batch(snapshot, ops, createId());
-      const intended = visible(snapshot, merged);
-      intended.revision = snapshot.revision + (ops.length ? 1 : 0);
       const saved = await client.snapshot(snapshot.id);
+      state.current = { ...state.current, project: saved };
       setProject(saved);
-      setEditor(reconcile(checkpoint(merged, snapshot, intended), saved));
+      setEditor((latest) => afterSave(latest, merged, snapshot, saved));
       setMessages([]);
       notice(`Saved · revision ${saved.revision}`);
       return true;
@@ -475,53 +503,15 @@ export default function Workspace() {
     });
     setModal(null);
   }
-  function addForm(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!activePage) return;
-    const data = new FormData(event.currentTarget),
-      id = createId();
-    const kind = String(data.get("kind")) as Form["kind"];
-    const source = String(data.get("source") ?? "");
-    if (kind !== "Login" && !source) {
-      setDialogError(
-        "This form requires a source. Set up a connection and schema before adding a data form.",
-      );
-      return;
-    }
-    const [sourceKind, sourceId] = source.split(":");
-    const form: Form = {
-      id,
-      pageId: activePage.id,
-      kind,
-      ...(kind !== "Login" && sourceId
-        ? {
-            sourceRef: {
-              kind: sourceKind as "table" | "query",
-              id: createId(() => sourceId),
-            },
-          }
-        : {}),
-      keyMapping: [],
-      controlIds: [],
-      actionIds: [],
-      search: [],
-      sorting: [],
-      paging: { pageSize: 20 },
-      appearance: { label: String(data.get("label")) },
-    };
-    change([
-      {
-        entity: "page",
-        value: {
-          ...activePage,
-          formIds: [...activePage.formIds, id],
-          document: [...activePage.document, { kind: "form", formId: id }],
-        },
-      },
-      { entity: "form", value: form },
-    ]);
-    updateView({ selected: id, propertyTab: "Format" });
-    setModal(null);
+  function selectCreated(id: string, next: Project) {
+    const form = next.forms.find((f) => f.id === id);
+    if (form)
+      updateView({
+        selected: id,
+        activePage: form.pageId,
+        propertyTab: "Data",
+        open: [...new Set([...state.current.view.open, form.pageId])],
+      });
   }
   function addControl(kind: Control["kind"]) {
     const form =
@@ -560,6 +550,19 @@ export default function Workspace() {
   }
   function pageDirty(id: string) {
     if (!model) return false;
+    const scalarDirty = Object.entries(editor.buffers ?? {}).some(
+      ([key, buffer]) =>
+        !completeScalarForPage(buffer) &&
+        model.forms.some(
+          (f) =>
+            f.pageId === id &&
+            (scalarObjectId(key) === f.id ||
+              model.controls.some(
+                (c) => c.formId === f.id && scalarObjectId(key) === c.id,
+              )),
+        ),
+    );
+    if (scalarDirty) return true;
     return Object.values(editor.drafts).some((d) =>
       d.entity === "page"
         ? d.value.id === id
@@ -597,10 +600,20 @@ export default function Workspace() {
           model.forms.some((f) => f.id === c.formId && f.pageId === id),
         )
         .map((c) => c.id),
+      ...model.actions
+        .filter((a) =>
+          model.forms.some((f) => f.id === a.formId && f.pageId === id),
+        )
+        .map((a) => a.id),
     ]);
     setEditor({
       drafts: Object.fromEntries(
         Object.entries(current.editor.drafts).filter(([key]) => !ids.has(key)),
+      ),
+      buffers: Object.fromEntries(
+        Object.entries(current.editor.buffers ?? {}).filter(
+          ([key]) => !ids.has(scalarObjectId(key)),
+        ),
       ),
       past: [],
       future: [],
@@ -621,7 +634,7 @@ export default function Workspace() {
           aria-label={name}
           type={type}
           value={value}
-          readOnly={busy}
+          readOnly={false}
           aria-busy={busy}
           onFocus={() => setHelp(description)}
           onChange={(e) =>
@@ -639,32 +652,23 @@ export default function Workspace() {
           Select a page, form or control to inspect its properties.
         </p>
       );
-    if (view.propertyTab === "Events" && selectedKind === "control") {
-      const control = selected as Control;
+    if (selectedKind === "form" || selectedKind === "control")
       return (
-        <>
-          <div className="property-row">
-            <span>Event</span>
-            <span>Action</span>
-          </div>
-          {control.events.map((e, i) => (
-            <div className="property-row" key={i}>
-              <span>{e.event}</span>
-              <span>
-                {model.actions.find((a) => a.id === e.actionId)?.operation ??
-                  e.actionId}
-              </span>
-            </div>
-          ))}
-          <p className="pane-note">
-            {control.events.length
-              ? "Action references are read from the shared model."
-              : "No events assigned."}{" "}
-            Action authoring will be available with the page construction tools.
-          </p>
-        </>
+        <FormProperties
+          project={model}
+          value={selected as Form | Control}
+          kind={selectedKind}
+          tab={view.propertyTab}
+          onChange={change}
+          buffers={editor.buffers ?? {}}
+          onScalar={(key, buffer) =>
+            setEditor((current) => ({
+              ...current,
+              buffers: { ...current.buffers, [key]: buffer },
+            }))
+          }
+        />
       );
-    }
     if (selectedKind === "page") {
       const page = selected as Page;
       return view.propertyTab === "Format" ? (
@@ -698,120 +702,7 @@ export default function Workspace() {
         </>
       );
     }
-    const value = selected as Form | Control;
-    if (view.propertyTab === "Format")
-      return (
-        <>
-          {field(
-            "Label",
-            value.appearance.label ?? "",
-            "Visible label for the selected object.",
-            (text) => ({
-              ...value,
-              appearance: { ...value.appearance, label: text },
-            }),
-          )}
-          {field(
-            "CSS class",
-            value.appearance.className ?? "",
-            "Authored presentation class. It is stored in the canonical model.",
-            (text) => ({
-              ...value,
-              appearance: { ...value.appearance, className: text },
-            }),
-          )}
-          <div className="property-row">
-            <span>Kind</span>
-            <span>{value.kind}</span>
-          </div>
-          <div className="property-row">
-            <span>Object ID</span>
-            <code>{value.id}</code>
-          </div>
-        </>
-      );
-    if (selectedKind === "form") {
-      const form = selected as Form;
-      return (
-        <>
-          <div className="property-row">
-            <span>Data source</span>
-            <span>
-              {form.sourceRef
-                ? ([
-                    ...model.schema.tables.map((t) => ({
-                      id: t.id,
-                      name: t.physicalName,
-                    })),
-                    ...model.queries,
-                  ].find((s) => s.id === form.sourceRef!.id)?.name ??
-                  form.sourceRef.id)
-                : "None"}
-            </span>
-          </div>
-          {form.kind === "Grid" &&
-            field(
-              "Page size",
-              form.paging.pageSize,
-              "Rows per page, from 1 to 200.",
-              (text) => ({ ...form, paging: { pageSize: Number(text) } }),
-              "number",
-            )}
-          <p className="pane-note">
-            Source binding and key configuration are available with the data and
-            page construction editors.
-            {form.kind === "Login" &&
-              " This is a form structure; generated-app authentication is not configured."}
-          </p>
-        </>
-      );
-    }
-    const control = selected as Control;
-    return (
-      <>
-        <label className="property-row"><span>Bound field</span><select aria-label="Bound field" disabled={busy} value={control.binding?.kind === "stored" ? control.binding.fieldId : ""} onChange={e => {const {binding:_binding,...unbound}=control;change([{entity:"control",value:e.target.value?{...control,binding:{kind:"stored",fieldId:createId(()=>e.target.value)}}:unbound}]);}}><option value="">Unbound</option>{(() => {const form=model.forms.find(f=>f.id===control.formId);return (form?.sourceRef?.kind==="table"?model.schema.tables.find(t=>t.id===form.sourceRef?.id)?.columns.map(c=>({id:c.id,name:c.physicalName})):model.queries.find(q=>q.id===form?.sourceRef?.id)?.projections)?.map(f=><option key={f.id} value={f.id}>{f.name}</option>);})()}</select></label>
-        <label className="property-row">
-          <span>Read only</span>
-          <input
-            type="checkbox"
-            aria-label="Read only"
-            disabled={busy}
-            checked={control.readOnly}
-            onChange={(e) =>
-              change([
-                {
-                  entity: "control",
-                  value: { ...control, readOnly: e.target.checked },
-                },
-              ])
-            }
-          />
-        </label>
-        <label className="property-row">
-          <span>Required</span>
-          <input
-            type="checkbox"
-            aria-label="Required"
-            disabled={busy}
-            checked={control.validation.required}
-            onChange={(e) =>
-              change([
-                {
-                  entity: "control",
-                  value: {
-                    ...control,
-                    validation: {
-                      ...control.validation,
-                      required: e.target.checked,
-                    },
-                  },
-                },
-              ])
-            }
-          />
-        </label>
-      </>
-    );
+    return null;
   }
   function treeKey(event: React.KeyboardEvent<HTMLDivElement>) {
     const items = Array.from(
@@ -945,9 +836,34 @@ export default function Workspace() {
         <button onClick={() => dialog("connection")} disabled={!project}>
           Connections…
         </button>
-        <button onClick={() => dialog("history")} disabled={!project || !caps.operations.some(c => c.operation === "schema.history")}>Migration history…</button>
-        <button onClick={() => dialog("generation")} disabled={!project || !caps.operations.some(c => c.operation === "generation.preview") || Object.keys(editor.drafts).length > 0}>Generate…</button>
-        <button disabled={!project} aria-pressed={schemaActive} onClick={() => setSchemaActive(v => !v)}>Schema</button>
+        <button
+          onClick={() => dialog("history")}
+          disabled={
+            !project ||
+            !caps.operations.some((c) => c.operation === "schema.history")
+          }
+        >
+          Migration history…
+        </button>
+        <button
+          onClick={() => dialog("generation")}
+          disabled={
+            !project ||
+            !caps.operations.some(
+              (c) => c.operation === "generation.preview",
+            ) ||
+            dirty
+          }
+        >
+          Generate…
+        </button>
+        <button
+          disabled={!project}
+          aria-pressed={schemaActive}
+          onClick={() => setSchemaActive((v) => !v)}
+        >
+          Schema
+        </button>
         <span className="menu-spacer" />
         <button
           onClick={() => setHidden((h) => ({ ...h, explorer: !h.explorer }))}
@@ -982,7 +898,12 @@ export default function Workspace() {
           {connected ? "Disconnect service" : "Connect service…"}
         </button>
       </nav>
-      <div className="toolbar" role="toolbar" aria-label="Model editing" style={{display:schemaActive?"none":undefined}}>
+      <div
+        className="toolbar"
+        role="toolbar"
+        aria-label="Model editing"
+        style={{ display: schemaActive ? "none" : undefined }}
+      >
         <button
           disabled={
             !project || !connected || busy || !dirty || conflicts.length > 0
@@ -1037,12 +958,26 @@ export default function Workspace() {
         <span className="menu-spacer" />
         <span className="revision">
           {project
-            ? `r${project.revision} · ${Object.keys(editor.drafts).length} dirty objects`
+            ? `r${project.revision} · ${Object.keys(editor.drafts).length} dirty objects${incompleteScalars(editor.buffers) ? ` · ${scalarIssues(editor.buffers).length} invalid numeric inputs` : ""}`
             : "No project open"}
         </span>
       </div>
       <div className="workspace-scroll">
-        {project && <div style={{height:"100%",display:schemaActive?"block":"none"}}><SchemaEditor key={project.id} active={schemaActive} onConnection={()=>dialog("connection")} project={project} client={client} caps={caps} onChanged={acceptSnapshot}/></div>}
+        {project && (
+          <div
+            style={{ height: "100%", display: schemaActive ? "block" : "none" }}
+          >
+            <SchemaEditor
+              key={project.id}
+              active={schemaActive}
+              onConnection={() => dialog("connection")}
+              project={project}
+              client={client}
+              caps={caps}
+              onChanged={acceptSnapshot}
+            />
+          </div>
+        )}
         <div
           className="docks"
           style={
@@ -1270,7 +1205,12 @@ export default function Workspace() {
                   </div>
                 )}
               </div>
-              <div className="modebar">
+              <div
+                className="modebar"
+                tabIndex={0}
+                role="region"
+                aria-label="Document modes and status"
+              >
                 <span className="mode-active">Design</span>
                 {["HTML", "Code", "Preview", "Live Page"].map((mode) => (
                   <span
@@ -1298,7 +1238,12 @@ export default function Workspace() {
               <h2>
                 Messages <span>{messages.length}</span>
               </h2>
-              <div className="message-table">
+              <div
+                className="message-table"
+                tabIndex={0}
+                role="region"
+                aria-label="Diagnostic messages"
+              >
                 <div className="message-columns">
                   <span>Code</span>
                   <span>Description</span>
@@ -1312,14 +1257,21 @@ export default function Workspace() {
                         if (message.objectId) select(message.objectId);
                         if (message.field) {
                           updateView({
-                            propertyTab:
-                              message.field === "route" ? "Data" : "Format",
+                            propertyTab: [
+                              "route",
+                              "Page size",
+                              "min",
+                              "max",
+                              "maxLength",
+                            ].includes(message.field ?? "")
+                              ? "Data"
+                              : "Format",
                           });
                           setTimeout(
                             () =>
                               document
                                 .querySelector<HTMLInputElement>(
-                                  `input[aria-label="${message.field === "route" ? "Route" : message.field === "title" ? "Title" : "Label"}"]`,
+                                  `input[aria-label="${["Width", "Page size", "min", "max", "maxLength"].includes(message.field ?? "") ? message.field : message.field === "route" ? "Route" : message.field === "title" ? "Title" : "Label"}"]`,
                                 )
                                 ?.focus(),
                             0,
@@ -1374,12 +1326,23 @@ export default function Workspace() {
                       </button>
                       <p>Grid · Record · Search · Login</p>
                       <span className="capability-note">
-                        Form wizards are not available in this version.
+                        Focused construction creates ordinary editable objects.
                       </span>
                     </>
                   ) : view.toolboxTab === "Controls" ? (
                     <>
-                      {(["label", "text", "button"] as const).map((kind) => (
+                      {(
+                        [
+                          "label",
+                          "text",
+                          "number",
+                          "date",
+                          "checkbox",
+                          "select",
+                          "link",
+                          "button",
+                        ] as const
+                      ).map((kind) => (
                         <button
                           key={kind}
                           disabled={
@@ -1389,11 +1352,18 @@ export default function Workspace() {
                           onClick={() => addControl(kind)}
                         >
                           ◇{" "}
-                          {kind === "label"
-                            ? "Label"
-                            : kind === "text"
-                              ? "Text input"
-                              : "Button"}
+                          {
+                            {
+                              label: "Label",
+                              text: "Text input",
+                              number: "Number input",
+                              date: "Date input",
+                              checkbox: "Checkbox",
+                              select: "Lookup / select",
+                              link: "Link",
+                              button: "Button",
+                            }[kind]
+                          }
                         </button>
                       ))}
                     </>
@@ -1538,7 +1508,11 @@ export default function Workspace() {
                         ? "Unsaved document changes"
                         : modal === "settings"
                           ? "Project settings"
-                          : modal === "generation" ? "Generate application" : modal === "history" ? "Migration history and restore" : "Connection setup"
+                          : modal === "generation"
+                            ? "Generate application"
+                            : modal === "history"
+                              ? "Migration history and restore"
+                              : "Connection setup"
           }
           busy={busy}
           onCancel={() => setModal(null)}
@@ -1694,64 +1668,82 @@ export default function Workspace() {
               </div>
             </form>
           ) : modal === "form" ? (
-            <form onSubmit={addForm}>
-              <label className="dialog-field">
-                Form label
-                <input autoFocus name="label" required />
-              </label>
-              <label className="dialog-field">
-                Form kind
-                <select
-                  name="kind"
-                  defaultValue={
-                    model?.schema.tables.length || model?.queries.length
-                      ? "Grid"
-                      : "Login"
+            model && activePage ? (
+              <FormWizard
+                project={model}
+                pageId={activePage.id}
+                onCancel={() => setModal(null)}
+                onFinish={async (input) => {
+                  setBusy(true);
+                  try {
+                    const current = state.current;
+                    const snapshot = current.project;
+                    if (!snapshot) throw new Error("Open a project first.");
+                    const neededPages = new Set(
+                      [input.pageId, input.linkedRecord?.pageId].filter(
+                        (id) => id && !snapshot.pages.some((p) => p.id === id),
+                      ),
+                    );
+                    const neededForms = new Set(
+                      model?.forms
+                        .filter((f) => neededPages.has(f.pageId))
+                        .map((f) => f.id),
+                    );
+                    const needed = new Set([
+                      ...neededPages,
+                      ...neededForms,
+                      ...(model?.controls
+                        .filter((c) => neededForms.has(c.formId))
+                        .map((c) => c.id) ?? []),
+                      ...(model?.actions
+                        .filter((a) => neededForms.has(a.formId))
+                        .map((a) => a.id) ?? []),
+                    ]);
+                    const submitted = {
+                      ...current.editor,
+                      buffers: Object.fromEntries(
+                        Object.entries(current.editor.buffers ?? {}).filter(
+                          ([key]) => needed.has(scalarObjectId(key)),
+                        ),
+                      ),
+                      drafts: Object.fromEntries(
+                        Object.entries(current.editor.drafts).filter(([id]) =>
+                          needed.has(id),
+                        ),
+                      ),
+                    };
+                    const pendingOperations = operations(submitted);
+                    const result = await client.read<{ changedIds: string[] }>(
+                      `projects/${encodeURIComponent(snapshot.id)}/commands`,
+                      {
+                        requestId: createId(),
+                        operation: "form.construct",
+                        expectedRevision: snapshot.revision,
+                        input: { ...input, pendingOperations },
+                      },
+                    );
+                    const next = await client.snapshot(snapshot.id);
+                    setEditor((latest) =>
+                      afterConstruction(
+                        latest,
+                        submitted,
+                        snapshot,
+                        next,
+                        result.changedIds,
+                      ),
+                    );
+                    setProject(next);
+                    selectCreated(result.changedIds[0] ?? "", next);
+                    setModal(null);
+                    notice("Form constructed. Edit its normal Properties.");
+                  } finally {
+                    setBusy(false);
                   }
-                >
-                  {["Grid", "Record", "Search", "Login"].map((kind) => (
-                    <option
-                      key={kind}
-                      disabled={
-                        kind !== "Login" &&
-                        !model?.schema.tables.length &&
-                        !model?.queries.length
-                      }
-                    >
-                      {kind}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="dialog-field">
-                Data source (required for data forms)
-                <select name="source">
-                  <option value="">None — Login structure only</option>
-                  {model?.schema.tables.map((table) => (
-                    <option key={table.id} value={`table:${table.id}`}>
-                      Table: {table.physicalName}
-                    </option>
-                  ))}
-                  {model?.queries.map((query) => (
-                    <option key={query.id} value={`query:${query.id}`}>
-                      Query: {query.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <p className="quiet">
-                Unbound Login is a structural form, not configured
-                authentication. Data forms need a source from the connection and
-                schema editors.
-              </p>
-              <DialogError message={dialogError} />
-              <div className="dialog-actions">
-                <button type="button" onClick={() => setModal(null)}>
-                  Cancel
-                </button>
-                <button className="primary">Add form</button>
-              </div>
-            </form>
+                }}
+              />
+            ) : (
+              <p>Open a page before constructing a form.</p>
+            )
           ) : modal === "close" ? (
             <>
               <p>
@@ -1815,11 +1807,42 @@ export default function Workspace() {
               </div>
             </>
           ) : modal === "generation" ? (
-            project ? <GenerationReview project={project} client={client} caps={caps} onBusy={setBusy} onClose={() => setModal(null)} /> : <p>Open a project first.</p>
+            project ? (
+              <GenerationReview
+                project={project}
+                client={client}
+                caps={caps}
+                onBusy={setBusy}
+                onClose={() => setModal(null)}
+              />
+            ) : (
+              <p>Open a project first.</p>
+            )
           ) : modal === "history" ? (
-            project ? <MigrationHistory project={project} client={client} onClose={() => setModal(null)} onChanged={acceptSnapshot} /> : <p>Open a project to view migration history.</p>
+            project ? (
+              <MigrationHistory
+                project={project}
+                client={client}
+                onClose={() => setModal(null)}
+                onChanged={acceptSnapshot}
+              />
+            ) : (
+              <p>Open a project to view migration history.</p>
+            )
+          ) : project ? (
+            <ConnectionSetup
+              project={project}
+              client={client}
+              roots={caps.approvedRootIds}
+              onClose={() => setModal(null)}
+              onBound={(snapshot) => {
+                acceptSnapshot(snapshot);
+                setModal(null);
+                notice("SQLite connection bound. Schema refreshed.");
+              }}
+            />
           ) : (
-            project ? <ConnectionSetup project={project} client={client} roots={caps.approvedRootIds} onClose={() => setModal(null)} onBound={(snapshot) => { acceptSnapshot(snapshot); setModal(null); notice("SQLite connection bound. Schema refreshed."); }} /> : <p>Open a project before setting up a database.</p>
+            <p>Open a project before setting up a database.</p>
           )}
         </Dialog>
       )}

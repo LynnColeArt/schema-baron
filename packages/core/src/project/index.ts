@@ -8,12 +8,13 @@ import { registerSchemaPreview, SchemaPreviewError } from '../schema-preview/ind
 import { registerGeneration, GenerationError } from '../generation/index.js';
 import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
+import { constructForm } from '../form-construction/index.js';
 import { PlanRepository } from '../plans/index.js';
 export interface CoreOptions extends StorageOptions { ownerId: string; generationFault?: (phase:string)=>void; migrationFault?: (point: string) => void; migrationWorkerFault?: string }
 export type Outcome = { ok: true; revision: number; result: unknown; diagnostics: Diagnostic[] } | { ok: false; revision: number; error: { code: string; message: string; retryable: boolean }; diagnostics: Diagnostic[] };
 interface PendingCommand { operation: string; payloadHash: string; outcome: Promise<Outcome> }
 const collection = { connection: 'connections', table: 'tables', query: 'queries', page: 'pages', form: 'forms', control: 'controls', action: 'actions', policy: 'policies', extension: 'extensionContracts' } as const;
-export function applyBatch(project: Project, operations: EntityBatchOperation[]): Project {
+export function stageBatch(project: Project, operations: EntityBatchOperation[]): Project {
  const candidate = structuredClone(project);
  for (const op of operations) {
   if (op.entity === 'connection' && op.kind === 'put') { const old = project.connections.find(c => c.id === op.id); if (!old || hash({ ...old, name: op.value.name, secretRef: op.value.secretRef }) !== hash(op.value)) throw new StorageError('ACCESS_DENIED', 'Inspected connection state can only change through inspect and bind.'); }
@@ -23,7 +24,10 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
   if (op.kind === 'remove') { if (index < 0) throw new StorageError('INVALID_INPUT', 'Unknown entity.'); values.splice(index, 1); }
   else if (index < 0) values.push(op.value); else values[index] = op.value;
  }
- candidate.revision++; return parseProject(candidate);
+ return candidate;
+}
+export function applyBatch(project: Project, operations: EntityBatchOperation[]): Project {
+ const candidate=stageBatch(project,operations);candidate.revision++;return parseProject(candidate);
 }
 export class ProjectCore {
  private migration: ReturnType<typeof registerSchemaApply>;
@@ -39,6 +43,7 @@ export class ProjectCore {
   this.closeSchemaPreview = registerSchemaPreview(this.registry, options, this.plans, id => this.closed ? undefined : this.storage.snapshot(id), (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.registry.register('project.create', c => { if (c.operation !== 'project.create') throw new Error(); if (c.input.emptyDatabaseLocation) throw new StorageError('INVALID_INPUT', 'Database creation belongs to the connection adapter.'); const id = c.projectId; const policy = createId(); const candidate = parseProject({ id, formatVersion: FORMAT_VERSION, revision: 1, name: c.input.name, target: c.input.target, targetVersion: '1', connectionRefs: [], connections: [], schema: { id: createId(), revision: 1, tables: [], opaqueObjects: [] }, queries: [], pages: [], forms: [], controls: [], actions: [], policies: [{ id: policy, ownerId: id, scope: 'global', access: 'public' }], globalPolicyId: policy, outputConfig: { approvedRootId: 'output', relativePath: 'app' }, extensionContracts: [] }); return { result: candidate, candidate, root: c.input.approvedRoot }; });
   this.registry.register('project.batch', (c, p) => { if (c.operation !== 'project.batch' || !p) throw new Error(); return { result: { changedIds: c.input.operations.map(op => op.id) }, candidate: applyBatch(p, c.input.operations as EntityBatchOperation[]), changedIds: c.input.operations.map(op => op.id) }; });
+  this.registry.register('form.construct', (c,p) => { if(c.operation !== 'form.construct' || !p) throw new Error(); return constructForm(p,c.input); });
   for (const operation of ['project.inspect', 'project.open'] as const) this.registry.register(operation, (c, p) => { return { result: p }; });
   this.registry.register('project.list', c => { if (c.operation !== 'project.list') throw new Error(); return { result: this.storage.list(c.input.approvedRoot) }; });
   this.registry.register('project.validate', (_c, p) => { const result = validateProject(p); return { result: { valid: result.ok, diagnostics: result.diagnostics } }; });

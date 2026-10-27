@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { pageSchema, idSchema } from "@schema-baron/model";
 import {
-  pageSchema,
-  formSchema,
-  controlSchema,
-  idSchema,
-} from "@schema-baron/model";
+  editingForm,
+  editingControl,
+  editingAction,
+  boundedEditing,
+} from "../forms/recovery.js";
 import { initialEditor, initialView } from "./state.js";
 import type { Draft, Drafts, Editor, View } from "./state.js";
 
@@ -12,13 +13,12 @@ import type { Draft, Drafts, Editor, View } from "./state.js";
 // fields may be incomplete/out of range here; the owner still validates every Save.
 const draftValues = {
   page: pageSchema.extend({ title: z.string(), route: z.string() }),
-  form: formSchema.extend({
-    paging: z.strictObject({ pageSize: z.number().finite() }),
-  }),
-  control: controlSchema,
+  form: editingForm,
+  control: editingControl,
+  action: editingAction,
 };
 const draftEnvelope = z.strictObject({
-  entity: z.enum(["page", "form", "control"]),
+  entity: z.enum(["page", "form", "control", "action"]),
   value: z.unknown(),
   base: z.unknown().optional(),
   baseRevision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
@@ -120,8 +120,41 @@ export function restore(id: string): Recovery {
   try {
     if (raw.length > MAX_CHARS) throw new Error("Recovery limit");
     const data: unknown = JSON.parse(raw);
-    if (!record(data)) throw new Error("Recovery shape");
+    if (!record(data) || !boundedEditing(data))
+      throw new Error("Recovery shape");
     const editor = record(data.editor) ? data.editor : {};
+    if (editor.buffers !== undefined) {
+      const buffers = z
+        .record(
+          z
+            .string()
+            .max(512)
+            .refine((key) => {
+              const split = key.lastIndexOf(":");
+              return (
+                idSchema.safeParse(key.slice(0, split)).success &&
+                ["Width", "Page size", "min", "max", "maxLength"].includes(
+                  key.slice(split + 1),
+                )
+              );
+            }),
+          z.strictObject({
+            text: z.string().max(128),
+            optional: z.boolean(),
+            min: z.number().finite().optional(),
+            max: z.number().finite().optional(),
+            positive: z.boolean().optional(),
+            integer: z.boolean().optional(),
+          }),
+        )
+        .refine((v) => Object.keys(v).length <= 1000)
+        .safeParse(editor.buffers);
+      if (buffers.success) result.editor.buffers = buffers.data;
+      else
+        issues.add(
+          "Some numeric text buffers could not be recovered. Other drafts were kept.",
+        );
+    }
     const current = drafts(editor.drafts),
       past = history(editor.past),
       future = history(editor.future);
