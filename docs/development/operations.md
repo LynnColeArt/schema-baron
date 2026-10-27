@@ -9,8 +9,7 @@ updated: 2026-10-26
 Use the pinned Node 24.22.1/npm 11.19.1 toolchain from `.nvmrc`. Install with
 `npm ci --ignore-scripts`; `npm run native:verify` verifies the packaged SQLite
 prebuild without enabling lifecycle scripts. `npm run build` builds dependencies
-before consumers, including the API-only Next application and stdio MCP executable.
-No Studio workspace UI is implemented by WP04; `/` returns Next's normal 404.
+before consumers, including the Studio Next application and stdio MCP executable. The compact Studio UI is served at `/`; connect with the masked owner dialog. The original WP04 API-only checkpoint is historical. See [current setup](release.md).
 
 Create a private JSON file outside the repository, chmod 600, containing:
 
@@ -79,12 +78,11 @@ object, 409 freshness/idempotency/fingerprint, 422 semantic validation, 423 leas
 500 recovery. Payloads over 1 MiB receive 413 (`INVALID_INPUT`); JSON content type is
 required. Unknown/repeated query keys fail. All responses disable caching; errors
 use safe messages, with no request values, SQL, configuration paths or credentials.
-The service emits no per-command logs. No long-running worker is advertised yet;
-202 applies only to a real future asynchronous outcome carrying a job ID.
+The service emits no per-command logs. Registered migration, query and generated-runtime work uses real workers/jobs; 202 applies only to an actual asynchronous outcome carrying a job ID. Inspect its observed outcome rather than assuming completion.
 
 ## Browser session exchange
 
-WP05 must provide an owner-connect dialog. On initial load, call
+The implemented owner-connect dialog uses the following protocol. On initial load, call
 `GET /api/v1/session` with `credentials: "same-origin"`. A valid session returns
 `result.csrfToken`; 401 shows the connect dialog. Read the capability only from the
 owner pasting their private configuration value into a password field (no autocomplete).
@@ -195,4 +193,4 @@ native SQLite 3.53.4 insert/transaction/online-backup smoke, diff lint, credenti
 scan, 120 tests in 10 files, and exact dependency evidence validation (182 installed,
 76 platform optional absent, 258 locked registry artifacts). `npm audit --json`
 reported zero vulnerabilities. Dedicated test-source strict TypeScript checks also
-passed. Missing generator/sqlite/UI packages remain explicitly NOT IMPLEMENTED.
+passed. At that WP04 checkpoint generator/sqlite/UI packages were not implemented. Current SQLite/generator/product behavior is documented in release.md; only the unused source-less UI scaffold remains NOT IMPLEMENTED.

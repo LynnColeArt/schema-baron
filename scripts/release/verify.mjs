@@ -63,6 +63,8 @@ const publicationTest=readdirSync(join(destination,'publication-evidence')).find
 if(!publicationTest)throw Error('Fresh Publication evidence missing');
 environment.SCHEMA_BARON_PUBLICATION_EVIDENCE=join(destination,'publication-evidence',publicationTest);
 await trace('publication-portable',['tests/e2e/publication/portable.mjs']);
+for(const name of ['equipment','publication']){const study=JSON.parse(readFileSync(join(destination,name+'.json'),'utf8'));
+ await trace(name+'-provision',['--conditions=react-server','tests/integration/clean-install/provision.mjs',join(study.root,'outputs/portable/app'),join(study.root,'outputs/portable/data/application.sqlite'),join(logRoot,name+'-provision.json')]);}
 await run('behavior',node,['node_modules/vitest/vitest.mjs','run','--maxWorkers=2'],checkout);
 await run('usability',node,['node_modules/@playwright/test/cli.js','test','tests/e2e/usability','--workers=1','--retries=0','--output='+join(destination,'usability-evidence')],checkout);
 await run('dependency-check',node,[npm,'run','check:dependencies'],checkout);

@@ -5,10 +5,7 @@ audience: Contributors implementing later Schema Baron work packages
 updated: 2026-10-26
 ---
 
-This baseline verifies dependencies and the development harness. Studio, MCP, model,
-storage, generator and UI source are not implemented in WP01. Workspace exports declare
-future `src/index.ts` entry points; importing them cannot work until their owning package
-adds source. No scaffold is presented as a working application.
+For current installation, product and generated-output procedures use [Supported setup](release.md). Studio, MCP, model, storage, SQLite and generator now have source and tested behavior. The unused source-less `@schema-baron/ui` scaffold still reports NOT IMPLEMENTED; the actual Studio UI lives in apps/studio. The dated WP01 observations below describe the original bootstrap, not current feature availability.
 
 ## Prerequisites and first run
 
@@ -57,10 +54,7 @@ npm run test:e2e
 ```
 
 Linux browser system libraries may require `playwright install --with-deps chromium`.
-No browser journey or installed browser is claimed by this bootstrap. Until real e2e
-specs exist, the direct e2e command fails for missing tests; CI reports NOT IMPLEMENTED.
-Later tests must start their real server through Playwright's `webServer` configuration
-or an explicitly managed server, with `STUDIO_BASE_URL` identifying it.
+Real browser journeys now exist and manage their own owner processes and generated runtimes. Run the ordered Equipment/Publication procedure in release.md; Publication requires an explicit fresh Equipment study. Original WP01 browser absence was a dated observation, not the current state.
 
 ## Workspace check contracts
 
@@ -114,7 +108,7 @@ installation rather than this checkout. System OS tool directories remain truste
 is a dependency-environment check, not a sandbox for untrusted application scripts. Both
 source and toolchain temporary directories are removed on failure.
 A temporary empty package is used only to prove this harness propagates failure; it is
-not generated-app behavior evidence. There is no generated application yet.
+not generated-app behavior evidence. Generated applications now have real acceptance coverage; see release.md and the Equipment/Publication reports.
 
 ## Dependency evidence and decisions
 
@@ -170,9 +164,7 @@ implemented, credential scan, tests and installed dependency comparison.
 
 The host-runtime negative check (`node scripts/workspace/verify.mjs typecheck` on
 26.8.1) exited 1 with the required 24.22.1 diagnostic. The installed comparison
-observed **182 present / 76 platform-optional absent**. Product
-builds, browser journeys, generated application functionality and full product offline
-acceptance are unexecuted because their implementations belong to later WPs. CI is
+observed **182 present / 76 platform-optional absent**. At the original WP01 checkpoint, product builds, browser journeys, generated application functionality and full product offline acceptance were unexecuted. Current evidence is reconciled in release.md and docs/user-guide/readiness.md. CI is
 configured here but no hosted CI execution is claimed.
 
 After installation, verification tools and SQLite work offline; an observed offline

@@ -1,30 +1,11 @@
 # Schema Baron
 
-A fresh application builder inspired by the interaction model of CodeCharge Studio 1.0, with a modern SQLite schema designer and TypeScript application output.
+Schema Baron is a local application builder with a compact Studio, SQLite schema and query designers, application flow views, and independently runnable TypeScript/Next.js output. Pages contain forms; forms contain controls. Grid, Record, Search and Login wizards create ordinary editable objects.
 
-Status: whole-app specification and implementation plan prepared; implementation has not started. This repository is intentionally separate from the earlier Schemabaron experiment.
+Start with the [author guide](docs/user-guide/index.md). Contributors should follow the [supported setup](docs/development/release.md) before starting Studio. [Owner service and MCP](docs/development/operations.md) describes private local configuration and the shared command interface.
 
-## Build mission
+The current implementation includes reviewed migrations, local visitor identity and access rules, query-backed reports, Design/HTML/Code/Preview/Live Page, authored extension modules, recoverable regeneration and portable export. The [readiness record](docs/development/release.md#observed-readiness) separates observed results from limitations. Linux x64/glibc is the exercised platform; there is one SQLite connection per project and one output target.
 
-The active mission is [Schema Baron Studio](kitty-specs/schema-baron-studio-01M5W3Q9/spec.md), on `feat/schema-baron-studio` for a later PR into `main`.
+The active [Schema Baron Studio mission](kitty-specs/schema-baron-studio-01M5W3Q9/spec.md) lands on `feat/schema-baron-studio` before a later reviewable PR into `main`. Planning tables retain their original Open/Planned wording; the [observed requirement reconciliation](docs/user-guide/readiness.md) records execution evidence. This checkout is not a deployment.
 
-- [Implementation plan](kitty-specs/schema-baron-studio-01M5W3Q9/plan.md)
-- [Acceptance walkthrough](kitty-specs/schema-baron-studio-01M5W3Q9/quickstart.md)
-- [Requirement-to-evidence matrix](kitty-specs/schema-baron-studio-01M5W3Q9/contracts/acceptance-matrix.md)
-- [Manual reading-pack instructions](docs/references/README.md)
-
-The plan is not implemented behavior. Work-package authoring is the next phase.
-
-## Direction
-
-- A compact Studio workspace: Project Explorer, central document, Toolbox, contextual Properties, and Messages.
-- Pages contain forms; forms contain controls. Start with Grid, Record, Search, and Login.
-- An application flow map is a core document view, showing how pages, forms, actions and parameters fit together.
-- A visual schema designer supports tables, relationships, constraints and reviewed SQLite migrations.
-- The first generated application target is TypeScript, Next.js, Node.js and SQLite.
-- A small MCP interface is present from the first implementation slice and uses the same operations as the UI.
-- Generated projects are readable, modular, independently runnable, and safe to regenerate around handwritten extensions.
-
-See [the baseline](docs/baseline.md) for scope and [architecture boundaries](docs/architecture.md) for implementation constraints.
-
-The earlier experiment is retained as a local reference. Its interface and accumulated feature set do not define the new baseline.
+The earlier experiment remains archived. It does not define this product's scope or supply demo credentials. The [manual reading-pack builder](docs/references/README.md) creates private local reference material; the supplied PDF and its derivatives are not distributed here.
