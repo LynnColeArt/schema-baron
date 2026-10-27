@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { documentBuffersSchema } from "../document-modes/state.js";
 import { pageSchema, idSchema } from "@schema-baron/model";
 import {
   editingForm,
@@ -155,6 +156,11 @@ export function restore(id: string): Recovery {
           "Some numeric text buffers could not be recovered. Other drafts were kept.",
         );
     }
+    if (editor.documents !== undefined) {
+      const parsed = documentBuffersSchema.safeParse(editor.documents);
+      if (parsed.success) result.editor.documents = parsed.data;
+      else issues.add("HTML draft recovery is damaged; original recovery data was retained. Other drafts were kept.");
+    }
     const current = drafts(editor.drafts),
       past = history(editor.past),
       future = history(editor.future);
@@ -180,6 +186,7 @@ export function restore(id: string): Recovery {
       open: z.array(idSchema).max(1000),
       collapsed: z.array(idSchema).max(1000),
       propertyTab: z.enum(["Format", "Data", "Events"]),
+      documentModes: z.record(idSchema, z.enum(["Design", "HTML", "Code", "Preview", "Live Page"])).optional(),
       toolboxTab: z.enum(["Forms", "Controls", "HTML"]),
     };
     for (const name of Object.keys(viewFields) as (keyof View)[]) {
