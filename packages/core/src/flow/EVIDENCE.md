@@ -112,3 +112,6 @@ Draft diagnostics and direct runtime refusal are not a promise that every
 partially invalid draft can be generated. Projection results are derived views,
 not a generation readiness verdict. Layout persistence is scoped to the browser
 session, like the workspace's existing draft recovery.
+
+Captured command logs normalize terminal carriage returns, tabs and trailing
+whitespace only; diagnostic content and outcomes are retained.
