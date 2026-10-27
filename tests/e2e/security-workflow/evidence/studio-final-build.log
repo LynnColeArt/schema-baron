@@ -1,0 +1,25 @@
+
+> @schema-baron/studio@0.0.0 build
+> tsc --project tsconfig.build.json && next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+✓ Running next.config.ts took 21ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1978ms
+  Running TypeScript ...
+  Finished TypeScript in 785ms ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/3) ...
+✓ Generating static pages using 5 workers (3/3) in 630ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+└ ƒ /api/v1/[...segments]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

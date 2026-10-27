@@ -1,0 +1,20 @@
+[
+  {
+    "id": "35ff4d7c-c3fc-426d-970e-e7f9bf193248",
+    "plan_hash": "4adf5521281609962e3e36526eeca97a274a55c2cb9ce25dbc4063dad52e443d",
+    "committed_at": "2026-10-27T13:23:10.620Z",
+    "schema_hash": "21a56c932441d9192473d9b9b5715e76fce202ad7d0b1cd7941f5ceac93d22de"
+  },
+  {
+    "id": "8b26ffff-b4c3-4a88-8686-528aeb54f56e",
+    "plan_hash": "f3d6381a609192578679922a107a9ce02dfd4e9da7a204af4892241ca19dfdf5",
+    "committed_at": "2026-10-27T13:23:54.182Z",
+    "schema_hash": "5332df1fb0d3f60ffec8b6cb2bd1142366f1db39f672d11b6d86ccaa92377cac"
+  },
+  {
+    "id": "@authority",
+    "plan_hash": "8fff9930-2092-4df8-accc-27328d7b5844",
+    "committed_at": "2026-10-27T13:23:10.620Z",
+    "schema_hash": "8fff9930-2092-4df8-accc-27328d7b5844"
+  }
+]

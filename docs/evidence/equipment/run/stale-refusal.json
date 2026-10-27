@@ -1,0 +1,10 @@
+{
+  "ok": false,
+  "revision": 76,
+  "error": {
+    "code": "REVISION_CONFLICT",
+    "message": "Model changed after preview.",
+    "retryable": false
+  },
+  "diagnostics": []
+}
