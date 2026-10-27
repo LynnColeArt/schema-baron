@@ -58,7 +58,7 @@ included in this committed record.
 The executor and exact decimal functions are emitted from the actual built SQLite
 preview runtime, with no Studio package imports/source paths. Reads use query-only
 connections and one snapshot covering schema/key/grain checks and result decoding,
-a 100,000-row source budget, and a five-second worker termination deadline. Fresh
+a 100,000-row source budget, and a five-second child-process deadline that waits for actual exit. Fresh
 workers plus force-dynamic routes avoid stale child totals. Grid page size is bounded
 at 200 and offset is a validated prepared value.
 
@@ -95,3 +95,42 @@ Only its existing @schema-baron/sqlite workspace edge was added. Original observ
 and registry artifact records were preserved; no new download/registry verification
 is claimed. Offline dependency verification then passed: 182 installed metadata
 records, 76 platform-optional absent, 258 registry artifacts.
+
+## Review cycle 1 — native deadline correction
+
+Review event 01M5YCFJF2HF6D6J3W53D0J2TQ correctly found that Worker.terminate()
+could return an error before synchronous native SQLite stopped. The original
+implementation therefore did not meet its claimed execution bound. Its public
+lifecycle/precision proof did not establish native execution cleanup.
+
+Report work now uses one isolated Node child with advanced IPC, the identical
+query executor/decimal helpers, query-only mode and same read snapshot. On timeout,
+AbortSignal, IPC/process failure or host shutdown the actual child is SIGKILLed;
+readReport does not settle until its close event. Normal results are published only
+after SQLite rollback/close, and also await process close. Existing four-argument
+readReport callers and all query/decoder/binding/context semantics are preserved.
+
+The new accepted-query regression compiles a real 90,000-row self-join COUNT
+(8.1 billion candidate pairs, below the existing physical-source budget). Against
+14375ba it failed because native execution kept the runner alive after the error;
+the test watchdog cleaned up its disposable process. With isolated execution it
+requires a five-second error, prompt runner exit, the observed native child PID
+already absent, and no forced watchdog cleanup. Additional cases cover successful
+reads, cancellation, missing database, crashed child, host SIGTERM and disconnect.
+The direct Node harness adapts only framework server-only marker imports; compiler,
+emitted query runtime, executor, native data and process lifecycle are real.
+
+Failed-before log: /tmp/wp17-deadline-confirmed-red.txt. Final repair checks and
+production output evidence are recorded in the review handoff. Auth14 integration
+and two WP20 regeneration cycles remain pending; this correction does not pass them.
+
+Repair verification: all 9 report tests in 2 files passed (6.92 s), workspace strict
+typecheck and generator build passed, and diff lint passed. The final accepted
+expensive query timed out at 5014 ms, its observed native child PID was already
+absent, the runner exited 0, living executions were empty, and watchdog cleanup
+was false: /tmp/wp17-deadline-repair.json. The standalone public-authoring/production
+walkthrough passed in 25.6 s with the actual child runtime, including offline
+install, strict output typecheck/tests/build, exact CRUD/minimum/filter-return
+oracles and persisted reopen. Its evidence is /tmp/wp17-report-nAFQMX. The first
+strict-output rerun caught Next's augmented ProcessEnv requiring NODE_ENV; the
+isolated clean environment now explicitly declares production, and the rerun passed.

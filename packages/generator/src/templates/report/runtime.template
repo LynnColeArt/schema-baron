@@ -1,6 +1,5 @@
 import 'server-only';
-import {Worker} from 'node:worker_threads';
-import {pathToFileURL} from 'node:url';
+import {fork} from 'node:child_process';
 import {join} from 'node:path';
 import {databasePath} from './connection.ts';
 import {isLiteralValue,parseQueryInput} from './query-scalar.js';
@@ -9,8 +8,44 @@ type Scalar={readonly kind:string;readonly scale?:number;readonly precision?:num
 type Input={readonly id:string;readonly name:string;readonly type:Scalar;readonly nullable:boolean;readonly default?:unknown};
 type Mapping={readonly parameterId:string;readonly value?:unknown;readonly runtime?:{readonly name:string}};
 type Plan={readonly id:string;readonly aliases?:Readonly<Record<string,string>>;readonly compiled:{readonly sql:string;readonly fields:readonly {readonly id:string;readonly name:string;readonly type:Scalar;readonly nullable:boolean}[];readonly tables:readonly {readonly name:string;readonly columns:readonly string[];readonly uniqueKeys:readonly (readonly string[])[]}[];readonly grainChecks:readonly string[];readonly parameters:Readonly<Record<string,unknown>>;readonly rowLimit:number};readonly inputs:readonly Input[];readonly bindings:Readonly<Record<string,readonly string[]>>};
+type QueryResult={rows:Record<string,unknown>[];truncated:boolean};
+const executions=new Set<{stop:()=>void;closed:Promise<void>}>();
+let lifecycleInstalled=false;
+function installLifecycle(){
+ if(lifecycleInstalled)return;lifecycleInstalled=true;
+ process.once('exit',()=>{for(const execution of executions)execution.stop();});
+ const shutdown=()=>{const pending=[...executions];for(const execution of pending)execution.stop();void Promise.all(pending.map(execution=>execution.closed)).then(()=>process.exit(0));};
+ process.once('SIGTERM',shutdown);process.once('SIGINT',shutdown);process.once('disconnect',shutdown);
+}
+/** Native SQLite is synchronous: only OS process termination actually interrupts it. */
+async function execute(compiled:Plan['compiled'],signal?:AbortSignal):Promise<QueryResult>{
+ if(signal?.aborted)throw Error('Report canceled.');
+ installLifecycle();
+ return new Promise<QueryResult>((resolve,reject)=>{
+  const child=fork(join(process.cwd(),'server/query-worker.mjs'),[],{env:{NODE_ENV:'production',...(process.env.SystemRoot?{SystemRoot:process.env.SystemRoot}:{})},stdio:['ignore','ignore','ignore','ipc'],serialization:'advanced',execArgv:[]});
+  let result:QueryResult|undefined,failure:Error|undefined;
+  const stop=(error:Error)=>{failure??=error;child.kill('SIGKILL');};
+  let closed!:()=>void;
+  const execution={stop:()=>stop(Error('Report process is shutting down.')),closed:new Promise<void>(resolve=>{closed=resolve;})};
+  executions.add(execution);
+  const abort=()=>stop(Error('Report canceled.'));signal?.addEventListener('abort',abort,{once:true});
+  const timer=setTimeout(()=>stop(Error('Report deadline exceeded.')),5000);
+  child.once('message',(message:unknown)=>{
+   if(!message||typeof message!=='object'||!('ok' in message)||message.ok!==true||!('result' in message)){stop(Error('Report could not be read.'));return;}
+   result=message.result as QueryResult;
+  });
+  child.once('error',()=>stop(Error('Report process failed.')));
+  child.once('disconnect',()=>{if(!result)stop(Error('Report process disconnected.'));});
+  // No response, cancellation or deadline settles before the native process and IPC close.
+  child.once('close',code=>{
+   clearTimeout(timer);signal?.removeEventListener('abort',abort);executions.delete(execution);closed();
+   if(failure)reject(failure);else if(code===0&&result)resolve(result);else reject(Error('Report process stopped without a result.'));
+  });
+  child.send({databasePath,compiled},error=>{if(error)stop(Error('Report request could not be sent.'));});
+ });
+}
 function one(p:Parameters,key:string){const value=p[key];if(Array.isArray(value))throw Error('Use one value per input.');return value;}
-export async function readReport(plan:Plan,mappings:readonly Mapping[],parameters:Parameters,prefix:string){
+export async function readReport(plan:Plan,mappings:readonly Mapping[],parameters:Parameters,prefix:string,options:{signal?:AbortSignal}={}){
  try {
   const pageText=one(parameters,prefix+':page')??'1';if(!/^[1-9]\d{0,4}$/.test(pageText))throw Error('Invalid report page.');const page=Number(pageText);
   const allowed=new Set([prefix+':page',...mappings.flatMap(m=>m.runtime?[prefix+':parameter:'+m.runtime.name,prefix+':parameter:'+m.runtime.name+':mode']:[])]);
@@ -28,13 +63,7 @@ export async function readReport(plan:Plan,mappings:readonly Mapping[],parameter
   }
   bindings.sb_report_offset=(page-1)*plan.compiled.rowLimit;
   const compiled={...plan.compiled,parameters:bindings};
-  const result=await new Promise<{rows:Record<string,unknown>[];truncated:boolean}>((resolve,reject)=>{
-   const worker=new Worker(pathToFileURL(join(process.cwd(),'server/query-worker.mjs')),{workerData:{databasePath,compiled}});
-   const timer=setTimeout(()=>{void worker.terminate();reject(Error('Report deadline exceeded.'));},5000);
-   worker.once('message',message=>{clearTimeout(timer);void worker.terminate();message.ok?resolve(message.result):reject(Error('Report could not be read.'));});
-   worker.once('error',error=>{clearTimeout(timer);reject(error);});
-   worker.once('exit',code=>{clearTimeout(timer);reject(Error('Report worker stopped before returning a result ('+code+').'));});
-  });
+  const result=await execute(compiled,options.signal);
   return {...result,rows:plan.aliases?result.rows.map(row=>Object.fromEntries(Object.entries(row).map(([key,value])=>[plan.aliases![key]??key,value]))):result.rows,page};
  }catch{return {rows:[] as Record<string,unknown>[],page:1,truncated:false,error:'The report could not be read. Check its declared parameters, data types and database.'};}
 }
