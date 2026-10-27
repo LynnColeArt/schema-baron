@@ -26,7 +26,7 @@ async function main() {
   await app.prepare(); setOwner(service); handle = app.getRequestHandler();
   process.stderr.write(`Schema Baron owner ready at ${origin}\n`);
   let closing = false;
-  const close = () => { if (closing) return; closing = true; server.close(() => { clearOwner(); service.close(); void app!.close().then(() => { process.exitCode = 0; }); }); server.closeIdleConnections(); };
+  const close = () => { if (closing) return; closing = true; server.close(() => { clearOwner(); void service.close().then(() => app!.close()).then(() => { process.exitCode = 0; }); }); server.closeIdleConnections(); };
   process.once('SIGTERM', close); process.once('SIGINT', close);
  } catch (error) { server.close(); service.close(); await app?.close(); throw error; }
 }

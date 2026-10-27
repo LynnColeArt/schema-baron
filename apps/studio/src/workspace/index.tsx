@@ -5,6 +5,7 @@ import { createId } from "@schema-baron/model";
 import type { Control, Form, Page, Project } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
+import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
 import {
   checkpoint,
@@ -1806,23 +1807,7 @@ export default function Workspace() {
               </div>
             </>
           ) : (
-            <>
-              <p>
-                Connection inspection and schema editing are not available in
-                this version. No database is created or altered by opening this
-                dialog.
-              </p>
-              <p>
-                {caps.operations.some(
-                  (op) => op.operation === "connection.inspect",
-                )
-                  ? "The service advertises connection inspection. The focused connection editor is not integrated in this workspace yet."
-                  : "This Studio service does not yet advertise connection.inspect."}
-              </p>
-              <div className="dialog-actions">
-                <button onClick={() => setModal(null)}>Close</button>
-              </div>
-            </>
+            project ? <ConnectionSetup project={project} client={client} roots={caps.approvedRootIds} onClose={() => setModal(null)} onBound={(snapshot) => { acceptSnapshot(snapshot); setModal(null); notice("SQLite connection bound. Schema refreshed."); }} /> : <p>Open a project before setting up a database.</p>
           )}
         </Dialog>
       )}

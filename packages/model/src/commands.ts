@@ -19,7 +19,7 @@ export const operationInputSchemas = {
   'project.list': z.strictObject({ approvedRoot: text }),
   'project.batch': z.strictObject({ operations: z.array(entityBatchOperationSchema).min(1).max(1000) }),
   'project.export': z.strictObject({ destination: text, includeData: z.boolean().default(false) }),
-  'connection.inspect': z.strictObject({ approvedPath: text, mode: z.literal('read-only') }),
+  'connection.inspect': z.strictObject({ approvedPath: text, mode: z.literal('read-only'), createEmpty: z.literal(true).optional(), connectionId: idSchema.optional() }),
   'connection.bind': z.strictObject({ connectionId: idSchema, fingerprint: hashSchema }),
   'schema.preview': previewSchemaInput,
   'schema.apply': applyInput,
@@ -47,7 +47,7 @@ export const commandSchema = z.union(Object.entries(operationInputSchemas).map((
 export const impactSchema = z.strictObject({ id: idSchema, objectId: idSchema.optional(), kind: z.enum(['create', 'change', 'delete', 'data-loss', 'conflict', 'cascade', 'backfill']), description: text, requiresAcknowledgement: z.boolean(), affectedCount: z.number().int().min(0).optional() });
 const planBase = { id: idSchema, sourceRevision: revisionSchema, modelHash: hashSchema, hash: hashSchema, createdAt: z.iso.datetime(), expiresAt: z.iso.datetime(), impact: z.array(impactSchema), requiredAcknowledgementIds: ids };
 export const reviewedPlanSchema = z.discriminatedUnion('kind', [
-  z.strictObject({ ...planBase, kind: z.literal('migration'), connectionId: idSchema, schemaFingerprint: hashSchema, dataFingerprint: hashSchema, backupPolicy: z.strictObject({ required: z.literal(true), approvedRootId: idSchema }), steps: z.array(z.strictObject({ id: idSchema, sql: text, objectIds: ids, transactional: z.boolean() })) }),
+  z.strictObject({ ...planBase, kind: z.literal('migration'), connectionId: idSchema, schemaFingerprint: hashSchema, dataFingerprint: hashSchema, backupPolicy: z.strictObject({ required: z.literal(true), approvedRootId: idSchema }), recovery: z.strictObject({ backupMethod: z.literal('sqlite-online-backup'), instructions: z.array(text).min(1), foreignKeysBeforeTransaction: z.literal(false), verifyBeforeCommit: z.array(z.enum(['foreign_key_check', 'integrity_check'])), restoreRequiresReview: z.literal(true), sqliteVersion: text, strategy: z.enum(['native', 'rebuild']) }).optional(), changes: z.array(z.strictObject({ objectId: idSchema, tableId: idSchema, kind: z.enum(['rename','add','drop','type','key','index','foreign-key','constraint']), description: text })).optional(), steps: z.array(z.strictObject({ id: idSchema, sql: text, objectIds: ids, transactional: z.boolean() })) }),
   z.strictObject({ ...planBase, kind: z.literal('generation'), generatorVersion: text, outputFingerprint: hashSchema, outputRootId: idSchema, extensionHashes: z.record(idSchema, hashSchema), steps: z.array(z.strictObject({ id: idSchema, path: text, operation: z.enum(['create', 'replace', 'delete', 'preserve']), beforeHash: hashSchema.optional(), afterHash: hashSchema.optional() })) }),
 ]).superRefine((plan, ctx) => {
   if (Date.parse(plan.expiresAt) <= Date.parse(plan.createdAt)) ctx.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Plan expiry must follow creation' });
