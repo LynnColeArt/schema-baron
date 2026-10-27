@@ -132,6 +132,9 @@
       "last_event_id": "01M5XKA0VGWQV8VVYQQP4E1H2C",
       "last_transition_at": "2026-10-27T02:33:54.288318+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review:453e630 implements T016-T020 owner HTTP + real SDK stdio forwarding to one writer;120 tests/10files, clean dependency-ordered production build, strict test-source checks, native ABI/backup smoke, diff lint/credential/dependency checks passed;npm audit0 vulnerabilities. Actual built Next browser session create/edit and MCP inspect pass;stale/invalid/duplicate/auth/origin/raw Host/path/payload negatives;atomic job cancel failure+restart+exact retry/events and committed-race outcome parity. Integration deviations approved by orchestrator and explained in docs/development/operations.md:app/bootstrap manifests/configs, topo build, optional typed job outcome+NOT_FOUND, atomic metadata-only job effect (no project candidate).API-only stage;no UI/generated/async-worker claim."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
