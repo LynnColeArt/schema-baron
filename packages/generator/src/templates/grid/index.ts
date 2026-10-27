@@ -1,3 +1,4 @@
+import {handlerPath} from '../../behavior/index.js';
 import { keyParameter } from '../navigation/index.js';
 import type { GridIR } from '../../ir/index.js';
 const literal = (value: unknown) => JSON.stringify(value);
@@ -11,7 +12,7 @@ export function gridFiles(grid: GridIR, index: number) {
  const controls = grid.controls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${literal(c.label)}}</NavigationLink>`).join('')}</td>`:`<td>{${c.fieldId ? `formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f => f.id === c.fieldId)?.type)}, ${literal(c.format)})` : literal(c.label)}}</td>`).join('\n                  ');
  const rowKey = grid.source.keys.length ? `JSON.stringify([${grid.source.keys.map(k => `row[${literal(k)}]`).join(', ')}].map(value => String(value)))` : 'rowIndex';
  return [
-  {path:`app/runtime/navigation-${index}/route.ts`,content:`import {cookies} from 'next/headers';
+  {path:`app${handlerPath('navigation',index)}/route.ts`,content:`import {cookies} from 'next/headers';
 import {authorize,sessionCookie,failure} from '../../../server/auth';
 import {config,actions} from '../../../server/grid-${index}';
 import {connect,read} from '../../../server/record-repository';
@@ -42,7 +43,7 @@ export function link(id:string,row:Record<string,unknown>,parameters:Parameters)
  const action=actions.find(a=>a.id===id);
  if(!action) return {error:'This navigation action is unavailable.'};
  try{
-  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(!action.destination.newForms.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'/runtime/navigation-${index}?'+query};}
+  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(!action.destination.newForms.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'${handlerPath('navigation',index)}?'+query};}
   return {href:destination(action.destination,row,parameters,allowed)};}
  catch{return {error:'This link could not be created. Check the page filters and mapped record values.'};}
 }

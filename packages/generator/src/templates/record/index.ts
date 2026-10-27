@@ -1,8 +1,9 @@
+import {handlerPath} from '../../behavior/index.js';
 import type { GeneratedFile, RecordIR } from '../../ir/index.js';
 export function recordFiles(record:RecordIR,index:number,flashCookie:string):GeneratedFile[] {
  const config=JSON.stringify(record.config,null,2);
  return [
- {path:`app/runtime/record-${index}/route.ts`,content:`import { cookies } from 'next/headers';
+ {path:`app${handlerPath('record',index)}/route.ts`,content:`import { cookies } from 'next/headers';
 import { authorize, originCheck, failure, sessionCookie, csrfCookie } from '../../../server/auth';
 import { config } from '../../../server/record-${index}';
 import { load, execute } from '../../../server/record-service';

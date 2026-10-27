@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
+import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, scalarTypeSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
 import { diagnosticSchema, outcomeSchema } from './diagnostics.js';
 import type { Diagnostic } from './diagnostics.js';
 
@@ -86,6 +86,13 @@ export type Job = z.infer<typeof jobSchema>;
 
 const changedResult = z.strictObject({ changedIds: ids });
 const runtimeResult = z.strictObject({ status: z.enum(['stopped', 'building', 'running', 'failed']), generatedRevision: revisionSchema, jobId: idSchema.optional(), port: z.number().int().min(1).max(65535).optional() });
+const flowFieldSchema=z.strictObject({id:idSchema,name:z.string(),type:scalarTypeSchema,nullable:z.boolean()});
+const flowContextSchema=z.strictObject({parameter:text,field:flowFieldSchema.optional(),kind:z.enum(['page','sort','direction','search','key','query','mode']).optional(),allowed:z.array(z.string()).optional()});
+export const flowProjectionSchema=z.strictObject({
+ nodes:z.array(z.strictObject({id:idSchema,sourceObjectId:idSchema,kind:text,label:z.string(),pageId:idSchema,access:text,policyId:z.string(),path:z.string().optional(),operation:z.string().optional()})),
+ edges:z.array(z.strictObject({id:idSchema,sourceObjectId:idSchema,fromId:idSchema,toId:idSchema,kind:text,label:text,access:text,policyId:z.string(),mappings:z.array(z.strictObject({parameter:text,field:flowFieldSchema,expression:z.discriminatedUnion('kind',[z.strictObject({kind:z.literal('field'),fieldId:idSchema}),z.strictObject({kind:z.literal('parameter'),parameterId:idSchema}),z.strictObject({kind:z.literal('literal'),value:scalar})])})),context:z.array(flowContextSchema),slot:z.enum(['destination','success','cancel']).optional(),dynamic:z.boolean().optional()})),
+ endpoints:z.array(z.strictObject({id:idSchema,sourceObjectId:idSchema,method:text,path:z.string(),handler:text,access:text,actionIds:ids})),diagnostics:z.array(diagnosticSchema)
+});
 /** A registry's implementation must satisfy its result schema as well as its input. */
 export const migrationHistorySchema = z.strictObject({ id: idSchema, planId: idSchema, requestId: idSchema, connectionId: idSchema, backupRef: idSchema, kind: z.enum(['migration','restore']), createdAt: z.iso.datetime(), baseRevision: revisionSchema, newRevision: revisionSchema.optional(), outcome: z.enum(['applying','committed','rolled-back','recovery-pending']), backupValidated: z.boolean(), message: text });
 export type MigrationHistory = z.infer<typeof migrationHistorySchema>;
@@ -110,7 +117,7 @@ export const operationResultSchemas = {
   'identity.configure': z.strictObject({ configured: z.literal(true) }),
   'identity.provision': z.strictObject({ userId: idSchema }),
   'project.validate': z.strictObject({ valid: z.boolean(), diagnostics: z.array(diagnosticSchema) }),
-  'flow.inspect': z.strictObject({ nodes: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, kind: text })), edges: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, fromId: idSchema, toId: idSchema, kind: text })) }),
+  'flow.inspect': flowProjectionSchema,
   'generation.preview': reviewedPlanSchema,
   'generation.apply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), manifest: generationManifestSchema }),
   'runtime.start': runtimeResult,

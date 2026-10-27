@@ -78,11 +78,11 @@ test('jobs use same core and idempotency; cancellation cannot erase committed wo
 });
 test('registered features flow through canonical validators and freshness checks', async () => {
  const { owner, request } = await fixture(); await create(request);
- owner.service.register('flow.inspect', (_c, snapshot) => ({ result: { nodes: snapshot!.pages.map(p => ({ id: p.id, sourceObjectId: p.id, kind: 'page' })), edges: [] } }));
- expect((await post(request, command('flow.inspect', { projection: 'schema', raw: true }))).status).toBe(400);
- expect((await post(request, command('flow.inspect', { projection: 'schema' }, 2))).status).toBe(409);
- expect((await post(request, command('flow.inspect', { projection: 'schema' }))).status).toBe(200);
- expect(() => owner.service.register('flow.inspect', () => ({ result: { nodes: [], edges: [] } }))).toThrow();
+ // Exercise the real WP18 projection; the reserved registration fixture is obsolete.
+ expect((await post(request, command('flow.inspect', { projection: 'application', raw: true }))).status).toBe(400);
+ expect((await post(request, command('flow.inspect', { projection: 'application' }, 2))).status).toBe(409);
+ expect((await post(request, command('flow.inspect', { projection: 'application' }))).status).toBe(200);
+ expect(() => owner.service.register('flow.inspect', () => ({ result: { nodes: [], edges: [], endpoints: [], diagnostics: [] } }))).toThrow();
 });
 test('job metadata rolls back with failed command completion and stale/duplicate cancellation never calls worker', async () => {
  const { owner, request, root } = await fixture(); await create(request);

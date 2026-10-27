@@ -1,3 +1,4 @@
+import {projectBehavior} from '../flow/index.js';
 import { createHmac, randomBytes } from 'node:crypto';
 import { registerIdentity } from '../identity/index.js';
 import { commandSchema, jobSchema, createId, parseProject, validateProject, ModelValidationError, FORMAT_VERSION } from '@schema-baron/model';
@@ -54,6 +55,7 @@ export class ProjectCore {
   this.registry.register('form.construct', (c,p) => { if(c.operation !== 'form.construct' || !p) throw new Error(); return constructForm(p,c.input); });
   for (const operation of ['project.inspect', 'project.open'] as const) this.registry.register(operation, (c, p) => { return { result: p }; });
   this.registry.register('project.list', c => { if (c.operation !== 'project.list') throw new Error(); return { result: this.storage.list(c.input.approvedRoot) }; });
+  this.registry.register('flow.inspect',(c,p)=>{if(c.operation!=='flow.inspect'||!p)throw new Error();if(c.input.projection==='schema')throw new StorageError('INVALID_INPUT','Use the schema editor for schema relationships; flow.inspect supports application and endpoint projections.');return {result:projectBehavior(p)};});
   this.registry.register('project.validate', (_c, p) => { const result = validateProject(p); return { result: { valid: result.ok, diagnostics: result.diagnostics } }; });
   this.registry.register('project.export', c => { if (c.operation !== 'project.export') throw new Error(); if (c.input.includeData) throw new StorageError('INVALID_INPUT', 'Data export is not available through definition export.'); const split = c.input.destination.indexOf(':'); if (split < 1) throw new StorageError('PATH_OUTSIDE_ROOT', 'Use approvedRootId:relativePath for export.'); return { result: this.storage.export(c.projectId, c.input.destination.slice(0, split), c.input.destination.slice(split + 1)) }; });
  }

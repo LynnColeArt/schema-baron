@@ -1,3 +1,4 @@
+import {delayFlowDispatch} from '../../../core/tests/flow/async-fixture.js';
 import { afterEach, expect, test } from 'vitest';
 import Database from 'better-sqlite3';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
@@ -50,7 +51,7 @@ test('missing, corrupt, permissions, locks, escapes, aliases and explicit empty 
 });
 test('awaited effects revalidate revision and matching/conflicting idempotency while synchronous commands continue', async () => {
  const {owner,http}=await setup(); const releases: (()=>void)[]=[]; const started: (()=>void)[]=[];
- owner.service.core.registry.registerAsync('flow.inspect',async (_command,snapshot)=> { await new Promise<void>(resolve=>{releases.push(resolve); started.shift()?.();}); const candidate=structuredClone(snapshot!); candidate.revision++; candidate.name='async effect'; return {result:{nodes:[],edges:[]},candidate} as CommandEffect; });
+ delayFlowDispatch(owner.service.core.registry,async (_command,snapshot)=> { await new Promise<void>(resolve=>{releases.push(resolve); started.shift()?.();}); const candidate=structuredClone(snapshot!); candidate.revision++; candidate.name='async effect'; return {result:{nodes:[],edges:[],endpoints:[],diagnostics:[]},candidate} as CommandEffect; });
  const waitStart=()=>new Promise<void>(resolve=>started.push(resolve));
  const request=command('flow.inspect',{projection:'schema'},1,'overlap'); const start=waitStart(); const pending=http(request); await start;
  expect((await http(command('project.batch',{operations:[{kind:'put',entity:'page',id:'page',value:{id:'page',route:'/page',title:'During worker',document:[],formIds:[]}}]},1))).outcome).toMatchObject({ok:true,revision:2}); releases.shift()!(); expect((await pending).outcome).toMatchObject({ok:false,error:{code:'REVISION_CONFLICT'}});
@@ -61,7 +62,7 @@ test('awaited effects revalidate revision and matching/conflicting idempotency w
 test('owner close rejects delayed asynchronous finalization and reopening sees only the committed snapshot',async()=>{
  const root=mkdtempSync(join(tmpdir(),'wp06-close-')); const {ProjectCore}=await import('@schema-baron/core'); const options={ownerId:'owner',metadataRoot:join(root,'metadata'),approvedRoots:{projects:join(root,'definitions')}}; const core=new ProjectCore(options);
  core.execute('owner',command('project.create',{name:'Before close',approvedRoot:'projects',target:'next-typescript-sqlite'},0));
- let release!:()=>void;let began!:()=>void;const started=new Promise<void>(resolve=>{began=resolve;});core.registry.registerAsync('flow.inspect',async(_command,project)=>{await new Promise<void>(resolve=>{release=resolve;began();});return {result:{nodes:[],edges:[]},candidate:{...project!,name:'Late forbidden commit',revision:2}};});
+ let release!:()=>void;let began!:()=>void;const started=new Promise<void>(resolve=>{began=resolve;});delayFlowDispatch(core.registry,async(_command,project)=>{await new Promise<void>(resolve=>{release=resolve;began();});return {result:{nodes:[],edges:[],endpoints:[],diagnostics:[]},candidate:{...project!,name:'Late forbidden commit',revision:2}};});
  const pending=core.executeAsync('owner',command('flow.inspect',{projection:'schema'}));await started;await core.close();release();expect(await pending).toMatchObject({ok:false,error:{code:'RECOVERY_REQUIRED'}});const reopened=new ProjectCore(options);expect(reopened.snapshot('owner','p')).toMatchObject({name:'Before close',revision:1});await reopened.close();rmSync(root,{recursive:true,force:true});
 });
 test('actual awaited connection inspect and bind cannot finalize across a synchronous project revision',async()=>{

@@ -1,3 +1,4 @@
+import {emissionOrder,pageFile} from '../../behavior/index.js';
 import { identityControlFiles } from '../identity-controls/index.js';
 import {reportFiles} from '../report/index.js';
 import {queryRuntimeFiles,queryScalarFile} from '../report/runtime-files.js';
@@ -31,15 +32,16 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
  add('server/navigation.ts',readFileSync(new URL('../navigation/runtime.template',import.meta.url),'utf8'));
  files.push(queryScalarFile());
  if(ir.queries.length){files.push(...queryRuntimeFiles());add('server/query-runtime.ts',readFileSync(new URL('../report/runtime.template',import.meta.url),'utf8'));add('server/query-worker.mjs',readFileSync(new URL('../report/worker.template',import.meta.url),'utf8'));}
- let index = 0;
+ const order=emissionOrder(ir.routes);
  for (const route of ir.routes) {
   const components = new Map<string, number>();
   for (const grid of route.grids) {
+   const index=order.find(entry=>entry.formId===grid.id)!.index;
    components.set(grid.id, index);
-   files.push(...(grid.report?reportFiles(grid,index++,ir.queries):(grid.kind==='Search'?searchFiles:gridFiles)(grid,index++)));
+   files.push(...(grid.report?reportFiles(grid,index,ir.queries):(grid.kind==='Search'?searchFiles:gridFiles)(grid,index)));
   }
   const recordComponents=new Map<string,number>();
-  for(const record of route.records) {recordComponents.set(record.id,index);files.push(...recordFiles(record,index++,flashCookie));}
+  for(const record of route.records) {const index=order.find(entry=>entry.formId===record.id)!.index;recordComponents.set(record.id,index);files.push(...recordFiles(record,index,flashCookie));}
   const placed = new Set<string>();
   const render = (node: DocumentNode, indent = '      '): string => {
    if (node.kind === 'text') return `${indent}{${JSON.stringify(node.text)}}`;
@@ -54,7 +56,7 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
   const unplaced = route.grids.filter(g => !placed.has(g.id)).map(g => `      <Grid${components.get(g.id)} parameters={parameters} />`).join('\n');
   const depth = route.path === '/' ? 0 : route.path.slice(1).split('/').length;
   const relative = '../'.repeat(depth + 1);
-  add(`app${route.path === '/' ? '' : route.path}/page.tsx`, [...components.values()].map(n => `import { Grid${n} } from '${relative}components/grid-${n}';`).join('\n') + [...recordComponents.values()].map(n=>`\nimport { Record${n} } from '${relative}components/record-${n}';\nimport { loadRecord as loadRecord${n}, config as config${n} } from '${relative}server/record-${n}';`).join('')+`\nimport { IdentityHeader } from '${relative}components/identity-header';\nimport { guardPage, loginCancel, pageReturn } from '${relative}server/auth';\nimport { Login } from '${relative}components/login';\nimport { cookies } from 'next/headers';\nimport { SavedNotice } from '${relative}components/saved-notice';\nimport { context } from '${relative}server/navigation';` + `
+  add(pageFile(route.path), [...components.values()].map(n => `import { Grid${n} } from '${relative}components/grid-${n}';`).join('\n') + [...recordComponents.values()].map(n=>`\nimport { Record${n} } from '${relative}components/record-${n}';\nimport { loadRecord as loadRecord${n}, config as config${n} } from '${relative}server/record-${n}';`).join('')+`\nimport { IdentityHeader } from '${relative}components/identity-header';\nimport { guardPage, loginCancel, pageReturn } from '${relative}server/auth';\nimport { Login } from '${relative}components/login';\nimport { cookies } from 'next/headers';\nimport { SavedNotice } from '${relative}components/saved-notice';\nimport { context } from '${relative}server/navigation';` + `
 
 export const dynamic = 'force-dynamic';
 type Parameters = Record<string, string | string[] | undefined>;
