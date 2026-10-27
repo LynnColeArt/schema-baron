@@ -12,7 +12,7 @@ Running 3 tests using 1 worker
   ✘  3 tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits (1.0s)
 
 
-  1) tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen 
+  1) tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen
 
     Error: {"ok":false,"revision":0,"error":{"code":"INVALID_INPUT","message":"Command does not match the operation schema.","retryable":false},"diagnostics":[]}
 
@@ -42,7 +42,7 @@ Running 3 tests using 1 worker
 
     Error Context: test-results/usability-scale-full-50-pa-46683-y-response-and-ready-reopen/error-context.md
 
-  2) tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection 
+  2) tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection
 
     Error: expect(locator).toContainText(expected) failed
 
@@ -69,7 +69,7 @@ Running 3 tests using 1 worker
 
     Error Context: test-results/usability-scale-actual-50--c2214--save-drag-and-reprojection/error-context.md
 
-  3) tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits 
+  3) tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits
 
     Error: {"ok":false,"revision":2,"error":{"code":"VALIDATION_FAILED","message":"Project validation failed","retryable":false},"diagnostics":[{"code":"VALIDATION_FAILED","severity":"error","objectId":"2925d791-3c41-4841-9b94-0beeb07d90a4","field":"id","message":"Values must be unique."}]}
 
@@ -100,6 +100,6 @@ Running 3 tests using 1 worker
     Error Context: test-results/usability-scale-indexed-10-f38d6-node-map-with-20-live-edits/error-context.md
 
   3 failed
-    tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen 
-    tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection 
-    tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits 
+    tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen
+    tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection
+    tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits

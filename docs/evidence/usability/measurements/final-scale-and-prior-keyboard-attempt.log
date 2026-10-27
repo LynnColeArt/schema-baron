@@ -14,7 +14,7 @@ Running 5 tests using 1 worker
   ✘  5 tests/e2e/usability/workflow.spec.ts:8:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes (23.3s)
 
 
-  1) tests/e2e/usability/workflow.spec.ts:7:1 › keyboard primary journey and full five-mode application checkpoint 
+  1) tests/e2e/usability/workflow.spec.ts:7:1 › keyboard primary journey and full five-mode application checkpoint
 
     Error: expect(received).toBeGreaterThanOrEqual(expected)
 
@@ -37,7 +37,7 @@ Running 5 tests using 1 worker
 
     Error Context: ../../../../../../tmp/wp25-final/usability-workflow-keyboar-ae8ff-mode-application-checkpoint/error-context.md
 
-  2) tests/e2e/usability/workflow.spec.ts:8:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes 
+  2) tests/e2e/usability/workflow.spec.ts:8:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes
 
     Error: expect(received).toBeGreaterThanOrEqual(expected)
 
@@ -62,6 +62,6 @@ Running 5 tests using 1 worker
     Error Context: ../../../../../../tmp/wp25-final/usability-workflow-native--bd6ae-ser-zoom-and-all-five-modes/error-context.md
 
   2 failed
-    tests/e2e/usability/workflow.spec.ts:7:1 › keyboard primary journey and full five-mode application checkpoint 
-    tests/e2e/usability/workflow.spec.ts:8:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes 
+    tests/e2e/usability/workflow.spec.ts:7:1 › keyboard primary journey and full five-mode application checkpoint
+    tests/e2e/usability/workflow.spec.ts:8:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes
   3 passed (1.2m)
