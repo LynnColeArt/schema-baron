@@ -267,11 +267,11 @@
     {
       "criterion_id": "FR-027",
       "description": "Verify FR-027 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-027; scripts/release/evidence/report.md; docs/evidence/equipment/report.md; docs/evidence/generality/report.md; tests/integration/clean-install/behavior.test.ts. Both portable apps independently install/typecheck/test/build/run with Studio unreachable; cold tracked source5dcf0e2/new HOME/cache/toolchain then offline namespaces repeated authoring/export; documented prerequisites/build/run/test/extensions and managed deployment provisioning observed. Reviewed against mission spec FR-027; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:13:05.441025+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
