@@ -77,11 +77,11 @@
     {
       "criterion_id": "FR-008",
       "description": "Verify FR-008 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-008; tests/e2e/schema-editor/workflow.spec.ts; docs/evidence/generality/report.md; docs/evidence/usability/report.md. Single/composite FK tuples and referential actions authored visibly; persistent canvas positions and native200 keyboard relationship workflow. Single-field lookup widget boundary does not erase composite schema FK support. Reviewed against mission spec FR-008; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:02.940689+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
