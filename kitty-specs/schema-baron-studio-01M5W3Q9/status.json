@@ -98,24 +98,26 @@
       "last_transition_at": "2026-10-27T01:53:55.089101+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: commit 9bd5c0d; public model-consuming core API and real SQLite/readable JSON journal recovery; 90 tests pass including 16 WP03 tests and four native process crash boundaries; clean local dependency-ordered package build, strict test typing, native ABI, lint, credential/dependency checks and offline audit pass. Evidence in packages/core/src/project/EVIDENCE.md. Shared manifests/build configs/root export and exact lock workspace edges plus refreshed registry hash are minimal integration edits coordinated with parent; no later-WP acceptance claimed."
+        "Ready for independent review: commit 9bd5c0d; public model-consuming core API and real SQLite/readable JSON journal recovery; 90 tests pass including 16 WP03 tests and four native process crash boundaries; clean local dependency-ordered package build, strict test typing, native ABI, lint, credential/dependency checks and offline audit pass. Evidence in packages/core/src/project/EVIDENCE.md. Shared manifests/build configs/root export and exact lock workspace edges plus refreshed registry hash are minimal integration edits coordinated with parent; no later-WP acceptance claimed.",
+        "Independent review rejects 9bd5c0d: overlapping-root writers lose a committed edit; metadata SQLite symlink mutates an outside database. Structured checklist and reproductions committed as 03cc7d8."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP03-project-storage-and-revision-checked-command-core/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP03-project-storage-and-revision-checked-command-core/review-cycle-1.md",
         "reviewer": "codex/reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T011": "done",
-        "T012": "done",
-        "T013": "done",
-        "T014": "done",
-        "T015": "done"
+        "T011": "planned",
+        "T012": "planned",
+        "T013": "planned",
+        "T014": "planned",
+        "T015": "planned"
       }
     },
     "WP04": {
