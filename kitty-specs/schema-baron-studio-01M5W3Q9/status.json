@@ -1,7 +1,7 @@
 {
-  "event_count": 182,
-  "last_event_id": "01M5YC4CFV335RZ3Z03C0B2YCH",
-  "materialized_at": "2026-10-27T09:47:43.995075+00:00",
+  "event_count": 185,
+  "last_event_id": "01M5YCHFHZDNH9B7N4G1MGN3GP",
+  "materialized_at": "2026-10-27T09:54:53.109215+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
@@ -12,8 +12,8 @@
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 1,
-    "in_review": 1,
+    "in_progress": 2,
+    "in_review": 0,
     "planned": 8
   },
   "work_packages": {
@@ -549,26 +549,34 @@
     "WP17": {
       "actor": "codex",
       "agent": "codex",
-      "agent_profile": "reviewer-renata",
+      "agent_profile": "node-norris",
       "agent_profile_version": "1.0",
-      "force_count": 0,
-      "lane": "in_review",
-      "last_event_id": "01M5YC4CFV335RZ3Z03C0B2YCH",
-      "last_transition_at": "2026-10-27T09:47:43.995075+00:00",
+      "force_count": 1,
+      "lane": "in_progress",
+      "last_event_id": "01M5YCHFHZDNH9B7N4G1MGN3GP",
+      "last_transition_at": "2026-10-27T09:54:53.109215+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for review: 14375ba; canonical MCP/Studio-authored reports and independent production CRUD totals/minimum/filter returns/reopen passed; 338 tests/45 files, strict builds, lint/native/dependency checks passed. Final auth13/14 integration and two WP20 regeneration cycles explicitly pending."
+        "Ready for review: 14375ba; canonical MCP/Studio-authored reports and independent production CRUD totals/minimum/filter returns/reopen passed; 338 tests/45 files, strict builds, lint/native/dependency checks passed. Final auth13/14 integration and two WP20 regeneration cycles explicitly pending.",
+        "Independent review requests changes: P1 native SQLite execution survives generated report deadline; eight checks and bounded valid-query CPU evidence in /tmp/wp17-review-feedback.md. Shared model/SQLite/compiler/navigation/UI/lock integration authorized and rationale reviewed. Auth integration pending WP14, regeneration pending WP20; neither passed."
       ],
       "provider": "__resolved_provider_absent__",
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "review": null,
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP17-query-backed-reports-and-refreshed-child-derived-values/review-cycle-1.md",
+        "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP17-query-backed-reports-and-refreshed-child-derived-values/review-cycle-1.md",
+        "reviewer": "reviewer-renata",
+        "verdict": "changes_requested"
+      },
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T081": "done",
-        "T082": "done",
-        "T083": "done",
-        "T084": "done",
-        "T085": "done"
+        "T081": "planned",
+        "T082": "planned",
+        "T083": "planned",
+        "T084": "planned",
+        "T085": "planned"
       }
     },
     "WP18": {
