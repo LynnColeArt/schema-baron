@@ -200,24 +200,26 @@
       "last_transition_at": "2026-10-27T04:00:00.469851+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: b355f99898b4c8e9a047edb4eef30f9da0da0173; 142 tests, all implemented builds/types and exact dependency verification passed; five real browser workflows passed; native cancellation confirms process exit and rollback. Evidence packages/core/src/connections/EVIDENCE.md."
+        "Ready for independent review: b355f99898b4c8e9a047edb4eef30f9da0da0173; 142 tests, all implemented builds/types and exact dependency verification passed; five real browser workflows passed; native cancellation confirms process exit and rollback. Evidence packages/core/src/connections/EVIDENCE.md.",
+        "Independent review rejected: effectful async connection.inspect lacks in-flight idempotency reservation; matching retries persist OUTPUT_CONFLICT after creation and conflicting payload creates an extra file. Evidence 376a12236e5ffd7a916ade8c46ee4aaaaa8d3380; shared integration rationale reviewed in EVIDENCE.md."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP06-sqlite-connections-and-lossless-introspection/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP06-sqlite-connections-and-lossless-introspection/review-cycle-1.md",
         "reviewer": "codex/reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T026": "done",
-        "T027": "done",
-        "T028": "done",
-        "T029": "done",
-        "T030": "done"
+        "T026": "planned",
+        "T027": "planned",
+        "T028": "planned",
+        "T029": "planned",
+        "T030": "planned"
       }
     },
     "WP07": {
