@@ -201,7 +201,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: b355f99898b4c8e9a047edb4eef30f9da0da0173; 142 tests, all implemented builds/types and exact dependency verification passed; five real browser workflows passed; native cancellation confirms process exit and rollback. Evidence packages/core/src/connections/EVIDENCE.md.",
-        "Independent review rejected: effectful async connection.inspect lacks in-flight idempotency reservation; matching retries persist OUTPUT_CONFLICT after creation and conflicting payload creates an extra file. Evidence 376a12236e5ffd7a916ade8c46ee4aaaaa8d3380; shared integration rationale reviewed in EVIDENCE.md."
+        "Independent review rejected: effectful async connection.inspect lacks in-flight idempotency reservation; matching retries persist OUTPUT_CONFLICT after creation and conflicting payload creates an extra file. Evidence 376a12236e5ffd7a916ade8c46ee4aaaaa8d3380; shared integration rationale reviewed in EVIDENCE.md.",
+        "Cycle 1 repair ready for independent review: 45fb008490dbea2c919bcb0c70ab29baf88fe9e2 reserves canonical async keys before any handler effect, shares matching outcomes, rejects conflicting sync/async payloads without file creation, and removes unused quoteIdentifier. Required verify passed 154 tests/builds/types, strict test-source checks and five real browser workflows passed. Evidence packages/core/src/connections/EVIDENCE.md."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
