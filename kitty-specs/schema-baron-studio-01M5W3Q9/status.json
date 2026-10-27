@@ -269,6 +269,9 @@
       "last_event_id": "01M5XXV5QZ25Q5T08HYADFSK3F",
       "last_transition_at": "2026-10-27T05:38:02.111404+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: a87c76f; real blank SQLite UI authoring, ordered composite FK, preview/backfill/stale/destructive cancel, MCP parity, 50x500 zero-loss navigation; 203 unit/integration tests and 9 browser regressions passed; apply capability honestly awaits approved WP09. Evidence in schema-editor/EVIDENCE.md."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
