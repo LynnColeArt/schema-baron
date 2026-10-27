@@ -262,6 +262,57 @@ test('actual authoring: HTML and Design share stable objects, recovery, conflict
   }
 });
 
+test('Design literal braces and encoded HTML survive apply, save and reopen', async ({ page }, info) => {
+  await connect(page);
+  await create(page, 'Literal static content');
+  await addPage(page, 'Literal page', '/literal');
+  await page.getByRole('button', { name: 'Insert paragraph', exact: true }).click();
+  await page.getByLabel('Static text 0.0', { exact: true }).fill('Literal {brace}');
+  await page.getByRole('button', { name: '▣ Save', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saved');
+  await mode(page, 'HTML').click();
+  const html = page.getByLabel('HTML source', { exact: true });
+  await expect(html).toHaveValue('<p>Literal &#123;brace&#125;</p>');
+  await expect(html).toHaveAttribute('aria-invalid', 'false');
+  await html.fill('<p>Literal &#x7b;brace&#x7d; &amp; &#123;other&#125;</p>');
+  await page.getByRole('button', { name: 'Apply HTML to draft', exact: true }).click();
+  await page.getByRole('button', { name: '▣ Save', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saved');
+  await mode(page, 'Design').click();
+  await expect(page.getByLabel('Static text 0.0', { exact: true })).toHaveValue('Literal {brace} & {other}');
+  // A structural edit invokes canonical serialization rather than preserving raw source.
+  await page.getByRole('button', { name: 'Insert heading', exact: true }).click();
+  await page.getByRole('button', { name: '▣ Save', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saved');
+  await mode(page, 'HTML').click();
+  const canonical = '<p>Literal &#123;brace&#125; &amp; &#123;other&#125;</p><h1>New heading</h1>';
+  await expect(html).toHaveValue(canonical);
+  await expect(html).toHaveAttribute('aria-invalid', 'false');
+  const summary = (await owner('projects?approvedRoot=projects')).find((value: { name: string }) => value.name === 'Literal static content');
+  const persisted: Project = await owner('projects/' + summary.id);
+  expect(persisted.pages[0]?.document).toEqual([
+    { kind: 'element', tag: 'p', children: [{ kind: 'text', text: 'Literal {brace} & {other}' }] },
+    { kind: 'element', tag: 'h1', children: [{ kind: 'text', text: 'New heading' }] },
+  ]);
+  await page.reload();
+  await expect(html).toHaveValue(canonical);
+  await expect(html).toHaveAttribute('aria-invalid', 'false');
+  await create(page, 'Separate literal project');
+  await page.getByRole('button', { name: 'Open / Switch…', exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: /Literal static content/ }).click();
+  await expect(html).toHaveValue(canonical);
+  await expect(html).toHaveAttribute('aria-invalid', 'false');
+  await mode(page, 'Preview').click();
+  await expect(page.frameLocator('iframe').getByText('Literal {brace} & {other}', { exact: true })).toBeVisible();
+  await mode(page, 'HTML').click();
+  await page.screenshot({ path: info.outputPath('literal-braces-html-reopened.png'), fullPage: true });
+  const dynamic = canonical + '<p>{serverHook()}</p>';
+  await html.fill(dynamic);
+  await expect(html).toHaveAttribute('aria-invalid', 'true');
+  await expect(html).toHaveValue(dynamic);
+  await expect(page.getByRole('button', { name: 'Apply HTML to draft', exact: true })).toBeDisabled();
+});
+
 test('native 200 percent zoom retains keyboard authoring and scrollable modes', async ({}, info) => {
   test.setTimeout(90000);
   const profile = mkdtempSync(join(root, 'native-zoom-profile-'));

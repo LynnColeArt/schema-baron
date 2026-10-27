@@ -6,6 +6,25 @@ const id = (v: string) => createId(() => v);
 const page: Page = { id: id('page'), title: 'Page', route: '/', document: [{ kind: 'form', formId: id('a') }, { kind: 'form', formId: id('b') }], formIds: [id('a'), id('b')] };
 const forms = [{ id: id('a'), pageId: page.id, controlIds: [id('one'), id('two')] }, { id: id('b'), pageId: page.id, controlIds: [] }] as Form[];
 describe('supported document codec', () => {
+  it.each(['<p>&#123;literal&#125;</p>', '<p>&#x7b;literal&#x7d;</p>'])('roundtrips supported encoded literal braces: %s', source => {
+    const emptyPage = { ...page, document: [], formIds: [] };
+    const parsed = parseDocument(source, emptyPage, []);
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(parsed.document).toEqual([{ kind: 'element', tag: 'p', children: [{ kind: 'text', text: '{literal}' }] }]);
+    const serialized = serializeDocument({ ...emptyPage, document: parsed.document }, []);
+    expect(serialized).toBe('<p>&#123;literal&#125;</p>');
+    const roundtrip = parseDocument(serialized, emptyPage, []);
+    expect(roundtrip.ok && roundtrip.document).toEqual(parsed.document);
+  });
+  it('serializes directly authored static model text without turning it into dynamic source', () => {
+    const authored: Page = { ...page, formIds: [], document: [{ kind: 'element', tag: 'p', children: [{ kind: 'text', text: 'Literal {brace} & &#123;quoted&#125;' }] }] };
+    const source = serializeDocument(authored, []);
+    expect(source).toBe('<p>Literal &#123;brace&#125; &amp; &amp;#123;quoted&amp;#125;</p>');
+    const parsed = parseDocument(source, authored, []);
+    expect(parsed.ok && parsed.document).toEqual(authored.document);
+    expect(parseDocument('<p>{serverHook()}</p>', authored, []).ok).toBe(false);
+  });
   it('roundtrips nested static content and typed reference order without copying metadata', () => {
     const source = '<header><h1>A &amp; B</h1></header>\n<section><sb-form id="b"></sb-form><sb-form id="a">\n<sb-control id="two" /><sb-control id="one" />\n</sb-form></section>';
     const result = parseDocument(source, page, forms);

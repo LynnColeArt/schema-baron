@@ -24,7 +24,8 @@ function decode(s: string): string {
 }
 export function serializeDocument(page: Page, forms: Form[]): string {
   const render = (node: DocumentNode): string => {
-    if (node.kind === 'text') return escape(node.text);
+    // Literal model text must stay inside the parser's static text grammar.
+    if (node.kind === 'text') return escape(node.text).replaceAll('{', '&#123;').replaceAll('}', '&#125;');
     if (node.kind === 'element') return `<${node.tag}>${node.children.map(render).join('')}</${node.tag}>`;
     const form = forms.find(f => f.id === node.formId);
     return `<sb-form id="${escape(node.formId)}">${(form?.controlIds ?? []).map(id => `<sb-control id="${escape(id)}" />`).join('')}</sb-form>`;
