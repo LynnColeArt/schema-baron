@@ -817,6 +817,9 @@
       "last_event_id": "01M5Z21PW26XH6WK00MWWC9J0S",
       "last_transition_at": "2026-10-27T16:10:44.994829+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: 14 cross-boundary cases plus targeted blocked-mutation rerun; 50 package regressions and real generated-auth production proof pass. Source/evidence commit 228e8c8; strict/typecheck/build/baseline lint pass; no production changes."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
