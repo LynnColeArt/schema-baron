@@ -881,6 +881,9 @@
       "last_event_id": "01M5Z4WJHFKJ874JSG8DWFRT41",
       "last_transition_at": "2026-10-27T17:00:22.447949+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: 482-test workspace and independently acquired source checks pass; fresh disconnected Equipment/Publication authoring, standalone exports and managed provisioning/login verified. Release guides, full requirement reconciliation and versioned evidence in scripts/release/evidence/report.md. Original archive5dcf independently proven; late metadata observation preserved/corrected. No main merge/push/deploy."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
