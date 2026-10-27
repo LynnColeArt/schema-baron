@@ -12,6 +12,8 @@ import type { Capabilities, StudioClient } from '../project-ui/api.js';
 import { Dialog, Tabs } from '../workspace/chrome.js';
 import { blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations, visibleTables } from './state.js';
 import type { Drafts } from './state.js';
+import { retainNodeMeasurements } from '../flow-map/state.js';
+import type { NodeMeasurements } from '../flow-map/state.js';
 import './styles.css';
 type Column = Table['columns'][number];
 type Migration = Extract<ReviewedPlan, {
@@ -241,6 +243,9 @@ export function SchemaEditor({
   onChanged: (p: Project) => void;
 }) {
   const [initial] = useState(() => recover(project.id));
+  const [measurements, setMeasurements] = useState<NodeMeasurements>({});
+  // Draft overlays can reorder visibleTables; default view positions follow stable IDs.
+  const defaultPositions = useRef<Positions>({});
   const [drafts, setDrafts] = useState<Drafts>(initial.drafts),
     [selected, setSelected] = useState(initial.selected),
     [column, setColumn] = useState(initial.column),
@@ -601,13 +606,17 @@ export function SchemaEditor({
       remote: ''
     }]);
   }
-  const nodes: Node<GraphData>[] = tables.map((t, i) => ({
+  for (const table of tables) {
+    if (!defaultPositions.current[table.id]) {
+      const index = Object.keys(defaultPositions.current).length;
+      defaultPositions.current[table.id] = { x: index % 4 * 280 + 28, y: Math.floor(index / 4) * 300 + 28 };
+    }
+  }
+  const nodes: Node<GraphData>[] = tables.map(t => ({
     id: t.id,
     type: 'table',
-    position: positions[t.id] ?? {
-      x: i % 4 * 280 + 28,
-      y: Math.floor(i / 4) * 300 + 28
-    },
+    ...(measurements[t.id] ? { measured: measurements[t.id] } : {}),
+    position: positions[t.id] ?? defaultPositions.current[t.id]!,
     selected: t.id === selected,
     data: {
       table: t,
@@ -661,7 +670,10 @@ export function SchemaEditor({
         })}>Undo deletion: {d.base?.physicalName}</button>)}{project.schema.opaqueObjects.length > 0 && <details><summary>Read-only imported objects ({project.schema.opaqueObjects.length})</summary>{project.schema.opaqueObjects.map(o => <p key={o.id}>{o.kind}: {o.physicalName} — unsupported SQL retained. Edits affecting dependencies may be blocked.</p>)}</details>}</aside>
  <div className="schema-center"><div className="schema-canvas-header"><span>Relationships / {table?.physicalName || 'Schema'}</span><Tabs label="Schema view" values={['Diagram', 'Table list']} active={mode} onChange={setMode} /></div><div className="schema-canvas" style={{
           display: mode === 'Diagram' ? 'block' : 'none'
-        }}><ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} onConnect={propose} onNodeDragStop={(_, node) => setPositions(p => ({
+        }}><ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} onNodesChange={changes => {
+            const dimensions = changes.flatMap(change => change.type === 'dimensions' && change.dimensions ? [{ id: change.id, dimensions: change.dimensions }] : []);
+            if (dimensions.length) setMeasurements(previous => retainNodeMeasurements(previous, dimensions));
+          }} onConnect={propose} onNodeDragStop={(_, node) => setPositions(p => ({
             ...p,
             [node.id]: node.position
           }))} onNodeClick={(_, node) => setSelected(node.id)} onEdgeClick={(_, edge) => {

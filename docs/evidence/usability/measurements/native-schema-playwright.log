@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:2238664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/e2e/usability/scale.spec.ts:38:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection (5.0s)
+
+  1 passed (6.3s)

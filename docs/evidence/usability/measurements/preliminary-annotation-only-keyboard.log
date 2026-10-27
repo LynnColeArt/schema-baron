@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:2250840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/e2e/usability/workflow.spec.ts:7:1 › keyboard primary journey and full five-mode application checkpoint (27.9s)
+  ✓  2 tests/e2e/usability/workflow.spec.ts:8:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes (41.3s)
+
+  2 passed (1.2m)
