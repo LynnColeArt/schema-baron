@@ -2,5 +2,4 @@
 > schema-baron@0.0.0 lint
 > node scripts/workspace/verify.mjs lint
 
-docs/evidence/generality/lint.log:4: new blank line at EOF.
-git failed (2)
+Diff-scoped syntax/JSON/whitespace lint checked 109 files; TypeScript semantic validation is separate
