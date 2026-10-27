@@ -713,24 +713,26 @@
       "last_transition_at": "2026-10-27T11:50:55.826523+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for review: source 2214b32; real managed build/run/cancel/native-child cleanup, tree-revision promotion/restart and typed Live Page; portable export independently installed/built/served with Studio stopped; 425 tests plus strict/browser proof. Evidence packages/core/tests/runtime/EVIDENCE.md."
+        "Ready for review: source 2214b32; real managed build/run/cancel/native-child cleanup, tree-revision promotion/restart and typed Live Page; portable export independently installed/built/served with Studio stopped; 425 tests plus strict/browser proof. Evidence packages/core/tests/runtime/EVIDENCE.md.",
+        "Independent review rejected source2214b32: concurrent runtime starts orphan an owned process; asynchronous stale export publishes despite revision rejection. Eight checks and actual test evidence in feedback."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP21-managed-runtime-jobs-live-page-and-portable-export/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP21-managed-runtime-jobs-live-page-and-portable-export/review-cycle-1.md",
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T101": "done",
-        "T102": "done",
-        "T103": "done",
-        "T104": "done",
-        "T105": "done"
+        "T101": "planned",
+        "T102": "planned",
+        "T103": "planned",
+        "T104": "planned",
+        "T105": "planned"
       }
     },
     "WP22": {
