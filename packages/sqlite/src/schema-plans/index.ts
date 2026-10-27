@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3';
+import type { PhysicalTable } from '../introspection/index.js';
 import { Decimal } from 'decimal.js';
 import { createHash } from 'node:crypto';
 import { canonicalJson, createId, expressionSchema, isLiteralValue, schemaSchema } from '@schema-baron/model';
@@ -27,9 +28,50 @@ function expression(node: Expression, table: Table, mode: 'default'|'check'|'cop
 }
 function names(table: Table, ids: readonly string[]) { return ids.map(id=> { const c=table.columns.find(c=>c.id===id); if(!c) fail('BROKEN_REFERENCE',id,'Constraint column does not exist.'); return quote(c.physicalName); }).join(', '); }
 function sqlType(column: Table['columns'][number]) { const type=column.type; return type.kind==='decimal'?(type.encoding==='text'?'TEXT':'INTEGER'):['boolean','integer'].includes(type.kind)?'INTEGER':type.kind==='real'?'REAL':type.kind==='blob'?'BLOB':'TEXT'; }
-function createTable(table: Table, schema: Schema, name=table.physicalName) {
- const defs=table.columns.map(c=> { if(c.generated) fail('UNSUPPORTED_SCHEMA_OBJECT',c.id,'Generated columns are preserved as opaque and cannot be authored or rebuilt.'); return `${quote(c.physicalName)} ${sqlType(c)}${c.nullable?'':' NOT NULL'}${c.default?' DEFAULT ('+expression(c.default,table,'default')+')':''}`; });
- if(table.primaryKey.length) defs.push(`PRIMARY KEY (${names(table,table.primaryKey)})`);
+interface RebuildLayout {
+ columnTypes: Map<string, string>;
+ notNull: Map<string, boolean>;
+ descendingPrimaryKeyId?: string;
+ aliasesRowid: boolean;
+ sourceAliasId?: string;
+}
+/** INTEGER affinity is not evidence of a rowid alias. SQLite gives independent
+ * INT keys and inline INTEGER PRIMARY KEY DESC keys a real PK index. */
+function rebuildLayout(table: Table, source?: Table, physical?: PhysicalTable): RebuildLayout {
+ const columnTypes = new Map<string, string>();
+ const notNull = new Map<string, boolean>();
+ for (const column of table.columns) {
+  const old = source?.columns.find(c => c.id === column.id);
+  const observed = physical?.columns.find(c => c.name === old?.physicalName);
+  if (old && observed && equal(old.type, column.type)) {
+   if (!/^(INTEGER|INT|REAL|TEXT|BLOB)$/i.test(observed.type)) fail('UNSUPPORTED_SCHEMA_OBJECT', column.id, 'Physical type declaration cannot be preserved by the rebuild compiler.');
+   columnTypes.set(column.id, observed.type);
+  }
+  if (old && observed && old.nullable === column.nullable) notNull.set(column.id, !!observed.notnull);
+ }
+ const physicalKeys = physical?.columns.filter(c => c.pk > 0) ?? [];
+ const pkIndex = physical?.indexes.find(i => i.origin === 'pk');
+ const sourceKey = physicalKeys.length === 1 ? physicalKeys[0] : undefined;
+ const oldKey = source?.columns.find(c => c.physicalName === sourceKey?.name);
+ const sourceAliasId = sourceKey && /^INTEGER$/i.test(sourceKey.type) && !pkIndex ? oldKey?.id : undefined;
+ let descendingPrimaryKeyId: string | undefined;
+ if (oldKey && table.primaryKey.length === 1 && table.primaryKey[0] === oldKey.id && /^INTEGER$/i.test(columnTypes.get(oldKey.id) ?? '')) {
+  const indexKeys = pkIndex?.columns.filter(c => c.key) ?? [];
+  if (!sourceAliasId && sourceKey && /^INTEGER$/i.test(sourceKey.type)) {
+   if (indexKeys.length !== 1 || indexKeys[0]!.name !== sourceKey.name || indexKeys[0]!.desc !== 1 || indexKeys[0]!.coll !== 'BINARY') fail('UNSUPPORTED_SCHEMA_OBJECT', table.id, 'Cannot prove the independent INTEGER primary-key storage semantics.');
+   descendingPrimaryKeyId = oldKey.id;
+  }
+ }
+ const key = table.primaryKey.length === 1 ? table.columns.find(c => c.id === table.primaryKey[0]) : undefined;
+ const aliasesRowid = !!key && /^INTEGER$/i.test(columnTypes.get(key.id) ?? sqlType(key)) && !descendingPrimaryKeyId;
+ // A source alias is implicitly non-null even when table_xinfo.notnull is 0.
+ // If its alias is explicitly removed, compile the desired NOT NULL constraint.
+ if (sourceAliasId && !aliasesRowid) notNull.delete(sourceAliasId);
+ return { columnTypes, notNull, aliasesRowid, ...(descendingPrimaryKeyId ? { descendingPrimaryKeyId } : {}), ...(sourceAliasId ? { sourceAliasId } : {}) };
+}
+function createTable(table: Table, schema: Schema, name=table.physicalName, layout?: RebuildLayout) {
+ const defs=table.columns.map(c=> { if(c.generated) fail('UNSUPPORTED_SCHEMA_OBJECT',c.id,'Generated columns are preserved as opaque and cannot be authored or rebuilt.'); return `${quote(c.physicalName)} ${layout?.columnTypes.get(c.id) ?? sqlType(c)}${layout?.descendingPrimaryKeyId === c.id ? ' PRIMARY KEY DESC' : ''}${(layout?.notNull.get(c.id) ?? !c.nullable) ? ' NOT NULL' : ''}${c.default?' DEFAULT ('+expression(c.default,table,'default')+')':''}`; });
+ if(table.primaryKey.length && !layout?.descendingPrimaryKeyId) defs.push(`PRIMARY KEY (${names(table,table.primaryKey)})`);
  for(const u of table.uniqueConstraints) defs.push(`CONSTRAINT ${quote(u.id)} UNIQUE (${names(table,u.columnIds)})`);
  for(const c of table.checks) defs.push(`CONSTRAINT ${quote(c.id)} CHECK (${expression(c.expression,table,'check')})`);
  for(const f of table.foreignKeys) { const target=schema.tables.find(t=>t.id===f.referencedTableId); if(!target) fail('BROKEN_REFERENCE',f.id,'Referenced table does not exist.'); defs.push(`CONSTRAINT ${quote(f.id)} FOREIGN KEY (${names(table,f.columnIds)}) REFERENCES ${quote(target.physicalName)} (${names(target,f.referencedColumnIds)}) ON UPDATE ${f.onUpdate.replaceAll('-',' ').toUpperCase()} ON DELETE ${f.onDelete.replaceAll('-',' ').toUpperCase()}${f.deferrable?' DEFERRABLE INITIALLY DEFERRED':''}`); }
@@ -110,7 +152,7 @@ function compile(db:Database.Database,input:SchemaPlanInput,result:SchemaPlanRes
  } else {
   // All changed tables are staged before originals are dropped; executor disables FK checks before BEGIN.
   const staged=new Map<string,string>(); const occupied=new Set(physical.objects.map(o=>o.name.toLowerCase()));
-  for(const p of projected.values()) if(changed.has(p.table.id)) {let temporary:string;do {temporary='__baron_'+createId().replaceAll('-','');}while(occupied.has(temporary.toLowerCase()));occupied.add(temporary.toLowerCase());staged.set(p.table.id,temporary);step(createTable(p.table,desired,temporary),[p.table.id]); if(p.source) { const integerKey=p.table.primaryKey.length===1 && p.table.columns.find(c=>c.id===p.table.primaryKey[0])?.type.kind==='integer'; const sourceRowid=['rowid','_rowid_','oid'].find(name=>!p.source!.columns.some(c=>c.physicalName.toLowerCase()===name)); const targetRowid=['rowid','_rowid_','oid'].find(name=>!p.table.columns.some(c=>c.physicalName.toLowerCase()===name)); if(!integerKey && (!sourceRowid || !targetRowid)) fail('UNSUPPORTED_SCHEMA_OBJECT',p.table.id,'Shadowed rowid aliases prevent a proven row-identity-preserving rebuild.'); step(`INSERT INTO ${quote(temporary)} (${!integerKey?quote(targetRowid!)+', ':''}${names(p.table,p.table.columns.map(c=>c.id))}) ${!integerKey?'SELECT '+quote(sourceRowid!)+', '+p.copies.map((v,i)=>v+' AS '+quote(p.table.columns[i]!.physicalName)).join(', ')+' FROM main.'+quote(p.source.physicalName):p.select}`,[p.table.id]); }}
+  for(const p of projected.values()) if(changed.has(p.table.id)) {let temporary:string;do {temporary='__baron_'+createId().replaceAll('-','');}while(occupied.has(temporary.toLowerCase()));occupied.add(temporary.toLowerCase());staged.set(p.table.id,temporary); const layout = rebuildLayout(p.table, p.source, physical.tables.find(t => t.name === p.source?.physicalName)); if (p.source && layout.aliasesRowid && (layout.sourceAliasId !== p.table.primaryKey[0] || backfills.has(JSON.stringify([p.table.id, p.table.primaryKey[0]])))) fail('UNSUPPORTED_SCHEMA_OBJECT', p.table.id, 'Rebuild would change independent row identity into a rowid alias or replace aliased row identities. Preserve the physical primary key or use a separately supported identity migration.'); step(createTable(p.table,desired,temporary,layout),[p.table.id]); if(p.source) { const integerKey=layout.aliasesRowid; const sourceRowid=['rowid','_rowid_','oid'].find(name=>!p.source!.columns.some(c=>c.physicalName.toLowerCase()===name)); const targetRowid=['rowid','_rowid_','oid'].find(name=>!p.table.columns.some(c=>c.physicalName.toLowerCase()===name)); if(!integerKey && (!sourceRowid || !targetRowid)) fail('UNSUPPORTED_SCHEMA_OBJECT',p.table.id,'Shadowed rowid aliases prevent a proven row-identity-preserving rebuild.'); step(`INSERT INTO ${quote(temporary)} (${!integerKey?quote(targetRowid!)+', ':''}${names(p.table,p.table.columns.map(c=>c.id))}) ${!integerKey?'SELECT '+quote(sourceRowid!)+', '+p.copies.map((v,i)=>v+' AS '+quote(p.table.columns[i]!.physicalName)).join(', ')+' FROM main.'+quote(p.source.physicalName):p.select}`,[p.table.id]); }}
   for(const old of baseline.tables) if(changed.has(old.id)) step(`DROP TABLE ${quote(old.physicalName)}`,[old.id]);
   for(const p of projected.values()) if(changed.has(p.table.id)) {step(`ALTER TABLE ${quote(staged.get(p.table.id)!)} RENAME TO ${quote(p.table.physicalName)}`,[p.table.id]); for(const sql of indexes(p.table))step(sql,[p.table.id]);}
  }

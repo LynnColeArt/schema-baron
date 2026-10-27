@@ -118,3 +118,54 @@ connection settings. Restore needs a new reviewed plan. After a successful apply
 refresh the actual inspection/baseline through the canonical connection path;
 never treat a client-supplied desired schema as proof of an observed database.
 The planner's projected checks do not substitute for transaction-time checks.
+
+## Review cycle 1 — physical primary-key preservation repair
+
+The independent rejection event `01M5XTH5WZASQPJ297FVZBMG13` identified a real
+preservation defect in source `570a5b8`: logical integer type was incorrectly used
+as proof of an SQLite rowid alias. The original reviewer files remain unchanged:
+
+- `/tmp/wp07-independent-review/probe.mjs`, SHA-256
+  `6830a90e6ed5601594e0256d4599892a12a56fe45cdff922cda17edaddc1caec`.
+- `/tmp/wp07-independent-review/results.jsonl`, SHA-256
+  `4b743a4308cf892695a9812c10745568869cb2251033bbe39dbc4ff1b587e50e`.
+
+The exact original command was rerun without modifying the probe. Fresh results
+were written separately to `/tmp/wp07-cycle1-before.jsonl` and
+`/tmp/wp07-cycle1-after.jsonl`. For both `INT NOT NULL PRIMARY KEY` and inline
+`INTEGER PRIMARY KEY DESC NOT NULL`, the original plan changed rowid 50 to 7 and
+made NULL insertion succeed. The repaired plans retain rowid 50/key 7 and reject
+NULL insertion with the original NOT NULL failure. The native rename control
+retains rowid/key 7 and its original NULL auto-allocation behavior.
+
+The compiler now takes retained type declarations, observed NOT NULL flags and
+physical PK-index metadata from the actual pinned inspection. `INT` remains
+`INT`; the independent inline `INTEGER PRIMARY KEY DESC` exception remains an
+inline descending key. It copies an independent rowid explicitly. It does not add
+NOT NULL to an unchanged true alias whose physical flag was zero. When an alias
+is explicitly converted away, the desired non-null constraint is emitted rather
+than incorrectly carrying forward the former implicit constraint. Creating a new
+alias over an existing independent identity or replacing aliased identities by a
+backfill is blocked with an actionable unsupported diagnostic. No generic
+acknowledgement is used to conceal identity changes.
+
+Nine new public-command tests cover the two exact heldouts, table-level INT,
+ordinary INTEGER aliases, table-level INTEGER DESC (which remains an alias),
+composite rowid keys, explicit conversion away from an alias, unsafe new-alias
+refusal, and composite WITHOUT ROWID refusal. Supported plans execute unchanged
+on a separately seeded SQLite database and compare rows/rowids, column PRAGMAs,
+PK index direction/collation, NULL behavior and integrity; preview leaves the
+source schema/rows unchanged. WITHOUT ROWID remains an opaque unsupported rebuild
+boundary: no plan or DDL is authorized, and its original no-rowid/non-null behavior
+is asserted unchanged. This is not a claim of WITHOUT ROWID authoring support.
+
+Before production repair the first eight tests yielded five failures and three
+passes (`/tmp/wp07-cycle1-red-tests.log`). After repair all nine pass as part of
+`npm run verify`: 19 files / 186 tests passed, along with production Next build,
+workspace source checks, native SQLite 3.53.4 smoke, credential-pattern scan and
+all existing dependency evidence. The strict standalone TypeScript command above
+also included `packages/sqlite/tests/schema-plans/primary-key-semantics.test.ts`
+and passed. Fresh npm audit reports zero vulnerabilities; diff-scoped lint passes.
+Only the owned planner, new tests and this evidence changed in the repair. No
+shared registration, dependency, runtime upgrade, hosted sync, UI or apply changes
+were made.
