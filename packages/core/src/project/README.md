@@ -33,8 +33,8 @@ in metadata, so a host can reconnect a moved location by supplying its new appro
 path on restart. Missing roots fail closed. Definitions contain portable model
 references; database data, credentials, events, jobs and plans stay outside them.
 
-Exclusive SQLite leases guard each metadata store and each approved definition root for the entire store lifetime,
-including recovery. The hidden root lease file contains no project metadata or secrets. A process crash releases the operating-system lock. Every
+Exclusive SQLite leases guard each metadata store, each approved definition root, and each resolved definition file for the entire store lifetime,
+including recovery. Definition leases use stable sidecars beside the resolved JSON file, so parent/child roots and different root IDs or metadata stores share the same exclusion boundary. A definition lease is acquired before open/read/freshness checking and held across the journal, replacement and cleanup. The hidden lease files contain no project metadata or secrets. SQLite leaf and journal/WAL/SHM companion paths are validated before native opens; symbolic links and hard-linked database aliases are refused. Hard-linked JSON definitions are also refused because atomic replacement cannot preserve their alias identity. A process crash releases the operating-system lock. Every
 mutation durably records an intent containing before/after identities and the
 request outcome, commits metadata, then fsyncs and atomically replaces the readable
 JSON file on the same filesystem. The file and SQLite are separate commit resources.

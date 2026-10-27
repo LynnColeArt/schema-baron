@@ -50,3 +50,51 @@ edges to existing exact dependencies. The registry collector refreshed its times
 and lock hash after those edges changed; all 258 artifact records are unchanged.
 Unimplemented later packages are explicitly reported as NOT IMPLEMENTED by verify;
 no later transport or generated-application acceptance claim is made here.
+
+
+## Review cycle 2 — storage boundary repair
+
+Acknowledged both P1 findings from canonical review-cycle-1 and the exact probes
+retained by reviewer commits 03cc7d8 and 11edfc3. The original root-only lease did
+not exclude parent/child roots reaching the same file; validating only the metadata
+directory allowed SQLite to follow a linked child. Both claims in the original
+T011 evidence were incomplete for those topologies.
+
+Before production edits, the new public-package boundary suite failed nine of ten
+initial cases. The reviewer's metadata-stage scheduling hook ran a second batch
+without throwing or changing files: both parent-first and child-first topologies
+acknowledged two different revision-2 outcomes, reproducing the lost-update defect.
+Pre-existing SQLite child/companion symlinks also lacked the required path refusal.
+
+The repaired invariant keys an exclusive native SQLite lease to each resolved
+JSON path using a stable sidecar in that file's directory. Acquire occurs before
+reading/importing the definition, before save freshness checks, and before recovery
+or export replacement. It remains held until store close, so atomic JSON rename
+cannot replace the lease itself. Root IDs, ancestor/descendant root boundaries and
+independent metadata-store configurations do not change this identity. Ordinary
+external file freshness checks remain in force while the actual-file lease is held.
+Hard-linked JSON definitions are refused rather than splitting physical aliases
+through atomic replacement.
+
+The path invariant validates every native SQLite leaf and its -journal, -wal and
+-shm companions before native opens, including metadata, store/root leases and
+actual-definition leases. Symbolic or hard-linked aliases are refused with
+PATH_OUTSIDE_ROOT. The outside sentinel database's independent before/after bytes,
+original tables and row values remain unchanged in the public-API tests.
+
+After repair, all 20 boundary regressions pass. The exact metadata-stage scheduling
+oracle now observes the second open rejected with PROJECT_BUSY and the scheduled
+second write unsuccessful. Independent JSON/SQLite reads show the first revision-2
+edit and its successful operation, with no registered project or successful
+operation in the refused store. After the first store closes, the second opens the
+current revision 2, commits revision 3, and preserves both acknowledged edits.
+Both root directions and normalized locators under different root aliases are tested.
+
+Final observed verification: deleted all local model/storage/core dist trees and
+rebuilt model -> storage -> core successfully; `npm run verify` passed native SQLite
+3.53.4 insert/transaction/backup, typecheck/build/lint, credentials and exact dependency
+evidence, and 110 tests in seven files (36 WP03 tests, including all four real
+process-crash/restart recovery boundaries). Strict TypeScript checking of all four
+WP03 test files passed. Offline npm audit again reported zero findings. No package
+versions, dependencies, model contracts, transport code or hosted-sync settings
+changed. Spec Kitty remains 3.2.7. Final diff lint passed before commit.
