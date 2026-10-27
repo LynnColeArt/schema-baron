@@ -4,6 +4,7 @@ import { ProjectStorage, StorageError, hash } from '@schema-baron/storage';
 import type { StorageOptions } from '@schema-baron/storage';
 import type { CommandEffect } from '../commands/index.js';
 import { registerSchemaPreview, SchemaPreviewError } from '../schema-preview/index.js';
+import { registerQueryPreview } from '../query-preview/index.js';
 import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { PlanRepository } from '../plans/index.js';
@@ -25,12 +26,14 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
 }
 export class ProjectCore {
  private pending = new Map<string, PendingCommand>();
+ private queryPreview: ReturnType<typeof registerQueryPreview>;
  private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>; private closeSchemaPreview: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
   this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.closeSchemaPreview = registerSchemaPreview(this.registry, options, this.plans, id => this.closed ? undefined : this.storage.snapshot(id), (id, connection) => this.storage.hasInspectedConnection(id, connection));
+  this.queryPreview = registerQueryPreview(this.registry, {...options,recordJob:(projectId,job)=>this.recordJob(options.ownerId,projectId,job)});
   this.registry.register('project.create', c => { if (c.operation !== 'project.create') throw new Error(); if (c.input.emptyDatabaseLocation) throw new StorageError('INVALID_INPUT', 'Database creation belongs to the connection adapter.'); const id = c.projectId; const policy = createId(); const candidate = parseProject({ id, formatVersion: FORMAT_VERSION, revision: 1, name: c.input.name, target: c.input.target, targetVersion: '1', connectionRefs: [], connections: [], schema: { id: createId(), revision: 1, tables: [], opaqueObjects: [] }, queries: [], pages: [], forms: [], controls: [], actions: [], policies: [{ id: policy, ownerId: id, scope: 'global', access: 'public' }], globalPolicyId: policy, outputConfig: { approvedRootId: 'output', relativePath: 'app' }, extensionContracts: [] }); return { result: candidate, candidate, root: c.input.approvedRoot }; });
   this.registry.register('project.batch', (c, p) => { if (c.operation !== 'project.batch' || !p) throw new Error(); return { result: { changedIds: c.input.operations.map(op => op.id) }, candidate: applyBatch(p, c.input.operations as EntityBatchOperation[]), changedIds: c.input.operations.map(op => op.id) }; });
   for (const operation of ['project.inspect', 'project.open'] as const) this.registry.register(operation, (c, p) => { return { result: p }; });
@@ -44,6 +47,8 @@ export class ProjectCore {
  job(actor: string, projectId: string, id: string) { this.authorize(actor); return this.storage.job(projectId, id); }
  recordJob(actor: string, projectId: string, input: unknown) { this.authorize(actor); const job = jobSchema.parse(input); this.storage.putJob(projectId, job.id, job); return job; }
  operation(actor: string, projectId: string, requestId: string) { this.authorize(actor); return this.storage.operation(projectId, requestId); }
+ /** Called only by an already reserved command handler; authorization still applies. */
+ cancelQueryPreview(actor: string, projectId: string, id: string) { this.authorize(actor); return this.queryPreview.cancel(projectId,id); }
  get recovery() { return structuredClone(this.storage.recovery); }
  /** Reserve the canonical key before invoking an async feature, including its first
   * synchronous effect. The store's writer/root leases exclude another live core.
@@ -104,5 +109,5 @@ export class ProjectCore {
    return outcome;
   }
  }
- close() { this.closed = true; const closed = Promise.all([this.closeConnections(), this.closeSchemaPreview()]).then(() => {}); this.storage.close(); return closed; }
+ close() { this.closed = true; const queriesRunning=this.queryPreview.hasActive(); const closed = Promise.all([this.closeConnections(),this.closeSchemaPreview(),this.queryPreview.close()]).then(()=>undefined); if(queriesRunning)return closed.finally(()=>this.storage.close()); this.storage.close(); return closed; }
 }

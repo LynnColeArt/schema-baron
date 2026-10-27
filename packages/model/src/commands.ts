@@ -25,7 +25,7 @@ export const operationInputSchemas = {
   'schema.apply': applyInput,
   'schema.history': z.strictObject({ connectionId: idSchema }),
   'schema.restorePreview': z.strictObject({ connectionId: idSchema, backupRef: idSchema }),
-  'query.preview': z.union([z.strictObject({ queryId: idSchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200) }), z.strictObject({ draft: querySchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200) })]),
+  'query.preview': z.union([z.strictObject({ queryId: idSchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() }), z.strictObject({ draft: querySchema, parameters: z.record(idSchema, scalar), rowLimit: z.number().int().min(1).max(200), timeoutMs: z.number().int().min(1).max(5000).optional(), maxScannedRows: z.number().int().min(1).max(100000).optional() })]),
   'form.construct': z.strictObject({ pageId: idSchema, kind: formSchema.shape.kind, source: sourceRefSchema.optional(), fieldIds: ids, keyIds: ids, actions: z.array(actionSchema.shape.operation), links: z.array(actionSchema.shape.destination.unwrap()), style: formSchema.shape.appearance }),
   'extension.read': z.strictObject({ extensionId: idSchema, approvedPath: text }),
   'extension.write': z.strictObject({ extensionId: idSchema, approvedPath: text, content: z.string(), expectedFileHash: hashSchema }),
