@@ -113,7 +113,11 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
     database.defaultSafeIntegers(true);
     database.pragma('query_only = ON');
     database.pragma('busy_timeout = 1000');
-    database.function('decimal_compare', { deterministic: true }, (left, right) => new Decimal(String(left)).comparedTo(String(right)));
+    database.function('decimal_compare', { deterministic: true }, (left, right) => {
+      // SQL comparisons involving NULL are unknown; WHERE excludes those rows.
+      if (left === null || right === null) return null;
+      return new Decimal(String(left)).comparedTo(String(right));
+    });
     const rows = database.prepare(sql).all(...bindings, config.pageSize, (page - 1) * config.pageSize) as Record<string, unknown>[];
     return { rows, page };
   } catch {

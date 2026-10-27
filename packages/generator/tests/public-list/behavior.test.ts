@@ -76,3 +76,14 @@ test('an injected staging-directory symlink cannot redirect source writes outsid
  expect(()=>writeInitialOutput(path,files,observeOutput(path),()=>{},phase=>{if(phase==='stage-created'){const stage=readdirSync(directory).find(name=>name.startsWith('.schema-baron-stage-'))!;symlinkSync(outside,join(directory,stage,'server'));}})).toThrow('symbolic links');
  expect(readdirSync(outside)).toEqual(['authored.txt']);expect(readFileSync(join(outside,'authored.txt'),'utf8')).toBe('keep');expect(readdirSync(directory)).toEqual([]);
 });
+
+test('Next private, group, slot and dynamic route conventions are diagnosed before output',()=>{
+ for(const route of ['/_inventory','/warehouse/_inventory','/_next','/(group)/inventory','/warehouse/(group)/inventory','/@slot/inventory','/[record]','/[...records]','/[[...records]]','/(.)inventory']) {
+  const p=project();p.pages[0]!.route=route;
+  try {compileProject(p);throw Error('Route unexpectedly compiled: '+route);}
+  catch(error) {const codes=route.split('/').some(segment=>segment.startsWith('_'))?['UNSUPPORTED_SCHEMA_OBJECT']:['VALIDATION_FAILED','UNSUPPORTED_SCHEMA_OBJECT'];expect(error).toMatchObject({diagnostics:expect.arrayContaining([expect.objectContaining({code:expect.stringMatching(new RegExp('^('+codes.join('|')+')$')),objectId:p.pages[0]!.id,severity:'error'})])});}
+ }
+ for(const route of ['/inventory_items','/warehouse/public_items','/layout','/route']) {
+  const p=project();p.pages[0]!.route=route;expect(compileProject(p).routes[0]?.path).toBe(route);
+ }
+});

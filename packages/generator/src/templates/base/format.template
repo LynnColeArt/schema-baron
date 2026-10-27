@@ -1,7 +1,13 @@
 import 'server-only';
 import Decimal from 'decimal.js';
 
-type FieldType = { kind: string; scale?: number; encoding?: string };
+type FieldType = {
+  kind: string;
+  scale?: number;
+  precision?: number;
+  encoding?: string;
+  rounding?: 'half-up' | 'half-even' | 'down';
+};
 
 export function formatValue(value: unknown, type: FieldType | undefined, format: string): string {
   if (value === null || value === undefined) return '—';

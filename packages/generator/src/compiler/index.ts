@@ -14,6 +14,7 @@ export function compileProject(input:Project):GenerationIR {
  const sources:SourceIR[]=project.schema.tables.map(t=>({id:t.id,kind:'table',name:t.physicalName,fields:t.columns.map(c=>({id:c.id,name:c.physicalName,type:c.type,nullable:c.nullable})),keys:t.primaryKey}));
  const routes:RouteIR[]=project.pages.map(page=>{
   if(!/^\/(?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_-]*$/.test(page.route) || page.route.endsWith('/')&&page.route!=='/') fail(page.id,'Use a static internal route made of letters, digits, underscores and hyphens.');
+  if(page.route.split('/').some(segment=>segment.startsWith('_'))) fail(page.id,'Route segments beginning with an underscore are private in Next.js. Rename this public route before generation.');
   const global=project.policies.find(p=>p.id===project.globalPolicyId)!;const local=project.policies.find(p=>p.id===page.policyId);const effective=local&&local.access!=='inherit'?local:global;
   if(effective.access!=='public') fail(page.id,'Authenticated page generation is not available yet.');
   const grids=page.formIds.flatMap(id=>{

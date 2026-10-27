@@ -1,0 +1,40 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-j
+
+ ❯ packages/generator/tests/public-list/behavior.test.ts (15 tests | 1 failed) 8078ms
+   × Next private, group, slot and dynamic route conventions are diagnosed before output 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/generator/tests/public-list/behavior.test.ts > Next private, group, slot and dynamic route conventions are diagnosed before output
+AssertionError: expected Error: Route unexpectedly compiled: /_inv… to match object { diagnostics: ArrayContaining{…} }
+
+- Expected
++ Received
+
+- {
+-   "diagnostics": ArrayContaining [
+-     ObjectContaining {
+-       "code": "UNSUPPORTED_SCHEMA_OBJECT",
+-       "objectId": "a4d4d1db-3a10-4d41-802c-de2335eea2f6",
+-     },
+-   ],
++ Error {
++   "message": "Route unexpectedly compiled: /_inventory",
+  }
+
+ ❯ packages/generator/tests/public-list/behavior.test.ts:84:31
+     82|   const p=project();p.pages[0]!.route=route;
+     83|   try {compileProject(p);throw Error('Route unexpectedly compiled: '+r…
+     84|   catch(error) {expect(error).toMatchObject({diagnostics:expect.arrayC…
+       |                               ^
+     85|  }
+     86|  for(const route of ['/inventory_items','/warehouse/public_items','/la…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  01:54:45
+   Duration  8.37s (tests 98%, import 1%, transform 1%)

@@ -60,3 +60,7 @@ Generation never seeds, resets, migrates or copies linked application data. SQLi
 - The obsolete bootstrap test that injected a fake generation.apply was changed to assert the production operation cannot be replaced. Actual plan/hash/revision/expiry/ack/state boundaries are exercised through the real handler in WP10.
 
 `dependency-evidence.json` records 85 generated artifacts reused at the workspace-reviewed exact integrity plus the additional official `server-only@0.0.1` metadata/integrity and 2022 publication date. Generated installs keep all lifecycle scripts denied; the reviewed better-sqlite3 native NAPI artifacts work without script exceptions. No Spec Kitty upgrade, hosted sync activation or missing-charter gate was introduced.
+
+## Cycle 1 follow-up
+
+Independent review found private-route mapping and nullable exact-decimal comparison defects. Both are repaired with red-to-green evidence, generated production HTTP checks and a strict decimal metadata type correction. See [CYCLE1.md](CYCLE1.md). The original evidence above is retained; the cycle1 workspace run passes 251 tests and its three strict isolated output checks pass.
