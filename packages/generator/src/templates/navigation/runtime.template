@@ -13,8 +13,11 @@ export function context(parameters:Parameters, allowed:readonly ContextField[]):
   // Parent/Record keys do not share that optional-search normalization.
   if(item.kind==='search'&&text==='') continue;
   if(item.kind==='mode'){
+   const key=item.parameter.slice(0,-5),input=allowed.find(value=>value.parameter===key);
+   // Record creation and query input modes share the suffix, with distinct declared grammars.
+   if(input?.kind!=='query'){if(text!=='new')throw Error('Invalid record mode.');result[item.parameter]=text;continue;}
    if(!['default','value','null'].includes(text))throw Error('Invalid query input mode.');
-   const key=item.parameter.slice(0,-5),field=allowed.find(value=>value.parameter===key)?.field;
+   const field=input.field;
    if(text==='null'&&!field?.nullable)throw Error('This input cannot be null.');
    if(text==='value'&&one(parameters,key)===undefined)throw Error('Missing query input.');
    result[item.parameter]=text;continue;
