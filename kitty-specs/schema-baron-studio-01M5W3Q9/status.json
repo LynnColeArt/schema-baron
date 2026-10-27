@@ -1,20 +1,20 @@
 {
-  "event_count": 205,
-  "last_event_id": "01M5YGEZ6TX7BV4KZYDTAXP05W",
-  "materialized_at": "2026-10-27T11:03:25.137007+00:00",
+  "event_count": 212,
+  "last_event_id": "01M5YH8ENG6G5JWBEQNRE388TX",
+  "materialized_at": "2026-10-27T11:17:20.176410+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
   "summary": {
-    "approved": 18,
+    "approved": 19,
     "blocked": 0,
     "canceled": 0,
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 2,
-    "in_review": 0,
-    "planned": 6
+    "in_progress": 1,
+    "in_review": 1,
+    "planned": 5
   },
   "work_packages": {
     "WP01": {
@@ -601,16 +601,17 @@
     "WP18": {
       "actor": "codex",
       "agent": "codex",
-      "agent_profile": "frontend-freddy",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
-      "lane": "in_progress",
-      "last_event_id": "01M5YGEZ6TX7BV4KZYDTAXP05W",
-      "last_transition_at": "2026-10-27T11:03:25.137007+00:00",
+      "lane": "in_review",
+      "last_event_id": "01M5YH8ENG6G5JWBEQNRE388TX",
+      "last_transition_at": "2026-10-27T11:17:20.176410+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for review: canonical behavior/typed parameter and endpoint projections; contextual Action Properties, source diagnostics and separate layout state; 357 tests, 31 focused tests, 2 browser standalone/pointer/100-node/native-200 cases; evidence under tests/e2e/flow-map/evidence. Source commits 30c2bb0 and bf1750c.",
-        "Independent review requests one P2 repair: annotate invalid source/type mappings on their normal semantic edges (or suppress only invalid mapping edges). Current31 focused tests, production build, browser2/2 pass. Coordinated shared integration: workspace/forms reuse ActionProperties; generator metadata+emitter exports; core registry/model result; corrected async transport fixtures. See review artifact for eight checks and heldouts."
+        "Independent review requests one P2 repair: annotate invalid source/type mappings on their normal semantic edges (or suppress only invalid mapping edges). Current31 focused tests, production build, browser2/2 pass. Coordinated shared integration: workspace/forms reuse ActionProperties; generator metadata+emitter exports; core registry/model result; corrected async transport fixtures. See review artifact for eight checks and heldouts.",
+        "Review cycle 1 P2 repaired in 2ed395d: source-indexed existing validation marks retained draft edges invalid with linked diagnostics, explicit SVG/ARIA/list/details and canonical Properties recovery. Three heldouts fail-before/pass-after; 34 focused tests, all 3 browser scenarios, final negative browser/axe rerun, build/typecheck/strict/diff/lint pass. Evidence tests/e2e/flow-map/evidence/review-cycle-1."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
@@ -620,15 +621,15 @@
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "implementer",
-      "shell_pid": null,
-      "shell_pid_created_at": null,
+      "role": "reviewer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54",
       "subtasks": {
-        "T086": "planned",
-        "T087": "planned",
-        "T088": "planned",
-        "T089": "planned",
-        "T090": "planned"
+        "T086": "done",
+        "T087": "done",
+        "T088": "done",
+        "T089": "done",
+        "T090": "done"
       }
     },
     "WP19": {
@@ -667,43 +668,53 @@
       }
     },
     "WP20": {
-      "actor": "codex",
-      "agent": null,
-      "agent_profile": "node-norris",
+      "actor": "user",
+      "agent": "codex",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
-      "lane": "in_progress",
-      "last_event_id": "01M5YG234RAWF04X9JDEB59V8Q",
-      "last_transition_at": "2026-10-27T10:56:23.182838+00:00",
+      "lane": "approved",
+      "last_event_id": "01M5YGYVP6RJWG9QHXW85KGT7J",
+      "last_transition_at": "2026-10-27T11:12:05.830469+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for review: 99822a0; final two-worker full verify 386 tests/54 files, 35 focused checks, real Code/MCP/two-cycle SQLite preservation and independent production output; canonical journal recovery and monotonic output revision. Actual WP21 process-manager stop integration remains explicitly pending."
+        "Ready for review: 99822a0; final two-worker full verify 386 tests/54 files, 35 focused checks, real Code/MCP/two-cycle SQLite preservation and independent production output; canonical journal recovery and monotonic output revision. Actual WP21 process-manager stop integration remains explicitly pending.",
+        "Review cycle 1 corrected in 0cf327a: unsupported Action hook bindings diagnose before emission; Properties restricts new bindings and preserves explicit removal. 70 focused tests, workspace typecheck, production generator build, independently installed/typechecked emitted Record hook execution/rollback and Cancel proof, diff lint passed. Prior full/browser evidence remains historical; separate bare-Record TS2339 gap retained for root WP21 follow-up; actual WP21 manager stopping remains pending.",
+        "Review passed at 0cf327a: prior unsupported action-hook P2 fixed; independent original heldout, 70 focused tests, workspace build/typecheck, fresh 1.4m actual Code/two-cycle/strict standalone/production CRUD+Cancel+Search+CSRF+hook rollback proof and separate Python rows/authored SHA256 oracle passed. Eight checks PASS: dead code; synthetic fixture; silent empty return; scoped FR coverage; frozen surface; locked decision; shared-file ownership (authorized rationale EVIDENCE.md); production fragility. Detailed reviewer evidence /tmp/wp20-rereview-renata.md. Explicit pending WP21 real manager stopping and inherited bare-Record context-never fix/build regression are not waived; no whole-mission generality claim."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
       "review_result": {
-        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP20-regeneration-ownership-authored-extensions-and-recovery/review-cycle-1.md",
-        "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP20-regeneration-ownership-authored-extensions-and-recovery/review-cycle-1.md",
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP20-regeneration-ownership-authored-extensions-and-recovery/review-cycle-2.md",
+        "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP20-regeneration-ownership-authored-extensions-and-recovery/review-cycle-2.md",
         "reviewer": "reviewer-renata",
-        "verdict": "changes_requested"
+        "verdict": "approved"
       },
-      "role": "implementer",
-      "shell_pid": null,
-      "shell_pid_created_at": null,
+      "role": "reviewer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54",
       "subtasks": {
-        "T096": "planned",
-        "T097": "planned",
-        "T098": "planned",
-        "T099": "planned",
-        "T100": "planned"
+        "T096": "done",
+        "T097": "done",
+        "T098": "done",
+        "T099": "done",
+        "T100": "done"
       }
     },
     "WP21": {
-      "actor": "finalize-tasks",
+      "actor": "codex",
+      "agent": "codex",
+      "agent_profile": "node-norris",
+      "agent_profile_version": "1.0",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W7XTNFFMC64G6F791Q8BYP",
-      "last_transition_at": "2026-10-26T13:55:45.967514+00:00"
+      "lane": "in_progress",
+      "last_event_id": "01M5YH05QXQ9QVQ1RPF910293K",
+      "last_transition_at": "2026-10-27T11:12:48.892693+00:00",
+      "model": "__resolved_model_absent__",
+      "provider": "__resolved_provider_absent__",
+      "role": "implementer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54"
     },
     "WP22": {
       "actor": "finalize-tasks",
