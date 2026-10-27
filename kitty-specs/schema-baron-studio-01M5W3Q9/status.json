@@ -63,24 +63,26 @@
       "last_transition_at": "2026-10-27T01:26:53.674041+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: a88b517; 49 model cases / 60 workspace tests passed; strict typecheck, build, native public package imports for two domains, diff lint, credential and exact-lock checks passed. Model manifest/build config integration rationale and limits recorded in packages/model/tests/evidence.md."
+        "Ready for independent review: a88b517; 49 model cases / 60 workspace tests passed; strict typecheck, build, native public package imports for two domains, diff lint, credential and exact-lock checks passed. Model manifest/build config integration rationale and limits recorded in packages/model/tests/evidence.md.",
+        "Independent review of a88b517: policy validation throws; ORDER BY aggregate bypasses grain checks; forward join aliases accepted. Structured checklist and executable public API evidence in feedback."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP02-canonical-project-model-and-validation/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP02-canonical-project-model-and-validation/review-cycle-1.md",
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T006": "done",
-        "T007": "done",
-        "T008": "done",
-        "T009": "done",
-        "T010": "done"
+        "T006": "planned",
+        "T007": "planned",
+        "T008": "planned",
+        "T009": "planned",
+        "T010": "planned"
       }
     },
     "WP03": {
