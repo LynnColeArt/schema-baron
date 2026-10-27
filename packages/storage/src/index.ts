@@ -3,7 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { canonicalJson, parseProject, operationRecordSchema, FORMAT_VERSION } from '@schema-baron/model';
-import type { Job, Project } from '@schema-baron/model';
+import type { Connection, Job, Project } from '@schema-baron/model';
 export class StorageError extends Error { constructor(readonly code: string, message: string) { super(message); } }
 export const hash = (value: unknown): string => createHash('sha256').update(canonicalJson(value)).digest('hex');
 function definitionFilename(id: string): string { const encoded = encodeURIComponent(id); return `${encoded.length <= 200 ? encoded : `%long-${hash(id)}`}.json`; }
@@ -132,6 +132,16 @@ export class ProjectStorage {
  export(id: string, rootId: string, locator: string) { const p = this.snapshot(id); const root = this.roots[rootId]; if (!root) throw new StorageError('PATH_OUTSIDE_ROOT', 'Unknown approved root.'); const destination = safePath(root, locator); this.acquireDefinition(destination); if (existsSync(destination)) { const existing = JSON.parse(readFileSync(destination, 'utf8')) as unknown; if (hash(existing) !== hash(p)) throw new StorageError('OUTPUT_CONFLICT', 'Export destination exists with different content.'); } replace(destination, `${JSON.stringify(p, null, 2)}\n`); return { destination: `${rootId}:${locator}`, modelHash: hash(p), includedData: false }; }
  latestSequence(id: string) { this.snapshot(id); return (this.db.prepare('SELECT coalesce(max(sequence),0) AS sequence FROM events WHERE project=?').get(id) as { sequence: number }).sequence; }
  events(id: string, after: number, limit = 100) { this.snapshot(id); if (!Number.isSafeInteger(after) || after < 0 || !Number.isInteger(limit) || limit < 1 || limit > 1000) throw new StorageError('INVALID_INPUT', 'Invalid replay range.'); return (this.db.prepare('SELECT sequence,body FROM events WHERE project=? AND sequence>? ORDER BY sequence LIMIT ?').all(id, after, limit) as { sequence: number; body: string }[]).map(row => ({ ...JSON.parse(row.body) as object, sequence: row.sequence })); }
+ /** Imported JSON cannot attest that a baseline came from our real adapter. Reuse
+  * the existing immutable inspect outcomes, scoped to this project and intended
+  * bound connection; no separate baseline store or client assertion is trusted. */
+ hasInspectedConnection(project: string, connection: Connection): boolean {
+  this.snapshot(project);
+  if (!connection.inspectedSchema || connection.inspectedForConnectionId !== connection.id) return false;
+  const rows = this.db.prepare("SELECT outcome FROM operations WHERE project=? AND json_extract(outcome,'$.ok')=1 AND json_extract(outcome,'$.result.connection.inspectedForConnectionId')=? AND json_extract(outcome,'$.result.connection.fingerprint')=?").all(project, connection.id, connection.fingerprint) as { outcome: string }[];
+  const observed = (value: Connection) => ({ inspectedForConnectionId: value.inspectedForConnectionId, locator: value.locator, fingerprint: value.fingerprint, capabilities: value.capabilities, physical: value.physical, inspectedSchema: value.inspectedSchema });
+  return rows.some(row => { const outcome = JSON.parse(row.outcome) as { result: { connection: Connection } }; return hash(observed(outcome.result.connection)) === hash(observed(connection)); });
+ }
  putPlan(project: string, id: string, body: unknown) { this.snapshot(project); if (this.plan(project, id) !== undefined) throw new StorageError('IDEMPOTENCY_CONFLICT', 'Reviewed plans are immutable; create a new plan ID.'); this.db.prepare('INSERT INTO plans VALUES(?,?,?)').run(project, id, JSON.stringify(body)); }
  plan(project: string, id: string): unknown { this.snapshot(project); const row = this.db.prepare('SELECT body FROM plans WHERE project=? AND id=?').get(project, id) as { body: string } | undefined; return row && JSON.parse(row.body); }
  putJob(project: string, id: string, body: unknown) { const snapshot = this.snapshot(project); this.db.transaction(() => { this.db.prepare('INSERT OR REPLACE INTO jobs VALUES(?,?,?)').run(project, id, JSON.stringify(body)); const sequence = (this.db.prepare('SELECT coalesce(max(sequence),0)+1 AS next FROM events WHERE project=?').get(project) as { next: number }).next; this.db.prepare('INSERT INTO events VALUES(?,?,?)').run(sequence, project, JSON.stringify({ kind: 'job', revision: snapshot.revision, jobId: id, objectIds: [], diagnostics: [] })); })(); }

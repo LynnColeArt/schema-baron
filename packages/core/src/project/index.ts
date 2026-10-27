@@ -3,6 +3,7 @@ import type { Command, Diagnostic, EntityBatchOperation, Project } from '@schema
 import { ProjectStorage, StorageError, hash } from '@schema-baron/storage';
 import type { StorageOptions } from '@schema-baron/storage';
 import type { CommandEffect } from '../commands/index.js';
+import { registerSchemaPreview, SchemaPreviewError } from '../schema-preview/index.js';
 import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { PlanRepository } from '../plans/index.js';
@@ -13,6 +14,7 @@ const collection = { connection: 'connections', table: 'tables', query: 'queries
 export function applyBatch(project: Project, operations: EntityBatchOperation[]): Project {
  const candidate = structuredClone(project);
  for (const op of operations) {
+  if (op.entity === 'connection' && op.kind === 'put') { const old = project.connections.find(c => c.id === op.id); if (!old || hash({ ...old, name: op.value.name, secretRef: op.value.secretRef }) !== hash(op.value)) throw new StorageError('ACCESS_DENIED', 'Inspected connection state can only change through inspect and bind.'); }
   if (op.entity === 'schema') { if (op.kind === 'remove') throw new StorageError('VALIDATION_FAILED', 'The project schema cannot be removed.'); candidate.schema = op.value; continue; }
   const values = (op.entity === 'table' ? candidate.schema.tables : candidate[collection[op.entity]]) as { id: string }[];
   const index = values.findIndex(value => value.id === op.id);
@@ -23,11 +25,12 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
 }
 export class ProjectCore {
  private pending = new Map<string, PendingCommand>();
- private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>;
+ private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>; private closeSchemaPreview: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
-  this.closeConnections = registerConnections(this.registry, options);
+  this.closeConnections = registerConnections(this.registry, options, (id, connection) => this.storage.hasInspectedConnection(id, connection));
+  this.closeSchemaPreview = registerSchemaPreview(this.registry, options, this.plans, id => this.closed ? undefined : this.storage.snapshot(id), (id, connection) => this.storage.hasInspectedConnection(id, connection));
   this.registry.register('project.create', c => { if (c.operation !== 'project.create') throw new Error(); if (c.input.emptyDatabaseLocation) throw new StorageError('INVALID_INPUT', 'Database creation belongs to the connection adapter.'); const id = c.projectId; const policy = createId(); const candidate = parseProject({ id, formatVersion: FORMAT_VERSION, revision: 1, name: c.input.name, target: c.input.target, targetVersion: '1', connectionRefs: [], connections: [], schema: { id: createId(), revision: 1, tables: [], opaqueObjects: [] }, queries: [], pages: [], forms: [], controls: [], actions: [], policies: [{ id: policy, ownerId: id, scope: 'global', access: 'public' }], globalPolicyId: policy, outputConfig: { approvedRootId: 'output', relativePath: 'app' }, extensionContracts: [] }); return { result: candidate, candidate, root: c.input.approvedRoot }; });
   this.registry.register('project.batch', (c, p) => { if (c.operation !== 'project.batch' || !p) throw new Error(); return { result: { changedIds: c.input.operations.map(op => op.id) }, candidate: applyBatch(p, c.input.operations as EntityBatchOperation[]), changedIds: c.input.operations.map(op => op.id) }; });
   for (const operation of ['project.inspect', 'project.open'] as const) this.registry.register(operation, (c, p) => { return { result: p }; });
@@ -95,11 +98,11 @@ export class ProjectCore {
    else if (project) this.storage.complete(command.projectId, { requestId: command.requestId, payloadHash, actor, baseRevision: revision, outcome }, null, effect.job);
    return outcome;
   } catch (error) {
-   const diagnostics = error instanceof ModelValidationError ? error.diagnostics : [];
+   const diagnostics = error instanceof ModelValidationError || error instanceof SchemaPreviewError ? error.diagnostics : [];
    const outcome: Outcome = { ok: false, revision, error: { code: error instanceof StorageError ? error.code : error instanceof ModelValidationError ? 'VALIDATION_FAILED' : 'RECOVERY_REQUIRED', message: error instanceof StorageError ? error.message : error instanceof ModelValidationError ? 'Candidate project is invalid.' : 'Operation failed; inspect recovery before retrying.', retryable: error instanceof StorageError && ['PROJECT_BUSY', 'RECOVERY_REQUIRED'].includes(error.code) }, diagnostics };
    if (accepted && payloadHash && revision > 0 && !(error instanceof StorageError && error.code === 'RECOVERY_REQUIRED')) { try { this.storage.complete(accepted.projectId, { requestId: accepted.requestId, payloadHash, actor, baseRevision: revision, outcome }, { revision, kind: 'diagnostic', objectIds: diagnostics.flatMap(d => d.objectId ? [d.objectId] : []), diagnostics }); } catch { return { ok: false, revision, error: { code: 'RECOVERY_REQUIRED', message: 'Outcome could not be recorded; restart before retrying.', retryable: true }, diagnostics: [] }; } }
    return outcome;
   }
  }
- close() { this.closed = true; const closed = this.closeConnections(); this.storage.close(); return closed; }
+ close() { this.closed = true; const closed = Promise.all([this.closeConnections(), this.closeSchemaPreview()]).then(() => {}); this.storage.close(); return closed; }
 }

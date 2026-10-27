@@ -1,6 +1,7 @@
 import { fork } from 'node:child_process';
 import type { ChildProcess } from 'node:child_process';
 import { closeSync, existsSync, lstatSync, openSync } from 'node:fs';
+import type { SchemaPlanInput, SchemaPlanResult } from '../schema-plans/index.js';
 import type { Inspection } from '../introspection/index.js';
 export class SQLiteError extends Error { constructor(readonly code: string) { super(({ NOT_FOUND: 'Selected SQLite file is missing. Reconnect its new location or explicitly create an empty database.', ACCESS_DENIED: 'Selected SQLite file cannot be accessed with the required permissions.', PROJECT_BUSY: 'SQLite is locked. Close the external writer and inspect again.', UNSUPPORTED_FORMAT: 'Selected file is corrupt or is not a supported SQLite database.', CANCELED: 'SQLite worker stopped. Inspect actual database state before retrying a write.', TIMEOUT: 'SQLite work exceeded its time limit. Inspect a smaller database or retry.', OUTPUT_CONFLICT: 'Backup destination already exists. Select an unused file.', VALIDATION_FAILED: 'SQLite could not complete the requested operation.' } as Record<string,string>)[code] ?? 'SQLite worker is unavailable.'); } }
 interface RequestOptions { signal?: AbortSignal; timeoutMs?: number }
@@ -37,6 +38,7 @@ export class SQLiteWorker {
    });
   } finally { if (timer) clearTimeout(timer); if (abort) options.signal?.removeEventListener('abort', abort); }
  }
+ schemaPlan(input: SchemaPlanInput, options?: RequestOptions) { return this.request<SchemaPlanResult>('schema-plan', { input }, options); }
  inspect(options?: RequestOptions) { return this.request<Inspection>('inspect', {}, options); }
  query(sql: string, parameters: unknown[] = [], options?: RequestOptions) { return this.request<unknown[]>('query', { sql, parameters }, options); }
  transaction(statements: { sql: string; parameters: unknown[] }[], options?: RequestOptions) { return this.request<unknown[]>('transaction', { statements }, options); }

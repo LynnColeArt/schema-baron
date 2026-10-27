@@ -53,7 +53,7 @@ function projectSchema(inspection: Inspection, previous: Schema): Schema {
  for (const object of inspection.objects.filter(o => o.type === 'view' || o.type === 'trigger')) if (object.sql) opaque(object.type, object.name, object.sql, schema.tables.filter(t => t.physicalName === object.tbl_name).map(t => t.id));
  return schema;
 }
-export function registerConnections(registry: CommandRegistry, options: Options) {
+export function registerConnections(registry: CommandRegistry, options: Options, hasBaseline: (projectId: string, connection: Connection) => boolean) {
  const workers = new Set<SQLiteWorker>();
  async function inspect(path: string): Promise<Inspection> { const worker = new SQLiteWorker(path); workers.add(worker); try { return await worker.inspect(); } catch (error) { if (error instanceof SQLiteError) throw new StorageError(error.code, error.message); throw error; } finally { await worker.close(); workers.delete(worker); } }
  const previews = new Map<string, Preview>();
@@ -67,8 +67,9 @@ export function registerConnections(registry: CommandRegistry, options: Options)
    try { const fd = openSync(path, 'wx', 0o600); closeSync(fd); } catch (error) { throw new StorageError((error as { code?: string }).code === 'EEXIST' ? 'OUTPUT_CONFLICT' : 'ACCESS_DENIED', 'Empty database could not be created. Choose an unused file in an existing writable approved directory.'); }
   }
   const before = identity(path); const physical = await inspect(path); if (identity(path) !== before) throw new StorageError('DATABASE_CHANGED', 'SQLite file was replaced during inspection. Inspect again.');
-  const schema = projectSchema(physical, project.schema);
-  const connection: Connection = { id: createId(), name: locator.relativePath, locator: { approvedRootId: createId(() => locator.approvedRootId), relativePath: locator.relativePath }, fingerprint: physical.fingerprint, capabilities: { sqliteVersion: physical.sqliteVersion, foreignKeys: physical.foreignKeys, returning: physical.sqliteVersion.split('.').slice(0,2).map(Number).reduce((a,b) => a*100+b,0) >= 335, strictTables: physical.sqliteVersion.split('.').slice(0,2).map(Number).reduce((a,b) => a*100+b,0) >= 337, unsupportedObjects: schema.opaqueObjects.map(o => o.id) }, physical: { encoding: physical.encoding, objects: physical.objects, tables: physical.tables } };
+  const schema = projectSchema(physical, prior?.fingerprint === physical.fingerprint && hasBaseline(project.id, prior) ? prior.inspectedSchema ?? project.schema : project.schema);
+  const previewId = createId();
+  const connection: Connection = { id: previewId, inspectedForConnectionId: prior?.id ?? previewId, name: locator.relativePath, locator: { approvedRootId: createId(() => locator.approvedRootId), relativePath: locator.relativePath }, fingerprint: physical.fingerprint, inspectedSchema: schema, capabilities: { sqliteVersion: physical.sqliteVersion, foreignKeys: physical.foreignKeys, returning: physical.sqliteVersion.split('.').slice(0,2).map(Number).reduce((a,b) => a*100+b,0) >= 335, strictTables: physical.sqliteVersion.split('.').slice(0,2).map(Number).reduce((a,b) => a*100+b,0) >= 337, unsupportedObjects: schema.opaqueObjects.map(o => o.id) }, physical: { encoding: physical.encoding, objects: physical.objects, tables: physical.tables } };
   for (const [id, preview] of previews) if (preview.expires < Date.now()) previews.delete(id);
   if (previews.size >= 100) previews.delete(previews.keys().next().value!);
   previews.set(connection.id, { ...(prior ? { reconnectId: prior.id } : {}), projectId: project.id, revision: project.revision, connection, schema, path, identity: before, expires: Date.now()+300000 });
