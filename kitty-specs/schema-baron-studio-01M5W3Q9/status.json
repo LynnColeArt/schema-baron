@@ -1,7 +1,7 @@
 {
-  "event_count": 64,
-  "last_event_id": "01M5XNFRZXCYTK7AYVRZ9R9WCH",
-  "materialized_at": "2026-10-27T03:11:59.997179+00:00",
+  "event_count": 65,
+  "last_event_id": "01M5XNG8N0RHH3QPSNE6G08B3P",
+  "materialized_at": "2026-10-27T03:12:16.032396+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
@@ -11,9 +11,9 @@
     "canceled": 0,
     "claimed": 0,
     "done": 0,
-    "for_review": 1,
+    "for_review": 0,
     "in_progress": 0,
-    "in_review": 0,
+    "in_review": 1,
     "planned": 21
   },
   "work_packages": {
@@ -157,18 +157,18 @@
     "WP05": {
       "actor": "codex",
       "agent": "codex",
-      "agent_profile": "frontend-freddy",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 0,
-      "lane": "for_review",
-      "last_event_id": "01M5XNFRZXCYTK7AYVRZ9R9WCH",
-      "last_transition_at": "2026-10-27T03:11:59.997179+00:00",
+      "lane": "in_review",
+      "last_event_id": "01M5XNG8N0RHH3QPSNE6G08B3P",
+      "last_transition_at": "2026-10-27T03:12:16.032396+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: compact real-owner Studio workspace; 126 tests and two real UI/MCP workflows pass; axe zero; save success/rejection preserves focus/caret; evidence and explicit zoom/scale limits in workspace/EVIDENCE.md"
       ],
       "provider": "__resolved_provider_absent__",
-      "role": "implementer",
+      "role": "reviewer",
       "shell_pid": 5024,
       "shell_pid_created_at": "1792851034.54",
       "subtasks": {
