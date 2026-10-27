@@ -207,11 +207,11 @@
     {
       "criterion_id": "FR-021",
       "description": "Verify FR-021 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-021; docs/evidence/equipment/report.md T108; docs/evidence/generality/report.md; tests/e2e/flow-map/workflow.spec.ts; packages/core/tests/flow/behavior.test.ts. Derived page/form/action/auth/navigation/Save/Cancel/key/filter edges select canonical Properties; edits update actual handlers; no separately persisted graph. 100-node/20-edit continuity observed. Reviewed against mission spec FR-021; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:47.296590+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
