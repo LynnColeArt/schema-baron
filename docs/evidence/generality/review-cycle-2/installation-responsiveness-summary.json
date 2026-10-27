@@ -1,0 +1,171 @@
+{
+  "concurrent": {
+    "mcp": {
+      "status": "succeeded",
+      "installDurationMs": 4034.380907999999,
+      "installExitStatus": 0,
+      "installSignal": null,
+      "installTimedOut": false,
+      "ownerResponsesDuringInstall": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "cleanup": [
+        {
+          "elapsedMs": 27713.433721,
+          "phase": "cleanup",
+          "resource": "mcp",
+          "closed": true
+        },
+        {
+          "elapsedMs": 27720.332652,
+          "phase": "cleanup",
+          "resource": "owner",
+          "closed": true
+        },
+        {
+          "elapsedMs": 28040.647115,
+          "phase": "cleanup",
+          "resource": "scratch",
+          "closed": true
+        }
+      ]
+    },
+    "http": {
+      "status": "succeeded",
+      "installDurationMs": 3663.733172,
+      "installExitStatus": 0,
+      "installSignal": null,
+      "installTimedOut": false,
+      "ownerResponsesDuringInstall": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "cleanup": [
+        {
+          "elapsedMs": 23146.311423000003,
+          "phase": "cleanup",
+          "resource": "mcp",
+          "closed": true
+        },
+        {
+          "elapsedMs": 23151.987961000003,
+          "phase": "cleanup",
+          "resource": "owner",
+          "closed": true
+        },
+        {
+          "elapsedMs": 23497.262517,
+          "phase": "cleanup",
+          "resource": "scratch",
+          "closed": true
+        }
+      ]
+    }
+  },
+  "serial": {
+    "mcp": {
+      "status": "succeeded",
+      "installDurationMs": 3731.9263979999996,
+      "installExitStatus": 0,
+      "installSignal": null,
+      "installTimedOut": false,
+      "ownerResponsesDuringInstall": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "cleanup": [
+        {
+          "elapsedMs": 23445.495641,
+          "phase": "cleanup",
+          "resource": "mcp",
+          "closed": true
+        },
+        {
+          "elapsedMs": 23450.973961,
+          "phase": "cleanup",
+          "resource": "owner",
+          "closed": true
+        },
+        {
+          "elapsedMs": 23798.587975000002,
+          "phase": "cleanup",
+          "resource": "scratch",
+          "closed": true
+        }
+      ]
+    },
+    "http": {
+      "status": "succeeded",
+      "installDurationMs": 3567.037582000001,
+      "installExitStatus": 0,
+      "installSignal": null,
+      "installTimedOut": false,
+      "ownerResponsesDuringInstall": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "cleanup": [
+        {
+          "elapsedMs": 23063.254774,
+          "phase": "cleanup",
+          "resource": "mcp",
+          "closed": true
+        },
+        {
+          "elapsedMs": 23069.061221999997,
+          "phase": "cleanup",
+          "resource": "owner",
+          "closed": true
+        },
+        {
+          "elapsedMs": 23417.230456999998,
+          "phase": "cleanup",
+          "resource": "scratch",
+          "closed": true
+        }
+      ]
+    }
+  }
+}
