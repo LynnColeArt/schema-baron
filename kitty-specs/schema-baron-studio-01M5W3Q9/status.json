@@ -1,7 +1,7 @@
 {
-  "event_count": 105,
-  "last_event_id": "01M5XVBJ318GSEGXRR5R2E874P",
-  "materialized_at": "2026-10-27T04:54:33.305257+00:00",
+  "event_count": 109,
+  "last_event_id": "01M5XW189MNPJV87XNQ12K0BV4",
+  "materialized_at": "2026-10-27T05:06:24.180177+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
@@ -12,8 +12,8 @@
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 2,
-    "in_review": 0,
+    "in_progress": 0,
+    "in_review": 2,
     "planned": 18
   },
   "work_packages": {
@@ -227,16 +227,17 @@
     "WP07": {
       "actor": "codex",
       "agent": "codex",
-      "agent_profile": "node-norris",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 2,
-      "lane": "in_progress",
-      "last_event_id": "01M5XVASNM441B4G28BWXDJ8T6",
-      "last_transition_at": "2026-10-27T04:54:08.296372+00:00",
+      "lane": "in_review",
+      "last_event_id": "01M5XVXEYYN7MPXHV27PE2E5ZR",
+      "last_transition_at": "2026-10-27T05:04:19.934386+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: 570a5b8; full verify 177 tests, strict test-source checks, actual HTTP/MCP parity, SQLite preservation/provenance/fingerprint/constraint safety. Evidence fixtures/schema-plans/evidence.md. Shared integration corrections authorized and coordinated; no UI/apply executor claim.",
-        "Cycle 1 P1 repaired in 8aaba8a: preserve observed INT/inline INTEGER PK DESC declaration, rowids, NULL behavior and PK metadata; exact original probe desired-green unchanged. Full verify 186 tests plus strict all schema-plan test-source checks/lint/audit0. Evidence fixtures/schema-plans/evidence.md. Ready for independent cycle 2 review."
+        "Cycle 1 P1 repaired in 8aaba8a: preserve observed INT/inline INTEGER PK DESC declaration, rowids, NULL behavior and PK metadata; exact original probe desired-green unchanged. Full verify 186 tests plus strict all schema-plan test-source checks/lint/audit0. Evidence fixtures/schema-plans/evidence.md. Ready for independent cycle 2 review.",
+        "Cycle 2 P2 repaired in 80e4341: retain complete inspected PK part direction/identity and verified collation, preserve prior rowid/NULL fixes; block unrepresented unsupported UNIQUE. Exact unchanged original and variations probes pass supported preservation cases. Full verify 197 tests, strict all planning-test source checks, lint/audit0. Evidence fixtures/schema-plans/evidence.md. Ready for independent cycle 3 review."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
@@ -246,15 +247,15 @@
         "reviewer": "codex/reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "implementer",
-      "shell_pid": null,
-      "shell_pid_created_at": null,
+      "role": "reviewer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54",
       "subtasks": {
-        "T031": "planned",
-        "T032": "planned",
-        "T033": "planned",
-        "T034": "planned",
-        "T035": "planned"
+        "T031": "done",
+        "T032": "done",
+        "T033": "done",
+        "T034": "done",
+        "T035": "done"
       }
     },
     "WP08": {
@@ -309,18 +310,19 @@
     "WP15": {
       "actor": "codex",
       "agent": "codex",
-      "agent_profile": "node-norris",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 2,
-      "lane": "in_progress",
-      "last_event_id": "01M5XVBJ318GSEGXRR5R2E874P",
-      "last_transition_at": "2026-10-27T04:54:33.305257+00:00",
+      "lane": "in_review",
+      "last_event_id": "01M5XW189MNPJV87XNQ12K0BV4",
+      "last_transition_at": "2026-10-27T05:06:24.180177+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: 7d85f26; safe typed compiler, exact decimal helpers, real bounded HTTP/MCP preview and confirmed-exit cancellation/shutdown; npm run verify 168 tests plus strict module checks passed. Shared integration rationale and limits in packages/core/src/query-preview/EVIDENCE.md.",
         "Independent review rejected: physical decimal TEXT uniqueness does not prove sb_compare join uniqueness; actual HTTP/MCP preview inflates 10.00 to 40.00. Shared integration reviewed as authorized; 8-item checklist and public repro in feedback.",
         "Ready for independent cycle 2 review: 9f0b1d7 repairs cycle1 P1 semantic-grain fanout using full actual ON multiplicity checks in the execution snapshot before result LIMIT. Original probes unchanged and now reject; 13 new regression cases and full npm run verify 181 tests plus strict module checks and audit0 passed. Evidence packages/core/src/query-preview/EVIDENCE.md.",
-        "Cycle 2 independent review: original decimal collision fixed; reject valid one-to-many then one-to-one chain because left grain check counts expanded prefix rows instead of distinct declared left entities. Public repro, snapshot proof and 8-item checklist retained; minimal shared diagnostic changes reviewed as authorized."
+        "Cycle 2 independent review: original decimal collision fixed; reject valid one-to-many then one-to-one chain because left grain check counts expanded prefix rows instead of distinct declared left entities. Public repro, snapshot proof and 8-item checklist retained; minimal shared diagnostic changes reviewed as authorized.",
+        "Ready for independent cycle 3 review: c5cedff repairs cycle2 P2 by counting proven raw BINARY left-alias key tuples rather than repeated prefix rows. Valid saved/draft HTTP and fresh MCP chains now match raw SQL; actual decimal/composite/collated entity collisions still reject. Eleven new chain regressions; full verify192 tests, strict module checks, audit0 and unchanged concurrent WAL/oracle probes passed. Evidence packages/core/src/query-preview/EVIDENCE.md."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
@@ -330,15 +332,15 @@
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "implementer",
-      "shell_pid": null,
-      "shell_pid_created_at": null,
+      "role": "reviewer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54",
       "subtasks": {
-        "T071": "planned",
-        "T072": "planned",
-        "T073": "planned",
-        "T074": "planned",
-        "T075": "planned"
+        "T071": "done",
+        "T072": "done",
+        "T073": "done",
+        "T074": "done",
+        "T075": "done"
       }
     },
     "WP16": {
