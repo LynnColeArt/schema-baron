@@ -2,10 +2,16 @@ import Database from "better-sqlite3";
 import { existsSync, closeSync, openSync, lstatSync } from "node:fs";
 import type { ReviewedPlan } from "@schema-baron/model";
 const url = new URL("./state.js", import.meta.url);
-const { fingerprints, marker, markerDDL, markerTable, validateDatabase } =
-  (await import(
-    existsSync(url) ? url.href : new URL("./state.ts", import.meta.url).href
-  )) as typeof import("./state.js");
+const {
+  fingerprints,
+  marker,
+  markerDDL,
+  markerTable,
+  checkMarkerTable,
+  validateDatabase,
+} = (await import(
+  existsSync(url) ? url.href : new URL("./state.ts", import.meta.url).href
+)) as typeof import("./state.js");
 interface Input {
   path: string;
   backupPath: string;
@@ -17,6 +23,8 @@ interface Input {
 }
 const input = JSON.parse(process.env.SCHEMA_BARON_MIGRATION_WORKER!) as Input;
 let db: Database.Database | undefined;
+let didCommit = false;
+let commitAttempted = false;
 const fault = (point: string) => {
   if (input.fault === point) process.exit(86);
 };
@@ -70,6 +78,9 @@ try {
   if (input.restorePath)
     db.prepare("ATTACH DATABASE ? AS restore_source").run(input.restorePath);
   db.exec("BEGIN IMMEDIATE");
+  // Namespace metadata is excluded from business fingerprints. Recheck its owner
+  // under the same write lock that protects all reviewed DDL and marker writes.
+  checkMarkerTable(db, input.authority);
   const state = fingerprints(db);
   // BEGIN IMMEDIATE holds the attached source against writers as well. Fingerprint
   // the exact attached snapshot consumed by the reviewed restore SQL.
@@ -150,7 +161,11 @@ try {
       "Bound SQLite file was replaced during the transaction.",
     );
   fault("before-db-commit");
+  commitAttempted = true;
   db.exec("COMMIT");
+  if (input.fault === "commit-error")
+    throw new Error("Injected ambiguous commit response.");
+  didCommit = true;
   fault("after-db-commit");
   const result = fingerprints(db);
   db.close();
@@ -164,6 +179,13 @@ try {
   const code = (error as { code?: string }).code ?? "VALIDATION_FAILED";
   process.send!({
     phase: "failed",
+    // An error from COMMIT can leave its outcome uncertain. Only failures before
+    // attempting it can report false after rollback; unknown outcomes need markers.
+    ...(didCommit
+      ? { committed: true }
+      : commitAttempted
+        ? {}
+        : { committed: false }),
     code:
       code.includes("BUSY") || code.includes("LOCKED")
         ? "PROJECT_BUSY"

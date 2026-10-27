@@ -5,7 +5,10 @@ import type { ReviewedPlan } from "@schema-baron/model";
 import type { fingerprints } from "./state.js";
 export { observed, committed, markerTable } from "./state.js";
 export class MigrationError extends Error {
-  constructor(readonly code: string) {
+  constructor(
+    readonly code: string,
+    readonly committed?: boolean,
+  ) {
     super(
       "Migration did not complete. Inspect migration history before retrying.",
     );
@@ -79,13 +82,19 @@ export class MigrationWorker {
     );
     let result: T | undefined;
     let code = "RECOVERY_REQUIRED";
+    let committed: boolean | undefined;
     const timer = setTimeout(() => {
       code = "TIMEOUT";
       void this.cancel("TIMEOUT");
     }, 30000);
     child.on(
       "message",
-      (message: { phase: string; code?: string; result?: T }) => {
+      (message: {
+        phase: string;
+        code?: string;
+        result?: T;
+        committed?: boolean;
+      }) => {
         if (message.phase === "backup-validated") {
           try {
             onBackup();
@@ -103,14 +112,19 @@ export class MigrationWorker {
             });
           }
         } else if (message.phase === "committed") result = message.result;
-        else if (message.phase === "failed")
+        else if (message.phase === "failed") {
           code = message.code ?? "VALIDATION_FAILED";
+          committed = message.committed;
+        }
       },
     );
     try {
       await this.exit;
       if (!result)
-        throw new MigrationError(this.stopped ? this.stopCode : code);
+        throw new MigrationError(
+          this.stopped ? this.stopCode : code,
+          committed,
+        );
       return result;
     } finally {
       clearTimeout(timer);

@@ -457,9 +457,17 @@ export function registerSchemaApply(
           },
         };
       } catch (error) {
+        if (error instanceof MigrationError && error.committed === true)
+          confirmedCommit = true;
         let hasCommit = false;
         try {
-          const m = committed(path, id, authority);
+          // A normal worker failure confirms rollback before reporting and exit.
+          // Do not inspect or adopt a foreign namespace that caused its refusal.
+          // Hard exits/cancellation still require observing the actual DB marker.
+          const m =
+            error instanceof MigrationError && error.committed === false
+              ? undefined
+              : committed(path, id, authority);
           hasCommit = confirmedCommit || !!m;
           if (m && m.plan_hash !== typed.hash)
             throw new StorageError(
