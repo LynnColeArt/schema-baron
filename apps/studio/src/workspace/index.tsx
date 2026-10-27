@@ -12,6 +12,8 @@ import {
   completeScalar as completeScalarForPage,
 } from "../forms/scalars.js";
 import { FormWizard, FormProperties } from "../forms/index.js";
+import { DocumentModes } from "../document-modes/index.js";
+import { pendingDocuments } from "../document-modes/state.js";
 import { GenerationReview } from "../generation/index.js";
 import { MigrationHistory } from "../migration-history/index.js";
 import { QueryBinding } from "../query-designer/binding.js";
@@ -124,7 +126,7 @@ export default function Workspace() {
       : undefined;
   const activePage = model?.pages.find((p) => p.id === view.activePage);
   const dirty =
-    Object.keys(editor.drafts).length > 0 || incompleteScalars(editor.buffers);
+    Object.keys(editor.drafts).length > 0 || incompleteScalars(editor.buffers) || pendingDocuments(editor.documents);
   const conflicts = Object.values(editor.drafts).filter(
     (d) => d.conflicts.length,
   );
@@ -326,9 +328,13 @@ export default function Workspace() {
     if (
       !current.project ||
       (!Object.keys(current.editor.drafts).length &&
-        !incompleteScalars(current.editor.buffers))
+        !incompleteScalars(current.editor.buffers) && !pendingDocuments(current.editor.documents))
     )
       return true;
+    if (pendingDocuments(current.editor.documents)) {
+      report(new Error("Apply or resolve pending HTML drafts before saving. Source is retained in HTML mode."));
+      return false;
+    }
     const scalarErrors = scalarIssues(current.editor.buffers);
     if (scalarErrors.length) {
       report(
@@ -567,7 +573,7 @@ export default function Workspace() {
               )),
         ),
     );
-    if (scalarDirty) return true;
+    if (scalarDirty || pendingDocuments(editor.documents?.[id] ? { [id]: editor.documents[id] } : undefined)) return true;
     return Object.values(editor.drafts).some((d) =>
       d.entity === "page"
         ? d.value.id === id
@@ -612,6 +618,8 @@ export default function Workspace() {
         .map((a) => a.id),
     ]);
     setEditor({
+      ...current.editor,
+      documents: Object.fromEntries(Object.entries(current.editor.documents ?? {}).filter(([key]) => key !== id)),
       drafts: Object.fromEntries(
         Object.entries(current.editor.drafts).filter(([key]) => !ids.has(key)),
       ),
@@ -1109,73 +1117,16 @@ export default function Workspace() {
                   </button>
                 )}
               </div>
-              <div
-                className="document-surface"
-                role="tabpanel"
-                aria-label="Design document"
-              >
-                {activePage && model ? (
-                  <>
-                    <div className="document-breadcrumb">
-                      Page / {activePage.title} <span>{activePage.route}</span>
-                    </div>
-                    <div className="page-sheet">
-                      <button
-                        className={`page-heading ${view.selected === activePage.id ? "selected-object" : ""}`}
-                        onClick={() => select(activePage.id)}
-                      >
-                        <span className="object-type">PAGE</span>
-                        <strong>{activePage.title}</strong>
-                      </button>
-                      {model.forms
-                        .filter((f) => f.pageId === activePage.id)
-                        .map((form) => (
-                          <section
-                            className={`form-outline ${view.selected === form.id ? "selected-object" : ""}`}
-                            key={form.id}
-                          >
-                            <button
-                              className="form-caption"
-                              onClick={() => select(form.id)}
-                            >
-                              <span className="object-type">
-                                {form.kind.toUpperCase()}
-                              </span>
-                              {form.appearance.label || form.kind}
-                            </button>
-                            <div className="control-list">
-                              {model.controls
-                                .filter((c) => c.formId === form.id)
-                                .map((control) => (
-                                  <button
-                                    className={`control-projection ${view.selected === control.id ? "selected-object" : ""}`}
-                                    onClick={() => select(control.id)}
-                                    key={control.id}
-                                  >
-                                    <span className="control-kind">
-                                      {control.kind}
-                                    </span>
-                                    {control.appearance.label || control.kind}
-                                  </button>
-                                ))}
-                              {!form.controlIds.length && (
-                                <span className="empty-inline">
-                                  Empty form · select it, then insert a control
-                                  from Toolbox.
-                                </span>
-                              )}
-                            </div>
-                          </section>
-                        ))}
-                      {!activePage.formIds.length && (
-                        <p className="document-note">
-                          Blank page. Add a form from the toolbar or Toolbox.
-                        </p>
-                      )}
-                      <p className="structure-note">Structure editor</p>
-                    </div>
-                  </>
-                ) : (
+              {activePage && model && project ? (
+                <DocumentModes
+                  key={project.id + ":" + activePage.id}
+                  project={project} model={model} page={activePage}
+                  editor={editor} setEditor={setEditor}
+                  selected={view.selected} select={select}
+                  mode={view.documentModes?.[activePage.id] ?? "Design"}
+                  setMode={(mode) => updateView({ documentModes: { ...view.documentModes, [activePage.id]: mode } })}
+                />
+              ) : <div className="document-surface" role="tabpanel" aria-label="Design document">
                   <div className="empty-document">
                     <span className="empty-glyph" aria-hidden="true">
                       ▤
@@ -1197,27 +1148,7 @@ export default function Workspace() {
                       {project ? "New page…" : "New blank project…"}
                     </button>
                   </div>
-                )}
-              </div>
-              <div
-                className="modebar"
-                tabIndex={0}
-                role="region"
-                aria-label="Document modes and status"
-              >
-                <span className="mode-active">Design</span>
-                {["HTML", "Code", "Preview", "Live Page"].map((mode) => (
-                  <span
-                    key={mode}
-                    title="This document mode is not available in this version."
-                    aria-disabled="true"
-                  >
-                    {mode}
-                  </span>
-                ))}
-                <span className="menu-spacer" />
-                <span className="mode-hint">Structure</span>
-              </div>
+              </div>}
             </section>
             <Splitter
               horizontal
@@ -1309,7 +1240,7 @@ export default function Workspace() {
                   active={view.toolboxTab}
                   onChange={(toolboxTab) => updateView({ toolboxTab })}
                 />
-                <div className="toolbox-content">
+                <div className="toolbox-content" role="region" aria-label="Toolbox actions" tabIndex={0}>
                   {view.toolboxTab === "Forms" ? (
                     <>
                       <button
@@ -1363,7 +1294,7 @@ export default function Workspace() {
                     </>
                   ) : (
                     <p className="pane-note">
-                      HTML editing is not available in this version.
+                      Edit ordinary content and stable object placement in HTML mode.
                     </p>
                   )}
                 </div>
@@ -1695,6 +1626,7 @@ export default function Workspace() {
                     ]);
                     const submitted = {
                       ...current.editor,
+                      documents: Object.fromEntries(Object.entries(current.editor.documents ?? {}).filter(([id]) => needed.has(id))),
                       buffers: Object.fromEntries(
                         Object.entries(current.editor.buffers ?? {}).filter(
                           ([key]) => needed.has(scalarObjectId(key)),

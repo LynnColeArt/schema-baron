@@ -24,7 +24,10 @@ interface Step {
 }
 import { incompleteScalars } from "../forms/scalars.js";
 import type { ScalarBuffers } from "../forms/scalars.js";
+import type { DocumentBuffers } from "../document-modes/state.js";
+import { pendingDocuments } from "../document-modes/state.js";
 export interface Editor {
+  documents?: DocumentBuffers;
   buffers?: ScalarBuffers;
   drafts: Drafts;
   past: Step[];
@@ -223,6 +226,7 @@ export function resolveDraft(
   return { ...editor, drafts, past: [], future: [] };
 }
 export function operations(editor: Editor): EntityBatchOperation[] {
+  if (pendingDocuments(editor.documents)) throw new Error("Apply or resolve pending HTML drafts before saving. Original source is retained in HTML mode.");
   if (incompleteScalars(editor.buffers))
     throw new Error(
       "Complete the unfinished numeric properties before saving. Your text buffers are retained.",
@@ -249,6 +253,7 @@ export interface View {
   propertyTab: string;
   toolboxTab: string;
   collapsed: string[];
+  documentModes?: Record<string, string>;
 }
 export const initialView = (): View => ({
   selected: "",
