@@ -18,4 +18,3 @@ Error: ENOENT: no such file or directory, open '/tmp/wp20-commands-lOVagc/output
       Tests  1 failed | 7 skipped (8)
    Start at  05:42:32
    Duration  9.48s (tests 87%, transform 8%, import 5%)
-

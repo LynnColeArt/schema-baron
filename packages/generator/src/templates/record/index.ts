@@ -1,8 +1,9 @@
+import {handlerPath} from '../../behavior/index.js';
 import type { GeneratedFile, RecordIR } from '../../ir/index.js';
 export function recordFiles(record:RecordIR,index:number,flashCookie:string):GeneratedFile[] {
  const config=JSON.stringify(record.config,null,2);
  return [
- {path:`app/runtime/record-${index}/route.ts`,content:`import { cookies } from 'next/headers';
+ {path:`app${handlerPath('record',index)}/route.ts`,content:`import { cookies } from 'next/headers';
 import { authorize, originCheck, failure, sessionCookie, csrfCookie } from '../../../server/auth';
 import { config } from '../../../server/record-${index}';
 import { load, execute } from '../../../server/record-service';
@@ -89,7 +90,7 @@ ${record.controls.filter(c=>c.fieldId).map(c=>{
  </div>
  {!isNew&&<div className="record-delete"><p>Delete {name || 'this record'}?</p>{impacts.map(impact=><p key={impact.table+impact.rule}>{impact.count} related records in {impact.table}: {impact.rule==='CASCADE'?'will be deleted (including their cascading descendants)':impact.rule==='SET NULL'?'their related reference will be cleared':impact.rule==='SET DEFAULT'?'their related reference will use its default':'prevent deletion'}.</p>)}<label><input type="checkbox" name="_confirmed" value="yes" />Confirm deletion of {name || 'this record'}</label></div>}
  <div className="record-actions">
-${(record.config.actions as {id:string;operation:string}[]).map(a=>` {${a.operation==='insert'?'isNew':a.operation==='update'||a.operation==='delete'?'!isNew':'true'}&&<button name="_action" value={${JSON.stringify(a.id)}} disabled={pending}>${a.operation==='insert'||a.operation==='update'?'Save':a.operation==='delete'?'Delete':a.operation==='cancel'?'Cancel':a.operation}</button>}`).join('\n')}
+${(record.config.actions as {id:string;operation:string;label?:string}[]).map(a=>` {${a.operation==='insert'?'isNew':a.operation==='update'||a.operation==='delete'?'!isNew':'true'}&&<button name="_action" value={${JSON.stringify(a.id)}} disabled={pending}>{${JSON.stringify(a.label??(a.operation==='insert'||a.operation==='update'?'Save':a.operation==='delete'?'Delete':a.operation==='cancel'?'Cancel':a.operation))}}</button>}`).join('\n')}
  </div>
  </form></section>;
 }

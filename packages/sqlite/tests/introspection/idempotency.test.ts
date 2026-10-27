@@ -1,3 +1,4 @@
+import {delayFlowDispatch} from '../../../core/tests/flow/async-fixture.js';
 import { afterEach, expect, test } from 'vitest';
 import { existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -67,7 +68,7 @@ test('shared failures persist once and later retries cannot create a file after 
 });
 test('reservation precedes the handler first await; generic canceled work is shared and conflicting sync calls never enter it', async () => {
  const { core } = setup(); let calls = 0; let release!: () => void;
- core.registry.registerAsync('flow.inspect', async () => { calls++; await new Promise<void>(resolve => { release = resolve; }); throw new StorageError('CANCELED', 'Canceled before commit.'); });
+ delayFlowDispatch(core.registry, async () => { calls++; await new Promise<void>(resolve => { release = resolve; }); throw new StorageError('CANCELED', 'Canceled before commit.'); });
  const request = command('flow.inspect', { projection: 'schema' }, 'generic-cancel');
  const first = core.executeAsync('owner', request); const second = core.executeAsync('owner', request);
  await Promise.resolve(); expect(calls).toBe(1);

@@ -1,0 +1,14 @@
+
+> generated-application@1.0.0 test
+> node --conditions=react-server --test tests/*.test.mjs
+
+✔ independent visitor store verifies salted credentials and hashed session lifecycle (397.311913ms)
+✔ prepared allowlisted reads, paging and formatting use disposable test data (118.607922ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 498.582825

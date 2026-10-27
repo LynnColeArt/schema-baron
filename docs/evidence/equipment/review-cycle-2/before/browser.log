@@ -1,0 +1,44 @@
+
+Running 1 test using 1 worker
+
+(node:1736645) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/e2e/flow-map/workflow.spec.ts:145:1 › behavior map edits canonical edge mappings and matches standalone auth Save/Cancel handlers (19.5s)
+
+
+  1) tests/e2e/flow-map/workflow.spec.ts:145:1 › behavior map edits canonical edge mappings and matches standalone auth Save/Cancel handlers
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('region', { name: 'Application behavior map' }).locator('.react-flow__node').filter({ hasText: 'Edit entry' })
+        - locator resolved to <div tabindex="0" role="group" aria-roledescription="node" aria-describedby="react-flow__node-desc-1" data-id="ce47e2a0-78dd-40e7-86d8-d9a3f3c48ecb" data-testid="rf__node-ce47e2a0-78dd-40e7-86d8-d9a3f3c48ecb" class="react-flow__node react-flow__node-behavior nopan selectable draggable">…</div>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        29 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      186 |  await map.getByRole('button',{name:'Fit visible',exact:true}).click();
+      187 |  writeFileSync(info.outputPath('saved-focused-geometry.json'),JSON.stringify(await map.evaluate(root=>({selection:root.getAttribute('data-selection'),focused:(root.querySelector('[aria-label="Focused neighbors"]') as HTMLInputElement)?.checked,viewport:root.querySelector('.react-flow__viewport')?.getAttribute('style'),nodes:[...root.querySelectorAll('.react-flow__node')].map(n=>({id:n.getAttribute('data-id'),text:n.textContent,style:n.getAttribute('style'),bounds:n.getBoundingClientRect().toJSON(),visibility:getComputedStyle(n).visibility,display:getComputedStyle(n).display})),bounds:root.getBoundingClientRect().toJSON()})),null,2));await page.screenshot({path:info.outputPath('saved-focused-before-pointer.png')});
+    > 188 |  await map.locator('.react-flow__node').filter({hasText:'Edit entry'}).click();await expect(page.getByLabel('Route',{exact:true})).toHaveValue('/edit');
+          |                                                                        ^
+      189 |  const path=map.locator('.react-flow__edge[data-id="'+navigation.id+':destination"] .react-flow__edge-interaction');
+      190 |  const point=await path.evaluate(async(element,id)=>{await new Promise(requestAnimationFrame);await new Promise(requestAnimationFrame);const path=element as SVGPathElement;for(const fraction of [.25,.4,.5,.6,.75]){const p=path.getPointAtLength(path.getTotalLength()*fraction);const q=new DOMPoint(p.x,p.y).matrixTransform(path.getScreenCTM()!);if(document.elementFromPoint(q.x,q.y)?.closest('.react-flow__edge')?.getAttribute('data-id')===id)return {x:q.x,y:q.y};}return null;},navigation.id+':destination');expect(point,'Visible pointer hit target on projected edge').not.toBeNull();await page.mouse.click(point!.x,point!.y);
+      191 |  await expect(page.getByLabel('navigate destination keyMapping source 1',{exact:true})).toHaveValue(keyField.id);
+        at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-v/tests/e2e/flow-map/workflow.spec.ts:188:72
+
+    Error Context: ../../../../../../tmp/wp22-cycle2-flow-before/flow-map-workflow-behavior-09fd5-e-auth-Save-Cancel-handlers/error-context.md
+
+    Error Context: ../../../../../../tmp/wp22-cycle2-flow-before/flow-map-workflow-behavior-09fd5-e-auth-Save-Cancel-handlers/error-context.md
+
+  1 failed
+    tests/e2e/flow-map/workflow.spec.ts:145:1 › behavior map edits canonical edge mappings and matches standalone auth Save/Cancel handlers

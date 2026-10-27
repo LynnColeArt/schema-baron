@@ -2,7 +2,7 @@
 import {reconcileRuntimeMessages} from '../runtime-ui/diagnostics.js';
 import {RuntimeControls} from '../runtime-ui/index.js';
 import {SourceEditor} from '../source-editor/index.js';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, FormEvent } from "react";
 import { createId } from "@schema-baron/model";
 import type { Control, Form, Page, Project, LiteralValue } from "@schema-baron/model";
@@ -18,9 +18,11 @@ import { FormWizard, FormProperties } from "../forms/index.js";
 import { DocumentModes } from "../document-modes/index.js";
 import { pendingDocuments } from "../document-modes/state.js";
 import { GenerationReview } from "../generation/index.js";
+import { SecurityEditor } from "../security-editor/index.js";
 import { MigrationHistory } from "../migration-history/index.js";
 import { QueryBinding } from "../query-designer/binding.js";
 import { QueryDesigner } from "../query-designer/index.js";
+import { FlowMap } from "../flow-map/index.js";
 import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
@@ -46,6 +48,7 @@ type Modal =
   | "open"
   | "page"
   | "form"
+  | "security"
   | "settings"
   | "connection"
   | "generation"
@@ -65,10 +68,12 @@ const label = (kind: Kind, value: ObjectValue) =>
     : (value as Form | Control).appearance.label ||
       (value as Form | Control).kind;
 export default function Workspace() {
+  const [selectedAction, setSelectedAction] = useState("");
+  const [flowActive, setFlowActive] = useState(false);
   const [schemaActive, setSchemaActive] = useState(false);
   const [queryActive, setQueryActive] = useState(false);
   const [queryRequest, setQueryRequest] = useState<{id:string;serial:number;parameters?:Record<string,LiteralValue>}>({id:"",serial:0});
-  function openQuery(id="",parameters?:Record<string,LiteralValue>) { setSchemaActive(false); setQueryActive(true); setQueryRequest(r=>({id,serial:r.serial+1,...(parameters?{parameters}:{})})); }
+  function openQuery(id="",parameters?:Record<string,LiteralValue>) { setFlowActive(false); setSchemaActive(false); setQueryActive(true); setQueryRequest(r=>({id,serial:r.serial+1,...(parameters?{parameters}:{})})); }
   const client = useRef(new StudioClient()).current;
   const [caps, setCaps] = useState<Capabilities>({
     operations: [],
@@ -108,7 +113,7 @@ export default function Workspace() {
   const mounted = useRef(true),
     refreshing = useRef(false),
     cursors = useRef<Record<string, number>>({});
-  const model = project ? visible(project, editor) : null;
+  const model = useMemo(() => project ? visible(project, editor) : null, [project, editor.drafts]);
   const selectedKind: Kind | undefined = model?.pages.some(
     (v) => v.id === view.selected,
   )
@@ -295,6 +300,7 @@ export default function Workspace() {
         (f) => f.id === (control?.formId ?? action?.formId ?? id),
       );
     const page = model.pages.find((p) => p.id === (form?.pageId ?? id));
+    setSelectedAction(action?.id ?? "");
     setView((v) => ({
       ...v,
       selected: action?.formId ?? id,
@@ -304,7 +310,7 @@ export default function Workspace() {
       collapsed: v.collapsed.filter(
         (parent) => parent !== page?.id && parent !== form?.id,
       ),
-      propertyTab:
+      propertyTab: action ? "Data" :
         v.propertyTab === "Events" && !control ? "Format" : v.propertyTab,
     }));
   }
@@ -673,7 +679,7 @@ export default function Workspace() {
     if (selectedKind === "form" || selectedKind === "control")
       return (
         <>
-        {selectedKind === "form" && view.propertyTab === "Data" && (() => {
+        {selectedKind === "form" && !(flowActive && selectedAction) && view.propertyTab === "Data" && (() => {
           const form = selected as Form;
           return <>
             <button onClick={() => openQuery(form.sourceRef?.kind === "query" ? form.sourceRef.id : "", Object.fromEntries((form.queryParameters ?? []).flatMap(m => m.value !== undefined ? [[m.parameterId, m.value]] : [])))}>Edit Data Source…</button>
@@ -682,6 +688,7 @@ export default function Workspace() {
         })()}
         <FormProperties
           project={model}
+          selectedActionId={flowActive ? selectedAction || undefined : undefined}
           value={selected as Form | Control}
           kind={selectedKind}
           tab={view.propertyTab}
@@ -860,6 +867,7 @@ export default function Workspace() {
         <button onClick={() => dialog("settings")} disabled={!project}>
           Project settings
         </button>
+        <button onClick={() => dialog("security")} disabled={!project || dirty}>Login and access…</button>
         <button onClick={() => dialog("connection")} disabled={!project}>
           Connections…
         </button>
@@ -884,8 +892,9 @@ export default function Workspace() {
         >
           Generate…
         </button>
-        <button disabled={!project} aria-pressed={schemaActive} onClick={() => { setQueryActive(false); setSchemaActive(v => !v); }}>Schema</button>
-        <button disabled={!project} aria-pressed={queryActive} onClick={() => setQueryActive(v=>!v)}>Queries</button>
+        <button disabled={!project} aria-pressed={flowActive} onClick={() => {setSchemaActive(false);setQueryActive(false);setFlowActive(v=>!v);}}>Flow map</button>
+        <button disabled={!project} aria-pressed={schemaActive} onClick={() => { setFlowActive(false); setQueryActive(false); setSchemaActive(v => !v); }}>Schema</button>
+        <button disabled={!project} aria-pressed={queryActive} onClick={() => {setFlowActive(false);setQueryActive(v=>!v);}}>Queries</button>
         <span className="menu-spacer" />
         <button
           onClick={() => setHidden((h) => ({ ...h, explorer: !h.explorer }))}
@@ -1122,7 +1131,7 @@ export default function Workspace() {
                   </button>
                 )}
               </div>
-              {activePage && model && project ? (
+              {flowActive && model ? <div className="document-surface" style={{padding:0,overflow:"hidden"}} role="tabpanel" aria-label="Application flow map"><FlowMap key={model.id} project={model} onSelect={id=>{select(id);setHidden(v=>({...v,inspector:false}));}}/></div> : activePage && model && project ? (
                 <DocumentModes
                   key={project.id + ":" + activePage.id}
                   project={project} model={model} page={activePage}
@@ -1335,12 +1344,12 @@ export default function Workspace() {
                   {selected && selectedKind ? (
                     <>
                       <span>
-                        {selectedKind.toUpperCase()}
-                        {selectedKind === "form" || selectedKind === "control"
+                        {flowActive && selectedAction ? "ACTION" : selectedKind.toUpperCase()}
+                        {flowActive && selectedAction ? ` · ${model?.actions.find(a=>a.id===selectedAction)?.operation ?? "removed"}` : selectedKind === "form" || selectedKind === "control"
                           ? ` · ${(selected as Form | Control).kind}`
                           : ""}
                       </span>
-                      <strong>{label(selectedKind, selected)}</strong>
+                      <strong>{flowActive && selectedAction ? selectedAction : label(selectedKind, selected)}</strong>
                     </>
                   ) : (
                     "No object selected"
@@ -1437,7 +1446,9 @@ export default function Workspace() {
                       ? "Insert form"
                       : modal === "close"
                         ? "Unsaved document changes"
-                        : modal === "settings"
+                        : modal === "security"
+                          ? "Login and access"
+                          : modal === "settings"
                           ? "Project settings"
                           : modal === "generation"
                             ? "Generate application"
@@ -1711,6 +1722,8 @@ export default function Workspace() {
                 </button>
               </div>
             </>
+          ) : modal === "security" ? (
+            project ? <SecurityEditor project={project} client={client} onChanged={acceptSnapshot} onBusy={setBusy} onClose={() => setModal(null)} /> : <p>Open a project first.</p>
           ) : modal === "settings" ? (
             <>
               <dl className="settings">

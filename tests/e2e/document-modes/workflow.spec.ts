@@ -239,9 +239,13 @@ test('actual authoring: HTML and Design share stable objects, recovery, conflict
   expect(snapshot.pages[0]?.title).toBe('Remote title');
   expect(JSON.stringify(snapshot.pages[0]?.document)).toContain('Local pending layout');
   await mode(page, 'Code').click();
-  await expect(page.getByRole('heading', { name: 'Generated source · read-only ownership' })).toBeVisible();
+  // Approved WP20 supplies the owner-command source editor in place of the old capability placeholder.
+  await expect(page.getByRole('region', { name: 'Source editor', exact: true })).toBeVisible();
+  await expect(page.getByLabel('Source code', { exact: true })).toHaveAttribute('readonly', '');
   await mode(page, 'Live Page').click();
-  await expect(page.getByText('Managed route resolution is unavailable until WP21 is integrated. Use Preview to inspect the current draft now.')).toBeVisible();
+  // Approved WP21 supplies actual controls, but this ungenerated project still cannot open a route.
+  await expect(page.getByRole('region', { name: 'Managed generated runtime', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Open selected generated page', exact: true })).toBeDisabled();
   // Roving keyboard mode tabs are real controls.
   await mode(page, 'Live Page').focus();
   await page.keyboard.press('Home');
@@ -341,6 +345,6 @@ test('native 200 percent zoom retains keyboard authoring and scrollable modes', 
   } finally { await context.close(); }
 });
 
-test('WP20 and WP21 final full-mode integration acceptance', () => {
-  test.skip(true, 'Acceptance gated: WP20 must supply approved generated source/extension editor and WP21 managed route resolver. Capability states are tested above; full integration is not yet implemented.');
+test('Historical full five-mode application acceptance checkpoint', () => {
+  test.skip(true, 'This inherited full five-mode application acceptance checkpoint remains unexecuted by dependency integration and must be completed by WP25. Current Code and Live Page capabilities are exercised by the regeneration and runtime-export suites.');
 });

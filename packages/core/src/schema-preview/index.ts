@@ -25,7 +25,11 @@ export function registerSchemaPreview(registry: CommandRegistry, options: Option
    if(!target) throw new StorageError('INVALID_INPUT','Backfill target is not present in the candidate.');
    const projectionId=createId();
    const {identity:_identity,...validationProject}=project;
-   const validation=validateProject({...validationProject,schema:connection.inspectedSchema,queries:[{id:createId(),name:'Backfill validation',sources:[{alias:'self',source:{kind:'table',id:backfill.tableId}}],joins:[],projections:[{id:projectionId,name:'value',type:target.type,nullable:target.nullable,expression:backfill.expression}],parameters:[],groupBy:[],orderBy:[],grain:{strategy:'rows',keys:[]}}],pages:[],forms:[],controls:[],actions:[],policies:project.policies.filter(p=>p.id===project.globalPolicyId),extensionContracts:[]});
+   // Assignment permits a non-null expression into a nullable column. Ordinary
+   // query result metadata remains exact; only this temporary projection varies.
+   const validateBackfill=(nullable:boolean)=>validateProject({...validationProject,schema:connection.inspectedSchema,queries:[{id:createId(),name:'Backfill validation',sources:[{alias:'self',source:{kind:'table',id:backfill.tableId}}],joins:[],projections:[{id:projectionId,name:'value',type:target.type,nullable,expression:backfill.expression}],parameters:[],groupBy:[],orderBy:[],grain:{strategy:'rows',keys:[]}}],pages:[],forms:[],controls:[],actions:[],policies:project.policies.filter(p=>p.id===project.globalPolicyId),extensionContracts:[]});
+   let validation=validateBackfill(false);
+   if(!validation.ok && target.nullable) validation=validateBackfill(true);
    if(!validation.ok) throw new SchemaPreviewError(validation.diagnostics.map(d=>({...d,objectId:target.id})));
   }
   const {path}=connectionPath(options.approvedRoots,`${connection.locator.approvedRootId}:${connection.locator.relativePath}`,options.metadataRoot);

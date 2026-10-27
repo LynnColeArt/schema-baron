@@ -1,3 +1,4 @@
+import { arithmeticResultType } from '@schema-baron/model';
 import { ScalarInput } from "./scalar.js";
 import type {
   Expression,
@@ -74,7 +75,7 @@ export function shape(
           shape(e.right, project, q).nullable,
       };
     return {
-      type: shape(e.left, project, q).type,
+      type: arithmeticResultType(shape(e.left, project, q).type, shape(e.right, project, q).type) ?? shape(e.left, project, q).type,
       nullable:
         shape(e.left, project, q).nullable ||
         shape(e.right, project, q).nullable,

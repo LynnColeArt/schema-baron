@@ -191,7 +191,7 @@ export function FormWizard({
                       : k === "Search"
                         ? ["search"]
                         : k === "Login"
-                          ? ["login", "cancel"]
+                          ? ["login", "logout", "cancel"]
                           : [],
                   );
                 }}
@@ -492,7 +492,9 @@ export function FormProperties({
   onChange,
   buffers,
   onScalar,
+  selectedActionId,
 }: {
+  selectedActionId?: string | undefined;
   project: Project;
   value: Form | Control;
   kind: "form" | "control";
@@ -727,6 +729,64 @@ export function FormProperties({
       </fieldset>
     );
   };
+  const actionProperties=(id:string)=>{
+          const action = project.actions.find((a) => a.id === id);
+          const supportsHook = form.kind === "Record" && action && ["insert", "update", "delete", "extension"].includes(action.operation);
+          return action ? (
+            <fieldset key={id}>
+              <legend>Action: {action.operation}</legend>
+              {choice(
+                `${action.operation} operation`,
+                action.operation,
+                [
+                  "insert",
+                  "update",
+                  "delete",
+                  "navigate",
+                  "search",
+                  "login",
+                  "logout",
+                  "cancel",
+                  "extension",
+                ].map((v) => ({ value: v, label: v })),
+                (operation) =>
+                  onChange([
+                    {
+                      entity: "action",
+                      value: {
+                        ...action,
+                        operation: operation as Action["operation"],
+                      },
+                    },
+                  ]),
+              )}
+              {choice(
+                `${action.operation} source hook`,
+                action.extensionHookRef ?? "",
+                [
+                  { value: "", label: "None" },
+                  ...project.extensionContracts
+                    .filter(
+                      (e) => (supportsHook && e.kind === "action") || e.id === action.extensionHookRef,
+                    )
+                    .map((e) => ({ value: e.id, label: supportsHook && e.kind === "action" ? e.relativePath : `Unsupported binding: ${e.relativePath}` })),
+                ],
+                (id) => {
+                  const next = { ...action };
+                  if (id) next.extensionHookRef = sid(id);
+                  else delete next.extensionHookRef;
+                  onChange([{ entity: "action", value: next }]);
+                },
+              )}
+              {!supportsHook && <small>Source hooks require a Record write or extension action. Cancel never invokes hooks; select None to remove an unsupported binding.</small>}
+              {(["destination", "success", "cancel"] as const).map((slot) =>
+                destinationEditor(action, slot),
+              )}
+            </fieldset>
+          ) : null;
+
+  };
+  if(selectedActionId)return <div className="form-properties"><strong>Action Properties</strong><code>{selectedActionId}</code>{actionProperties(selectedActionId)}</div>;
   if (tab === "Format")
     return (
       <div className="form-properties">
@@ -880,62 +940,7 @@ export function FormProperties({
             </div>
           ))}
         </fieldset>
-        {form.actionIds.map((id) => {
-          const action = project.actions.find((a) => a.id === id);
-          const supportsHook = form.kind === "Record" && action && ["insert", "update", "delete", "extension"].includes(action.operation);
-          return action ? (
-            <fieldset key={id}>
-              <legend>Action: {action.operation}</legend>
-              {choice(
-                `${action.operation} operation`,
-                action.operation,
-                [
-                  "insert",
-                  "update",
-                  "delete",
-                  "navigate",
-                  "search",
-                  "login",
-                  "logout",
-                  "cancel",
-                  "extension",
-                ].map((v) => ({ value: v, label: v })),
-                (operation) =>
-                  onChange([
-                    {
-                      entity: "action",
-                      value: {
-                        ...action,
-                        operation: operation as Action["operation"],
-                      },
-                    },
-                  ]),
-              )}
-              {choice(
-                `${action.operation} source hook`,
-                action.extensionHookRef ?? "",
-                [
-                  { value: "", label: "None" },
-                  ...project.extensionContracts
-                    .filter(
-                      (e) => (supportsHook && e.kind === "action") || e.id === action.extensionHookRef,
-                    )
-                    .map((e) => ({ value: e.id, label: supportsHook && e.kind === "action" ? e.relativePath : `Unsupported binding: ${e.relativePath}` })),
-                ],
-                (id) => {
-                  const next = { ...action };
-                  if (id) next.extensionHookRef = sid(id);
-                  else delete next.extensionHookRef;
-                  onChange([{ entity: "action", value: next }]);
-                },
-              )}
-              {!supportsHook && <small>Source hooks require a Record write or extension action. Cancel never invokes hooks; select None to remove an unsupported binding.</small>}
-              {(["destination", "success", "cancel"] as const).map((slot) =>
-                destinationEditor(action, slot),
-              )}
-            </fieldset>
-          ) : null;
-        })}
+        {form.actionIds.map(actionProperties)}
         <button
           type="button"
           onClick={() => {

@@ -7,6 +7,14 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
+    },
+    "./navigation": {
+      "types": "./src/templates/navigation/index.ts",
+      "default": "./dist/templates/navigation/index.js"
+    },
+    "./behavior": {
+      "types": "./src/behavior/index.ts",
+      "default": "./dist/behavior/index.js"
     }
   },
   "dependencies": {

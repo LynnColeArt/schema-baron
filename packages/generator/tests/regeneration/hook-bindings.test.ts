@@ -4,7 +4,8 @@ import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {spawnSync} from 'node:child_process';
 import Database from 'better-sqlite3';
-import {parseProject} from '@schema-baron/model';
+import {createId,parseProject} from '@schema-baron/model';
+const sid=(value:string)=>createId(()=>value);
 import type {Action,Form} from '@schema-baron/model';
 import {compileProject,emitApplication,GenerationError} from '@schema-baron/generator';
 const roots:string[]=[];
@@ -28,9 +29,9 @@ test('production Record output executes supported hooks and rolls back failures;
  model.actions=['insert','update','delete','extension','cancel'].map(operation=>({...model.actions[0]!,id:operation,operation,...(operation==='cancel'?{extensionHookRef:undefined}:{})})) as typeof model.actions;
  // Cancel deliberately has no authored hook binding.
  delete model.actions.at(-1)!.extensionHookRef;model.forms[0]!.actionIds=model.actions.map(action=>action.id);
- model.extensionContracts.push(...(['validator','service','event'] as const).map(kind=>({id:kind+'-hook',kind,version:1,relativePath:'authored/'+kind+'.ts'})));
- model.forms.push({...model.forms[0]!,id:'list-form',pageId:'list',kind:'Grid',keyMapping:[],displayFieldIds:[],controlIds:['list-key-control','list-title-control'],actionIds:[]});
- model.controls.push(...model.controls.map(control=>({...control,id:'list-'+control.id,formId:'list-form',kind:'label' as const,readOnly:true})));model.pages[1]!.formIds=['list-form'];model.pages[1]!.document=[{kind:'form',formId:'list-form'}];
+ model.extensionContracts.push(...(['validator','service','event'] as const).map(kind=>({id:sid(kind+'-hook'),kind,version:1,relativePath:'authored/'+kind+'.ts'})));
+ model.forms.push({...model.forms[0]!,id:sid('list-form'),pageId:sid('list'),kind:'Grid',keyMapping:[],displayFieldIds:[],controlIds:[sid('list-key-control'),sid('list-title-control')],actionIds:[]});
+ model.controls.push(...model.controls.map(control=>({...control,id:sid('list-'+control.id),formId:sid('list-form'),kind:'label' as const,readOnly:true})));model.pages[1]!.formIds=[sid('list-form')];model.pages[1]!.document=[{kind:'form',formId:sid('list-form')}];
  const files=emitApplication(compileProject(parseProject(model)),database);
  for(const file of files){const path=join(output,file.path);mkdirSync(join(path,'..'),{recursive:true});writeFileSync(path,file.content);}
  const signatures={validator:['ValidatorV1','validate'],action:['ActionV1','execute'],service:['ServiceV1','beforeWrite'],event:['EventV1','afterWrite']} as const;

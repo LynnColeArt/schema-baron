@@ -1,0 +1,101 @@
+Generate application
+
+Create an independent Next.js application against the connected database. Generation writes source files; data migration is separate.
+
+Output location
+
+Choose an approved source output. Regeneration preserves declared authored modules; conflicts require resolution and a fresh preview. The old tree remains in a recoverable backup. Reinstall dependencies and rebuild runtime artifacts after promotion.
+
+85 files to create/change/delete or preserve
+
+Promote a complete reviewed source tree to catalog-output-6MrH23:app. Database, identity, secrets and migration history remain external.
+
+create .gitignore
+create .npmrc
+create .nvmrc
+create .schema-baron-generation.json
+create app/access/page.tsx
+create app/find/page.tsx
+create app/layout.tsx
+create app/membership/page.tsx
+create app/memberships/page.tsx
+create app/page.tsx
+create app/publication/page.tsx
+create app/royalties/page.tsx
+create app/runtime/auth/csrf/route.ts
+create app/runtime/auth/route.ts
+create app/runtime/navigation-0/route.ts
+create app/runtime/navigation-1/route.ts
+create app/runtime/navigation-2/route.ts
+create app/runtime/navigation-3/route.ts
+create app/runtime/navigation-8/route.ts
+create app/runtime/record-4/route.ts
+create app/runtime/record-5/route.ts
+create app/runtime/record-6/route.ts
+create app/runtime/record-7/route.ts
+create app/styles.css
+create app/subject/page.tsx
+create app/subjects/page.tsx
+create app/writer/page.tsx
+create app/writers/page.tsx
+create AUTH.md
+create authored/catalog-validation.ts
+create components/csrf.tsx
+create components/grid-0.tsx
+create components/grid-1.tsx
+create components/grid-2.tsx
+create components/grid-3.tsx
+create components/grid-8.tsx
+create components/grid-9.tsx
+create components/identity-header.tsx
+create components/login.tsx
+create components/record-4.tsx
+create components/record-5.tsx
+create components/record-6.tsx
+create components/record-7.tsx
+create components/saved-notice.tsx
+create components/sign-out.tsx
+create next-env.d.ts
+create next.config.ts
+create package-lock.json
+create package.json
+create README.md
+create server/auth-config.ts
+create server/auth.ts
+create server/connection.ts
+create server/extension-contracts.ts
+create server/extensions.ts
+create server/format.ts
+create server/grid-0.ts
+create server/grid-1.ts
+create server/grid-2.ts
+create server/grid-3.ts
+create server/grid-8.ts
+create server/identity-store.ts
+create server/navigation.ts
+create server/query-decimal.js
+create server/query-execute.js
+create server/query-runtime.ts
+create server/query-scalar.js
+create server/query-support.js
+create server/query-worker.mjs
+create server/record-4.ts
+create server/record-5.ts
+create server/record-6.ts
+create server/record-7.ts
+create server/record-action-4.ts
+create server/record-action-5.ts
+create server/record-action-6.ts
+create server/record-action-7.ts
+create server/record-repository.ts
+create server/record-service.ts
+create server/record-validation.ts
+create server/report-9.ts
+create server/repository.ts
+create tests/identity.test.mjs
+create tests/output.test.mjs
+create tsconfig.json
+Technical details
+Cancel
+Preview files
+Create application

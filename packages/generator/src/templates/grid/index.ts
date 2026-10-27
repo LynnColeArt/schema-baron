@@ -1,3 +1,4 @@
+import {handlerPath} from '../../behavior/index.js';
 import { keyParameter } from '../navigation/index.js';
 import type { GridIR } from '../../ir/index.js';
 const literal = (value: unknown) => JSON.stringify(value);
@@ -8,10 +9,13 @@ export function gridFiles(grid: GridIR, index: number) {
  const prefix = grid.id;
  const parameter = (key: string) => literal(`${prefix}:${key}`);
  const links=(grid.actions??[]).filter(a=>a.operation==='navigate');
- const controls = grid.controls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${literal(c.label)}}</NavigationLink>`).join('')}</td>`:`<td>{${c.fieldId ? `formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f => f.id === c.fieldId)?.type)}, ${literal(c.format)})` : literal(c.label)}}</td>`).join('\n                  ');
+ const searchBinding=grid.controls.find(c=>c.kind==='button'&&c.events?.some(e=>(grid.actions??[]).find(a=>a.id===e.actionId)?.operation==='search'));
+ const displayedControls=grid.controls.filter(c=>c.id!==searchBinding?.id);
+ const value=(c:GridIR['controls'][number])=>c.fieldId?`formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f=>f.id===c.fieldId)?.type)}, ${literal(c.format)})`:literal(c.label);
+ const controls = displayedControls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${value(c)}}</NavigationLink>`).join('')}</td>`:`<td>{${value(c)}}</td>`).join('\n                  ');
  const rowKey = grid.source.keys.length ? `JSON.stringify([${grid.source.keys.map(k => `row[${literal(k)}]`).join(', ')}].map(value => String(value)))` : 'rowIndex';
  return [
-  {path:`app/runtime/navigation-${index}/route.ts`,content:`import {cookies} from 'next/headers';
+  {path:`app${handlerPath('navigation',index)}/route.ts`,content:`import {cookies} from 'next/headers';
 import {authorize,sessionCookie,failure} from '../../../server/auth';
 import {config,actions} from '../../../server/grid-${index}';
 import {connect,read} from '../../../server/record-repository';
@@ -42,7 +46,7 @@ export function link(id:string,row:Record<string,unknown>,parameters:Parameters)
  const action=actions.find(a=>a.id===id);
  if(!action) return {error:'This navigation action is unavailable.'};
  try{
-  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(!action.destination.newForms.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'/runtime/navigation-${index}?'+query};}
+  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(!action.destination.newForms.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'${handlerPath('navigation',index)}?'+query};}
   return {href:destination(action.destination,row,parameters,allowed)};}
  catch{return {error:'This link could not be created. Check the page filters and mapped record values.'};}
 }
@@ -101,7 +105,7 @@ ${fields.filter(f=>sortFieldIds.includes(f.id)).map(f => `            <option va
             <option value="desc">Descending</option>
           </select>
         </label>
-        <button>Filter and sort</button>
+        <button>{${literal(searchBinding?.label??'Filter and sort')}}</button>
       </form>
       {rows.length === 0 ? (
         <p>No records found.</p>
@@ -109,7 +113,7 @@ ${fields.filter(f=>sortFieldIds.includes(f.id)).map(f => `            <option va
         <table>
           <thead>
             <tr>
-${grid.controls.map(c => `              <th>{${literal(c.label)}}</th>`).join('\n')}
+${displayedControls.map(c => `              <th>{${literal(c.label)}}</th>`).join('\n')}
             </tr>
           </thead>
           <tbody>

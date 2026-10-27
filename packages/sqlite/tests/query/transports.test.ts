@@ -11,7 +11,7 @@ import type { Outcome } from '@schema-baron/core';
 import { project, seed } from './fixture.js';
 const cleanups:(()=>Promise<void>)[]=[];afterEach(async()=>{for(const close of cleanups.splice(0).reverse())await close();});
 function command(operation:string,input:unknown,expectedRevision=1,requestId:string=crypto.randomUUID()){return {projectId:'query-project',requestId,operation,expectedRevision,input};}
-async function setup(){
+async function setup(cancellationWorkload=false){
  const root=mkdtempSync(join(tmpdir(),'wp15-owner-'));const definitions=join(root,'definitions'),cap='query-preview-'+'x'.repeat(40);
  const owner=await startOwner({ownerId:'owner',capability:cap,metadataRoot:join(root,'metadata'),approvedRoots:{projects:definitions}});
  cleanups.push(async()=>{await owner.close();rmSync(root,{recursive:true,force:true});});
@@ -19,7 +19,11 @@ async function setup(){
  const config=join(root,'mcp.json');writeFileSync(config,JSON.stringify({ownerUrl:owner.url,capability:cap}),{mode:0o600});const mcp=new Client({name:'query-proof',version:'1'});await mcp.connect(new StdioClientTransport({command:process.execPath,args:[resolve('apps/mcp/dist/main.js')],env:{SCHEMA_BARON_MCP_CONFIG:config},stderr:'pipe'}));cleanups.push(()=>mcp.close());
  const agent=async(body:Record<string,unknown>)=>{const {operation,...args}=body;return (await mcp.callTool({name:String(operation).replaceAll('.','_'),arguments:args})).structuredContent;};
  const p=project();writeFileSync(join(definitions,'import.json'),JSON.stringify({...p,queries:[]}));expect((await http(command('project.open',{locator:'projects:import.json'}))).outcome.ok).toBe(true);
- const path=join(definitions,'data.sqlite'),db=seed(path);const before=readFileSync(path);db.close();
+ const path=join(definitions,'data.sqlite'),db=seed(path);
+ // Keep real decimal aggregation pending while the public stale/forged boundary probes run.
+ // The original four-row query could finish before the subsequent MCP cancellation arrived.
+ if(cancellationWorkload)db.exec("WITH RECURSIVE fixture(n) AS (SELECT 5 UNION ALL SELECT n+1 FROM fixture WHERE n<75004) INSERT INTO detail SELECT n,'many',1,'0.1000','1.0000' FROM fixture");
+ const before=readFileSync(path);db.close();
  const inspection=(await http(command('connection.inspect',{approvedPath:'projects:data.sqlite',mode:'read-only'}))).outcome.result;
  // Bind inspection-proven physical metadata while retaining explicit logical decimal encodings and IDs.
  // The public connection.bind imports inferred TEXT types. Restore the authored logical model using public batch after binding.
@@ -38,7 +42,7 @@ test('saved and draft preview share actual HTTP/MCP values, shape, rejection and
  expect(readFileSync(path)).toEqual(before);
 });
 test('public cancel waits for worker exit; stale/conflicting cancellations have no effects and service remains responsive',async()=>{
- const {owner,http,agent,path,before}=await setup();const c=command('query.preview',{queryId:'report',parameters:{},rowLimit:200},3,'running-preview');
+ const {owner,http,agent,path,before}=await setup(true);const c=command('query.preview',{queryId:'report',parameters:{},rowLimit:200},3,'running-preview');
  const pending=http(c);
  // Observe the public running-job record; no mocked handlers or blocked native APIs.
  for(let i=0;i<100;i++){const job=owner.service.core.job('owner','query-project','running-preview') as {status:string}|undefined;if(job?.status==='running')break;await new Promise(resolve=>setTimeout(resolve,1));}
