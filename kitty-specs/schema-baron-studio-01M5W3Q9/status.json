@@ -658,6 +658,9 @@
       "last_event_id": "01M5YFSWNXGHBF91270XQGV754",
       "last_transition_at": "2026-10-27T10:51:54.429425+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: 99822a0; final two-worker full verify 386 tests/54 files, 35 focused checks, real Code/MCP/two-cycle SQLite preservation and independent production output; canonical journal recovery and monotonic output revision. Actual WP21 process-manager stop integration remains explicitly pending."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
