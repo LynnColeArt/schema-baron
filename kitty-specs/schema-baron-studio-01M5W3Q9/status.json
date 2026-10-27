@@ -1,7 +1,7 @@
 {
-  "event_count": 228,
-  "last_event_id": "01M5YSJCV648PT7XM1DCYJNGPE",
-  "materialized_at": "2026-10-27T13:42:34.586494+00:00",
+  "event_count": 230,
+  "last_event_id": "01M5YT72C5SMBD4SHFHMYBR4XA",
+  "materialized_at": "2026-10-27T13:53:52.005639+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
@@ -12,8 +12,8 @@
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 1,
-    "in_review": 0,
+    "in_progress": 0,
+    "in_review": 1,
     "planned": 4
   },
   "work_packages": {
@@ -739,17 +739,18 @@
     },
     "WP22": {
       "actor": "codex",
-      "agent": null,
-      "agent_profile": "implementer-ivan",
+      "agent": "codex",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
-      "lane": "in_progress",
-      "last_event_id": "01M5YSJCV648PT7XM1DCYJNGPE",
-      "last_transition_at": "2026-10-27T13:42:34.586494+00:00",
+      "lane": "in_review",
+      "last_event_id": "01M5YT72C5SMBD4SHFHMYBR4XA",
+      "last_transition_at": "2026-10-27T13:53:52.005639+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for review: pure visible Equipment authoring, auth/CRUD/exact report, reviewed evolution, two preserved regenerations and Studio-off export; 455 tests and isolated verifier pass. Source 7b172b9; evidence docs/evidence/equipment/report.md.",
-        "Independent reviewer-renata: request changes for reproducible integrated FlowMap pointer-selection failure after mapping save/focus/Fit visible, test line187 twice. Equipment fresh journey,455/68,offline standalone,146 numeric and8 migration heldouts pass. Shared-file coordination inspected: approved18/21 merge a605e34 and authorized62feaa7/f1b4d7b narrow generic corrections; see /tmp/wp22-independent-review.md for8checks and honest scope."
+        "Independent reviewer-renata: request changes for reproducible integrated FlowMap pointer-selection failure after mapping save/focus/Fit visible, test line187 twice. Equipment fresh journey,455/68,offline standalone,146 numeric and8 migration heldouts pass. Shared-file coordination inspected: approved18/21 merge a605e34 and authorized62feaa7/f1b4d7b narrow generic corrections; see /tmp/wp22-independent-review.md for8checks and honest scope.",
+        "Review cycle 2: e46290c closes controlled map measured-dimension loss. Original focused pointer case passes twice fresh; full flow/document 6 pass/1 historical skip, fresh Equipment complete pass. View-only cache; source/model/layout semantics preserved. Evidence docs/evidence/equipment/review-cycle-2/report.md."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
@@ -759,15 +760,15 @@
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "implementer",
-      "shell_pid": null,
-      "shell_pid_created_at": null,
+      "role": "reviewer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54",
       "subtasks": {
-        "T106": "planned",
-        "T107": "planned",
-        "T108": "planned",
-        "T109": "planned",
-        "T110": "planned"
+        "T106": "done",
+        "T107": "done",
+        "T108": "done",
+        "T109": "done",
+        "T110": "done"
       }
     },
     "WP23": {
