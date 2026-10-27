@@ -1,0 +1,19 @@
+{
+  "wp_id": "WP17",
+  "captured_at": "2026-10-27T09:16:41Z",
+  "base_branch": "feat/schema-baron-studio",
+  "base_commit": "b578ef5974b19f7f65b9fa6a747223459e5a3e5f",
+  "test_runner": "pytest",
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "skipped": 0,
+  "failures": [
+    {
+      "test": "<gate-coverage-junit>",
+      "error": "no JUnit XML artifact produced by the scoped run",
+      "file": "unknown"
+    }
+  ],
+  "source_identity": "GateCoverageScopeSource/junit_xml"
+}

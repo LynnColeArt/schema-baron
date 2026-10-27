@@ -1,0 +1,78 @@
+import 'server-only';
+import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { randomBytes } from 'node:crypto';
+import { IdentityStore, managedIdentityPath } from './identity-store.ts';
+import { authConfig } from './auth-config';
+import { databasePath } from './connection';
+import { context } from './navigation';
+import { destination } from './navigation';
+import type { Parameters } from './record-validation';
+export class AccessError extends Error {readonly status:number;constructor(status:number,message:string){super(message);this.status=status;}}
+export const sessionCookie=authConfig.cookie,csrfCookie=authConfig.cookie+'_csrf';
+export function store(){if(!authConfig.enabled)throw new AccessError(403,'Identity is not configured.');return new IdentityStore(managedIdentityPath(databasePath,authConfig.projectId),authConfig.projectId,authConfig.mapping??undefined,databasePath);}
+export function authorize(pageId:string,actionId:string|undefined,token:string|undefined) {
+ const page=authConfig.routes.find(p=>p.id===pageId);if(!page)throw new AccessError(404,'Page is not declared.');
+ const action=actionId===undefined?undefined:page.actions.find(a=>a.id===actionId);
+ if(actionId!==undefined&&!action)throw new AccessError(403,'Action is not declared.');
+ if(page.access==='authenticated'||action?.access==='authenticated') {
+  const identity=store();try{if(!identity.session(token))throw new AccessError(401,'Sign in is required.');}finally{identity.close();}
+ }
+}
+export function returnTarget(text:string) {
+ if(text.length>16000||!text.startsWith('/')||text.startsWith('//')||text.includes('\\')||text.includes('#'))throw new AccessError(400,'Invalid return target.');
+ const target=new URL(text,'http://runtime.invalid'),page=authConfig.routes.find(p=>p.path===target.pathname);
+ if(target.origin!=='http://runtime.invalid'||!page)throw new AccessError(400,'Invalid return target.');
+ const params:Record<string,string>={};for(const [key,value] of target.searchParams){if(key in params)throw new AccessError(400,'Duplicate return parameter.');params[key]=value;}
+ const fields=page.parameters;
+ if(Object.keys(params).some(key=>!fields.some(f=>f.parameter===key)))throw new AccessError(400,'Undeclared return parameter.');
+ const normalized=context(params,fields);
+ for(const field of fields)if(field.kind==='mode'&&params[field.parameter]!==undefined&&params[field.parameter]!=='new')throw new AccessError(400,'Invalid record mode.');
+ // Context validation normalizes optional blank searches; all typed keys survive.
+ return page.path+(Object.keys(normalized).length?'?'+new URLSearchParams(normalized):'');
+}
+export function originCheck(origin:string|null,host:string|null,csrf:string|undefined,cookie:string|undefined,forwardedProto:string|null=null) {
+ if(!origin||!host)throw new AccessError(403,'Request origin is required.');
+ const url=new URL(origin),local=['localhost','127.0.0.1','[::1]'].includes(url.hostname);
+ if(url.host!==host||url.pathname!=='/'||url.search||url.hash||url.username||url.password||url.protocol!=='https:'&&!(url.protocol==='http:'&&local)||forwardedProto&&forwardedProto!==url.protocol.slice(0,-1))throw new AccessError(403,'Request origin is not allowed.');
+ if(!csrf||!cookie||csrf!==cookie||!/^[A-Za-z0-9_-]{43}$/.test(csrf))throw new AccessError(403,'CSRF validation failed.');
+ return url.protocol==='https:';
+}
+export function cookieOptions(secure:boolean) {return {httpOnly:true,sameSite:'lax' as const,secure,path:'/',maxAge:8*60*60};}
+export async function guardAction(pageId:string,actionId:string,data:FormData) {
+ const jar=await cookies(),h=await headers();
+ originCheck(h.get('origin'),h.get('host'),String(data.get('_csrf')??''),jar.get(csrfCookie)?.value);
+ authorize(pageId,actionId,jar.get(sessionCookie)?.value);
+}
+export async function guardPage(pageId:string,parameters:Parameters) {
+ const token=(await cookies()).get(sessionCookie)?.value;
+ try{authorize(pageId,undefined,token);const route=authConfig.routes.find(r=>r.id===pageId)!;for(const read of route.readActions)if(Object.keys(parameters).some(key=>read.parameters.includes(key)))for(const actionId of read.actions)authorize(pageId,actionId,token);}catch(error){if(error instanceof AccessError&&error.status===401){const page=authConfig.routes.find(p=>p.id===pageId)!;const query=new URLSearchParams();for(const [k,v] of Object.entries(parameters))if(typeof v==='string')query.set(k,v);const target=returnTarget(page.path+(query.size?'?'+query:''));redirect(authConfig.loginPath+'?returnTo='+encodeURIComponent(target));}throw error;}
+}
+export async function csrfResponse(request:Request) {
+ const url=new URL(request.url),local=['localhost','127.0.0.1','[::1]'].includes(url.hostname);
+ if(url.protocol!=='https:'&&!(url.protocol==='http:'&&local))throw new AccessError(403,'HTTPS or explicit loopback HTTP is required.');
+ const jar=await cookies(),existing=jar.get(csrfCookie)?.value;const nonce=existing&&/^[A-Za-z0-9_-]{43}$/.test(existing)?existing:randomBytes(32).toString('base64url');jar.set(csrfCookie,nonce,cookieOptions(url.protocol==='https:'));return Response.json({csrf:nonce},{headers:{'cache-control':'no-store'}});
+}
+export async function authenticate(request:Request) {
+ const length=request.headers.get('content-length');if(length&&(!/^\d+$/.test(length)||Number(length)>20000))throw new AccessError(400,'Login request exceeds the supported size.');
+ const jar=await cookies(),data=await request.formData();
+ const secure=originCheck(request.headers.get('origin'),request.headers.get('host'),String(data.get('_csrf')??''),jar.get(csrfCookie)?.value);
+ const actionId=String(data.get('_action')??''),login=authConfig.logins.find(l=>l.actions.some(a=>a.id===actionId));
+ const action=login?.actions.find(a=>a.id===actionId);if(!action||!login||!['login','logout'].includes(action.operation))throw new AccessError(403,'Login action is not declared.');
+ const allowed=['_csrf','_action','returnTo',login.username,login.password];for(const [key,value] of data)if(!allowed.includes(key)||data.getAll(key).length!==1||typeof value!=='string'||value.length>16000)throw new AccessError(400,'Invalid login input.');
+ const token=jar.get(sessionCookie)?.value,identity=store();
+ try {
+  if(action.operation==='logout'){authorize(login.pageId,action.id,token);if(!identity.checkCsrf(token,jar.get(csrfCookie)?.value))throw new AccessError(403,'CSRF validation failed.');if(token)identity.logout(token);jar.delete(sessionCookie);jar.delete(csrfCookie);const fallback=authConfig.routes.find(p=>p.access==='public'&&!authConfig.logins.some(l=>l.pageId===p.id))??authConfig.routes.find(p=>p.access==='public');return Response.json({location:fallback?.path??authConfig.loginPath});}
+  // Access rules apply to login itself; a public login route is explicitly authored.
+  authorize(login.pageId,action.id,token);
+  const submitted=data.get('returnTo');let location:string;
+  try{location=submitted?returnTarget(String(submitted)):action.target?returnTarget(destination(action.target,{}, {},authConfig.contexts)):returnTarget('/');}catch{throw new AccessError(400,'Invalid return target.');}
+  if(String(data.get(login.username)??'').length>200||Buffer.byteLength(String(data.get(login.password)??''))>1024)throw new AccessError(401,'Sign in failed. Try again later.');
+  let session;try{session=await identity.login(String(data.get(login.username)??''),String(data.get(login.password)??''),token,'runtime-login');}catch{throw new AccessError(401,'Sign in failed. Try again later.');}
+  jar.set(sessionCookie,session.token,cookieOptions(secure));jar.set(csrfCookie,session.csrf,cookieOptions(secure));return Response.json({location});
+ }finally{identity.close();}
+}
+export function failure(error:unknown) {const status=error instanceof AccessError?error.status:400;return Response.json({error:error instanceof AccessError?error.message:'Request could not be completed.'},{status,headers:{'cache-control':'no-store'}});}
+/** Only declared, typed page context reaches links or login return fields. */
+export function pageReturn(pageId:string,parameters:Parameters) {const page=authConfig.routes.find(p=>p.id===pageId);if(!page)throw new AccessError(400,'Unknown page.');const values:Record<string,string>={};for(const field of page.parameters){const value=parameters[field.parameter];if(typeof value==='string')values[field.parameter]=value;}return returnTarget(page.path+(Object.keys(values).length?'?'+new URLSearchParams(values):''));}
+export function loginCancel(loginId:string,parameters:Parameters) {if(typeof parameters.returnTo==='string'){try{const target=new URL(returnTarget(parameters.returnTo),'http://runtime.invalid');parameters=Object.fromEntries(target.searchParams);}catch{parameters={};}}const login=authConfig.logins.find(l=>l.id===loginId);const action=login?.actions.find(a=>a.operation==='cancel');const fallback=authConfig.routes.find(p=>p.access==='public'&&!authConfig.logins.some(l=>l.pageId===p.id))??authConfig.routes.find(p=>p.access==='public');if(!fallback)throw new AccessError(400,'Configure a public Cancel page.');if(!action?.target)return pageReturn(fallback.id,parameters);const path=returnTarget(destination(action.target,{},parameters,authConfig.contexts));if(authConfig.routes.find(p=>p.path===new URL(path,'http://runtime.invalid').pathname)?.access!=='public')throw new AccessError(400,'Cancel requires a public page.');return path;}

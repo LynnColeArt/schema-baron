@@ -1,0 +1,67 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-i
+
+ ❯ packages/sqlite/tests/migrations/namespace-race.test.ts (3 tests | 2 failed) 18804ms
+   × external matching-DDL namespace during migration backup refuses all reviewed SQL and preserves foreign evidence 4272ms
+   × external matching-DDL namespace during restore backup refuses all reviewed SQL and preserves foreign evidence 13339ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/sqlite/tests/migrations/namespace-race.test.ts > external matching-DDL namespace during migration backup refuses all reviewed SQL and preserves foreign evidence
+AssertionError: expected { ok: true, revision: 3, …(2) } to match object { ok: false, revision: 3, …(1) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "UNSUPPORTED_SCHEMA_OBJECT",
+-   },
+-   "ok": false,
++   "ok": true,
+    "revision": 3,
+  }
+
+ ❯ packages/sqlite/tests/migrations/namespace-race.test.ts:132:23
+    130|         .all();
+    131|       const outcome = await applying;
+    132|       expect(outcome).toMatchObject({
+       |                       ^
+    133|         ok: false,
+    134|         revision,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/sqlite/tests/migrations/namespace-race.test.ts > external matching-DDL namespace during restore backup refuses all reviewed SQL and preserves foreign evidence
+AssertionError: expected { ok: true, revision: 4, …(2) } to match object { ok: false, revision: 4, …(1) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "UNSUPPORTED_SCHEMA_OBJECT",
+-   },
+-   "ok": false,
++   "ok": true,
+    "revision": 4,
+  }
+
+ ❯ packages/sqlite/tests/migrations/namespace-race.test.ts:132:23
+    130|         .all();
+    131|       const outcome = await applying;
+    132|       expect(outcome).toMatchObject({
+       |                       ^
+    133|         ok: false,
+    134|         revision,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  00:40:25
+   Duration  19.03s (tests 99%)
+
