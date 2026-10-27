@@ -194,6 +194,8 @@ export function validateProject(input: unknown): ValidationResult {
     const ctx = sourceContext(form.sourceRef, form.id); const fields = ctx.sources.get('root') ?? [];
     for (const key of form.keyMapping) { const target = ref(fields, key.targetFieldId, form.id, 'keyMapping'); const shape = expr(key.expression, ctx, form.id, 'keyMapping.expression'); if (target && shape && !sameType(target.type, shape.type)) error('TYPE_MISMATCH', form.id, 'keyMapping', 'Key expression type must match target.'); }
     unique(form.keyMapping.map(k => k.targetFieldId), form.id, 'keyMapping');
+    for (const id of form.displayFieldIds ?? []) ref(fields, id, form.id, 'displayFieldIds');
+    unique(form.displayFieldIds ?? [], form.id, 'displayFieldIds');
     if (form.kind === 'Record' && form.sourceRef?.kind === 'table') {
       const table = p.schema.tables.find(t => t.id === form.sourceRef!.id);
       if (table && (table.primaryKey.length === 0 || canonicalJson(form.keyMapping.map(k => k.targetFieldId)) !== canonicalJson(table.primaryKey))) error('VALIDATION_FAILED', form.id, 'keyMapping', 'Record key mapping must match the complete ordered primary key.');
@@ -206,6 +208,7 @@ export function validateProject(input: unknown): ValidationResult {
     if (!form.controlIds.includes(control.id)) error('BROKEN_REFERENCE', control.id, 'formId', 'Form must include its control.');
     const ctx = sourceContext(form.sourceRef, control.id); let shape: Shape | undefined;
     if (control.validation.min !== undefined && control.validation.max !== undefined && control.validation.min > control.validation.max) error('VALIDATION_FAILED', control.id, 'validation', 'Minimum cannot exceed maximum.');
+    if(control.credentialRole&&(form.kind!=='Login'||control.binding||control.readOnly))error('VALIDATION_FAILED',control.id,'credentialRole','Credential controls belong to Login forms and must be editable transient inputs without bindings.');
     if (control.binding?.kind === 'stored') { const field = ref(ctx.sources.get('root') ?? [], control.binding.fieldId, control.id, 'binding.fieldId'); if (field) { shape = { ...field, aggregate: false }; const col = p.schema.tables.flatMap(t => t.columns).find(c => c.id === field.id); if ((form.sourceRef?.kind === 'query' || col?.generated) && !control.readOnly) error('VALIDATION_FAILED', control.id, 'readOnly', 'Query results and generated columns are read-only.'); } }
     if (control.binding?.kind === 'derived') {
       shape = expr(control.binding.expression, ctx, control.id, 'binding.expression'); if (!control.readOnly) error('VALIDATION_FAILED', control.id, 'readOnly', 'Derived bindings must be read-only.');

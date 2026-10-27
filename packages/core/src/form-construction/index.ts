@@ -161,11 +161,13 @@ export function constructForm(original: Project, input: FormConstruction) {
       put("control", control);
     }
     if (kind === "Login")
-      for (const label of ["Username", "Password"]) {
+      for (const credentialRole of ["username", "password"] as const) {
+        const label=credentialRole === "username" ? "Username" : "Password";
         const control: Control = {
           id: createId(),
           formId: form.id,
-          kind: label === "Username" ? "identity" : "text",
+          kind: credentialRole === "username" ? "identity" : "text",
+          credentialRole,
           readOnly: false,
           appearance: { label },
           validation: { required: true },
@@ -224,9 +226,7 @@ export function constructForm(original: Project, input: FormConstruction) {
       linked.keyIds,
       linked.label,
       [
-        { operation: "insert" },
-        { operation: "update" },
-        { operation: "delete" },
+        ...(["insert", "update", "delete"] as const).map(operation => ({ operation, success: { pageId: spec.pageId, keyMapping: [], filterMapping: [] } })),
         {
           operation: "cancel",
           destination: {
@@ -260,6 +260,10 @@ export function constructForm(original: Project, input: FormConstruction) {
     };
     form.controlIds.push(control.id);
     put("control", control);
+    // The linked-record wizard declares an explicit new-record destination too.
+    const createAction: Action = { id: createId(), formId: form.id, operation: "navigate", destination: { pageId: record.pageId, keyMapping: [], filterMapping: [] } };
+    form.actionIds.push(createAction.id);
+    put("action", createAction);
     put("form", form);
   }
   for (const page of pages.values())

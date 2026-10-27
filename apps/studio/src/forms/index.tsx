@@ -764,6 +764,7 @@ export function FormProperties({
   if (kind === "form")
     return (
       <div className="form-properties">
+        {form.kind === "Record" && <fieldset><legend>Record name fields for delete confirmation</legend>{sourceFields(project, form.sourceRef).map(field => <label key={field.id}><input type="checkbox" checked={form.displayFieldIds?.includes(field.id) ?? false} onChange={event => update({ ...form, displayFieldIds: event.target.checked ? [...(form.displayFieldIds ?? []), field.id] : (form.displayFieldIds ?? []).filter(id => id !== field.id) })} />{field.name}</label>)}</fieldset>}
         {choice(
           "Data source",
           form.sourceRef ? `${form.sourceRef.kind}:${form.sourceRef.id}` : "",

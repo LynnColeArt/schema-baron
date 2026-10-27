@@ -2,6 +2,7 @@ import 'server-only';
 import Database from 'better-sqlite3';
 import Decimal from 'decimal.js';
 import { z } from 'zod';
+import { value as parseValue } from './record-validation.ts';
 import { databasePath } from './connection.ts';
 
 type Field = {
@@ -13,9 +14,12 @@ type Field = {
 type Config = {
   readonly table: string;
   readonly fields: readonly Field[];
+  readonly keys?:readonly string[];
+  readonly sortFieldIds?:readonly string[];
   readonly search: readonly { readonly fieldId: string; readonly operator: 'eq' | 'contains' | 'gte' | 'lte' }[];
   readonly sorting: readonly { readonly fieldId: string; readonly direction: 'asc' | 'desc' }[];
   readonly pageSize: number;
+  readonly parents?:readonly {readonly fieldId:string;readonly parameter:string}[];
 };
 type Parameters = Record<string, string | string[] | undefined>;
 type Binding = string | number | bigint;
@@ -30,28 +34,9 @@ function one(parameters: Parameters, key: string) {
 
 function filterValue(field: Field, text: string): Binding {
   if (text.length > 1000) throw new Error('Filter is too long.');
-  switch (field.type.kind) {
-    case 'integer':
-      if (!/^-?\d+$/.test(text)) throw new Error('Enter an integer.');
-      return z.bigint().min(-9223372036854775808n).max(9223372036854775807n).parse(BigInt(text));
-    case 'real':
-      return z.coerce.number().finite().parse(text);
-    case 'boolean':
-      return z.enum(['0', '1']).transform(Number).parse(text);
-    case 'date':
-      return z.iso.date().parse(text);
-    case 'datetime':
-      return z.iso.datetime().parse(text);
-    case 'decimal': {
-      if (!/^-?\d+(?:\.\d+)?$/.test(text)) throw new Error('Enter a decimal number.');
-      if (field.type.encoding !== 'scaled-integer') return text;
-      const scaled = new Decimal(text).times(new Decimal(10).pow(field.type.scale ?? 0));
-      if (!scaled.isInteger()) throw new Error('Decimal exceeds configured scale.');
-      return z.bigint().min(-9223372036854775808n).max(9223372036854775807n).parse(BigInt(scaled.toFixed()));
-    }
-    default:
-      return text;
-  }
+  const parsed=parseValue(field,text);
+  if(parsed===null) throw new Error('Enter a parent key value.');
+  return parsed;
 }
 
 export function readGrid(config: Config, parameters: Parameters, prefix: string): {
@@ -64,8 +49,8 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
     const page = z.coerce.number().int().min(1).max(100000).parse(one(parameters, prefix + ':page') ?? '1');
     const requested = one(parameters, prefix + ':sort');
     const direction = z.enum(['asc', 'desc']).parse(one(parameters, prefix + ':direction') ?? 'asc');
-    if (requested && !config.fields.some(f => f.id === requested)) throw new Error('Choose an available sort field.');
-    const allowed = ['page', 'sort', 'direction', ...config.search.map(s => 'filter:' + s.fieldId)];
+    if (requested && !(config.sortFieldIds??config.fields.map(f=>f.id)).includes(requested)) throw new Error('Choose an available sort field.');
+    const allowed = ['page', 'sort', 'direction', ...config.search.map(s => 'filter:' + s.fieldId),...(config.parents??[]).map(p=>p.parameter.startsWith(prefix+':')?p.parameter.slice(prefix.length+1):p.parameter)];
     for (const key of Object.keys(parameters)) {
       if (key.startsWith(prefix + ':') && !allowed.includes(key.slice(prefix.length + 1))) {
         throw new Error('Unknown list parameter.');
@@ -74,6 +59,16 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
 
     const clauses: string[] = [];
     const bindings: Binding[] = [];
+    for(const parent of config.parents??[]) {
+      const field=config.fields.find(f=>f.id===parent.fieldId);const text=one(parameters,parent.parameter);
+      if(!field) throw Error('A parent field is unavailable.');
+      // A declared key can identify rows on the unfiltered list too. When its
+      // parameter is present, it is always validated and bound as a predicate.
+      if(text===undefined) continue;
+      const name=quote(field.name);
+      clauses.push(field.type.kind==='decimal'&&field.type.encoding==='text' ? 'decimal_compare('+name+', ?) = 0' : name+' = ?');
+      bindings.push(filterValue(field,text));
+    }
     for (const search of config.search) {
       const text = one(parameters, prefix + ':filter:' + search.fieldId);
       if (text === undefined || text === '') continue;
@@ -94,7 +89,8 @@ export function readGrid(config: Config, parameters: Parameters, prefix: string)
     }
 
     const ordering = requested ? [{ fieldId: requested, direction }] : config.sorting;
-    const orderSql = ordering.map(sort => {
+    const stableOrdering=[...ordering,...(config.keys??[]).filter(id=>!ordering.some(sort=>sort.fieldId===id)).map(fieldId=>({fieldId,direction:'asc' as const}))];
+    const orderSql = stableOrdering.map(sort => {
       const field = config.fields.find(f => f.id === sort.fieldId);
       if (!field) throw new Error('Sort field is unavailable.');
       // Exact decimal text is sorted using a registered deterministic collation seam.
