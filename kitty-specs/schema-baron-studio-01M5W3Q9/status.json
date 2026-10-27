@@ -337,7 +337,8 @@
       "last_transition_at": "2026-10-27T07:07:37.064372+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: commit 5872850; typed public Grid generation, reviewed safe initial output, UI/MCP parity, two visibly authored standalone apps. Workspace verify 249 tests and all 11 browser journeys pass; both strict isolated output verifiers pass. Evidence: packages/generator/tests/public-list/EVIDENCE.md."
+        "Ready for independent review: commit 5872850; typed public Grid generation, reviewed safe initial output, UI/MCP parity, two visibly authored standalone apps. Workspace verify 249 tests and all 11 browser journeys pass; both strict isolated output verifiers pass. Evidence: packages/generator/tests/public-list/EVIDENCE.md.",
+        "Cycle1 fixes ready for independent review: commit 49381c2. Private routes rejected before output; nullable decimal comparisons preserve SQL NULL; canonical decimal metadata strictly builds. Workspace verify251, focused16, real generated HTTP eq/gte/lte/null/sort/missing DB, two-app authoring proof and three strict isolated output helpers pass. Original reproducer hashes retained; evidence packages/generator/tests/public-list/CYCLE1.md."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
