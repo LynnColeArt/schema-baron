@@ -1,0 +1,631 @@
+{
+  "id": "query-project",
+  "formatVersion": 1,
+  "revision": 1,
+  "name": "Independent exact query fixture",
+  "target": "next-typescript-sqlite",
+  "targetVersion": "1",
+  "connectionRefs": [],
+  "connections": [],
+  "schema": {
+    "id": "schema",
+    "revision": 1,
+    "tables": [
+      {
+        "id": "parents",
+        "physicalName": "parent \" ledger",
+        "columns": [
+          {
+            "id": "pa",
+            "physicalName": "first key",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "pb",
+            "physicalName": "second key",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "pa",
+          "pb"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      },
+      {
+        "id": "lines",
+        "physicalName": "detail",
+        "columns": [
+          {
+            "id": "lid",
+            "physicalName": "id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "la",
+            "physicalName": "parent_a",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "lb",
+            "physicalName": "parent_b",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "price",
+            "physicalName": "price",
+            "type": {
+              "kind": "decimal",
+              "precision": 20,
+              "scale": 4,
+              "rounding": "half-even",
+              "encoding": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "qty",
+            "physicalName": "quantity",
+            "type": {
+              "kind": "decimal",
+              "precision": 20,
+              "scale": 4,
+              "rounding": "half-even",
+              "encoding": "text"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "lid"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      },
+      {
+        "id": "fees",
+        "physicalName": "fee",
+        "columns": [
+          {
+            "id": "fid",
+            "physicalName": "id",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "fa",
+            "physicalName": "parent_a",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "fb",
+            "physicalName": "parent_b",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "fee",
+            "physicalName": "fee",
+            "type": {
+              "kind": "decimal",
+              "precision": 20,
+              "scale": 4,
+              "rounding": "half-even",
+              "encoding": "text"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "fid"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      }
+    ],
+    "opaqueObjects": []
+  },
+  "queries": [
+    {
+      "id": "subtotal",
+      "name": "subtotal",
+      "sources": [
+        {
+          "alias": "l",
+          "source": {
+            "kind": "table",
+            "id": "lines"
+          }
+        }
+      ],
+      "joins": [],
+      "projections": [
+        {
+          "id": "suba",
+          "name": "suba",
+          "type": {
+            "kind": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "l",
+            "fieldId": "la"
+          }
+        },
+        {
+          "id": "subb",
+          "name": "subb",
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "l",
+            "fieldId": "lb"
+          }
+        },
+        {
+          "id": "subvalue",
+          "name": "subvalue",
+          "type": {
+            "kind": "decimal",
+            "precision": 20,
+            "scale": 4,
+            "rounding": "half-even",
+            "encoding": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "binary",
+              "operator": "*",
+              "left": {
+                "kind": "field",
+                "alias": "l",
+                "fieldId": "price"
+              },
+              "right": {
+                "kind": "field",
+                "alias": "l",
+                "fieldId": "qty"
+              }
+            },
+            "zeroChildren": "zero"
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "id": "floor",
+          "name": "price floor",
+          "type": {
+            "kind": "decimal",
+            "precision": 20,
+            "scale": 4,
+            "rounding": "half-even",
+            "encoding": "text"
+          },
+          "nullable": false,
+          "default": "0.0000"
+        }
+      ],
+      "groupBy": [
+        {
+          "kind": "field",
+          "alias": "l",
+          "fieldId": "la"
+        },
+        {
+          "kind": "field",
+          "alias": "l",
+          "fieldId": "lb"
+        }
+      ],
+      "orderBy": [],
+      "grain": {
+        "strategy": "grouped",
+        "keys": [
+          "suba",
+          "subb"
+        ]
+      },
+      "where": {
+        "kind": "binary",
+        "operator": ">=",
+        "left": {
+          "kind": "field",
+          "alias": "l",
+          "fieldId": "price"
+        },
+        "right": {
+          "kind": "parameter",
+          "parameterId": "floor"
+        }
+      }
+    },
+    {
+      "id": "feesum",
+      "name": "feesum",
+      "sources": [
+        {
+          "alias": "f",
+          "source": {
+            "kind": "table",
+            "id": "fees"
+          }
+        }
+      ],
+      "joins": [],
+      "projections": [
+        {
+          "id": "feea",
+          "name": "feea",
+          "type": {
+            "kind": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "f",
+            "fieldId": "fa"
+          }
+        },
+        {
+          "id": "feeb",
+          "name": "feeb",
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "f",
+            "fieldId": "fb"
+          }
+        },
+        {
+          "id": "feevalue",
+          "name": "feevalue",
+          "type": {
+            "kind": "decimal",
+            "precision": 20,
+            "scale": 4,
+            "rounding": "half-even",
+            "encoding": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "field",
+              "alias": "f",
+              "fieldId": "fee"
+            },
+            "zeroChildren": "zero"
+          }
+        }
+      ],
+      "parameters": [],
+      "groupBy": [
+        {
+          "kind": "field",
+          "alias": "f",
+          "fieldId": "fa"
+        },
+        {
+          "kind": "field",
+          "alias": "f",
+          "fieldId": "fb"
+        }
+      ],
+      "orderBy": [],
+      "grain": {
+        "strategy": "grouped",
+        "keys": [
+          "feea",
+          "feeb"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "name": "report",
+      "sources": [
+        {
+          "alias": "p",
+          "source": {
+            "kind": "table",
+            "id": "parents"
+          }
+        },
+        {
+          "alias": "s",
+          "source": {
+            "kind": "query",
+            "id": "subtotal"
+          }
+        },
+        {
+          "alias": "f",
+          "source": {
+            "kind": "query",
+            "id": "feesum"
+          }
+        }
+      ],
+      "joins": [
+        {
+          "leftAlias": "p",
+          "rightAlias": "s",
+          "kind": "left",
+          "cardinality": "many-to-one",
+          "on": {
+            "kind": "binary",
+            "operator": "and",
+            "left": {
+              "kind": "binary",
+              "operator": "=",
+              "left": {
+                "kind": "field",
+                "alias": "p",
+                "fieldId": "pa"
+              },
+              "right": {
+                "kind": "field",
+                "alias": "s",
+                "fieldId": "suba"
+              }
+            },
+            "right": {
+              "kind": "binary",
+              "operator": "=",
+              "left": {
+                "kind": "field",
+                "alias": "p",
+                "fieldId": "pb"
+              },
+              "right": {
+                "kind": "field",
+                "alias": "s",
+                "fieldId": "subb"
+              }
+            }
+          }
+        },
+        {
+          "leftAlias": "p",
+          "rightAlias": "f",
+          "kind": "left",
+          "cardinality": "many-to-one",
+          "on": {
+            "kind": "binary",
+            "operator": "and",
+            "left": {
+              "kind": "binary",
+              "operator": "=",
+              "left": {
+                "kind": "field",
+                "alias": "p",
+                "fieldId": "pa"
+              },
+              "right": {
+                "kind": "field",
+                "alias": "f",
+                "fieldId": "feea"
+              }
+            },
+            "right": {
+              "kind": "binary",
+              "operator": "=",
+              "left": {
+                "kind": "field",
+                "alias": "p",
+                "fieldId": "pb"
+              },
+              "right": {
+                "kind": "field",
+                "alias": "f",
+                "fieldId": "feeb"
+              }
+            }
+          }
+        }
+      ],
+      "projections": [
+        {
+          "id": "ra",
+          "name": "ra",
+          "type": {
+            "kind": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "p",
+            "fieldId": "pa"
+          }
+        },
+        {
+          "id": "rb",
+          "name": "rb",
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "field",
+            "alias": "p",
+            "fieldId": "pb"
+          }
+        },
+        {
+          "id": "rt",
+          "name": "rt",
+          "type": {
+            "kind": "decimal",
+            "precision": 20,
+            "scale": 4,
+            "rounding": "half-even",
+            "encoding": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "field",
+              "alias": "s",
+              "fieldId": "subvalue"
+            },
+            "zeroChildren": "zero"
+          }
+        },
+        {
+          "id": "rf",
+          "name": "rf",
+          "type": {
+            "kind": "decimal",
+            "precision": 20,
+            "scale": 4,
+            "rounding": "half-even",
+            "encoding": "text"
+          },
+          "nullable": false,
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "field",
+              "alias": "f",
+              "fieldId": "feevalue"
+            },
+            "zeroChildren": "zero"
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "id": "minimum",
+          "name": "minimum total",
+          "type": {
+            "kind": "decimal",
+            "precision": 20,
+            "scale": 4,
+            "rounding": "half-even",
+            "encoding": "text"
+          },
+          "nullable": false,
+          "default": "0.0000"
+        }
+      ],
+      "groupBy": [
+        {
+          "kind": "field",
+          "alias": "p",
+          "fieldId": "pa"
+        },
+        {
+          "kind": "field",
+          "alias": "p",
+          "fieldId": "pb"
+        }
+      ],
+      "orderBy": [
+        {
+          "expression": {
+            "kind": "aggregate",
+            "function": "sum",
+            "argument": {
+              "kind": "field",
+              "alias": "s",
+              "fieldId": "subvalue"
+            },
+            "zeroChildren": "zero"
+          },
+          "direction": "asc"
+        }
+      ],
+      "grain": {
+        "strategy": "preaggregated",
+        "keys": [
+          "ra",
+          "rb"
+        ],
+        "sourceAliases": [
+          "s",
+          "f"
+        ]
+      },
+      "having": {
+        "kind": "binary",
+        "operator": ">=",
+        "left": {
+          "kind": "aggregate",
+          "function": "sum",
+          "argument": {
+            "kind": "field",
+            "alias": "s",
+            "fieldId": "subvalue"
+          },
+          "zeroChildren": "zero"
+        },
+        "right": {
+          "kind": "parameter",
+          "parameterId": "minimum"
+        }
+      }
+    }
+  ],
+  "pages": [],
+  "forms": [],
+  "controls": [],
+  "actions": [],
+  "policies": [
+    {
+      "id": "policy",
+      "scope": "global",
+      "ownerId": "query-project",
+      "access": "public"
+    }
+  ],
+  "globalPolicyId": "policy",
+  "outputConfig": {
+    "approvedRootId": "output",
+    "relativePath": "app"
+  },
+  "extensionContracts": []
+}
