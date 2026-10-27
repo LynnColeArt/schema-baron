@@ -340,21 +340,22 @@
         "Ready for independent review: commit 5872850; typed public Grid generation, reviewed safe initial output, UI/MCP parity, two visibly authored standalone apps. Workspace verify 249 tests and all 11 browser journeys pass; both strict isolated output verifiers pass. Evidence: packages/generator/tests/public-list/EVIDENCE.md."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP10-first-standalone-generated-public-list/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP10-first-standalone-generated-public-list/review-cycle-1.md",
         "reviewer": "codex",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T046": "done",
-        "T047": "done",
-        "T048": "done",
-        "T049": "done",
-        "T050": "done"
+        "T046": "planned",
+        "T047": "planned",
+        "T048": "planned",
+        "T049": "planned",
+        "T050": "planned"
       }
     },
     "WP11": {
