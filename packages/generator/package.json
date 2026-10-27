@@ -10,7 +10,8 @@
     }
   },
   "dependencies": {
-    "@schema-baron/model": "0.0.0"
+    "@schema-baron/model": "0.0.0",
+    "@schema-baron/sqlite": "0.0.0"
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json && node scripts/copy-templates.mjs"

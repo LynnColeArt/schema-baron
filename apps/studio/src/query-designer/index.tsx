@@ -980,8 +980,7 @@ export function QueryDesigner({
                   <p>
                     Save validates the whole candidate project. Removing or
                     changing fields used by a control, sort or link is refused
-                    with a dependency diagnostic. Report generation becomes
-                    available with the report editor.
+                    with a dependency diagnostic. Bind the saved query to a Grid and configure its typed runtime inputs in Data properties to generate a report.
                   </p>
                 </>
               )}

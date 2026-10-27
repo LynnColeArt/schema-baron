@@ -1,3 +1,4 @@
+import {queryInputs} from './query-inputs.js';
 import { FORMAT_VERSION, projectSchema } from './schemas.js';
 import type { DocumentNode, Expression, Form, Project, Query, ScalarType, StableId } from './schemas.js';
 import type { Diagnostic, DiagnosticCode } from './diagnostics.js';
@@ -201,9 +202,10 @@ export function validateProject(input: unknown): ValidationResult {
       const query = form.sourceRef?.kind === 'query' ? p.queries.find(q => q.id === form.sourceRef!.id) : undefined;
       if (!query) error('BROKEN_REFERENCE', form.id, 'queryParameters', 'Parameter inputs require a saved query source.');
       unique(form.queryParameters.map(mapping => mapping.parameterId), form.id, 'queryParameters');
+      unique(form.queryParameters.flatMap(mapping => mapping.runtime ? [mapping.runtime.name] : []), form.id, 'queryParameters.runtime.name');
       for (const mapping of form.queryParameters) {
-        const parameter = ref(query?.parameters ?? [], mapping.parameterId, form.id, 'queryParameters.parameterId');
-        if (parameter && !isLiteralValue(mapping.value, parameter.type, parameter.nullable)) error('TYPE_MISMATCH', form.id, 'queryParameters.value', 'Query parameter input does not match its declared type or nullability.');
+        const parameter = ref(query ? queryInputs(p,query.id) : [], mapping.parameterId, form.id, 'queryParameters.parameterId');
+        if (parameter && !mapping.runtime && !isLiteralValue(mapping.value, parameter.type, parameter.nullable)) error('TYPE_MISMATCH', form.id, 'queryParameters.value', 'Query parameter input does not match its declared type or nullability.');
       }
     }
 

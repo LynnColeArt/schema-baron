@@ -663,7 +663,7 @@ export default function Workspace() {
         {selectedKind === "form" && view.propertyTab === "Data" && (() => {
           const form = selected as Form;
           return <>
-            <button onClick={() => openQuery(form.sourceRef?.kind === "query" ? form.sourceRef.id : "", Object.fromEntries((form.queryParameters ?? []).map(m => [m.parameterId, m.value])))}>Edit Data Source…</button>
+            <button onClick={() => openQuery(form.sourceRef?.kind === "query" ? form.sourceRef.id : "", Object.fromEntries((form.queryParameters ?? []).flatMap(m => m.value !== undefined ? [[m.parameterId, m.value]] : [])))}>Edit Data Source…</button>
             <QueryBinding form={form} project={model} onChange={value => change([{entity: "form", value}])}/>
           </>;
         })()}

@@ -18,7 +18,7 @@ function boundedAst(input: unknown) {
  while(stack.length) { const [value,depth]=stack.pop()!; if(++count>20000 || depth>48) throw new QueryError('QUERY_COST_EXCEEDED','Query structure exceeds preview limits. Reduce expression depth or query size.'); if(value && typeof value==='object') for(const v of Object.values(value))stack.push([v,depth+1]); }
 }
 /** Validate the complete draft in the same canonical model as saved queries, then compile ID references only. */
-export function compileQuery(project: Project, input: unknown, values: Record<string,unknown>, rowLimit = 200): CompiledQuery {
+export function compileQuery(project: Project, input: unknown, values: Record<string,unknown>, rowLimit = 200, inputBindings?: Record<string,string[]>): CompiledQuery {
  boundedAst(input); if(!Number.isInteger(rowLimit) || rowLimit<1 || rowLimit>200)throw new QueryError('INVALID_INPUT','Preview row limit must be between 1 and 200.');
  const parsed=querySchema.safeParse(input); if(!parsed.success)throw new QueryError('UNSAFE_EXPRESSION','Unsupported query shape or expression. Use the supported AST grammar.');
  const draft=parsed.data;
@@ -63,7 +63,7 @@ export function compileQuery(project: Project, input: unknown, values: Record<st
    if(!rightUnique)expansions++;
   }
   if(q.grain.strategy!=='rows' && expansions>1)throw new QueryError('INVALID_QUERY_GRAIN','Multiple expanding child joins require grouped child queries joined on their complete grain keys.');
-  const localParameters=new Map(q.parameters.map(p=>{declared.add(p.id);const value=Object.hasOwn(values,p.id)?values[p.id]:p.default;return[p.id,{sql:bind(value,p.type,p.nullable),type:p.type}];}));
+  const localParameters=new Map(q.parameters.map(p=>{declared.add(p.id);const value=Object.hasOwn(values,p.id)?values[p.id]:p.default;const sql=bind(value,p.type,p.nullable);if(inputBindings)(inputBindings[p.id]??=[]).push(sql.slice(1));return[p.id,{sql,type:p.type}];}));
   type Node={sql:string;type:ScalarType};
   function expression(e:Expression):Node {
    if(e.kind==='literal')return {sql:bind(e.value,e.type,true),type:e.type};

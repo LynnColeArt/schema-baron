@@ -1,4 +1,5 @@
 "use client";
+import {DerivedBinding} from "../report-bindings/derived.js";
 import { useState } from "react";
 import { createId } from "@schema-baron/model";
 import type {
@@ -1088,6 +1089,7 @@ export function FormProperties({
           update(next);
         },
       )}
+      <DerivedBinding project={project} form={form} control={control} onChange={update} />
       {bound && (
         <p>
           Type: {bound.type.kind} ·{" "}
