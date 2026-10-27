@@ -117,11 +117,11 @@
     {
       "criterion_id": "FR-012",
       "description": "Verify FR-012 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-012; docs/evidence/equipment/report.md T107,T108; docs/evidence/generality/report.md; packages/generator/tests/public-list/behavior.test.ts; packages/generator/src/compiler/index.ts. Field display/format, actual search/sort/paging/empty/filtered report and parameterized parent/composite links. Exact-decimal table sorting and protected query Search/navigation are explicit refused combinations; query ordering/parameters are supported. Reviewed against mission spec FR-012; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:12:16.965134+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
