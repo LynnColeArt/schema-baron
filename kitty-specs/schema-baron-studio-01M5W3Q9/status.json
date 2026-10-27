@@ -97,6 +97,9 @@
       "last_event_id": "01M5XGRMBFFW0XH7VSZ84DSR4G",
       "last_transition_at": "2026-10-27T01:49:27.279699+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: commit 9bd5c0d; public model-consuming core API and real SQLite/readable JSON journal recovery; 90 tests pass including 16 WP03 tests and four native process crash boundaries; clean local dependency-ordered package build, strict test typing, native ABI, lint, credential/dependency checks and offline audit pass. Evidence in packages/core/src/project/EVIDENCE.md. Shared manifests/build configs/root export and exact lock workspace edges plus refreshed registry hash are minimal integration edits coordinated with parent; no later-WP acceptance claimed."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
