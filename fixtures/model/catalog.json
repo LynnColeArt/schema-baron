@@ -1,0 +1,312 @@
+{
+  "id": "catalog-id",
+  "formatVersion": 1,
+  "revision": 1,
+  "name": "catalog",
+  "target": "next-typescript-sqlite",
+  "targetVersion": "1.0.0",
+  "connectionRefs": [
+    "catalog-connection"
+  ],
+  "connections": [
+    {
+      "id": "catalog-connection",
+      "name": "Local SQLite",
+      "locator": {
+        "approvedRootId": "catalog-root",
+        "relativePath": "data/app.sqlite"
+      },
+      "fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "capabilities": {
+        "sqliteVersion": "3.51.2",
+        "foreignKeys": true,
+        "returning": true,
+        "strictTables": true,
+        "unsupportedObjects": []
+      }
+    }
+  ],
+  "schema": {
+    "id": "catalog-schema",
+    "revision": 1,
+    "tables": [
+      {
+        "id": "catalog-parent",
+        "physicalName": "publication",
+        "columns": [
+          {
+            "id": "catalog-tenant",
+            "physicalName": "tenant key",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "catalog-key",
+            "physicalName": "key",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "catalog-title",
+            "physicalName": "display \"name\"",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          },
+          {
+            "id": "catalog-price",
+            "physicalName": "retail price",
+            "type": {
+              "kind": "decimal",
+              "scale": 2,
+              "precision": 12,
+              "encoding": "text",
+              "rounding": "half-even"
+            },
+            "nullable": false,
+            "default": {
+              "kind": "literal",
+              "value": "0.00",
+              "type": {
+                "kind": "decimal",
+                "scale": 2,
+                "precision": 12,
+                "encoding": "text",
+                "rounding": "half-even"
+              }
+            }
+          }
+        ],
+        "primaryKey": [
+          "catalog-tenant",
+          "catalog-key"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [
+          {
+            "id": "catalog-title-unique",
+            "columnIds": [
+              "catalog-title"
+            ]
+          }
+        ],
+        "checks": [],
+        "indexes": [
+          {
+            "id": "catalog-title-index",
+            "physicalName": "order",
+            "columnIds": [
+              "catalog-title"
+            ],
+            "unique": false
+          }
+        ]
+      },
+      {
+        "id": "catalog-child",
+        "physicalName": "edition",
+        "columns": [
+          {
+            "id": "catalog-ref-tenant",
+            "physicalName": "tenant reference",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": true
+          },
+          {
+            "id": "catalog-ref-key",
+            "physicalName": "item reference",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": true
+          },
+          {
+            "id": "catalog-child-key",
+            "physicalName": "sequence",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "catalog-child-key"
+        ],
+        "foreignKeys": [
+          {
+            "id": "catalog-fk",
+            "columnIds": [
+              "catalog-ref-tenant",
+              "catalog-ref-key"
+            ],
+            "referencedTableId": "catalog-parent",
+            "referencedColumnIds": [
+              "catalog-tenant",
+              "catalog-key"
+            ],
+            "onUpdate": "cascade",
+            "onDelete": "set-null",
+            "deferrable": true
+          }
+        ],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      }
+    ],
+    "opaqueObjects": []
+  },
+  "queries": [
+    {
+      "id": "catalog-query",
+      "name": "Index",
+      "sources": [
+        {
+          "alias": "root",
+          "source": {
+            "kind": "table",
+            "id": "catalog-parent"
+          }
+        }
+      ],
+      "joins": [],
+      "projections": [
+        {
+          "id": "catalog-output-key",
+          "name": "key",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "catalog-key"
+          },
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false
+        }
+      ],
+      "parameters": [],
+      "groupBy": [],
+      "orderBy": [],
+      "grain": {
+        "strategy": "rows",
+        "keys": [
+          "catalog-output-key"
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "id": "catalog-page",
+      "route": "/catalog",
+      "title": "Index",
+      "document": [
+        {
+          "kind": "text",
+          "text": "Project index"
+        },
+        {
+          "kind": "form",
+          "formId": "catalog-form"
+        }
+      ],
+      "formIds": [
+        "catalog-form"
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "id": "catalog-form",
+      "pageId": "catalog-page",
+      "kind": "Record",
+      "sourceRef": {
+        "kind": "table",
+        "id": "catalog-parent"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "catalog-tenant",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "catalog-tenant"
+          }
+        },
+        {
+          "targetFieldId": "catalog-key",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "catalog-key"
+          }
+        }
+      ],
+      "controlIds": [
+        "catalog-control"
+      ],
+      "actionIds": [
+        "catalog-action"
+      ],
+      "search": [],
+      "sorting": [],
+      "paging": {
+        "pageSize": 25
+      },
+      "appearance": {}
+    }
+  ],
+  "controls": [
+    {
+      "id": "catalog-control",
+      "formId": "catalog-form",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "catalog-key"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "Key"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": [
+        {
+          "event": "submit",
+          "actionId": "catalog-action"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "catalog-action",
+      "formId": "catalog-form",
+      "operation": "update"
+    }
+  ],
+  "policies": [
+    {
+      "id": "catalog-global-policy",
+      "scope": "global",
+      "ownerId": "catalog-id",
+      "access": "public"
+    }
+  ],
+  "globalPolicyId": "catalog-global-policy",
+  "outputConfig": {
+    "approvedRootId": "catalog-output-root",
+    "relativePath": "generated"
+  },
+  "extensionContracts": []
+}
