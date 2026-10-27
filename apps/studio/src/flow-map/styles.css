@@ -3,3 +3,5 @@
 .flow-map header,.flow-tools,.flow-pan-controls,.flow-details,.flow-list,.flow-diagnostics{flex-shrink:0}.flow-details{min-height:40px}.flow-map .react-flow__edge-text{font-size:12px}.flow-map .react-flow__node:focus-visible{outline:3px solid #2466a0}
 
 .flow-map header h2{font-size:12px;margin:0;padding:0;border:0;background:none}.flow-map code{overflow-wrap:anywhere}.selected-caption strong{overflow-wrap:anywhere}
+
+.flow-details.flow-invalid{border:2px solid #ad2831;background:#fff7f7}.flow-edge-diagnostics button{display:block;text-align:left;white-space:normal;overflow-wrap:anywhere;margin:4px 0}.flow-edge-invalid .react-flow__edge-text{fill:#8e2028;font-weight:700}

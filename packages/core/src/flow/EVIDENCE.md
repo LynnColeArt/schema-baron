@@ -115,3 +115,49 @@ session, like the workspace's existing draft recovery.
 
 Captured command logs normalize terminal carriage returns, tabs and trailing
 whitespace only; diagnostic content and outcomes are retained.
+
+## Review cycle 1 — invalid semantic mapping repair
+
+Review event `01M5YGDGGQZK9HT801KJVEQ71X` identified that missing source fields,
+missing parameters and incompatible mapping types already fail canonical
+validation/generation, but a retained destination edge still looked executable.
+
+Edges now include required derived `valid` and source-linked `diagnostics` fields.
+The existing single `validateProject` call is reused: after projection, diagnostics
+are indexed once by source object and associated with edges. Error diagnostics
+make that source's declarations visibly invalid; unrelated graph sources stay
+inspectable. Canonical destination diagnostics currently use `destination.*` for
+all destination slots, so validity is conservatively scoped to the source action,
+not guessed per expression or revalidated separately per edge. No generator or
+model validation implementation was changed. The root-authorized shared edit to
+`packages/model/src/commands.ts` extends the strict existing flow result DTO only.
+
+Invalid geometry and IDs remain selectable. SVG edges use a short visible
+“Invalid” caption, red dashed stroke and a full accessible invalid-flow label.
+The keyboard list, selected-edge explanation, declared-mapping heading and linked
+source diagnostics identify the invalid state without relying on color. A detail
+diagnostic opens the existing canonical Action Properties while retaining edge
+selection. Repair derives a valid edge with the same ID and clears its diagnostics;
+there is still no persisted semantic graph or hidden authoring mutation.
+
+New heldout-style core cases for all three errors failed before the repair
+(3 failed / 6 passed), then passed (9 / 9), including compiler refusal,
+unchanged source bytes, stable graph/edge IDs, unrelated valid Save edge and repair.
+The new visible browser case also failed before the repair at the missing edge
+validity/detail state. After repair the focused suite passes 34 tests / 5 files;
+workspace production build/typecheck and strict harness source checks pass.
+
+All three browser scenarios pass (52.4 s): previous standalone/pointer/CRUD/auth
+correspondence and 100-node/20-edit/native-200 tests, plus a fresh ordinary project
+with a real integer-key SQLite table. Native Action Properties selects its text
+field as the integer key source; the retained edge shows TYPE_MISMATCH, including
+keyboard edge and diagnostic source selection. Failed Save preserves the owner
+snapshot and invalid draft; restoring the source through Properties clears the
+error without replacing the selected edge. After the display-only short SVG
+caption refinement, the negative browser case passes again (4.4 s) and its
+map-scoped axe scan reports zero violations.
+
+Fresh revision-specific logs, invalid/repaired screenshots and source IDs are in
+`tests/e2e/flow-map/evidence/review-cycle-1/`. The earlier 357-test full suite and
+its timing remain prior-cycle evidence; they are not claimed as a new full-suite
+run for this narrowly scoped repair. No later-WP integration claim is added.

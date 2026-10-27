@@ -4,7 +4,7 @@ import {compileDestination,contextFields,keyParameter} from '@schema-baron/gener
 import {authPath,csrfPath,emissionOrder,handlerPath,pageFile} from '@schema-baron/generator/behavior';
 import type {ContextIR,DestinationIR,SourceIR} from '@schema-baron/generator';
 export interface BehaviorNode {id:string;sourceObjectId:string;kind:string;label:string;pageId:string;access:string;policyId:string;path?:string;operation?:string}
-export interface BehaviorEdge {id:string;sourceObjectId:string;fromId:string;toId:string;kind:string;label:string;access:string;policyId:string;mappings:DestinationIR['mappings'];context:ContextIR[];slot?:'destination'|'success'|'cancel';dynamic?:boolean}
+export interface BehaviorEdge {id:string;sourceObjectId:string;fromId:string;toId:string;kind:string;label:string;access:string;policyId:string;valid:boolean;diagnostics:Diagnostic[];mappings:DestinationIR['mappings'];context:ContextIR[];slot?:'destination'|'success'|'cancel';dynamic?:boolean}
 export interface Endpoint {id:string;sourceObjectId:string;method:string;path:string;handler:string;access:string;actionIds:string[]}
 export interface BehaviorProjection {nodes:BehaviorNode[];edges:BehaviorEdge[];endpoints:Endpoint[];diagnostics:Diagnostic[]}
 /** A projection only: no semantic graph persistence, mutation or generator invocation. */
@@ -19,7 +19,7 @@ export function projectBehavior(project:Project):BehaviorProjection {
  const returnContext=(pageId:string):ContextIR[]=>[...context,...project.forms.filter(f=>f.pageId===pageId&&f.kind==='Record').flatMap(f=>{const source=sources.find(s=>s.id===f.sourceRef?.id);return [...(source?.keys??[]).flatMap(id=>{const field=source?.fields.find(v=>v.id===id);return field?[{parameter:keyParameter(f,id),kind:'key' as const,field}]:[];}),{parameter:f.id+':mode',kind:'mode' as const}];})];
  const login=project.pages.find(p=>access(p.id).access==='public'&&p.formIds.some(id=>{const f=project.forms.find(f=>f.id===id);return f?.kind==='Login'&&f.actionIds.some(a=>project.actions.some(v=>v.id===a&&v.operation==='login'&&access(p.id,a).access==='public'));}));
  const addNode=(id:string,kind:string,label:string,pageId:string,path?:string)=>{const policy=access(pageId,kind==='action'?id:undefined);const node={id,sourceObjectId:id,kind,label,pageId,access:policy.access,policyId:policy.sourcePolicyId,...(path===undefined?{}:{path})};nodes.push(node);return node;};
- const addEdge=(id:string,sourceObjectId:string,fromId:string,toId:string,kind:string,label:string,policy:{access:string;policyId:string},extra:Partial<BehaviorEdge>={})=>edges.push({id,sourceObjectId,fromId,toId,kind,label,access:policy.access,policyId:policy.policyId,mappings:[],context:[],...extra});
+ const addEdge=(id:string,sourceObjectId:string,fromId:string,toId:string,kind:string,label:string,policy:{access:string;policyId:string},extra:Partial<BehaviorEdge>={})=>edges.push({id,sourceObjectId,fromId,toId,kind,label,access:policy.access,policyId:policy.policyId,valid:true,diagnostics:[],mappings:[],context:[],...extra});
  for(const page of project.pages){
   const node=addNode(page.id,'page',page.title,page.id,page.route);
   endpoints.push({id:page.id+':GET',sourceObjectId:page.id,method:'GET',path:page.route,handler:pageFile(page.route),access:node.access,actionIds:[]});
@@ -60,5 +60,11 @@ export function projectBehavior(project:Project):BehaviorProjection {
   else if(form.sourceRef?.kind!=='query')endpoints.push({id:form.id+':navigation',sourceObjectId:form.id,method:'GET',path:handlerPath('navigation',entry.index),handler:`app${handlerPath('navigation',entry.index)}/route.ts`,access:policy.access,actionIds:actions.filter(id=>project.actions.find(a=>a.id===id)?.operation==='navigate')});
  }
  endpoints.push({id:project.id+':auth',sourceObjectId:login?.id??project.id,method:'POST',path:authPath,handler:`app${authPath}/route.ts`,access:'public',actionIds:project.actions.filter(a=>['login','logout'].includes(a.operation)&&project.forms.find(f=>f.id===a.formId)?.kind==='Login').map(a=>a.id)},{id:project.id+':csrf',sourceObjectId:login?.id??project.id,method:'GET',path:csrfPath,handler:`app${csrfPath}/route.ts`,access:'public',actionIds:[]});
+ // Validate once above, then associate its diagnostics (and projection failures)
+ // by canonical source. A retained draft edge describes an invalid declaration,
+ // not executable typed movement. Other sources remain independently inspectable.
+ const diagnosticsBySource=new Map<string,Diagnostic[]>();
+ for(const diagnostic of diagnostics){const id=diagnostic.objectId??project.id;const group=diagnosticsBySource.get(id)??[];group.push(diagnostic);diagnosticsBySource.set(id,group);}
+ for(const edge of edges){edge.diagnostics=diagnosticsBySource.get(edge.sourceObjectId)??[];edge.valid=!edge.diagnostics.some(d=>d.severity==='error');}
  return {nodes,edges,endpoints,diagnostics};
 }

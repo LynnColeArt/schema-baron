@@ -26,3 +26,21 @@ it('shares emitted handler paths, typed navigation and dynamic login return scop
 it('uses the generator page form ordering for handler indices rather than collection order',()=>{const p=behaviorFixture();p.forms.reverse();const graph=projectBehavior(p);const files=emitApplication(compileProject(p),'/external/data.sqlite');for(const e of graph.endpoints)expect(files.some(f=>f.path===e.handler)).toBe(true);expect(graph.endpoints.find(e=>e.sourceObjectId==='record'&&e.method==='POST')?.path).toBe('/runtime/record-1');});
 it('keeps source-linked diagnostics for invalid parameter mappings and protected Login Cancel',()=>{const p=behaviorFixture();p.actions.find(a=>a.id==='open')!.destination!.keyMapping[0]!.targetFieldId=createId(()=> 'missing');p.actions.find(a=>a.id==='back')!.destination!.pageId=createId(()=> 'edit');const graph=projectBehavior(p);expect(graph.diagnostics).toEqual(expect.arrayContaining([expect.objectContaining({objectId:'open'}),expect.objectContaining({objectId:'back',code:'ACCESS_DENIED'})]));expect(graph.edges.some(e=>e.id==='open:destination')).toBe(false);});
 it('filters navigation and focused neighbors without modifying graph/source objects',()=>{const p=behaviorFixture(),graph=projectBehavior(p),before=JSON.stringify(p);const view={...initialMapView(),query:'record:key:key'};expect(filteredGraph(graph,view).edges.some(e=>e.id==='open:destination')).toBe(true);expect(filteredGraph(graph,{...view,query:'',selection:'edit',focus:true}).nodes.every(n=>['edit','record','open','credentials','login','save','cancel'].includes(n.id))).toBe(true);expect(JSON.stringify(p)).toBe(before);});
+
+it.each([
+ {name:'missing source field',expression:{kind:'field',alias:'root',fieldId:'gone'},code:'BROKEN_REFERENCE'},
+ {name:'missing parameter',expression:{kind:'parameter',parameterId:'gone'},code:'BROKEN_REFERENCE'},
+ {name:'incompatible literal type',expression:{kind:'literal',type:{kind:'text'},value:'not-an-integer'},code:'TYPE_MISMATCH'},
+] as const)('marks $name on the stable edge and clears it only after canonical repair',({expression,code})=>{
+ const p=behaviorFixture(),action=p.actions.find(a=>a.id==='open')!,mapping=action.destination!.keyMapping[0]!,original=structuredClone(mapping.expression);
+ mapping.expression=expression as typeof mapping.expression;
+ const before=JSON.stringify(p),graph=projectBehavior(p),edge=graph.edges.find(e=>e.id==='open:destination')!;
+ expect(()=>compileProject(p)).toThrow();
+ expect(edge).toMatchObject({valid:false,sourceObjectId:action.id,fromId:action.id,toId:'edit',diagnostics:expect.arrayContaining([expect.objectContaining({code,objectId:action.id})])});
+ expect(graph.nodes).toHaveLength(projectBehavior(behaviorFixture()).nodes.length);
+ expect(graph.edges.find(e=>e.id==='save:success')).toMatchObject({valid:true,diagnostics:[]});
+ expect(flowProjectionSchema.safeParse(graph).success).toBe(true);
+ expect(JSON.stringify(p)).toBe(before);
+ mapping.expression=original;
+ expect(projectBehavior(p).edges.find(e=>e.id===edge.id)).toMatchObject({valid:true,diagnostics:[],mappings:compileProject(p).routes[0]!.grids[0]!.actions![0]!.destination!.mappings});
+});
