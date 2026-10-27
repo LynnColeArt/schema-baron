@@ -437,6 +437,9 @@
       "last_event_id": "01M5YBCBK4QSRJQQFH49VBWF00",
       "last_transition_at": "2026-10-27T09:34:36.644256+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: source 9b913c4; 38 files/275 tests, owner HTTP+SDK stdio provisioning, independent generated install/type/test/production build and direct HTTP auth policy/CSRF/return/session proof passed; shared integration rationale and Python coverage/TLS limitations in packages/generator/tests/auth/EVIDENCE.md."
+      ],
       "provider": "__resolved_provider_absent__",
       "role": "implementer",
       "shell_pid": 5024,
