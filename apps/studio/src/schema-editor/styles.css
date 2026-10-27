@@ -190,3 +190,8 @@ dialog:has(.schema-dialog-scroll)>.schema-dialog-scroll {flex:1;overflow:auto;ma
 dialog:has(.schema-dialog-scroll)>h2,dialog:has(.schema-dialog-scroll)>.dialog-actions {flex-shrink:0;}
 .schema-connection-note{background:#f2f6fa;border-bottom:1px solid var(--line);padding:5px 12px;color:var(--muted);}
 .schema-connection-note button{color:var(--accent);text-decoration:underline;}
+
+/* Small native viewports scroll the editor instead of allowing the canvas to cover the footer. */
+.schema-editor { min-height:400px; }
+.schema-commandbar,.schema-connection-note,.schema-backfill { flex-shrink:0; }
+.schema-center { overflow:auto; }

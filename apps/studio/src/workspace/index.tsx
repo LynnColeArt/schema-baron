@@ -2,9 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, FormEvent } from "react";
 import { createId } from "@schema-baron/model";
-import type { Control, Form, Page, Project } from "@schema-baron/model";
+import type { Control, Form, Page, Project, LiteralValue } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
+import { QueryBinding } from "../query-designer/binding.js";
+import { QueryDesigner } from "../query-designer/index.js";
 import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
@@ -46,6 +48,9 @@ const label = (kind: Kind, value: ObjectValue) =>
       (value as Form | Control).kind;
 export default function Workspace() {
   const [schemaActive, setSchemaActive] = useState(false);
+  const [queryActive, setQueryActive] = useState(false);
+  const [queryRequest, setQueryRequest] = useState<{id:string;serial:number;parameters?:Record<string,LiteralValue>}>({id:"",serial:0});
+  function openQuery(id="",parameters?:Record<string,LiteralValue>) { setSchemaActive(false); setQueryActive(true); setQueryRequest(r=>({id,serial:r.serial+1,...(parameters?{parameters}:{})})); }
   const client = useRef(new StudioClient()).current;
   const [caps, setCaps] = useState<Capabilities>({
     operations: [],
@@ -350,7 +355,7 @@ export default function Workspace() {
   }
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey) || modal || schemaActive) return;
+      if (!(event.ctrlKey || event.metaKey) || modal || schemaActive || queryActive) return;
       if (event.key.toLowerCase() === "s") {
         event.preventDefault();
         if (!busy && connected) void save();
@@ -375,7 +380,7 @@ export default function Workspace() {
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [modal, busy, connected, schemaActive]);
+  }, [modal, busy, connected, schemaActive, queryActive]);
   async function connect(event: FormEvent) {
     event.preventDefault();
     setBusy(true);
@@ -745,6 +750,9 @@ export default function Workspace() {
                 : "None"}
             </span>
           </div>
+          <button onClick={()=>openQuery(form.sourceRef?.kind === "query" ? form.sourceRef.id : "",Object.fromEntries((form.queryParameters??[]).map(m=>[m.parameterId,m.value])))}>Edit Data Source…</button>
+          <label className="property-row"><span>Saved query</span><select aria-label="Form saved query" value={form.sourceRef?.kind === "query" ? form.sourceRef.id : ""} onChange={e=>{if(e.target.value) change([{entity:"form",value:{...form,sourceRef:{kind:"query",id:createId(()=>e.target.value)}}}]);}}><option value="">Choose reusable query</option>{model.queries.map(q=><option key={q.id} value={q.id}>{q.name}</option>)}</select></label>
+          <QueryBinding form={form} project={model} onChange={value=>change([{entity:"form",value}])}/>
           {form.kind === "Grid" &&
             field(
               "Page size",
@@ -944,7 +952,8 @@ export default function Workspace() {
         <button onClick={() => dialog("connection")} disabled={!project}>
           Connections…
         </button>
-        <button disabled={!project} aria-pressed={schemaActive} onClick={() => setSchemaActive(v => !v)}>Schema</button>
+        <button disabled={!project} aria-pressed={schemaActive} onClick={() => { setQueryActive(false); setSchemaActive(v => !v); }}>Schema</button>
+        <button disabled={!project} aria-pressed={queryActive} onClick={() => setQueryActive(v=>!v)}>Queries</button>
         <span className="menu-spacer" />
         <button
           onClick={() => setHidden((h) => ({ ...h, explorer: !h.explorer }))}
@@ -979,7 +988,7 @@ export default function Workspace() {
           {connected ? "Disconnect service" : "Connect service…"}
         </button>
       </nav>
-      <div className="toolbar" role="toolbar" aria-label="Model editing" style={{display:schemaActive?"none":undefined}}>
+      <div className="toolbar" role="toolbar" aria-label="Model editing" style={{display:schemaActive||queryActive?"none":undefined}}>
         <button
           disabled={
             !project || !connected || busy || !dirty || conflicts.length > 0
@@ -1039,12 +1048,13 @@ export default function Workspace() {
         </span>
       </div>
       <div className="workspace-scroll">
-        {project && <div style={{height:"100%",display:schemaActive?"block":"none"}}><SchemaEditor key={project.id} active={schemaActive} onConnection={()=>dialog("connection")} project={project} client={client} caps={caps} onChanged={acceptSnapshot}/></div>}
+        {project && <QueryDesigner key={`query-${project.id}`} active={queryActive} request={queryRequest} project={project} client={client} onChanged={acceptSnapshot} onClose={()=>setQueryActive(false)} onSelectObject={id=>{setQueryActive(false);select(id);}}/>}
+        {project && <div className="schema-viewport" role="region" aria-label="Schema viewport" tabIndex={0} style={{height:"100%",display:schemaActive?"block":"none"}}><SchemaEditor key={project.id} active={schemaActive} onConnection={()=>dialog("connection")} project={project} client={client} caps={caps} onChanged={acceptSnapshot}/></div>}
         <div
           className="docks"
           style={
             {
-              display: schemaActive ? "none" : undefined,
+              display: schemaActive||queryActive ? "none" : undefined,
               "--explorer": hidden.explorer ? "0px" : `${sizes.left}px`,
               "--inspector": hidden.inspector ? "0px" : `${sizes.right}px`,
               "--messages": `${sizes.messages}px`,
@@ -1090,6 +1100,9 @@ export default function Workspace() {
                     : "Create or open a project to begin."}
                 </p>
               )}
+              <h2>Named queries</h2>
+              {model?.queries.map(q=><button key={q.id} onClick={()=>openQuery(q.id)}>{q.name}</button>)}
+              <button disabled={!project} onClick={()=>openQuery()}>New query…</button>
               <div className="explorer-footer">
                 <span>Connections · {model?.connections.length ?? 0}</span>
                 <span>Schema · {model?.schema.tables.length ?? 0} tables</span>
@@ -1722,7 +1735,7 @@ export default function Workspace() {
               </label>
               <label className="dialog-field">
                 Data source (required for data forms)
-                <select name="source">
+                <select name="source" aria-label="Data source (required for data forms)">
                   <option value="">None — Login structure only</option>
                   {model?.schema.tables.map((table) => (
                     <option key={table.id} value={`table:${table.id}`}>

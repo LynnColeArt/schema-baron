@@ -76,7 +76,7 @@ code {
 }
 .studio {
   height: 100dvh;
-  min-height: 480px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -807,3 +807,6 @@ dialog p {
   font-size: 18px;
   padding: 1px 7px;
 }
+
+/* Focusable schema viewport keeps both axes reachable at native browser zoom. */
+.schema-viewport { width:100%;height:100%;overflow:auto;min-height:0; }
