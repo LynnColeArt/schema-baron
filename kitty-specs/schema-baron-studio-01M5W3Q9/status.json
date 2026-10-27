@@ -739,7 +739,7 @@
     },
     "WP22": {
       "actor": "user",
-      "agent": "codex",
+      "agent": null,
       "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
@@ -748,9 +748,11 @@
       "last_transition_at": "2026-10-27T13:40:30.554694+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for review: pure visible Equipment authoring, auth/CRUD/exact report, reviewed evolution, two preserved regenerations and Studio-off export; 455 tests and isolated verifier pass. Source 7b172b9; evidence docs/evidence/equipment/report.md."
+        "Ready for review: pure visible Equipment authoring, auth/CRUD/exact report, reviewed evolution, two preserved regenerations and Studio-off export; 455 tests and isolated verifier pass. Source 7b172b9; evidence docs/evidence/equipment/report.md.",
+        "Independent reviewer-renata: request changes for reproducible integrated FlowMap pointer-selection failure after mapping save/focus/Fit visible, test line187 twice. Equipment fresh journey,455/68,offline standalone,146 numeric and8 migration heldouts pass. Shared-file coordination inspected: approved18/21 merge a605e34 and authorized62feaa7/f1b4d7b narrow generic corrections; see /tmp/wp22-independent-review.md for8checks and honest scope."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP22-equipment-desk-end-to-end-authoring-acceptance/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP22-equipment-desk-end-to-end-authoring-acceptance/review-cycle-1.md",
@@ -758,14 +760,14 @@
         "verdict": "changes_requested"
       },
       "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T106": "done",
-        "T107": "done",
-        "T108": "done",
-        "T109": "done",
-        "T110": "done"
+        "T106": "planned",
+        "T107": "planned",
+        "T108": "planned",
+        "T109": "planned",
+        "T110": "planned"
       }
     },
     "WP23": {
