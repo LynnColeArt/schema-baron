@@ -108,9 +108,27 @@ async function addPage(page: BrowserPage, title: string, route: string) {
 async function addForm(page: BrowserPage, label: string) {
   await page.getByRole("button", { name: "＋ Form", exact: true }).click();
   await page.getByLabel("Form label", { exact: true }).fill(label);
-  await page.getByRole("button", { name: "Add form", exact: true }).click();
+  await page
+    .getByRole("dialog")
+    .getByLabel("Form kind", { exact: true })
+    .selectOption("Login");
+  for (let i = 0; i < 4; i++)
+    await page
+      .getByRole("dialog")
+      .getByRole("button", { name: "Next", exact: true })
+      .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Finish", exact: true })
+    .click();
+  await expect(page.getByRole("dialog")).toBeHidden();
+  await page.getByRole("tab", { name: "Format", exact: true }).click();
 }
 async function save(page: BrowserPage) {
+  if (
+    await page.getByRole("button", { name: "▣ Save", exact: true }).isDisabled()
+  )
+    return;
   await page.getByRole("button", { name: "▣ Save", exact: true }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
 }
@@ -170,7 +188,12 @@ test("real blank lifecycle, atomic Cancel, keyboard authoring, contextual contro
     page.getByRole("treeitem", { name: /Canceled page/ }),
   ).toHaveCount(0);
   await addPage(page, "First", "/first");
+  const initialRevision = (await owner("projects/" + projectId)).revision;
   await addForm(page, "First login");
+  const afterFirstFinish: Project = await owner("projects/" + projectId);
+  expect(afterFirstFinish.revision).toBe(initialRevision + 1);
+  expect(afterFirstFinish.pages).toHaveLength(1);
+  expect(afterFirstFinish.forms).toHaveLength(1);
   await page.getByRole("tab", { name: "Controls", exact: true }).click();
   await page.getByRole("button", { name: "◇ Label", exact: true }).click();
   await page.getByLabel("Label", { exact: true }).fill("Account label");
@@ -179,8 +202,16 @@ test("real blank lifecycle, atomic Cancel, keyboard authoring, contextual contro
     page.getByText("No events assigned.", { exact: false }),
   ).toBeVisible();
   await addPage(page, "Second", "/second");
+  const beforeSecondFinish: Project = await owner("projects/" + projectId);
   await addForm(page, "Second login");
-  await page.getByRole("treeitem", { name: /^First\s*unsaved$/ }).focus();
+  const afterSecondFinish: Project = await owner("projects/" + projectId);
+  expect(afterSecondFinish.revision).toBe(beforeSecondFinish.revision + 1);
+  expect(
+    afterSecondFinish.controls.some(
+      (c) => c.appearance.label === "Account label",
+    ),
+  ).toBe(false);
+  await page.getByRole("treeitem", { name: /^First$/ }).focus();
   await page.keyboard.press("Enter");
   await expect(
     page.getByRole("tab", { name: "First *", exact: true }),
@@ -194,16 +225,33 @@ test("real blank lifecycle, atomic Cancel, keyboard authoring, contextual contro
   );
   await save(page);
   const snapshot: Project = await owner("projects/" + projectId);
+  expect(snapshot.revision).toBe(afterSecondFinish.revision + 1);
   expect(snapshot.pages).toHaveLength(2);
   expect(snapshot.forms).toHaveLength(2);
-  expect(snapshot.controls[0]!.appearance.label).toBe("Account label");
+  expect(
+    snapshot.controls.some((c) => c.appearance.label === "Account label"),
+  ).toBe(true);
   await page.getByRole("button", { name: "↶ Undo", exact: true }).click();
-  await expect(page.getByRole("treeitem")).toHaveCount(0);
+  await expect(page.getByRole("treeitem")).toHaveCount(
+    snapshot.pages.length +
+      snapshot.forms.length +
+      snapshot.controls.length -
+      1,
+  );
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("First");
+  expect(
+    (await owner("projects/" + projectId)).controls.some(
+      (c: { appearance: { label: string } }) =>
+        c.appearance.label === "Account label",
+    ),
+  ).toBe(true);
   expect((await owner("projects/" + projectId)).revision).toBe(
     snapshot.revision,
   );
   await page.getByRole("button", { name: "↷ Redo", exact: true }).click();
-  await expect(page.getByRole("treeitem")).toHaveCount(5);
+  await expect(page.getByRole("treeitem")).toHaveCount(
+    snapshot.pages.length + snapshot.forms.length + snapshot.controls.length,
+  );
   const inspected = await mcp.callTool({
     name: "project_inspect",
     arguments: {

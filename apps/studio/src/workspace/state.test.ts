@@ -132,3 +132,63 @@ test("undo a saved batch stages the inverse, including newly created entities, a
   editor = redo(editor);
   expect(visible(saved, editor).pages).toEqual(saved.pages);
 });
+
+test("acknowledgement retains later typing and unrelated drafts while checkpointing only submitted values", async () => {
+  const { afterSave } = await import("./state.js");
+  const base = project();
+  base.pages.push({
+    ...base.pages[0]!,
+    id: createId(() => "other"),
+    route: "/other",
+  });
+  const submitted = edit(initialEditor(), base, [
+    { entity: "page", value: { ...base.pages[0]!, title: "Submitted" } },
+  ]);
+  const latest = edit(submitted, base, [
+    { entity: "page", value: { ...base.pages[0]!, title: "Typed later" } },
+    { entity: "page", value: { ...base.pages[1]!, title: "Unrelated draft" } },
+  ]);
+  const saved = visible(base, submitted);
+  saved.revision++;
+  const next = afterSave(latest, submitted, base, saved);
+  expect(visible(saved, next).pages.map((p) => p.title)).toEqual([
+    "Typed later",
+    "Unrelated draft",
+  ]);
+  expect(next.drafts.page!.conflicts).toEqual([]);
+  expect(visible(saved, undo(next)).pages[0]!.title).toBe("Submitted");
+});
+
+test("construction undo/redo retains an unrelated unfinished name and reverses the ordinary document tree", async () => {
+  const { afterConstruction } = await import("./state.js");
+  const base = project();
+  const draft = edit(initialEditor(), base, [
+    { entity: "page", value: { ...base.pages[0]!, title: "Unfinished name" } },
+  ]);
+  const saved = structuredClone(base);
+  saved.revision++;
+  const form = {
+    id: createId(() => "constructed"),
+    pageId: id,
+    kind: "Login" as const,
+    controlIds: [],
+    actionIds: [],
+    keyMapping: [],
+    search: [],
+    sorting: [],
+    paging: { pageSize: 20 },
+    appearance: { label: "Login" },
+  };
+  saved.forms = [form];
+  saved.pages[0]!.formIds = [form.id];
+  saved.pages[0]!.document = [{ kind: "form", formId: form.id }];
+  const result = afterConstruction(draft, initialEditor(), base, saved, [
+    id,
+    form.id,
+  ]);
+  const undone = visible(saved, undo(result));
+  expect(undone.forms).toEqual([]);
+  expect(undone.pages[0]!.document).toEqual([]);
+  expect(undone.pages[0]!.title).toBe("Unfinished name");
+  expect(visible(saved, redo(undo(result))).forms).toHaveLength(1);
+});
