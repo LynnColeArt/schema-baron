@@ -1,0 +1,47 @@
+# Canonical model interface
+
+For command, storage, compiler and UI implementers. Import from
+`@schema-baron/model` after `npm run build --workspace @schema-baron/model`.
+The package is pure: its only external import is Zod.
+
+Use `parseProject(unknown)` or `validateProject(unknown)` for committed snapshots.
+`projectSchema` provides strict structural validation for draft tooling; it does
+not replace whole-project validation. Failures contain stable diagnostic codes,
+object IDs and fields/paths; they do not echo raw input values. Parsing clones
+rather than mutates caller input. Format 1 is the first supported format;
+unsupported versions are refused without a speculative upgrade.
+
+IDs come from `createId()` (or caller UUID injection) and are opaque. Physical
+names and routes are separate. Serialization sorts object properties but retains
+array order, especially key tuples. Field expressions in table constraints use
+alias `self`; form/control/action mappings use alias `root`; query aliases are
+explicit. Dates use ISO calendar dates, datetimes UTC, blobs base64; exact decimals
+use strings plus explicit scale, precision, encoding and rounding. Scaled-integer
+precision is limited to 18 digits; later arithmetic must enforce these declared
+bounds. Derived controls and query outputs are read-only.
+
+Query result fields are projections with stable IDs and checked type/nullability.
+Declared grouping keys are exactly the projected GROUP BY expressions. Outer joins
+propagate nullability. Grouped query sources permit explicit preaggregation; joins
+after preaggregation must preserve one row per declared grain. Multiple child
+fanouts, cyclic query references, nested aggregates and aggregate WHERE clauses
+are rejected. There is no executable SQL or JavaScript expression node. Imported
+opaque SQLite objects retain their SQL as read-only schema metadata.
+
+`commandSchema` discriminates every registered operation and validates its input.
+`operationInputSchemas` and `operationResultSchemas` let adapters/registries bind
+strict matching boundaries. `EntityBatchOperation` preserves entity-specific
+compile-time unions. A batch must validate the entire candidate snapshot before
+commit; this package performs no persistence/revision increments. Provisioning
+password input is transient: never persist it in the project or operation record.
+The operation record deliberately carries hashes and outcome metadata only.
+
+`effectiveAccess` expects a validated project and reports the effective access
+and source policy. Pages may override the global default. Action policies can
+tighten their containing page; explicit weakening is a validation error.
+
+`reviewedPlanSchema` requires source revision/model hash, external fingerprints,
+expiry and exact disclosed acknowledgement IDs. `validatePlanApplication` is a
+pure freshness/acknowledgement check. Services must call it under a real lease /
+transaction and verify stored immutable plan hashes. This package does not claim
+to implement database backups, SQL execution, generation or transport auth.

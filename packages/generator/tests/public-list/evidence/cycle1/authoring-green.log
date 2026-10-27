@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:2350565) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/e2e/first-output/workflow.spec.ts:204:1 › two visibly authored applications build and read real SQLite after Studio stops (42.5s)
+
+  1 passed (43.9s)

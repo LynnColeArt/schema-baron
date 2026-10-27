@@ -1,0 +1,52 @@
+import 'server-only';
+import Database from 'better-sqlite3';
+import { databasePath } from './connection.ts';
+import { type Field, type Binding } from './record-validation.ts';
+export type Source = { readonly table:string; readonly fields:readonly Field[]; readonly keys:readonly string[] };
+export const quote=(text:string)=>'"'+text.replaceAll('"','""')+'"';
+export function connect() {
+ const db=new Database(databasePath,{fileMustExist:true}); db.defaultSafeIntegers(true); db.pragma('foreign_keys = ON'); db.pragma('busy_timeout = 1000'); return db;
+}
+function field(source:Source,id:string):Field { const field=source.fields.find(f=>f.id===id); if(!field) throw Error('Unknown field.'); return field; }
+export function where(source:Source) { return source.keys.map(id=>quote(field(source,id).name)+' = ?').join(' AND '); }
+export function read(db:Database.Database,source:Source,keys:Binding[]) {
+ if(keys.length!==source.keys.length||!keys.length||keys.some(k=>k===null)) throw Error('Enter the complete record key.');
+ return db.prepare('SELECT '+source.fields.map(f=>quote(f.name)+' AS '+quote(f.id)).join(', ')+' FROM '+quote(source.table)+' WHERE '+where(source)).get(...keys) as Record<string,unknown>|undefined;
+}
+export function automaticKey(db:Database.Database,source:Source):string|undefined {
+ if(source.keys.length!==1) return;
+ const key=field(source,source.keys[0]!);
+ const columns=db.prepare('PRAGMA table_xinfo('+quote(source.table)+')').all() as {name:string;type:string;pk:bigint}[];
+ const indexes=db.prepare('PRAGMA index_list('+quote(source.table)+')').all() as {origin:string}[];
+ const definition=db.prepare("SELECT sql FROM sqlite_schema WHERE type='table' AND name=?").get(source.table) as {sql:string}|undefined;
+ // SQLite emits an origin=pk index for INT PRIMARY KEY and the historical inline
+ // INTEGER PRIMARY KEY DESC exception. WITHOUT ROWID has no alias either.
+ if(columns.find(c=>c.name===key.name)?.type.toUpperCase()==='INTEGER'&&!indexes.some(i=>i.origin==='pk')&&!/\bWITHOUT\s+ROWID\b/i.test(definition?.sql??'')) return key.id;
+}
+export function insert(db:Database.Database,source:Source,values:Record<string,Binding>) {
+ const ids=Object.keys(values);
+ return ids.length ? db.prepare('INSERT INTO '+quote(source.table)+' ('+ids.map(id=>quote(field(source,id).name)).join(', ')+') VALUES ('+ids.map(()=>'?').join(', ')+')').run(...ids.map(id=>values[id]!)) : db.prepare('INSERT INTO '+quote(source.table)+' DEFAULT VALUES').run();
+}
+export function update(db:Database.Database,source:Source,keys:Binding[],values:Record<string,Binding>) {
+ const ids=Object.keys(values); if(!ids.length) return;
+ const result=db.prepare('UPDATE '+quote(source.table)+' SET '+ids.map(id=>quote(field(source,id).name)+' = ?').join(', ')+' WHERE '+where(source)).run(...ids.map(id=>values[id]!),...keys);
+ if(result.changes!==1) throw Error('Record no longer exists.');
+}
+export function remove(db:Database.Database,source:Source,keys:Binding[]) {
+ const result=db.prepare('DELETE FROM '+quote(source.table)+' WHERE '+where(source)).run(...keys); if(result.changes!==1) throw Error('Record no longer exists.');
+}
+export function impacts(db:Database.Database,source:Source,keys:Binding[]) {
+ const impacts:{table:string;rule:string;count:number}[]=[];
+ const tables=db.prepare("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%'").all() as {name:string}[];
+ const record=read(db,source,keys); if(!record) return impacts;
+ for(const table of tables) {
+  const fks=db.prepare('PRAGMA foreign_key_list('+quote(table.name)+')').all() as {id:bigint;seq:bigint;table:string;from:string;to:string|null;on_delete:string}[];
+  for(const id of new Set(fks.filter(f=>f.table===source.table).map(f=>String(f.id)))) {
+   const fk=fks.filter(f=>String(f.id)===id).sort((a,b)=>Number(a.seq-b.seq));
+   const bindings=fk.map((f,index)=>record[source.fields.find(field=>field.name===f.to)?.id??source.keys[index]!] as Binding);
+   const count=db.prepare('SELECT count(*) AS n FROM '+quote(table.name)+' WHERE '+fk.map(f=>quote(f.from)+' = ?').join(' AND ')).get(...bindings) as {n:bigint};
+   if(count.n>0n) impacts.push({table:table.name,rule:fk[0]!.on_delete,count:Number(count.n)});
+  }
+ }
+ return impacts;
+}
