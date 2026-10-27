@@ -417,24 +417,26 @@
       "last_transition_at": "2026-10-27T06:30:09.778360+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: visual joined aggregate/typed presets, exact bounded previews, recovery/conflicts and native 200% pointer fix; commit 1f090eb; 256 tests plus 3 real browser scenarios passed."
+        "Ready for independent review: visual joined aggregate/typed presets, exact bounded previews, recovery/conflicts and native 200% pointer fix; commit 1f090eb; 256 tests plus 3 real browser scenarios passed.",
+        "Independent review rejected 1f090eb: supported unfinished function/preaggregated query drafts disappear on project switch/reload; structural query edits lack shared model undo/redo. Root-authorized workspace/model/native-zoom integration rationale reviewed; eight-item checklist and reproducible UI evidence in feedback."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP16-visual-query-designer-and-saved-data-sources/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP16-visual-query-designer-and-saved-data-sources/review-cycle-1.md",
         "reviewer": "codex/reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T076": "done",
-        "T077": "done",
-        "T078": "done",
-        "T079": "done",
-        "T080": "done"
+        "T076": "planned",
+        "T077": "planned",
+        "T078": "planned",
+        "T079": "planned",
+        "T080": "planned"
       }
     },
     "WP17": {
