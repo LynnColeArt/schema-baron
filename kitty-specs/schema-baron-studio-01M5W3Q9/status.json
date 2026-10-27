@@ -319,7 +319,8 @@
       "notes": [
         "Ready for independent review: 7d85f26; safe typed compiler, exact decimal helpers, real bounded HTTP/MCP preview and confirmed-exit cancellation/shutdown; npm run verify 168 tests plus strict module checks passed. Shared integration rationale and limits in packages/core/src/query-preview/EVIDENCE.md.",
         "Independent review rejected: physical decimal TEXT uniqueness does not prove sb_compare join uniqueness; actual HTTP/MCP preview inflates 10.00 to 40.00. Shared integration reviewed as authorized; 8-item checklist and public repro in feedback.",
-        "Ready for independent cycle 2 review: 9f0b1d7 repairs cycle1 P1 semantic-grain fanout using full actual ON multiplicity checks in the execution snapshot before result LIMIT. Original probes unchanged and now reject; 13 new regression cases and full npm run verify 181 tests plus strict module checks and audit0 passed. Evidence packages/core/src/query-preview/EVIDENCE.md."
+        "Ready for independent cycle 2 review: 9f0b1d7 repairs cycle1 P1 semantic-grain fanout using full actual ON multiplicity checks in the execution snapshot before result LIMIT. Original probes unchanged and now reject; 13 new regression cases and full npm run verify 181 tests plus strict module checks and audit0 passed. Evidence packages/core/src/query-preview/EVIDENCE.md.",
+        "Cycle 2 independent review: original decimal collision fixed; reject valid one-to-many then one-to-one chain because left grain check counts expanded prefix rows instead of distinct declared left entities. Public repro, snapshot proof and 8-item checklist retained; minimal shared diagnostic changes reviewed as authorized."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
@@ -329,15 +330,15 @@
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T071": "done",
-        "T072": "done",
-        "T073": "done",
-        "T074": "done",
-        "T075": "done"
+        "T071": "planned",
+        "T072": "planned",
+        "T073": "planned",
+        "T074": "planned",
+        "T075": "planned"
       }
     },
     "WP16": {
