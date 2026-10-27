@@ -303,7 +303,8 @@
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: 0340a59; reviewed SQLite apply/online backup/transaction markers/recovery/restore; 224 tests and real Studio restore E2E passed; evidence packages/sqlite/tests/migrations/EVIDENCE.md",
-        "P1 reserved marker ownership race during online backup: recheck provenance under BEGIN IMMEDIATE before DDL; independent public-core repro retained in /tmp/wp09-review-renata."
+        "P1 reserved marker ownership race during online backup: recheck provenance under BEGIN IMMEDIATE before DDL; independent public-core repro retained in /tmp/wp09-review-renata.",
+        "Cycle1 P1 corrected in c16231a: namespace authority checked under BEGIN IMMEDIATE before DDL; real apply/restore external-writer regressions and unchanged reviewer probe pass; 32 focused/229 full tests plus build/typecheck/E2E; evidence packages/sqlite/tests/migrations/CYCLE1.md"
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
