@@ -238,21 +238,22 @@
         "Ready for independent review: 570a5b8; full verify 177 tests, strict test-source checks, actual HTTP/MCP parity, SQLite preservation/provenance/fingerprint/constraint safety. Evidence fixtures/schema-plans/evidence.md. Shared integration corrections authorized and coordinated; no UI/apply executor claim."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP07-schema-diff-and-reviewed-migration-planning/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP07-schema-diff-and-reviewed-migration-planning/review-cycle-1.md",
         "reviewer": "codex/reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T031": "done",
-        "T032": "done",
-        "T033": "done",
-        "T034": "done",
-        "T035": "done"
+        "T031": "planned",
+        "T032": "planned",
+        "T033": "planned",
+        "T034": "planned",
+        "T035": "planned"
       }
     },
     "WP08": {
