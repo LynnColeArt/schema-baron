@@ -18,7 +18,7 @@ export const operationInputSchemas = {
   'project.open': z.strictObject({ locator: text }),
   'project.list': z.strictObject({ approvedRoot: text }),
   'project.batch': z.strictObject({ operations: z.array(entityBatchOperationSchema).min(1).max(1000) }),
-  'project.export': z.strictObject({ destination: text, includeData: z.boolean().default(false) }),
+  'project.export': z.strictObject({ destination: text, includeData: z.boolean().default(false), outputRoot: text.optional() }),
   'connection.inspect': z.strictObject({ approvedPath: text, mode: z.literal('read-only'), createEmpty: z.literal(true).optional(), connectionId: idSchema.optional() }),
   'connection.bind': z.strictObject({ connectionId: idSchema, fingerprint: hashSchema }),
   'schema.preview': previewSchemaInput,
@@ -38,9 +38,10 @@ export const operationInputSchemas = {
   'flow.inspect': z.strictObject({ projection: z.enum(['application', 'schema', 'endpoint']), selectedId: idSchema.optional() }),
   'generation.preview': z.strictObject({ target: targetSchema, outputRoot: text, projectRevision: revisionSchema }),
   'generation.apply': applyInput,
-  'runtime.start': z.strictObject({ generatedRevision: revisionSchema, intent: z.enum(['build', 'run']) }),
+  'runtime.start': z.strictObject({ generatedRevision: revisionSchema, intent: z.enum(['build', 'run']), port: z.number().int().min(1024).max(65535).optional() }),
+  'runtime.route': z.strictObject({ generatedRevision: revisionSchema, pageId: idSchema, parameters: z.record(text, scalar) }),
   'runtime.stop': z.strictObject({ generatedRevision: revisionSchema }),
-  'runtime.status': z.strictObject({ generatedRevision: revisionSchema }),
+  'runtime.status': z.strictObject({ generatedRevision: revisionSchema.optional() }),
   'job.inspect': z.strictObject({ jobId: idSchema }),
   'job.cancel': z.strictObject({ jobId: idSchema }),
 } as const;
@@ -86,7 +87,8 @@ export type ViewState = z.infer<typeof viewStateSchema>;
 export type Job = z.infer<typeof jobSchema>;
 
 const changedResult = z.strictObject({ changedIds: ids });
-const runtimeResult = z.strictObject({ status: z.enum(['stopped', 'building', 'running', 'failed']), generatedRevision: revisionSchema, jobId: idSchema.optional(), port: z.number().int().min(1).max(65535).optional() });
+export const runtimeResultSchema = z.strictObject({ status: z.enum(['stopped', 'building', 'starting', 'running', 'failed']), generatedRevision: revisionSchema, modelRevision: revisionSchema, runningRevision: revisionSchema.optional(), jobId: idSchema.optional(), port: z.number().int().min(1).max(65535).optional(), executable: text, arguments: z.array(z.string()), cwd: text, intent: z.enum(['build','run']).optional(), message: z.string().optional() });
+const runtimeResult=runtimeResultSchema;
 /** A registry's implementation must satisfy its result schema as well as its input. */
 export const migrationHistorySchema = z.strictObject({ id: idSchema, planId: idSchema, requestId: idSchema, connectionId: idSchema, backupRef: idSchema, kind: z.enum(['migration','restore']), createdAt: z.iso.datetime(), baseRevision: revisionSchema, newRevision: revisionSchema.optional(), outcome: z.enum(['applying','committed','rolled-back','recovery-pending']), backupValidated: z.boolean(), message: text });
 export type MigrationHistory = z.infer<typeof migrationHistorySchema>;
@@ -115,6 +117,7 @@ export const operationResultSchemas = {
   'flow.inspect': z.strictObject({ nodes: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, kind: text })), edges: z.array(z.strictObject({ id: idSchema, sourceObjectId: idSchema, fromId: idSchema, toId: idSchema, kind: text })) }),
   'generation.preview': reviewedPlanSchema,
   'generation.apply': z.strictObject({ planId: idSchema, committed: z.boolean(), recoveryRequired: z.boolean(), manifest: generationManifestSchema }),
+  'runtime.route': z.strictObject({url:text,generatedRevision:revisionSchema,pageId:idSchema}),
   'runtime.start': runtimeResult,
   'runtime.stop': runtimeResult,
   'runtime.status': runtimeResult,

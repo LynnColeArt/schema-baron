@@ -24,7 +24,7 @@ test('projects stay isolated, switch by ID, export portable definitions, and rec
  expect(batch(core, 'p', [page('one')]).ok).toBe(true); expect(core.snapshot('owner', 'q').pages).toEqual([]);
  expect(core.execute('owner', { requestId: 'list', projectId: 'p', expectedRevision: 0, operation: 'project.list', input: { approvedRoot: 'projects' } })).toMatchObject({ ok: true, result: [{ id: 'p', revision: 2 }, { id: 'q', revision: 1 }] });
  const result = core.execute('owner', { requestId: 'export', projectId: 'p', expectedRevision: 2, operation: 'project.export', input: { destination: 'projects:portable.json' } }); expect(result.ok).toBe(true);
- const portable = JSON.parse(readFileSync(join(definitions, 'portable.json'), 'utf8')); expect(portable).toEqual(core.snapshot('owner', 'p')); expect(JSON.stringify(portable)).not.toContain(root);
+ const portable = JSON.parse(readFileSync(join(definitions, 'portable.json'), 'utf8')); expect(portable).toEqual({...core.snapshot('owner', 'p'),outputConfig:{approvedRootId:'portable',relativePath:'app'}}); expect(JSON.stringify(portable)).not.toContain(root);
  core.close(); const moved = join(root, 'moved-definitions'); renameSync(definitions, moved); core = new ProjectCore({ ...options, approvedRoots: { projects: moved } }); expect(core.snapshot('owner', 'p').revision).toBe(2); expect(core.snapshot('owner', 'q').revision).toBe(1); core.close();
 });
 test('newer definitions are refused and preserved without overwrite', () => {

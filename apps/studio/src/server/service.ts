@@ -35,11 +35,13 @@ export class OwnerService {
  constructor(private options: OwnerOptions) {
   if (options.capability.length < 32) throw new Error('Owner capability must have at least 32 characters.');
   this.secrets.add(options.capability);
-  this.core = new ProjectCore(options);
+  this.core = new ProjectCore({...options,runtimeSecrets:[...(options.runtimeSecrets??[]),options.capability]});
   this.register('job.inspect', (command, project) => { const job = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!job) throw new StorageError('NOT_FOUND', 'Unknown job.'); return { result: jobSchema.parse(job) }; });
   this.core.registry.registerAsync('job.cancel', async (input) => {
    if (input.operation !== 'job.cancel') throw new StorageError('INVALID_INPUT', 'Expected job cancellation.');
    const command = input;
+   const runtime = await this.core.cancelRuntime(options.ownerId,command.projectId,command.input.jobId);
+   if(runtime)return {result:runtime,job:runtime};
    const migration = await this.core.cancelMigration(command.projectId, command.input.jobId);
    if (migration) return { result: migration };
    const value = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!value) throw new StorageError('NOT_FOUND', 'Unknown job.');

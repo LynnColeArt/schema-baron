@@ -1,4 +1,5 @@
 "use client";
+import {RuntimeControls} from '../runtime-ui/index.js';
 import {SourceEditor} from '../source-editor/index.js';
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, FormEvent } from "react";
@@ -1122,7 +1123,7 @@ export default function Workspace() {
                 <DocumentModes
                   key={project.id + ":" + activePage.id}
                   project={project} model={model} page={activePage}
-                  capabilities={{sourceEditor:<SourceEditor project={project} client={client} onChanged={refresh}/>}}
+                  capabilities={{sourceEditor:<SourceEditor project={project} client={client} onChanged={refresh}/>,runtimeControls:<RuntimeControls project={project} pageId={activePage.id} client={client} hasDrafts={Object.keys(editor.drafts).length>0||Object.values(editor.documents??{}).some(buffer=>buffer.text!==buffer.appliedText)} live={view.documentModes?.[activePage.id]==="Live Page"}/>}}
                   editor={editor} setEditor={setEditor}
                   selected={view.selected} select={select}
                   mode={view.documentModes?.[activePage.id] ?? "Design"}

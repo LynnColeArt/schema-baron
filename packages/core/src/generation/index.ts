@@ -44,7 +44,20 @@ export function registerGeneration(registry:CommandRegistry,options:Options,plan
  const authorityKey=(path:string)=>'output-'+contentHash(path);
  const intentKey=(path:string)=>'promotion-'+contentHash(path);
  const stored=(project:Project,key:string)=>storage.job(project.id,key) as {outcome?:{result?:Record<string,string>}}|undefined;
- const recordAuthority=(project:Project,path:string,files:GeneratedFile[],planId:string)=>{const prior=stored(project,authorityKey(path))?.outcome?.result;const treeRevision=prior?.planId===planId?Number(prior.outputTreeRevision):Number(prior?.outputTreeRevision??'0')+1;if(!Number.isSafeInteger(treeRevision)||treeRevision<1)throw new StorageError('RECOVERY_REQUIRED','Output revision authority is invalid. Preserve output and inspect metadata.');storage.putJob(project.id,authorityKey(path),{id:authorityKey(path),status:'succeeded',committed:true,diagnostics:[],outcome:{ok:true,revision:project.revision,result:{manifestHash:contentHash(files.find(f=>f.path===manifestPath)!.content),planId,outputTreeRevision:String(treeRevision)},diagnostics:[]}});return treeRevision;};
+ const recordAuthority=(project:Project,path:string,files:GeneratedFile[],planId:string)=>{
+  const prior=stored(project,authorityKey(path))?.outcome?.result;
+  const treeRevision=prior?.planId===planId?Number(prior.outputTreeRevision):Number(prior?.outputTreeRevision??'0')+1;
+  if(!Number.isSafeInteger(treeRevision)||treeRevision<1)throw new StorageError('RECOVERY_REQUIRED','Output revision authority is invalid. Preserve output and inspect metadata.');
+  const plan=plans.inspect(options.ownerId,project.id,planId);
+  if(plan.kind!=='generation'||!plan.outputLocator)throw new StorageError('RECOVERY_REQUIRED','Output authority requires a canonical generation plan.');
+  const intent=stored(project,intentKey(path))?.outcome?.result;
+  const generatedProject=intent?.project?JSON.parse(intent.project) as Project:project;
+  if(hash(generatedProject)!==plan.modelHash)throw new StorageError('RECOVERY_REQUIRED','Generated snapshot differs from canonical plan.');
+  // Capture the reviewed snapshot, not a later model/draft, including crash recovery.
+  storage.putJob(project.id,'output-current',{id:'output-current',status:'succeeded',committed:true,diagnostics:[],outcome:{ok:true,revision:plan.sourceRevision,result:{outputLocator:plan.outputLocator,outputTreeRevision:treeRevision,modelRevision:plan.sourceRevision,project:generatedProject},diagnostics:[]}});
+  storage.putJob(project.id,authorityKey(path),{id:authorityKey(path),status:'succeeded',committed:true,diagnostics:[],outcome:{ok:true,revision:project.revision,result:{manifestHash:contentHash(files.find(f=>f.path===manifestPath)!.content),planId,outputTreeRevision:String(treeRevision)},diagnostics:[]}});
+  return treeRevision;
+ };
  const planFiles=(plan:Extract<import('@schema-baron/model').ReviewedPlan,{kind:'generation'}>)=>plan.steps.filter(s=>s.operation!=='delete').map(s=>({path:s.path,content:s.afterContent!}));
  const resultFor=(planId:string,revision:number,modelHash:string,files:GeneratedFile[],treeRevision:number)=>{const marker=JSON.parse(files.find(f=>f.path===manifestPath)!.content) as ReturnType<typeof sourceManifest>;return {planId,committed:true,recoveryRequired:false,manifest:{generatorVersion:marker.generatorVersion,modelVersion:revision,modelHash,ownedFileHashes:marker.ownedFileHashes,authoredContractVersions:Object.fromEntries(marker.authoredContracts.map(c=>[c.id,c.version])),outputTreeRevision:treeRevision}};};
  const recover=(project:Project,path:string)=>{
@@ -101,11 +114,11 @@ export function registerGeneration(registry:CommandRegistry,options:Options,plan
   if(fresh.filter(f=>!authored.has(f.path)).some(f=>!files.some(p=>p.path===f.path&&p.content===f.content)))throw new StorageError('PLAN_HASH_MISMATCH','Generator output changed after preview.');
   const identity=await verifyConnection(project);if(identity!==plan.connectionIdentity)throw new StorageError('DATABASE_CHANGED','Connected database was replaced after preview.');
   if(!recovered){
-   // No manager exists before WP21. A supplied manager must positively stop its child.
+   // Managed jobs must positively stop before any active source rename.
    if(options.runtimeLifecycle){const stopped=await options.runtimeLifecycle.stopForPromotion({projectId:project.id,outputPath:path});if(!['stopped','unmanaged'].includes(stopped.status))throw new StorageError('PROJECT_BUSY','Managed preview could not be stopped.');}
    if(await verifyConnection(project)!==plan.connectionIdentity)throw new StorageError('DATABASE_CHANGED','Connected schema or database identity changed after preview or during preview shutdown.');
    validate();
-   const job={id:plan.id,status:'running',phase:'Staging reviewed complete source',committed:false,diagnostics:[],outcome:{ok:true,revision:project.revision,result:{planId:plan.id,requestId:command.requestId,payloadHash:hash(command),planHash:plan.hash},diagnostics:[]}};
+   const job={id:plan.id,status:'running',phase:'Staging reviewed complete source',committed:false,diagnostics:[],outcome:{ok:true,revision:project.revision,result:{planId:plan.id,requestId:command.requestId,payloadHash:hash(command),planHash:plan.hash,project:JSON.stringify(project)},diagnostics:[]}};
    storage.putJob(project.id,plan.id,job);storage.putJob(project.id,intentKey(path),{...job,id:intentKey(path)});
    if(existsSync(path))promoteSource(path,files,plan.outputFingerprint,validate,options.generationFault);else writeInitialOutput(path,files,plan.outputFingerprint,validate);
    options.generationFault?.('promoted-before-record');
