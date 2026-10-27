@@ -2,6 +2,8 @@ import { commandSchema, jobSchema, createId, parseProject, validateProject, Mode
 import type { Command, Diagnostic, EntityBatchOperation, Project } from '@schema-baron/model';
 import { ProjectStorage, StorageError, hash } from '@schema-baron/storage';
 import type { StorageOptions } from '@schema-baron/storage';
+import type { CommandEffect } from '../commands/index.js';
+import { registerConnections } from '../connections/index.js';
 import { CommandRegistry } from '../commands/index.js';
 import { PlanRepository } from '../plans/index.js';
 export interface CoreOptions extends StorageOptions { ownerId: string }
@@ -19,10 +21,11 @@ export function applyBatch(project: Project, operations: EntityBatchOperation[])
  candidate.revision++; return parseProject(candidate);
 }
 export class ProjectCore {
- private storage: ProjectStorage;
+ private storage: ProjectStorage; private closed = false; private closeConnections: () => Promise<void>;
  readonly registry = new CommandRegistry(); readonly plans: PlanRepository;
  constructor(private options: CoreOptions) {
   this.storage = new ProjectStorage(options); this.plans = new PlanRepository(this.storage, actor => this.authorize(actor));
+  this.closeConnections = registerConnections(this.registry, options);
   this.registry.register('project.create', c => { if (c.operation !== 'project.create') throw new Error(); if (c.input.emptyDatabaseLocation) throw new StorageError('INVALID_INPUT', 'Database creation belongs to the connection adapter.'); const id = c.projectId; const policy = createId(); const candidate = parseProject({ id, formatVersion: FORMAT_VERSION, revision: 1, name: c.input.name, target: c.input.target, targetVersion: '1', connectionRefs: [], connections: [], schema: { id: createId(), revision: 1, tables: [], opaqueObjects: [] }, queries: [], pages: [], forms: [], controls: [], actions: [], policies: [{ id: policy, ownerId: id, scope: 'global', access: 'public' }], globalPolicyId: policy, outputConfig: { approvedRootId: 'output', relativePath: 'app' }, extensionContracts: [] }); return { result: candidate, candidate, root: c.input.approvedRoot }; });
   this.registry.register('project.batch', (c, p) => { if (c.operation !== 'project.batch' || !p) throw new Error(); return { result: { changedIds: c.input.operations.map(op => op.id) }, candidate: applyBatch(p, c.input.operations as EntityBatchOperation[]), changedIds: c.input.operations.map(op => op.id) }; });
   for (const operation of ['project.inspect', 'project.open'] as const) this.registry.register(operation, (c, p) => { return { result: p }; });
@@ -37,9 +40,27 @@ export class ProjectCore {
  recordJob(actor: string, projectId: string, input: unknown) { this.authorize(actor); const job = jobSchema.parse(input); this.storage.putJob(projectId, job.id, job); return job; }
  operation(actor: string, projectId: string, requestId: string) { this.authorize(actor); return this.storage.operation(projectId, requestId); }
  get recovery() { return structuredClone(this.storage.recovery); }
- execute(actor: string, input: unknown): Outcome {
+ /** Async features do their bounded external read outside the owner event loop. Re-enter
+  * the exact synchronous authority after await: idempotency and revision are rechecked
+  * before validating/saving the candidate. No stale effect can finalize. */
+ async executeAsync(actor: string, input: unknown): Promise<Outcome> {
+  let command: Command; let project: Project | undefined;
+  try {
+   if (this.closed) return this.execute(actor, input);
+   this.authorize(actor); command = commandSchema.parse(input);
+   if (!this.registry.isAsync(command.operation)) return this.execute(actor, input);
+   if (this.storage.lookup(command.projectId, command.requestId)) return this.execute(actor, input);
+   project = this.storage.snapshot(command.projectId);
+   if (command.expectedRevision !== project.revision) return this.execute(actor, input);
+  } catch { return this.execute(actor, input); }
+  try { const effect = await this.registry.runAsync(command, project); return this.executePrepared(actor, input, () => effect); }
+  catch (error) { return this.executePrepared(actor, input, () => { throw error; }); }
+ }
+ execute(actor: string, input: unknown): Outcome { return this.executePrepared(actor, input); }
+ private executePrepared(actor: string, input: unknown, prepared?: () => CommandEffect): Outcome {
   let revision = 0; let accepted: Command | undefined; let payloadHash: string | undefined;
   try {
+   if (this.closed) throw new StorageError('RECOVERY_REQUIRED', 'Owner has closed; no command was committed.');
    this.authorize(actor); const parsed = commandSchema.safeParse(input); if (!parsed.success) throw new StorageError('INVALID_INPUT', 'Command does not match the operation schema.'); const command: Command = parsed.data;
    if (!this.registry.has(command.operation)) throw new StorageError('INVALID_INPUT', 'Operation is not available.');
    payloadHash = hash(command); const retry = this.storage.lookup(command.projectId, command.requestId);
@@ -47,7 +68,7 @@ export class ProjectCore {
    const project = command.operation === 'project.create' || command.operation === 'project.list' ? undefined : command.operation === 'project.open' ? this.storage.open(command.projectId, command.input.locator) : this.storage.snapshot(command.projectId); revision = project?.revision ?? 0;
    if (command.expectedRevision !== revision) throw new StorageError('REVISION_CONFLICT', 'Read the current revision before changing this project.');
    accepted = command;
-   const effect = this.registry.run(command, project); const outcome: Outcome = { ok: true, revision: effect.candidate?.revision ?? revision, result: effect.result, diagnostics: [] };
+   const effect = prepared ? prepared() : this.registry.run(command, project); const outcome: Outcome = { ok: true, revision: effect.candidate?.revision ?? revision, result: effect.result, diagnostics: [] };
    if (effect.job) { jobSchema.parse(effect.job); if (command.operation !== 'job.cancel' || command.input.jobId !== effect.job.id || effect.candidate) throw new StorageError('VALIDATION_FAILED', 'Job effects must match the cancellation command.'); }
    if (effect.candidate && (effect.candidate.id !== command.projectId || effect.candidate.revision !== revision + 1)) throw new StorageError('VALIDATION_FAILED', 'A mutation must preserve project identity and advance exactly one revision.');
    if (effect.candidate) this.storage.save(effect.candidate, effect.root, { requestId: command.requestId, payloadHash, actor, baseRevision: revision, newRevision: outcome.revision, outcome }, { revision: outcome.revision, kind: 'revision', objectIds: effect.changedIds ?? [command.projectId], diagnostics: [] });
@@ -60,5 +81,5 @@ export class ProjectCore {
    return outcome;
   }
  }
- close() { this.storage.close(); }
+ close() { this.closed = true; const closed = this.closeConnections(); this.storage.close(); return closed; }
 }

@@ -19,7 +19,7 @@ export const operationInputSchemas = {
   'project.list': z.strictObject({ approvedRoot: text }),
   'project.batch': z.strictObject({ operations: z.array(entityBatchOperationSchema).min(1).max(1000) }),
   'project.export': z.strictObject({ destination: text, includeData: z.boolean().default(false) }),
-  'connection.inspect': z.strictObject({ approvedPath: text, mode: z.literal('read-only') }),
+  'connection.inspect': z.strictObject({ approvedPath: text, mode: z.literal('read-only'), createEmpty: z.literal(true).optional(), connectionId: idSchema.optional() }),
   'connection.bind': z.strictObject({ connectionId: idSchema, fingerprint: hashSchema }),
   'schema.preview': previewSchemaInput,
   'schema.apply': applyInput,

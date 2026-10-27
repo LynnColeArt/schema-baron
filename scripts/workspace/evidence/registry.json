@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-10-27T01:43:13.880Z",
+  "observedAt": "2026-10-27T03:46:52.668Z",
   "clientDate": "2026-10-26",
-  "lockSha256": "fda276948d783b22de861d29e3a19dbf21e416a28d0c6bc33b6d15b4c50b6a6f",
+  "lockSha256": "463c5bb01c0a9ad9cd1858ed51d13f4cf44a7df5f6df6f5ded2033755d7c1687",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
     {
@@ -1499,7 +1499,7 @@
       "version": "0.155.0",
       "firstPublished": "2024-10-25T02:54:47.140Z",
       "published": "2026-10-19T14:27:36.193Z",
-      "packageModified": "2026-10-19T14:27:36.810Z",
+      "packageModified": "2026-10-27T03:22:39.792Z",
       "repository": {
         "url": "git+https://github.com/oxc-project/oxc.git",
         "type": "git",
@@ -1516,8 +1516,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQCDGtEIDDZLkU6D5mGr1rIIDt092hEFZxSJz4tobCNgkgIgQaFYEWKh6rdaeIbw+VdvqBQyKoPcY/aBF34VaySWEt4="
+          "sig": "MEUCIQCDGtEIDDZLkU6D5mGr1rIIDt092hEFZxSJz4tobCNgkgIgQaFYEWKh6rdaeIbw+VdvqBQyKoPcY/aBF34VaySWEt4=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -8112,9 +8112,5 @@
       "lifecycle": {},
       "scriptsDenied": true
     }
-  ],
-  "workspaceGraphUpdate": {
-    "observedAt": "2026-10-27T02:26:44.668Z",
-    "reason": "WP04 adds only Studio edges to existing locked workspaces and zod; all third-party artifact records compared unchanged, no lifecycle script execution."
-  }
+  ]
 }
