@@ -345,6 +345,6 @@ test('native 200 percent zoom retains keyboard authoring and scrollable modes', 
   } finally { await context.close(); }
 });
 
-test('Historical full five-mode application acceptance checkpoint', () => {
-  test.skip(true, 'This inherited full five-mode application acceptance checkpoint remains unexecuted by dependency integration and must be completed by WP25. Current Code and Live Page capabilities are exercised by the regeneration and runtime-export suites.');
-});
+// WP25 closes the inherited checkpoint in the authoritative executable keyboard journey:
+// tests/e2e/usability/workflow.spec.ts — keyboard primary journey and full five-mode application checkpoint.
+// It authors Code, regenerates, builds/runs Live Page, and proves current draft/output separation.
