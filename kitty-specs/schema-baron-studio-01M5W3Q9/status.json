@@ -1,7 +1,7 @@
 {
-  "event_count": 97,
-  "last_event_id": "01M5XV2GVS5EKKQJGHA6QFMR8H",
-  "materialized_at": "2026-10-27T04:49:37.145057+00:00",
+  "event_count": 98,
+  "last_event_id": "01M5XV3AVRWMM7CSZ6VQWTD38F",
+  "materialized_at": "2026-10-27T04:50:03.768809+00:00",
   "mission_number": "",
   "mission_slug": "schema-baron-studio-01M5W3Q9",
   "mission_type": "software-dev",
@@ -11,9 +11,9 @@
     "canceled": 0,
     "claimed": 0,
     "done": 0,
-    "for_review": 2,
+    "for_review": 1,
     "in_progress": 0,
-    "in_review": 0,
+    "in_review": 1,
     "planned": 18
   },
   "work_packages": {
@@ -227,12 +227,12 @@
     "WP07": {
       "actor": "codex",
       "agent": "codex",
-      "agent_profile": "node-norris",
+      "agent_profile": "reviewer-renata",
       "agent_profile_version": "1.0",
       "force_count": 1,
-      "lane": "for_review",
-      "last_event_id": "01M5XV2GVS5EKKQJGHA6QFMR8H",
-      "last_transition_at": "2026-10-27T04:49:37.145057+00:00",
+      "lane": "in_review",
+      "last_event_id": "01M5XV3AVRWMM7CSZ6VQWTD38F",
+      "last_transition_at": "2026-10-27T04:50:03.768809+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for independent review: 570a5b8; full verify 177 tests, strict test-source checks, actual HTTP/MCP parity, SQLite preservation/provenance/fingerprint/constraint safety. Evidence fixtures/schema-plans/evidence.md. Shared integration corrections authorized and coordinated; no UI/apply executor claim.",
@@ -246,9 +246,9 @@
         "reviewer": "codex/reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "implementer",
-      "shell_pid": null,
-      "shell_pid_created_at": null,
+      "role": "reviewer",
+      "shell_pid": 5024,
+      "shell_pid_created_at": "1792851034.54",
       "subtasks": {
         "T031": "done",
         "T032": "done",
