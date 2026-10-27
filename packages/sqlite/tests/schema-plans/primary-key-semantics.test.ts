@@ -102,3 +102,72 @@ test('an explicit conversion away from a rowid alias still enforces the desired 
   expect(db.prepare('SELECT rowid AS __review_rowid__,* FROM t').all()).toEqual([{ __review_rowid__: 7, k: 7, v: 'kept' }]);
  } finally { trial.close(); await close(); }
 });
+const directionCases = [
+ { name: 'INT inline DESC', definition: 'k INT NOT NULL PRIMARY KEY DESC,v TEXT NOT NULL', first: 'k', second: 'v', ordering: 'k DESC,v ASC', composite: false },
+ { name: 'INT table DESC', definition: 'k INT NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k DESC)', first: 'k', second: 'v', ordering: 'k DESC,v ASC', composite: false },
+ { name: 'composite DESC/ASC', definition: 'k INTEGER NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k DESC,v ASC)', first: 'k', second: 'v', ordering: 'k DESC,v ASC', composite: true },
+ { name: 'composite ASC/DESC', definition: 'k INTEGER NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k ASC,v DESC)', first: 'k', second: 'v', ordering: 'k ASC,v DESC', composite: true },
+ { name: 'composite DESC/DESC', definition: 'k INTEGER NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k DESC,v DESC)', first: 'k', second: 'v', ordering: 'k DESC,v DESC', composite: true },
+ { name: 'composite ASC/ASC control', definition: 'k INTEGER NOT NULL,v TEXT NOT NULL,PRIMARY KEY(k ASC,v ASC)', first: 'k', second: 'v', ordering: 'k ASC,v ASC', composite: true },
+ { name: 'quoted composite mixed direction', definition: '"select "" key" INTEGER NOT NULL,"from value" TEXT NOT NULL,PRIMARY KEY("select "" key" DESC,"from value" ASC)', first: '"select "" key"', second: '"from value"', ordering: '"select "" key" DESC,"from value" ASC', composite: true },
+] as const;
+function primaryKeyMetadata(db: Database.Database) {
+ const pk = (db.pragma('index_list(t)') as { name: string; origin: string }[]).find(i => i.origin === 'pk');
+ if (!pk) throw new Error('Fixture must have an independent physical PK index');
+ return db.prepare('SELECT seqno,cid,name,desc,coll,key FROM pragma_index_xinfo(?) ORDER BY seqno').all(pk.name);
+}
+test.each(directionCases)('preserves full physical PK metadata and actual ORDER BY plan: $name', async c => {
+ const sql = `CREATE TABLE t(${c.definition});INSERT INTO t(_rowid_,${c.first},${c.second}) VALUES(50,7,'b'),(60,3,'z'),(70,9,'a')${c.composite?",(80,7,'a')":''}`;
+ const { db, run, project, close } = await author(sql); const trial = new Database(':memory:');
+ try {
+  trial.exec(sql); const statement = `SELECT ${c.first},${c.second} FROM t ORDER BY ${c.ordering}`;
+  const observed = () => ({ keys: primaryKeyMetadata(db), rows: db.prepare('SELECT _rowid_ AS identity_value,* FROM t ORDER BY _rowid_').all(), columns: db.pragma('table_xinfo(t)'), objects: db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all(), queryPlan: db.prepare('EXPLAIN QUERY PLAN '+statement).all() });
+  const before = observed(); const ordered = db.prepare(statement).all();
+  const schema = structuredClone(project.schema); schema.revision++; schema.tables[0]!.columns.push({ id: createId(), physicalName: 'added', type: { kind: 'text' }, nullable: true });
+  expect(await run('project.batch', { operations: [{ kind: 'put', entity: 'schema', id: schema.id, value: schema }] }, 2)).toMatchObject({ ok: true });
+  const preview = await run('schema.preview', { desiredSchemaRevision: schema.revision, backfills: [] }, 3); expect(preview).toMatchObject({ ok: true }); if (!preview.ok) throw new Error(preview.error.code);
+  expect(observed()).toEqual(before);
+  const plan = preview.result as Extract<ReviewedPlan, { kind: 'migration' }>;
+  expect(plan.changes).toEqual([expect.objectContaining({ kind: 'add' })]); expect(plan.requiredAcknowledgementIds).toEqual([]);
+  trial.exec('BEGIN'); for (const step of plan.steps) trial.exec(step.sql); expect(trial.pragma('integrity_check', { simple: true })).toBe('ok'); trial.exec('COMMIT');
+  expect(primaryKeyMetadata(trial)).toEqual(before.keys);
+  expect(trial.prepare('SELECT _rowid_ AS identity_value,* FROM t ORDER BY _rowid_').all()).toEqual(before.rows.map(row => ({ ...(row as object), added: null })));
+  expect((trial.pragma('table_xinfo(t)') as unknown[]).slice(0, 2)).toEqual(before.columns);
+  expect(trial.prepare(statement).all()).toEqual(ordered);
+  const actualPlan = trial.prepare('EXPLAIN QUERY PLAN '+statement).all();
+  // SQLite's estimated cost changes with the added column width; compare the
+  // actual access/sort strategy rather than the auxiliary estimate.
+  const strategy = (rows: unknown[]) => rows.map(row => { const { id, parent, detail } = row as { id: number; parent: number; detail: string }; return { id, parent, detail }; });
+  expect(strategy(actualPlan)).toEqual(strategy(before.queryPlan));
+  if(c.composite) { expect(actualPlan).toEqual(expect.arrayContaining([expect.objectContaining({ detail: expect.stringContaining('COVERING INDEX') })])); expect(actualPlan).not.toEqual(expect.arrayContaining([expect.objectContaining({ detail: expect.stringContaining('TEMP B-TREE') })])); }
+ } finally { trial.close(); await close(); }
+});
+test.each(['NOCASE','RTRIM'])('unsupported PK collation %s blocks instead of silently normalizing its descriptor', async collation => {
+ const { db, run, project, close } = await author(`CREATE TABLE t(k INTEGER NOT NULL,v TEXT COLLATE ${collation} NOT NULL,PRIMARY KEY(k DESC,v ASC));INSERT INTO t(_rowid_,k,v) VALUES(50,7,'kept')`);
+ try {
+  const keys = primaryKeyMetadata(db); expect(keys).toEqual(expect.arrayContaining([expect.objectContaining({ coll: collation })])); const before = db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all();
+  const schema = structuredClone(project.schema); schema.revision++; schema.tables[0]!.columns.push({ id: createId(), physicalName: 'added', type: { kind: 'text' }, nullable: true }); await run('project.batch', { operations: [{ kind: 'put', entity: 'schema', id: schema.id, value: schema }] }, 2);
+  expect(await run('schema.preview', { desiredSchemaRevision: schema.revision, backfills: [] }, 3)).toMatchObject({ ok: false, error: { code: 'UNSUPPORTED_SCHEMA_OBJECT' } });
+  expect(primaryKeyMetadata(db)).toEqual(keys); expect(db.prepare('SELECT _rowid_ AS identity_value,* FROM t').all()).toEqual([{ identity_value: 50, k: 7, v: 'kept' }]); expect(db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all()).toEqual(before);
+ } finally { await close(); }
+});
+test('an imported descending UNIQUE absent from the logical model must not disappear in a rebuild', async () => {
+ const { db, run, project, close } = await author('CREATE TABLE t(k INT NOT NULL PRIMARY KEY,v TEXT,UNIQUE(v DESC));INSERT INTO t(_rowid_,k,v) VALUES(50,7,\'kept\')');
+ try {
+  const before = db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all(); const schema = structuredClone(project.schema); schema.revision++; schema.tables[0]!.columns.push({ id: createId(), physicalName: 'added', type: { kind: 'text' }, nullable: true }); await run('project.batch', { operations: [{ kind: 'put', entity: 'schema', id: schema.id, value: schema }] }, 2);
+  expect(await run('schema.preview', { desiredSchemaRevision: schema.revision, backfills: [] }, 3)).toMatchObject({ ok: false, error: { code: 'UNSUPPORTED_SCHEMA_OBJECT' } });
+  expect(db.prepare('SELECT * FROM sqlite_schema ORDER BY name').all()).toEqual(before); expect(() => db.exec("INSERT INTO t(k,v) VALUES(8,'kept')")).toThrow(); expect(db.prepare('SELECT _rowid_ AS identity_value,* FROM t').all()).toEqual([{ identity_value: 50, k: 7, v: 'kept' }]);
+ } finally { await close(); }
+});
+test('a represented ASC UNIQUE and ordinary index remain enforced and present after a supported rebuild', async () => {
+ const sql = 'CREATE TABLE t(k INT NOT NULL PRIMARY KEY,v TEXT NOT NULL,UNIQUE(v ASC));CREATE INDEX ordinary_index ON t(k,v);INSERT INTO t(_rowid_,k,v) VALUES(50,7,\'kept\')';
+ const { db, run, project, close } = await author(sql); const trial = new Database(':memory:');
+ try {
+  trial.exec(sql); const schema = structuredClone(project.schema); schema.revision++; schema.tables[0]!.columns.push({ id: createId(), physicalName: 'added', type: { kind: 'text' }, nullable: true }); await run('project.batch', { operations: [{ kind: 'put', entity: 'schema', id: schema.id, value: schema }] }, 2);
+  const preview = await run('schema.preview', { desiredSchemaRevision: schema.revision, backfills: [] }, 3); expect(preview).toMatchObject({ ok: true }); if (!preview.ok) throw new Error(preview.error.code);
+  for (const step of (preview.result as Extract<ReviewedPlan,{kind:'migration'}>).steps) trial.exec(step.sql);
+  expect(trial.pragma('index_list(t)')).toEqual(db.pragma('index_list(t)'));
+  expect(trial.prepare('SELECT _rowid_ AS identity_value,* FROM t').all()).toEqual([{ identity_value: 50, k: 7, v: 'kept', added: null }]);
+  expect(() => trial.exec("INSERT INTO t(k,v) VALUES(8,'kept')")).toThrow(); expect(() => trial.exec("INSERT INTO t(k,v) VALUES(7,'different')")).toThrow(); expect(trial.pragma('integrity_check',{simple:true})).toBe('ok');
+ } finally { trial.close(); await close(); }
+});

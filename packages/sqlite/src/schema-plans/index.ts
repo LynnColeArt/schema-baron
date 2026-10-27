@@ -31,6 +31,7 @@ function sqlType(column: Table['columns'][number]) { const type=column.type; ret
 interface RebuildLayout {
  columnTypes: Map<string, string>;
  notNull: Map<string, boolean>;
+ primaryKeyParts: { columnId: string; direction: 'ASC' | 'DESC' }[];
  descendingPrimaryKeyId?: string;
  aliasesRowid: boolean;
  sourceAliasId?: string;
@@ -49,8 +50,30 @@ function rebuildLayout(table: Table, source?: Table, physical?: PhysicalTable): 
   }
   if (old && observed && old.nullable === column.nullable) notNull.set(column.id, !!observed.notnull);
  }
- const physicalKeys = physical?.columns.filter(c => c.pk > 0) ?? [];
+ const physicalKeys = physical?.columns.filter(c => c.pk > 0).sort((a,b) => a.pk-b.pk) ?? [];
  const pkIndex = physical?.indexes.find(i => i.origin === 'pk');
+ const retainedParts = new Map<string, RebuildLayout['primaryKeyParts'][number]>();
+ if (physical && source) {
+  const mappedKeys = physicalKeys.map(c => source.columns.find(old => old.physicalName === c.name)?.id);
+  if (!equal(mappedKeys, source.primaryKey)) fail('UNSUPPORTED_SCHEMA_OBJECT', table.id, 'Inspected primary-key columns do not have a complete logical mapping.');
+  if (pkIndex) {
+   const parts = pkIndex.columns.filter(c => c.key).sort((a,b) => a.seqno-b.seqno);
+   if (pkIndex.unique !== 1 || pkIndex.partial || parts.length !== physicalKeys.length) fail('UNSUPPORTED_SCHEMA_OBJECT', table.id, 'Inspected primary-key index cannot be preserved completely.');
+   parts.forEach((part,i) => {
+    const column = physicalKeys[i]!, id = mappedKeys[i];
+    if (!id || part.cid !== column.cid || part.name !== column.name || ![0,1].includes(part.desc) || part.coll !== 'BINARY') fail('UNSUPPORTED_SCHEMA_OBJECT', table.id, `Inspected primary-key index ${pkIndex.name} has unsupported column, direction or collation metadata. Leave this table unchanged.`);
+    retainedParts.set(id, { columnId: id, direction: part.desc ? 'DESC' : 'ASC' });
+   });
+  } else if (physicalKeys.length && (physicalKeys.length !== 1 || !/^INTEGER$/i.test(physicalKeys[0]!.type))) fail('UNSUPPORTED_SCHEMA_OBJECT', table.id, 'Inspected primary key has neither a verified index nor an INTEGER rowid alias.');
+  // An unsupported anonymous UNIQUE may have no SQL object and was omitted by
+  // logical import. Do not interpret that omission as an authorized deletion.
+  for (const index of physical.indexes.filter(i => i.origin === 'u')) {
+   const parts = index.columns.filter(c => c.key).sort((a,b) => a.seqno-b.seqno);
+   const ids = parts.map(p => source.columns.find(c => c.physicalName === p.name)?.id);
+   if (index.unique !== 1 || index.partial || parts.some(p => p.cid < 0 || p.desc !== 0 || p.coll !== 'BINARY') || ids.some(id => !id) || !source.uniqueConstraints.some(u => equal(u.columnIds, ids))) fail('UNSUPPORTED_SCHEMA_OBJECT', table.id, `Inspected UNIQUE index ${index.name} has unsupported direction/collation or no verified logical constraint. Leave this table unchanged until preservation is supported.`);
+  }
+ }
+ const primaryKeyParts: RebuildLayout['primaryKeyParts'] = table.primaryKey.map(id => retainedParts.get(id) ?? { columnId: id, direction: 'ASC' });
  const sourceKey = physicalKeys.length === 1 ? physicalKeys[0] : undefined;
  const oldKey = source?.columns.find(c => c.physicalName === sourceKey?.name);
  const sourceAliasId = sourceKey && /^INTEGER$/i.test(sourceKey.type) && !pkIndex ? oldKey?.id : undefined;
@@ -67,11 +90,11 @@ function rebuildLayout(table: Table, source?: Table, physical?: PhysicalTable): 
  // A source alias is implicitly non-null even when table_xinfo.notnull is 0.
  // If its alias is explicitly removed, compile the desired NOT NULL constraint.
  if (sourceAliasId && !aliasesRowid) notNull.delete(sourceAliasId);
- return { columnTypes, notNull, aliasesRowid, ...(descendingPrimaryKeyId ? { descendingPrimaryKeyId } : {}), ...(sourceAliasId ? { sourceAliasId } : {}) };
+ return { columnTypes, notNull, primaryKeyParts, aliasesRowid, ...(descendingPrimaryKeyId ? { descendingPrimaryKeyId } : {}), ...(sourceAliasId ? { sourceAliasId } : {}) };
 }
 function createTable(table: Table, schema: Schema, name=table.physicalName, layout?: RebuildLayout) {
  const defs=table.columns.map(c=> { if(c.generated) fail('UNSUPPORTED_SCHEMA_OBJECT',c.id,'Generated columns are preserved as opaque and cannot be authored or rebuilt.'); return `${quote(c.physicalName)} ${layout?.columnTypes.get(c.id) ?? sqlType(c)}${layout?.descendingPrimaryKeyId === c.id ? ' PRIMARY KEY DESC' : ''}${(layout?.notNull.get(c.id) ?? !c.nullable) ? ' NOT NULL' : ''}${c.default?' DEFAULT ('+expression(c.default,table,'default')+')':''}`; });
- if(table.primaryKey.length && !layout?.descendingPrimaryKeyId) defs.push(`PRIMARY KEY (${names(table,table.primaryKey)})`);
+ if(table.primaryKey.length && !layout?.descendingPrimaryKeyId) defs.push(`PRIMARY KEY (${layout ? layout.primaryKeyParts.map(part => `${names(table,[part.columnId])} ${part.direction}`).join(', ') : names(table,table.primaryKey)})`);
  for(const u of table.uniqueConstraints) defs.push(`CONSTRAINT ${quote(u.id)} UNIQUE (${names(table,u.columnIds)})`);
  for(const c of table.checks) defs.push(`CONSTRAINT ${quote(c.id)} CHECK (${expression(c.expression,table,'check')})`);
  for(const f of table.foreignKeys) { const target=schema.tables.find(t=>t.id===f.referencedTableId); if(!target) fail('BROKEN_REFERENCE',f.id,'Referenced table does not exist.'); defs.push(`CONSTRAINT ${quote(f.id)} FOREIGN KEY (${names(table,f.columnIds)}) REFERENCES ${quote(target.physicalName)} (${names(target,f.referencedColumnIds)}) ON UPDATE ${f.onUpdate.replaceAll('-',' ').toUpperCase()} ON DELETE ${f.onDelete.replaceAll('-',' ').toUpperCase()}${f.deferrable?' DEFERRABLE INITIALLY DEFERRED':''}`); }

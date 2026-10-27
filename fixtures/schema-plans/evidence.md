@@ -169,3 +169,61 @@ and passed. Fresh npm audit reports zero vulnerabilities; diff-scoped lint passe
 Only the owned planner, new tests and this evidence changed in the repair. No
 shared registration, dependency, runtime upgrade, hosted sync, UI or apply changes
 were made.
+
+## Review cycle 2 — complete physical key descriptor repair
+
+Rejection event `01M5XV9HW53ZZ0ECA2CKJSETDC` correctly identified that repair
+`8aaba8a` preserved the INTEGER inline-DESC storage exception but still normalized
+other imported descending PK parts. The original artifacts are unchanged:
+
+- `/tmp/wp07-cycle2-review/variations.mjs`, SHA-256
+  `f88b568911578b7416492b70df311886dc2e45a1463835dcdfe948e0731c14b3`.
+- `/tmp/wp07-cycle2-review/variations.jsonl`, SHA-256
+  `31407788321ec770bd20f246925f7bccea95335e870b2fc431bdea1093cc50aa`.
+
+The unchanged reviewer command wrote fresh observations separately to
+`/tmp/wp07-cycle2-before.jsonl` and `/tmp/wp07-cycle2-after.jsonl`. All seven
+supported variations now retain actual PK metadata, rows/rowids and query access
+strategy. In particular, the composite `(k DESC,v ASC)` retains its covering PK
+index and adds no TEMP B-TREE. The eighth variation, WITHOUT ROWID, remains an
+explicit unsupported rebuild with unchanged source. The original cycle-1 probe
+also ran unchanged into `/tmp/wp07-cycle2-original-after.jsonl`: both rowid-50
+cases still retain rowid/key values and reject NULL keys; the ordinary native
+rename still retains alias auto-allocation.
+
+The planner now verifies the entire inspected PK descriptor: physical PK rank,
+index sequence, column name/cid mapped to stable IDs, uniqueness, partial state,
+every ASC/DESC bit and supported BINARY collation. Emitted PK parts retain those
+directions through their stable column IDs, including quoted identifiers. The
+inline INTEGER-DESC exception remains a separate, physically proven rowid-storage
+rule. Unknown mappings/directions/collations fail closed; directions are not
+inferred from SQL spellings or acceptance fixture names. Non-BINARY imported
+collations continue to block clearly instead of being normalized.
+
+A related actual self-review repro showed an anonymous descending UNIQUE could be
+omitted by logical import because its SQLite index has no standalone SQL object.
+A parent-authorized narrow guard now refuses that unrepresented/unsupported
+inspected UNIQUE by its real index name and owner table. It does not interpret
+missing logical metadata as permission to delete a physical constraint. A
+represented ASC UNIQUE plus an ordinary index remains supported; separate-DB
+execution retains both indexes and rejects actual duplicate PK/UNIQUE inserts.
+No descending-constraint authoring feature or other shared change was introduced.
+
+Eleven new public-command cases extend the nine previous physical-key cases.
+They cover inline/table INT DESC, quoted and mixed composite directions, DESC/DESC,
+ASC controls, NOCASE/RTRIM blockers, the unrepresented UNIQUE blocker and supported
+UNIQUE/index preservation. Actual metadata, row identity, ordered results and
+EXPLAIN access/sort steps are checked after executing the exact plan on a separate
+DB. The auxiliary SQLite cost estimate is not asserted equal because adding a
+column changes estimated width; actual index choice and sorting strategy are.
+
+Against the unchanged `8aaba8a` planner, the final assertions produced seven real
+failures / thirteen passes (`/tmp/wp07-cycle2-red-tests.log`); the repaired planner
+passes all twenty physical-key cases. Final `npm run verify` passes 19 files /
+197 tests, workspace source checks, production Next build, native SQLite 3.53.4
+smoke, credential scan and dependency evidence. Strict standalone test-source
+TypeScript includes all three schema-plan test files and passes. Diff lint and a
+fresh npm audit (zero reported vulnerabilities) pass. The previously reported
+NOT IMPLEMENTED generator/shared UI stage limits still apply. The repair changes
+only the owned planner, its physical-key tests and this evidence, with no UI,
+executor, dependency, shared-registration or hosted-sync expansion.
