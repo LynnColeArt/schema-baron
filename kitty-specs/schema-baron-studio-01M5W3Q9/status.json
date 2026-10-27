@@ -285,24 +285,26 @@
       "last_transition_at": "2026-10-27T05:37:12.899149+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Ready for independent review: 0340a59; reviewed SQLite apply/online backup/transaction markers/recovery/restore; 224 tests and real Studio restore E2E passed; evidence packages/sqlite/tests/migrations/EVIDENCE.md"
+        "Ready for independent review: 0340a59; reviewed SQLite apply/online backup/transaction markers/recovery/restore; 224 tests and real Studio restore E2E passed; evidence packages/sqlite/tests/migrations/EVIDENCE.md",
+        "P1 reserved marker ownership race during online backup: recheck provenance under BEGIN IMMEDIATE before DDL; independent public-core repro retained in /tmp/wp09-review-renata."
       ],
       "provider": "__resolved_provider_absent__",
+      "review": null,
       "review_result": {
         "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP09-migration-apply-backup-and-crash-recovery/review-cycle-1.md",
         "reference": "review-cycle://schema-baron-studio-01M5W3Q9/WP09-migration-apply-backup-and-crash-recovery/review-cycle-1.md",
         "reviewer": "reviewer-renata",
         "verdict": "changes_requested"
       },
-      "role": "reviewer",
-      "shell_pid": 5024,
-      "shell_pid_created_at": "1792851034.54",
+      "role": "implementer",
+      "shell_pid": null,
+      "shell_pid_created_at": null,
       "subtasks": {
-        "T041": "done",
-        "T042": "done",
-        "T043": "done",
-        "T044": "done",
-        "T045": "done"
+        "T041": "planned",
+        "T042": "planned",
+        "T043": "planned",
+        "T044": "planned",
+        "T045": "planned"
       }
     },
     "WP10": {
