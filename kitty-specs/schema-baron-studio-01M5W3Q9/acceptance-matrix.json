@@ -57,11 +57,11 @@
     {
       "criterion_id": "FR-006",
       "description": "Verify FR-006 is satisfied",
-      "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "proof_type": "review_of_versioned_source_tests_and_execution_evidence",
+      "evidence": "42c8dda615be024bdb05e13e23dabfe6b230d6e8: docs/user-guide/readiness.md FR-006; tests/e2e/connections/workflow.spec.ts; packages/sqlite/tests/introspection/connections.test.ts; docs/user-guide/readiness.md FR-006. Create/connect/introspect/preview/rebind relocated WAL database; unsupported objects and stale fingerprints diagnosed without loss; fresh databases in both visible apps. Reviewed against mission spec FR-006; versioned source/test/execution-evidence review, not a new execution.",
+      "pass_fail": "pass",
+      "verified_by": "reviewer-renata",
+      "verified_at": "2026-10-27T17:11:56.506964+00:00",
       "notes": "TODO: replace with a real acceptance criterion"
     },
     {
