@@ -1,9 +1,245 @@
 {
-  "observedAt": "2026-10-27T16:33:29.217Z",
-  "clientDate": "2026-10-26",
-  "lockSha256": "6f5b211aca580485a41f67fe8807aa46aaae3abfb04b620e8ae722701247cd57",
+  "observedAt": "2026-10-28T04:02:10.606Z",
+  "clientDate": "2026-10-27",
+  "lockSha256": "3d443184f8187d84251cf3c344700749474c7a52ce3b46db8d98c575261d1663",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
+    {
+      "path": "node_modules/@antfu/install-pkg",
+      "name": "@antfu/install-pkg",
+      "version": "2.1.0",
+      "firstPublished": "2021-09-28T04:56:09.547Z",
+      "published": "2026-09-15T01:58:39.182Z",
+      "packageModified": "2026-09-15T01:58:39.514Z",
+      "repository": {
+        "url": "git+https://github.com/antfu-collective/install-pkg.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "antfu"
+      ],
+      "integrity": "sha512-sdg9NxU3zR4Mnawfbc/x6GB5Wf17WYud5qOuEuxXjaKpYpMkISSJEjItGebXJ2bQ4DIcly4NYH23mtkGJjvKUw==",
+      "tarball": "https://registry.npmjs.org/@antfu/install-pkg/-/install-pkg-2.1.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIBhWg3aQWqOdJmFz5Zp0jXHO57wjmDyJUEguKTWANQr8AiBL7c23xLkDEh1t1TwlgrtZe9RnbZVx43PACGTPrst9/w==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEYCIQDMh8T4Bkfei6zPOtGLueT4qoo/UFTXqNlvCpMNuVlRfwIhANvhmo2rv+RjjZHRr/1NhlbWPzq1D0geV9DJRKPNlxJX"
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@antfu%2finstall-pkg@2.1.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@braintree/sanitize-url",
+      "name": "@braintree/sanitize-url",
+      "version": "7.1.2",
+      "firstPublished": "2017-08-08T21:33:28.289Z",
+      "published": "2026-01-29T18:18:48.474Z",
+      "packageModified": "2026-01-29T18:18:48.587Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/braintree/sanitize-url.git"
+      },
+      "maintainers": [
+        "braintree"
+      ],
+      "integrity": "sha512-jigsZK+sMF/cuiB7sERuo9V7N9jx+dhmHHnQyDSVdpZwVutaBu7WvNYqMDLSgFgfB30n452TP3vjDAvFC973mA==",
+      "tarball": "https://registry.npmjs.org/@braintree/sanitize-url/-/sanitize-url-7.1.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQC4aVKsv+mmxebfw3IGEAZvTk15uLntnPDMb2gXrDwTOAIgNJje4/3AMKGSo7MleEBxYxpQoH8JE1K0e/JFkjUVw9w="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@chevrotain/cst-dts-gen",
+      "name": "@chevrotain/cst-dts-gen",
+      "version": "13.2.0",
+      "firstPublished": "2021-06-12T22:47:58.101Z",
+      "published": "2026-08-01T14:02:51.094Z",
+      "packageModified": "2026-08-01T14:02:51.399Z",
+      "repository": {
+        "url": "git://github.com/Chevrotain/chevrotain.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "bd82"
+      ],
+      "integrity": "sha512-bA9dvWlhAUcHkNwU+8w9yiUxJPlj/Lm3VqS7MD+NbIR/7LmpNLuK/AWNFdCo/T3SK5ND0/UHf3IJvl/Jn/i6yg==",
+      "tarball": "https://registry.npmjs.org/@chevrotain/cst-dts-gen/-/cst-dts-gen-13.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDJga2WIc6i1dYwT6J5DZcWKnMXlzDJzz9YphwCTz8zQwIhAPOBV0C/xJrC5aiRK+1cHcQ5GT1d1yW2uqZ/OifAnlsa",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIArMLJvgt33ye4l7bk+qA/01Y9lOnhdY3urobRguOxZhAiEAnGmjB+/7VqGjVfmAHy38t2Wi3DyzngP21TfWG0RgMmk="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@chevrotain%2fcst-dts-gen@13.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@chevrotain/gast",
+      "name": "@chevrotain/gast",
+      "version": "13.2.0",
+      "firstPublished": "2022-01-17T01:08:11.090Z",
+      "published": "2026-08-01T14:01:46.416Z",
+      "packageModified": "2026-08-01T14:01:46.789Z",
+      "repository": {
+        "url": "git://github.com/Chevrotain/chevrotain.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "bd82"
+      ],
+      "integrity": "sha512-bCARdAsG+eEbOveSXcOAC7pVxA04I1ionzeMOwIYf5NX7SaS7zgn4Dgug2BSqoL+iyKeMNSorQjsFSHJHsCNwg==",
+      "tarball": "https://registry.npmjs.org/@chevrotain/gast/-/gast-13.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIFjx1yzk0bjv04q3KiD+10i5tpomdUenUMSf4TS0nTePAiADH8fJhVhGwN9rBBcg257hJiPQUXtAnaheFQqGeqWf5g==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIHVDgU9HzTwStKP3us74Q3iA/7HVSRSn7SzPPb8Ynvi7AiAYPblpIdcGAw4HismHAsUMo6EepvZigp++zTHTrlfBDQ=="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@chevrotain%2fgast@13.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@chevrotain/regexp-to-ast",
+      "name": "@chevrotain/regexp-to-ast",
+      "version": "13.2.0",
+      "firstPublished": "2023-07-11T20:31:15.844Z",
+      "published": "2026-08-01T14:01:45.602Z",
+      "packageModified": "2026-08-01T14:01:45.998Z",
+      "repository": {
+        "url": "git://github.com/Chevrotain/chevrotain.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "bd82"
+      ],
+      "integrity": "sha512-kxpUkLtiaK09ph+dib+Yvm+3sWSnuwlo25gqfKRgTPNmF6H7uW4gVkMjaRdtnN783S9sM6vUNWh9CsxYX4QwKw==",
+      "tarball": "https://registry.npmjs.org/@chevrotain/regexp-to-ast/-/regexp-to-ast-13.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIEi2pUrVnWudVhRFNm3QhWz3ueDjWaRfBtmoTnR4qxUEAiAyMpCyBLQCJW0+eeLAcIRfVUD3as9DtPvDVLdSqdcvmg==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIDWqSegB7UN5kUSiQz4W93vDV+E7314PAWnEAVuZ9kreAiEA6WaMuRbymQLuSq+BNa2jz5kCQMda8vV8xu+UY96BtBg="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@chevrotain%2fregexp-to-ast@13.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@chevrotain/types",
+      "name": "@chevrotain/types",
+      "version": "13.2.0",
+      "firstPublished": "2021-03-20T23:36:10.833Z",
+      "published": "2026-08-01T14:01:45.252Z",
+      "packageModified": "2026-08-01T14:01:45.625Z",
+      "repository": {
+        "url": "git://github.com/Chevrotain/chevrotain.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "bd82"
+      ],
+      "integrity": "sha512-7qrYHRlKfWf2AvBfJi5eVOrKAkbxvMFsy/iIHTGIiApNcEecCaVIdR+mIQhyCBsTDJxBz4JWXHMo6krbhR9hVg==",
+      "tarball": "https://registry.npmjs.org/@chevrotain/types/-/types-13.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIQCh5lXIFzGb94AIPETNYVYDHcARFIfu+iWMOCC68tfb3AIgWRBR6C9flLVTx/vnBTBukrB4c982ccKGykBqU6IPtRE=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIE645XpMbX6RtTCeljkv/xvCfEBU8bnOBdfEA45i+BIAAiEAlc2LV1BE7U/tcznllVs98iKk1ptLNSvp9tGgcKYlDPo="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@chevrotain%2ftypes@13.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@chevrotain/utils",
+      "name": "@chevrotain/utils",
+      "version": "13.2.0",
+      "firstPublished": "2021-03-20T23:36:11.287Z",
+      "published": "2026-08-01T14:01:45.442Z",
+      "packageModified": "2026-08-01T14:01:45.804Z",
+      "repository": {
+        "url": "git://github.com/Chevrotain/chevrotain.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "bd82"
+      ],
+      "integrity": "sha512-SzKYY68rseOrb9KILVzPsl6SjkQtdWw01SRGB5aCVI5kFcHltQsOYV3JB0Ffst72DgkvHCyDQ0NLwxtmCCf97Q==",
+      "tarball": "https://registry.npmjs.org/@chevrotain/utils/-/utils-13.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCICQSxlrvthp0aCV9v9vHfXXRTA5iZ5o617tz/tsgMbB8AiAYeB6dP/9HaHTo7TgafbszOgXQG0Wees1A8DO67o0YqQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIFqfn2XbgLa9bKSuDbZOFGFjYjkDpWm0EE//VWvrsj+YAiB1MOJaS4BX9C+qhj+WYZWsUjq2pd1fPzYER/g+TIxazA=="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@chevrotain%2futils@13.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
     {
       "path": "node_modules/@emnapi/runtime",
       "name": "@emnapi/runtime",
@@ -67,6 +303,64 @@
           "predicateType": "https://slsa.dev/provenance/v1"
         }
       },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@iconify/types",
+      "name": "@iconify/types",
+      "version": "2.0.0",
+      "firstPublished": "2019-12-24T13:16:56.252Z",
+      "published": "2022-09-08T06:23:03.369Z",
+      "packageModified": "2022-09-08T06:23:45.712Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iconify/iconify.git",
+        "directory": "packages/types"
+      },
+      "maintainers": [
+        "cyberalien"
+      ],
+      "integrity": "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==",
+      "tarball": "https://registry.npmjs.org/@iconify/types/-/types-2.0.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQDxRQGwODrdQ8HTqCkgfSvcSXE5ku5R62xV0D1DZwy2dAIhAMMHnZDwS+miQ9o9WUOMVIwIdzfsYbfjMa7HIWgqizfF"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@iconify/utils",
+      "name": "@iconify/utils",
+      "version": "3.1.7",
+      "firstPublished": "2021-05-24T08:00:46.920Z",
+      "published": "2026-09-06T15:35:47.555Z",
+      "packageModified": "2026-09-06T15:35:47.724Z",
+      "repository": {
+        "url": "https://github.com/iconify/iconify.git",
+        "type": "git",
+        "directory": "packages/utils"
+      },
+      "maintainers": [
+        "cyberalien"
+      ],
+      "integrity": "sha512-JZHlwdID+dy+lTgbYC8NEC4zeugqeYsc6jewvzb4c58kHauJn+X7rNwQjxz5p2qSjqaEeQoLkCIQ9v/H4PK0/w==",
+      "tarball": "https://registry.npmjs.org/@iconify/utils/-/utils-3.1.7.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDU/ey7icPAHDtyAsPj/p7WqLfVU8Eq6gi1y2HlzanxrwIhAI7tKbZZDRkGvZIVGOxENQaA/YysH8sVb/ac7KnuG5Ak",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQCLeH3ewB7yddjfrR6cDQYESzMVtxKfucxRu2gdhGNNZQIgYQVkqBhJcQohzt4kVPJl0TLhu8LvazJtJMOG6hmN0MA="
+        }
+      ],
+      "provenance": null,
       "lifecycle": {},
       "scriptsDenied": true
     },
@@ -1122,6 +1416,47 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/@mermaid-js/parser",
+      "name": "@mermaid-js/parser",
+      "version": "2.0.1",
+      "firstPublished": "2023-11-26T15:41:01.479Z",
+      "published": "2026-10-02T11:06:38.186Z",
+      "packageModified": "2026-10-02T11:06:41.008Z",
+      "repository": {
+        "url": "git+https://github.com/mermaid-js/mermaid.git",
+        "type": "git",
+        "directory": "packages/parser"
+      },
+      "maintainers": [
+        "knsv",
+        "ugnikalnis",
+        "ashishjain0512",
+        "sidv",
+        "aloisklink",
+        "p_brolin47"
+      ],
+      "integrity": "sha512-j37dj/h6p6pots1L7pLPPNuABEEu9WP4OYg9pW1g+nYG331j0+3canE9OagtYdytYvdSAMG+2fKU5cxep6LgjA==",
+      "tarball": "https://registry.npmjs.org/@mermaid-js/parser/-/parser-2.0.1.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCICUVcdylEd+HpbZ/DbxLL0eGIpjiDFJEZ9oPVishePLMAiEA1hae/rkyt2QLkIs2tCQgMQF6zkAHN0ceZFfFmB01/0Y=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQDEXUjQTDGhuvhoh7nECIBFHXaQcuDvafZVyoEldBThDwIgHmNvnwYSuknuHAZmiU1ZibmumDLql2vhkGhYK+LEZko="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@mermaid-js%2fparser@2.0.1",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/@modelcontextprotocol/sdk",
       "name": "@modelcontextprotocol/sdk",
       "version": "1.32.2",
@@ -1166,7 +1501,7 @@
       "version": "16.4.3",
       "firstPublished": "2020-09-25T15:11:40.240Z",
       "published": "2026-10-23T13:28:24.925Z",
-      "packageModified": "2026-10-26T23:49:55.505Z",
+      "packageModified": "2026-10-27T23:45:50.674Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1203,7 +1538,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:14:58.884Z",
       "published": "2026-10-23T13:28:27.602Z",
-      "packageModified": "2026-10-26T23:51:03.887Z",
+      "packageModified": "2026-10-27T23:45:25.962Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1240,7 +1575,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:15:06.322Z",
       "published": "2026-10-23T13:28:30.354Z",
-      "packageModified": "2026-10-26T23:54:36.674Z",
+      "packageModified": "2026-10-27T23:46:04.123Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1277,7 +1612,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:20.021Z",
       "published": "2026-10-23T13:27:43.529Z",
-      "packageModified": "2026-10-26T23:52:51.858Z",
+      "packageModified": "2026-10-27T23:48:04.939Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1314,7 +1649,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:25.312Z",
       "published": "2026-10-23T13:27:17.999Z",
-      "packageModified": "2026-10-26T23:50:13.222Z",
+      "packageModified": "2026-10-27T23:45:17.887Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1351,7 +1686,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:15:12.550Z",
       "published": "2026-10-23T13:28:21.884Z",
-      "packageModified": "2026-10-26T23:50:26.099Z",
+      "packageModified": "2026-10-27T23:45:02.659Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1388,7 +1723,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:37.144Z",
       "published": "2026-10-23T13:37:40.117Z",
-      "packageModified": "2026-10-26T23:53:43.105Z",
+      "packageModified": "2026-10-27T23:46:48.887Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1425,7 +1760,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:42.493Z",
       "published": "2026-10-23T13:28:37.181Z",
-      "packageModified": "2026-10-26T23:50:22.076Z",
+      "packageModified": "2026-10-27T23:45:51.455Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1462,7 +1797,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:15:18.336Z",
       "published": "2026-10-23T13:28:17.836Z",
-      "packageModified": "2026-10-26T23:52:03.602Z",
+      "packageModified": "2026-10-27T23:46:56.469Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -2279,6 +2614,141 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/@types/d3",
+      "name": "@types/d3",
+      "version": "7.4.3",
+      "firstPublished": "2016-05-17T04:44:02.449Z",
+      "published": "2023-11-07T19:52:29.365Z",
+      "packageModified": "2026-10-04T09:17:55.279Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-lZXZ9ckh5R8uiFVt8ogUNf+pIrK4EsWrx2Np75WvF/eTpJ0FMHNhjXk8CKEx/+gpHbNQyJWehbFaTvqmHWB3ww==",
+      "tarball": "https://registry.npmjs.org/@types/d3/-/d3-7.4.3.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIEzSzEy3EnDKZmpXF+BJvXc1pz6nDQnJ3+CYgGIEu/UBAiBVfkiLyf2eQCG++SnOmhNFFcrcSQb+4rEO8ugifHbwog==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-array",
+      "name": "@types/d3-array",
+      "version": "3.2.2",
+      "firstPublished": "2016-08-08T20:35:06.072Z",
+      "published": "2025-09-12T20:02:36.152Z",
+      "packageModified": "2026-10-04T09:17:55.933Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-array"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-array/-/d3-array-3.2.2.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDS4rklZXfmGckm0PXAOJra92DcMd5SkDep8S1EP0vo/wIhAIisCe3Dr7z0fRDHqrnyzTbUZG0XetgP8sGpdWn06zlg",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-axis",
+      "name": "@types/d3-axis",
+      "version": "3.0.6",
+      "firstPublished": "2016-08-08T20:35:06.740Z",
+      "published": "2023-11-07T19:52:59.521Z",
+      "packageModified": "2026-10-04T09:17:55.571Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-axis"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-pYeijfZuBd87T0hGn0FO1vQ/cgLk6E1ALJjfkC0oJ8cbwkZl3TpgS8bVBLZN+2jjGgg38epgxb2zmoGtSfvgMw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-axis/-/d3-axis-3.0.6.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIFEMHXzriRIldSbu+tr6P5bwCCEt4Y9x6pKGDwKKoVFSAiBjHBvUdlwiOfIr67I629lMNmVEE7jbB2VEvmS4resiIg==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-brush",
+      "name": "@types/d3-brush",
+      "version": "3.0.6",
+      "firstPublished": "2016-08-08T20:35:10.898Z",
+      "published": "2023-11-07T19:53:09.057Z",
+      "packageModified": "2026-10-04T09:17:55.949Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-brush"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-nH60IZNNxEcrh6L1ZSMNA28rj27ut/2ZmI3r96Zd+1jrZD++zD3LsMIjWlvg4AYrHn/Pqz4CF3veCxGjtbqt7A==",
+      "tarball": "https://registry.npmjs.org/@types/d3-brush/-/d3-brush-3.0.6.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQCNjS9tCaCH+GQXbcjutfPnYuvhjNG8Rv89C+Nr5HWv2gIhALCHXwvoIHB45LQG9VWg5qk6BuKnj39K8K8henB+5V5w",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-chord",
+      "name": "@types/d3-chord",
+      "version": "3.0.6",
+      "firstPublished": "2016-08-08T20:35:15.088Z",
+      "published": "2023-11-07T19:53:18.896Z",
+      "packageModified": "2026-10-04T09:17:56.935Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-chord"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-LFYWWd8nwfwEmTZG9PfQxd17HbNPksHBiJHaKuY1XeqscXacsS2tyoo6OdRsjf+NQYeB6XrNL3a25E3gH69lcg==",
+      "tarball": "https://registry.npmjs.org/@types/d3-chord/-/d3-chord-3.0.6.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQC3V0iJPjbaIAfgTGyu6xVNplfQKNvQGzZnRh87cRdc9QIhAKpOquCZZx09kjksfZLeQQCHBG8ulilWgVu5OoLaHVom",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/@types/d3-color",
       "name": "@types/d3-color",
       "version": "3.1.3",
@@ -2306,6 +2776,87 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/@types/d3-contour",
+      "name": "@types/d3-contour",
+      "version": "3.0.6",
+      "firstPublished": "2017-05-03T18:13:31.480Z",
+      "published": "2023-11-07T19:53:37.946Z",
+      "packageModified": "2026-10-04T09:17:57.774Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-contour"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-BjzLgXGnCWjUSYGfH1cpdo41/hgdWETu4YxpezoztawmqsvCeep+8QGfiY6YbDvfgHz/DkjeIkkZVJavB4a3rg==",
+      "tarball": "https://registry.npmjs.org/@types/d3-contour/-/d3-contour-3.0.6.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIEtHhL2H5LL7tFKTbaa7skyLeITMywtI8fk/QtUH5ydoAiEAqzYHHjeT//dLf2u8j4I0rdYKm9FCOwcdFkg+dYy97p8=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-delaunay",
+      "name": "@types/d3-delaunay",
+      "version": "6.0.4",
+      "firstPublished": "2018-09-10T21:56:09.374Z",
+      "published": "2023-11-07T19:53:47.744Z",
+      "packageModified": "2026-10-04T09:17:58.270Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-delaunay"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-ZMaSKu4THYCU6sV64Lhg6qjf1orxBthaC161plr5KuPHo3CNm8DTHiLw/5Eq2b6TsNP0W0iJrUOFscY6Q450Hw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-delaunay/-/d3-delaunay-6.0.4.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIFzdoHC7gOVrVBC2NEYpW+8I2bEsp3pZbTQit+i+au4LAiBvtly6voayem7bz3alUnppF6o1LjJnBqSX/RUZ+nwljQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-dispatch",
+      "name": "@types/d3-dispatch",
+      "version": "3.0.7",
+      "firstPublished": "2016-08-08T20:35:23.445Z",
+      "published": "2025-07-30T13:15:13.772Z",
+      "packageModified": "2026-10-04T09:17:58.621Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-dispatch"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-5o9OIAdKkhN1QItV2oqaE5KMIiXAvDWBDPrD85e58Qlz1c1kI/J0NcqbEG88CoTwJrYe7ntUCVfeUl2UJKbWgA==",
+      "tarball": "https://registry.npmjs.org/@types/d3-dispatch/-/d3-dispatch-3.0.7.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDk904Pk6rBZne0+CfWVYhOw0CMHwQCqezqV5it02iGDwIhAJjWHCfTfvOud3c4VtwHD9Wmjx5eLslAPHf/UIGAF1rP",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/@types/d3-drag",
       "name": "@types/d3-drag",
       "version": "3.0.7",
@@ -2325,6 +2876,199 @@
       "signatures": [
         {
           "sig": "MEQCIDNCfPcMEGHVdGOGnZLLsbTat/KbT+fbBi1Xpt2hkOTHAiAN4AExVtWpqL1ZbRZKcxO960aeFHl+QVLyuCGZZAgcqQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-dsv",
+      "name": "@types/d3-dsv",
+      "version": "3.0.7",
+      "firstPublished": "2016-05-17T04:44:08.299Z",
+      "published": "2023-11-07T19:54:17.990Z",
+      "packageModified": "2026-10-04T09:18:00.468Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-dsv"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-n6QBF9/+XASqcKK6waudgL0pf/S5XHPPI8APyMLLUHd8NqouBGLsU8MgtO7NINGtPBtk9Kko/W4ea0oAspwh9g==",
+      "tarball": "https://registry.npmjs.org/@types/d3-dsv/-/d3-dsv-3.0.7.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDhS+jRmsMrzplxr7na8V8mRmjzRXb+CSu/O0FrPpJd3gIhANNHcLo6LHYipQKSJWRlxI4IRL0ryiaIC1SWP6oDZpzH",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-ease",
+      "name": "@types/d3-ease",
+      "version": "3.0.2",
+      "firstPublished": "2016-08-08T20:35:25.206Z",
+      "published": "2023-11-07T19:54:31.301Z",
+      "packageModified": "2026-10-04T09:18:00.068Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-ease"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-NcV1JjO5oDzoK26oMzbILE6HW7uVXOHLQvHshBUW4UMdZGfiY6v5BeQwh9a9tCzv+CeefZQHJt5SRgK154RtiA==",
+      "tarball": "https://registry.npmjs.org/@types/d3-ease/-/d3-ease-3.0.2.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDDV6w0oA9m8jC/Gzj2B0wHaREyrIsJQ2iIwCQhINm5gQIhAMogl+FseMtpGr4pV91QkDj4wnvN9x+fwG3hltRJjYwc",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-fetch",
+      "name": "@types/d3-fetch",
+      "version": "3.0.7",
+      "firstPublished": "2018-01-31T23:36:20.731Z",
+      "published": "2023-11-07T19:54:40.598Z",
+      "packageModified": "2026-10-04T09:18:00.618Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-fetch"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-fTAfNmxSb9SOWNB9IoG5c8Hg6R+AzUHDRlsXsDZsNp6sxAEOP0tkP3gKkNSO/qmHPoBFTxNrjDprVHDQDvo5aA==",
+      "tarball": "https://registry.npmjs.org/@types/d3-fetch/-/d3-fetch-3.0.7.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIBUN7aAQ3ggKuUnl+MYX+BXXx0T7OzEdRfYx0uszuYViAiBLSg3+t0NnbD3b5mAkh6nMJ9uvNJbB7O7vbWbrKAbKCw==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-force",
+      "name": "@types/d3-force",
+      "version": "3.0.10",
+      "firstPublished": "2016-08-08T20:35:29.176Z",
+      "published": "2024-06-17T20:08:32.766Z",
+      "packageModified": "2026-10-04T09:18:00.929Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-force"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-ZYeSaCF3p73RdOKcjj+swRlZfnYpK1EbaDiYICEEp5Q6sUiqFaFQ9qgoshp5CzIyyb/yD09kD9o2zEltCexlgw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-force/-/d3-force-3.0.10.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQCz6HjVHvy7FX7bxCO7jpYnuR8E532Dc18S931wW53hCAIhALkHpbITnBWPc1c3KaVTvkMM7uTwsSA2gDdCnE8D7ZB1",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-format",
+      "name": "@types/d3-format",
+      "version": "3.0.4",
+      "firstPublished": "2016-08-08T20:35:33.150Z",
+      "published": "2023-11-07T19:55:03.445Z",
+      "packageModified": "2026-10-04T09:18:01.154Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-format"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-fALi2aI6shfg7vM5KiR1wNJnZ7r6UuggVqtDA+xiEdPZQwy/trcQaHnwShLuLdta2rTymCNpxYTiMZX/e09F4g==",
+      "tarball": "https://registry.npmjs.org/@types/d3-format/-/d3-format-3.0.4.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDgwaz5mnMcYaBIYYBEayWGnjq1obiNvbUydG+z4hM+eQIhAIYXd35urS5DwqDN/mlOeohdozP81XnepJuVpGSSrXo/",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-geo",
+      "name": "@types/d3-geo",
+      "version": "3.1.1",
+      "firstPublished": "2016-08-22T17:57:11.190Z",
+      "published": "2026-07-31T18:08:08.149Z",
+      "packageModified": "2026-10-04T09:18:02.160Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-geo"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-65Emv9fQiQQqphLlRkuQ5ypPsOmWPhtBGCMv61JDPEPMvsx+gzhGf74yw1a78xFKPj6zw4AgQICJoQv0vK9M2w==",
+      "tarball": "https://registry.npmjs.org/@types/d3-geo/-/d3-geo-3.1.1.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDDMJKW1W4ktHVGCJOaZl2/B5dhaCb62TgGq/3uoVAJ9QIhAO5Mr+lPcbH7d1Ohu9huHjj6Lic0TJyJoX2kwJ0dTvoZ",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEUCIQCLMrSsLZbSxNw8Mfg9tWL0c6oFiSIke9X4xRT8DfB3iwIgNlq/Qp/rDzRvLfKXHEZkQ3r4c+CAW4mFxtqHA+9PCes=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-hierarchy",
+      "name": "@types/d3-hierarchy",
+      "version": "3.1.7",
+      "firstPublished": "2016-08-08T20:35:33.812Z",
+      "published": "2024-03-18T18:36:07.295Z",
+      "packageModified": "2026-10-04T09:18:02.758Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-hierarchy"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-tJFtNoYBtRtkNysX1Xq4sxtjK8YgoWUNpIiUee0/jHGRwqvzYxkq0hGVbbOGSz+JgFxxRu4K8nb3YpG3CMARtg==",
+      "tarball": "https://registry.npmjs.org/@types/d3-hierarchy/-/d3-hierarchy-3.1.7.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIGnY3msSoCMX2Nu2/J9vYxCUoFDfesCFAdXwFqllmt5IAiEApKmp+REKUfvW43qZ6glFvfxR6iiGf27jAHcQ64y3STw=",
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
@@ -2360,6 +3104,168 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/@types/d3-path",
+      "name": "@types/d3-path",
+      "version": "3.1.1",
+      "firstPublished": "2016-08-08T20:35:38.625Z",
+      "published": "2025-02-04T22:02:38.070Z",
+      "packageModified": "2026-10-04T09:18:03.170Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-path"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-VMZBYyQvbGmWyWVea0EHs/BwLgxc+MKi1zLDCONksozI4YJMcTt8ZEuIR4Sb1MMTE8MMW49v0IwI5+b7RmfWlg==",
+      "tarball": "https://registry.npmjs.org/@types/d3-path/-/d3-path-3.1.1.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIDK4uI47XPIElESbhswY8uXSW9swO8ItLPcHo9rPXYNYAiEAms2GSAhKs3nc9qxOYryli0A4FXQ6SHkG0c0BtMpncnw=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-polygon",
+      "name": "@types/d3-polygon",
+      "version": "3.0.2",
+      "firstPublished": "2016-08-08T20:35:42.698Z",
+      "published": "2023-11-07T19:56:06.355Z",
+      "packageModified": "2026-10-04T09:18:05.221Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-polygon"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-ZuWOtMaHCkN9xoeEMr1ubW2nGWsp4nIql+OPQRstu4ypeZ+zk3YKqQT0CXVe/PYqrKpZAi+J9mTs05TKwjXSRA==",
+      "tarball": "https://registry.npmjs.org/@types/d3-polygon/-/d3-polygon-3.0.2.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDgKxtelt0OEmERrBJEK785m0Rxu3Bd0IwtWe7OcH4dGAIhALLFcwybsQ8LBianw3Hp40j2UAZruDGYQl/K+XlKV7lT",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-quadtree",
+      "name": "@types/d3-quadtree",
+      "version": "3.0.6",
+      "firstPublished": "2016-08-08T20:35:43.376Z",
+      "published": "2023-11-22T00:56:08.684Z",
+      "packageModified": "2026-10-04T09:18:04.690Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-quadtree"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-oUzyO1/Zm6rsxKRHA1vH0NEDG58HrT5icx/azi9MF1TWdtttWl0UIUsjEQBBh+SIkrpd21ZjEv7ptxWys1ncsg==",
+      "tarball": "https://registry.npmjs.org/@types/d3-quadtree/-/d3-quadtree-3.0.6.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIG4F2ORZT72gFCHgofxqW4jJ4SeDQZpSFOYknJqnDHmGAiEA4QV7x4H3Kdn1NloFfPhBlSm+lm18kB2DRC5YxhfV5v4=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-random",
+      "name": "@types/d3-random",
+      "version": "3.0.4",
+      "firstPublished": "2016-08-08T20:35:48.083Z",
+      "published": "2026-07-02T18:30:19.132Z",
+      "packageModified": "2026-10-04T09:18:04.938Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-random"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-UHYId5WTCx4L4YNel7NU00XUXXgvgpgZOvp10PuvsQENjMDXhh2RyFc0KBjO7B45ne4Ha1yVH7ii0vnzKkuzWA==",
+      "tarball": "https://registry.npmjs.org/@types/d3-random/-/d3-random-3.0.4.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIDr9FfHsQQ5mk2unJOuN6cyD1cO2+o1jFmRnOV0qCorPAiBWRTqdjdnHYauz6/YlHRvOpufp0XWN0t6v3vQlXSnGtg==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-scale",
+      "name": "@types/d3-scale",
+      "version": "4.0.9",
+      "firstPublished": "2016-08-08T20:35:52.292Z",
+      "published": "2025-02-05T00:46:59.854Z",
+      "packageModified": "2026-10-04T09:18:05.382Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-scale"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-dLmtwB8zkAeO/juAMfnV+sItKjlsw2lKdZVVy6LRr0cBmegxSABiLEpGVmSJJ8O08i4+sGR6qQtb6WtuwJdvVw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-scale/-/d3-scale-4.0.9.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIAdiL4WTAf8ItJfO4bLnkKOddH1jHBAQBhccu0c+gc96AiEAmmyEABqrC9KfCAZGJEizYKYYLuv3AUWDoecOAnfdWyM=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-scale-chromatic",
+      "name": "@types/d3-scale-chromatic",
+      "version": "3.1.0",
+      "firstPublished": "2016-09-21T14:03:55.683Z",
+      "published": "2024-11-27T21:33:24.203Z",
+      "packageModified": "2026-10-04T09:18:05.414Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-scale-chromatic"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-iWMJgwkK7yTRmWqRB5plb1kadXyQ5Sj8V/zYlFGMUBbIPKQScw+Dku9cAAMgJG+z5GYDoMjWGLVOvjghDEFnKQ==",
+      "tarball": "https://registry.npmjs.org/@types/d3-scale-chromatic/-/d3-scale-chromatic-3.1.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIHo8FI3G06SrZY1kuYB/JUyV2wycoeykqvjDSdRoG2NaAiBj11BpWzYpZMC/OSxVy5ASuAT7IoOviugIwBglbToNSQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/@types/d3-selection",
       "name": "@types/d3-selection",
       "version": "3.0.12",
@@ -2384,6 +3290,118 @@
         {
           "sig": "MEUCIHDlxk509q8sTkjF7yCvLYdbprpSZ1qTEhbWeF8S+6xiAiEA052iSpol1o77JaTAn6+FKiSmwHMIoxz54NK4CiKcG98=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-shape",
+      "name": "@types/d3-shape",
+      "version": "3.2.0",
+      "firstPublished": "2016-08-08T20:35:56.927Z",
+      "published": "2026-08-21T21:39:11.144Z",
+      "packageModified": "2026-10-04T09:18:07.022Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-shape"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-kVd74ta9eof3eJOvbNd1vGKS/XERRyQbT26Og63hIsvDO84cjD5gEOhsXf26w3FSoNlPVz84DOFcKv/oou+fMw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-shape/-/d3-shape-3.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQCWecqI1OQr3J4TojU8ivxYFcDitqEgr/kKOLZ8KOXfWgIhALI3q/pa1tKm2FIgz6KHDCdsABMmoiapodiKdQ1ssPXE",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEYCIQDccbfHEPXx99+B5h9nLZrgC0H82Ve2fiYW0k+f+GjAnAIhAPtOcmEYosdZTbkPgZLFK9VFYdNNXMgL86UsyzbLP15b",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-time",
+      "name": "@types/d3-time",
+      "version": "3.0.4",
+      "firstPublished": "2016-08-08T20:36:01.270Z",
+      "published": "2024-11-25T10:02:27.849Z",
+      "packageModified": "2026-10-04T09:18:07.493Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-time"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-yuzZug1nkAAaBlBBikKZTgzCeA+k1uy4ZFwWANOfKw5z5LRhV0gNA7gNkKm7HoK+HRN0wX3EkxGk0fpbWhmB7g==",
+      "tarball": "https://registry.npmjs.org/@types/d3-time/-/d3-time-3.0.4.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIEm3T2jBUZxriOrpFayWAvBLgOUgnmwDWpcHvTL+OQxaAiEAlngRGeiLkMdVVyXWuaiuyYjX/1GMIv0S+EZpMcUu/lA=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-time-format",
+      "name": "@types/d3-time-format",
+      "version": "4.0.3",
+      "firstPublished": "2016-08-08T20:36:05.535Z",
+      "published": "2023-11-07T19:57:40.287Z",
+      "packageModified": "2026-10-04T09:18:07.448Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-time-format"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-5xg9rC+wWL8kdDj153qZcsJ0FWiFt0J5RB6LYUNZjwSnesfblqrI/bJ1wBdJ8OQfncgbJG5+2F+qfqnqyzYxyg==",
+      "tarball": "https://registry.npmjs.org/@types/d3-time-format/-/d3-time-format-4.0.3.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDOW9mfQrtx1ZccKFKxxUx+JmGKyAkmlgY3Y2OvyBG4ewIhAP0+tURD/AHFyaPsDTFwH1wWxfVyL6NeajrL2WjtYhHL",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/d3-timer",
+      "name": "@types/d3-timer",
+      "version": "3.0.2",
+      "firstPublished": "2016-08-08T20:36:09.580Z",
+      "published": "2023-11-07T19:57:54.045Z",
+      "packageModified": "2026-10-04T09:18:07.545Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/d3-timer"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-Ps3T8E8dZDam6fUyNiMkekK3XUsaUEik+idO9/YjPtfj2qruF8tFBXS7XhtE4iIXBLxhmLjP3SXpLhVf21I9Lw==",
+      "tarball": "https://registry.npmjs.org/@types/d3-timer/-/d3-timer-3.0.2.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIQD3Tizt9+h5XYrEdeEgCZ7H0WQYNSW0CzoVn623YYq+pwIgW4zXkH5irvhQyBy9dLh3zQrpUZr7vqJsbo0JwiA6fko=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -2503,6 +3521,33 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/@types/geojson",
+      "name": "@types/geojson",
+      "version": "7946.0.16",
+      "firstPublished": "2016-05-17T05:01:20.730Z",
+      "published": "2025-01-23T18:37:01.847Z",
+      "packageModified": "2026-10-04T08:33:28.556Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/geojson"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==",
+      "tarball": "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.16.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIBqch7O8MI5jLeLlLx+PUWRJTnDM5b2h4HPkoMLywEHoAiBjloqS+2e4AJ/9+xrWLp1jbN0N2WduWMDvHYIZzO67sQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/@types/node",
       "name": "@types/node",
       "version": "24.19.2",
@@ -2589,6 +3634,33 @@
         {
           "sig": "MEYCIQDfRDroOzjwBEz1yqXRbBWKCYOt7p/DKB+WIMPoMWCfUAIhAMPChj/cPQOALZVIGvV0h+QYQERrlQ5RJZb3dptWvQFV",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/@types/trusted-types",
+      "name": "@types/trusted-types",
+      "version": "2.0.7",
+      "firstPublished": "2019-01-19T01:21:34.387Z",
+      "published": "2023-11-21T01:13:25.434Z",
+      "packageModified": "2026-10-04T09:12:28.097Z",
+      "repository": {
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "type": "git",
+        "directory": "types/trusted-types"
+      },
+      "maintainers": [
+        "types"
+      ],
+      "integrity": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==",
+      "tarball": "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.7.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIQC+2CO1aDVqVXRMel81PXQqA3m8Pqazy2rOf6x9sYv/5wIgTz1fvZGcPh3dTr7ePJxTfe6nvKgvM/1Z9+As1CSTExE=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -3236,6 +4308,32 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/@upsetjs/venn.js",
+      "name": "@upsetjs/venn.js",
+      "version": "2.0.0",
+      "firstPublished": "2020-06-18T08:20:47.693Z",
+      "published": "2024-11-17T19:38:29.050Z",
+      "packageModified": "2025-12-28T18:09:32.295Z",
+      "repository": {
+        "url": "https://github.com/upsetjs/venn.js.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "sgratzl"
+      ],
+      "integrity": "sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==",
+      "tarball": "https://registry.npmjs.org/@upsetjs/venn.js/-/venn.js-2.0.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIHLsz1ieSVelNUU+3UGLUAobPzKvDFz5zQ3zI2HJUx+8AiEAhxy4EDLmCTvDe77BtJGCOh0FNOT+LKVrT6GwRbqSWtQ=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/@vitest/mocker",
       "name": "@vitest/mocker",
       "version": "5.0.5",
@@ -3527,7 +4625,7 @@
       "version": "2.11.33",
       "firstPublished": "2024-11-29T10:34:28.533Z",
       "published": "2026-10-25T17:29:32.531Z",
-      "packageModified": "2026-10-25T17:29:32.842Z",
+      "packageModified": "2026-10-27T19:18:59.632Z",
       "repository": {
         "url": "git+https://github.com/web-platform-dx/baseline-browser-mapping.git",
         "type": "git"
@@ -3543,8 +4641,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQCBVX1iYUF6fsYb7VhUc1frmcehB7aK2WTB6lwrEcmBqQIgF7uvxfog3rt0GzVI1eoe61eIUK8ervBKE4fSf0fGNVs="
+          "sig": "MEUCIQCBVX1iYUF6fsYb7VhUc1frmcehB7aK2WTB6lwrEcmBqQIgF7uvxfog3rt0GzVI1eoe61eIUK8ervBKE4fSf0fGNVs=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -3805,6 +4903,41 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/chevrotain",
+      "name": "chevrotain",
+      "version": "13.2.0",
+      "firstPublished": "2015-05-30T19:53:56.532Z",
+      "published": "2026-08-01T14:01:53.674Z",
+      "packageModified": "2026-08-01T14:01:54.046Z",
+      "repository": {
+        "url": "git://github.com/Chevrotain/chevrotain.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "bd82"
+      ],
+      "integrity": "sha512-GTouk5YzgBxlTPCaDn5q0q2EJKkrYmnPF+HmF8v0Qo4r3iyPG7HJivkN1wthCXZcm3sIcZFpGTRovLPNdJNRCA==",
+      "tarball": "https://registry.npmjs.org/chevrotain/-/chevrotain-13.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIQDnn0TACMaCxVjDUD23zLYNQOSmnXX3MPyBEl55/WX8aAIgYMEDCob2tGn4YCxvdgPc0f/9hBdCqRHHNTGcSPeTI/o=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIBZhHGKStXf1lZIk+x31cJwdvauBVqz+i0yOlns8dazvAiAS5gX3vuDD5E8XgZkd8OVKezkCZ9r3YE5rRPq20G2XGQ=="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/chevrotain@13.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/classcat",
       "name": "classcat",
       "version": "5.0.5",
@@ -3849,6 +4982,37 @@
         {
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
           "sig": "MEYCIQCONIkLr5EhLzm5+uEnLCRP+UKwk93KtwvJPN0ngV7N1AIhAPEGlYfT5k5SZ5auol+Ox76phWquF/2i9g4NJ0VtB47O"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/commander",
+      "name": "commander",
+      "version": "7.2.0",
+      "firstPublished": "2011-08-14T22:17:51.639Z",
+      "published": "2021-03-21T21:56:16.053Z",
+      "packageModified": "2026-09-02T19:31:26.165Z",
+      "repository": {
+        "url": "git+https://github.com/tj/commander.js.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "zhiyelee",
+        "somekittens",
+        "tjholowaychuk",
+        "vanesyan",
+        "shadowspawn",
+        "abetomo"
+      ],
+      "integrity": "sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==",
+      "tarball": "https://registry.npmjs.org/commander/-/commander-7.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIBflDnZJYcPmn5yXDFWwb4LBZUuBOgEJi9vXWkkVGnvDAiA+SOYBJIcvrnLcyhTsa0RQlj+iRp3vQBT+kTFM4ZDDig==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -3996,6 +5160,32 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/cose-base",
+      "name": "cose-base",
+      "version": "1.0.3",
+      "firstPublished": "2019-04-12T09:08:09.509Z",
+      "published": "2020-05-19T14:42:53.461Z",
+      "packageModified": "2023-01-17T13:03:54.868Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iVis-at-Bilkent/cose-base.git"
+      },
+      "maintainers": [
+        "ivisatbilkent"
+      ],
+      "integrity": "sha512-s9whTXInMSgAp/NVXVNuVxVKzGH2qck3aQlVHxDCdAEPgtMKwc4Wq6/QKhgdEdgbLSi9rBTAcPoRa6JpiG4ksg==",
+      "tarball": "https://registry.npmjs.org/cose-base/-/cose-base-1.0.3.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQDG+2M5XdSBjhRw8pwqxavsuCvfWnhdbb30eaLpCh2K4QIgKbdwVgrf2azUK6uoPVRsbp4B7gna6rNhY1cQPqg+jmo="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/cross-spawn",
       "name": "cross-spawn",
       "version": "7.0.6",
@@ -4049,6 +5239,296 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/cytoscape",
+      "name": "cytoscape",
+      "version": "3.34.4",
+      "firstPublished": "2012-10-18T20:28:28.001Z",
+      "published": "2026-10-15T19:14:50.649Z",
+      "packageModified": "2026-10-15T19:14:51.041Z",
+      "repository": {
+        "url": "git+https://github.com/cytoscape/cytoscape.js.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "maxkfranz",
+        "dylanfong",
+        "mikekucera",
+        "chrtannus",
+        "sreuland",
+        "ndexbio-org"
+      ],
+      "integrity": "sha512-msY99tMY8iWTg+sIPGfSqDcPNOt4xcj+v/K/7qUFaCUxxlqnMkUYLBjRUzn9W5CU/R2hrmtJa5+UtovrEM2ctg==",
+      "tarball": "https://registry.npmjs.org/cytoscape/-/cytoscape-3.34.4.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIGCzxn1J/n4oemAdGuZnK9Jwo/Ufx4pOL8/0nn6kiLafAiAb+lwlTmrNZTiIwLBygMUJRLJ0gCzsNKhBx8weh9JYTg==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEYCIQCygSia5TXRV/AdzAKSpwq9bvPiRk3c6lkT1lPkHUeAkAIhAKK+gW4x7yxDfryOMiWShwZeK+o6Wyo+K6RTdX+hN2nf"
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/cytoscape@3.34.4",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/cytoscape-cose-bilkent",
+      "name": "cytoscape-cose-bilkent",
+      "version": "4.1.0",
+      "firstPublished": "2015-09-09T20:35:29.897Z",
+      "published": "2019-09-09T10:40:52.713Z",
+      "packageModified": "2026-08-06T18:20:01.202Z",
+      "repository": {
+        "url": "git+https://github.com/cytoscape/cytoscape.js-cose-bilkent.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "balcihasan",
+        "cytoscapenpm",
+        "dylanfong",
+        "maxkfranz",
+        "metincansiper",
+        "mj3cheun",
+        "ugurdogrusoz"
+      ],
+      "integrity": "sha512-wgQlVIUJF13Quxiv5e1gstZ08rnZj2XaLHGoFMYXz7SkNfCDOOteKBE6SYRfA9WxxI/iBc3ajfDoc6hb/MRAHQ==",
+      "tarball": "https://registry.npmjs.org/cytoscape-cose-bilkent/-/cytoscape-cose-bilkent-4.1.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQC5+SNfJ+533Qfhfb1SEbEbxG9ek/yb4asqYTTPZ6Gv4QIhANgjqZtgcK714eXoo86yjb69G/i98JX2jAJUoNxJhp3W",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/cytoscape-fcose",
+      "name": "cytoscape-fcose",
+      "version": "2.2.0",
+      "firstPublished": "2019-04-12T12:42:10.774Z",
+      "published": "2023-01-17T13:53:14.042Z",
+      "packageModified": "2023-01-17T13:53:14.183Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iVis-at-Bilkent/cytoscape.js-fcose.git"
+      },
+      "maintainers": [
+        "ivisatbilkent"
+      ],
+      "integrity": "sha512-ki1/VuRIHFCzxWNrsshHYPs6L7TvLu3DL+TyIGEsRcvVERmxokbf5Gdk7mFxZnTdiGtnA4cfSmjZJMviqSuZrQ==",
+      "tarball": "https://registry.npmjs.org/cytoscape-fcose/-/cytoscape-fcose-2.2.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQD0bNYXsSEiM6qkgwTZlA2qmFNQnGgWszBv8MI8mZrXkwIhAMpIvMcDjGSV+4htYarlZzXTNrm6AIcdubpbxAgPOoWP"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/cytoscape-fcose/node_modules/cose-base",
+      "name": "cose-base",
+      "version": "2.2.0",
+      "firstPublished": "2019-04-12T09:08:09.509Z",
+      "published": "2023-01-17T13:03:54.773Z",
+      "packageModified": "2023-01-17T13:03:54.868Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iVis-at-Bilkent/cose-base.git"
+      },
+      "maintainers": [
+        "ivisatbilkent"
+      ],
+      "integrity": "sha512-AzlgcsCbUMymkADOJtQm3wO9S3ltPfYOFD5033keQn9NJzIbtnZj+UdBJe7DYml/8TdbtHJW3j58SOnKhWY/5g==",
+      "tarball": "https://registry.npmjs.org/cose-base/-/cose-base-2.2.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQC2CXu/8LBcm2ddZx2ajirjY54p2UnHUnhKqmWHIdlFTwIgN5KAGYvaaACL72M3cnhVccoCOz+A12VYzvbiYbM/hkA="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/cytoscape-fcose/node_modules/layout-base",
+      "name": "layout-base",
+      "version": "2.0.1",
+      "firstPublished": "2019-04-12T08:33:24.169Z",
+      "published": "2021-06-25T10:40:42.314Z",
+      "packageModified": "2022-05-07T17:03:28.715Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iVis-at-Bilkent/layout-base.git"
+      },
+      "maintainers": [
+        "ivisatbilkent",
+        "metincansiper",
+        "livogindo",
+        "leonarddrv",
+        "balcihasan",
+        "mrsfy"
+      ],
+      "integrity": "sha512-dp3s92+uNI1hWIpPGH3jK2kxE2lMjdXdr+DH8ynZHpd6PUlH6x6cbuXnoMmiNumznqaNO31xu9e79F0uuZ0JFg==",
+      "tarball": "https://registry.npmjs.org/layout-base/-/layout-base-2.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCICslHbNWrhe1QAfd4ZwN923/jdNQyEl2EJP3dInSOO8+AiAX/WXqmEk/kxHZio4ELW8xDN9CFMKKytirip0Tv/T2eA=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3",
+      "name": "d3",
+      "version": "7.9.0",
+      "firstPublished": "2011-08-18T17:05:26.410Z",
+      "published": "2024-03-12T22:15:07.703Z",
+      "packageModified": "2025-05-17T15:07:03.565Z",
+      "repository": {
+        "url": "git+https://github.com/d3/d3.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-e1U46jVP+w7Iut8Jt8ri1YsPOvFpg46k+K8TpCb0P+zjCkjkPnV7WzfDJzMHy1LnA+wj5pLT1wjO901gLXeEhA==",
+      "tarball": "https://registry.npmjs.org/d3/-/d3-7.9.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDIRuVFNmkNvsR5uWNyUnloQkRVXo9FmN+gDVavATsYIQIhAP7tmx4w5GJc/ftzKx9ajlQv/ZmPNsfTAF7GnvPmPxbd",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-array",
+      "name": "d3-array",
+      "version": "3.2.4",
+      "firstPublished": "2015-12-09T00:05:07.360Z",
+      "published": "2023-05-30T21:53:24.048Z",
+      "packageModified": "2023-05-30T21:53:24.152Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-array.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg==",
+      "tarball": "https://registry.npmjs.org/d3-array/-/d3-array-3.2.4.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIB7J7S5RpXxWrAU6v5ArgA3IWiAR5RPd494w/lmZfrOGAiEAldBrCDSBSbtKq2iWhLwg0tcrsG9J8WnCNhqNbAhR8+s="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-axis",
+      "name": "d3-axis",
+      "version": "3.0.0",
+      "firstPublished": "2016-01-08T22:01:40.749Z",
+      "published": "2021-06-09T03:35:37.066Z",
+      "packageModified": "2022-06-14T07:35:27.716Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-axis.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-IH5tgjV4jE/GhHkRV0HiVYPDtvfjHQlQfJHs0usq7M30XcSBvOotpmH1IgkcXsO/5gEQZD43B//fc7SRT5S+xw==",
+      "tarball": "https://registry.npmjs.org/d3-axis/-/d3-axis-3.0.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQD1xo3eyFgDv5kj/WT9H8Jc6rRH7ZrK1Twv2ebC66w9vAIgN7jiSnjEc8zvvdl8R1Z+Lwd0yFrP+R3/jPsrZpAZTEA="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-brush",
+      "name": "d3-brush",
+      "version": "3.0.0",
+      "firstPublished": "2016-02-29T19:57:15.418Z",
+      "published": "2021-06-10T00:04:10.328Z",
+      "packageModified": "2022-06-14T07:36:20.256Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-brush.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-ALnjWlVYkXsVIGlOsuWH1+3udkYFI48Ljihfnh8FZPF2QS9o+PzGLBslO0PjzVoHLZ2KCVgAM8NVkXPJB2aNnQ==",
+      "tarball": "https://registry.npmjs.org/d3-brush/-/d3-brush-3.0.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQCsTth2XOJ7xkALtFlpu9RDpRxhfWccMY0sylVYwYSYQAIgf47O7jXDrK9og/KSGaJJzFzWsV6aV3LpCKIjTw2HHXo="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-chord",
+      "name": "d3-chord",
+      "version": "3.0.1",
+      "firstPublished": "2016-05-02T18:07:18.971Z",
+      "published": "2021-06-05T18:26:14.475Z",
+      "packageModified": "2022-06-14T07:37:23.393Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-chord.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-VE5S6TNa+j8msksl7HwjxMHDM2yNK3XCkusIlpX5kwauBfXuyLAtNg9jCp/iHH61tgI4sb6R/EIMWCqEIdjT/g==",
+      "tarball": "https://registry.npmjs.org/d3-chord/-/d3-chord-3.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCID2QljmrhTNkq6PEfgbpt560qd6g52s1YdzN1uJapFSSAiEA8sPN1wrCXcbOwNSNL+2Uamno+GCzEApmFyTEbFTaH9U="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/d3-color",
       "name": "d3-color",
       "version": "3.1.0",
@@ -4069,6 +5549,61 @@
         {
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
           "sig": "MEUCIFz00mTz0dUdKpLV8ciP7YiIVtXigzNtnYvPaGlvYsPCAiEAqNxJQJssNWi8D8HmPlNqPN4esBSsjkYSLs1ziyOvxOc="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-contour",
+      "name": "d3-contour",
+      "version": "4.0.2",
+      "firstPublished": "2017-04-04T22:42:07.378Z",
+      "published": "2023-01-11T16:36:10.656Z",
+      "packageModified": "2023-01-11T16:36:10.739Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-contour.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-4EzFTRIikzs47RGmdxbeUvLWtGedDUNkTcmzoeyg4sP/dvCexO47AaQL7VKy/gul85TOxw+IBgA8US2xwbToNA==",
+      "tarball": "https://registry.npmjs.org/d3-contour/-/d3-contour-4.0.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIGXY/YzT0nY6f7YcwadlQJ6upAVuKUUZYBnZkth5um/WAiBsA43gt4kYXq2JJAPJ9mQTt+iJfj+VxEN9SX2Kxwy+ew=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-delaunay",
+      "name": "d3-delaunay",
+      "version": "6.0.4",
+      "firstPublished": "2018-03-21T19:05:53.287Z",
+      "published": "2023-04-01T02:39:11.886Z",
+      "packageModified": "2023-04-01T02:39:12.037Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-delaunay.git"
+      },
+      "maintainers": [
+        "mourner",
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-mdjtIZ1XLAM8bm/hx3WwjfHt6Sggek7qH043O8KEjDXN40xi3vx/6pYSVTwLjEgiXQTbvaouWKynLBiUZ6SK6A==",
+      "tarball": "https://registry.npmjs.org/d3-delaunay/-/d3-delaunay-6.0.4.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIDGb8k7kl1pt3fbpgoDmGYAouGz7CrlVokoJriOxYdulAiATMRRSa3n4/j3cITLkaXL3L/m/RyZ+Iv2VAGzQI/TVPw=="
         }
       ],
       "provenance": null,
@@ -4130,6 +5665,59 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/d3-dsv",
+      "name": "d3-dsv",
+      "version": "3.0.1",
+      "firstPublished": "2015-06-05T16:28:53.023Z",
+      "published": "2021-06-05T18:32:05.522Z",
+      "packageModified": "2022-06-14T07:39:22.380Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-dsv.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-UG6OvdI5afDIFP9w4G0mNq50dSOsXHJaRE8arAS5o9ApWnIElp8GZw1Dun8vP8OyHOZ/QJUKUJwxiiCCnUwm+Q==",
+      "tarball": "https://registry.npmjs.org/d3-dsv/-/d3-dsv-3.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQCJyPAjEM9G2nXeDXbW71ef4xA8VjQudLb/wFf1joW6nwIgVLFtfYatBe4tCAuQP1TnX/xC75p4qIvuLYNM9C2XWOM="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-dsv/node_modules/iconv-lite",
+      "name": "iconv-lite",
+      "version": "0.6.3",
+      "firstPublished": "2011-11-09T17:51:01.242Z",
+      "published": "2021-05-24T03:00:17.928Z",
+      "packageModified": "2026-10-25T23:42:38.538Z",
+      "repository": {
+        "url": "git://github.com/ashtuchkin/iconv-lite.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "ashtuchkin"
+      ],
+      "integrity": "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==",
+      "tarball": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIDSW7M7mQIAkBr00ylKb0LSsUZcoFW209OCE5NNaW1gbAiAbeRO4nflTwu3LXel4cm/zTmdXnshjnilZrIfaimURZA==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/d3-ease",
       "name": "d3-ease",
       "version": "3.0.1",
@@ -4150,6 +5738,146 @@
         {
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
           "sig": "MEQCIHFhlqXOr7vnirM86vH05AVRIzEf9nSrvnzsL6PXSnP4AiBMTOlJB3Hxv8U3v4e5AaRZcSuP3nux7dy/7yo45YmomQ=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-fetch",
+      "name": "d3-fetch",
+      "version": "3.0.1",
+      "firstPublished": "2016-10-22T15:24:12.022Z",
+      "published": "2021-06-05T18:34:14.207Z",
+      "packageModified": "2022-06-14T07:40:18.279Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-fetch.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-kpkQIM20n3oLVBKGg6oHrUchHM3xODkTzjMoj7aWQFq5QEM+R6E4WkzT5+tojDY7yjez8KgCBRoj4aEr99Fdqw==",
+      "tarball": "https://registry.npmjs.org/d3-fetch/-/d3-fetch-3.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQCDRIIHUUJxWIbvPK7lusu9gLNeAj2PRCPkkWrHhFUziAIgECnLKCsUzGy2tkz7dHNFK+h7CShWSCaEnbYPggYkBK8="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-force",
+      "name": "d3-force",
+      "version": "3.0.0",
+      "firstPublished": "2016-04-05T20:53:53.026Z",
+      "published": "2021-06-05T19:11:01.836Z",
+      "packageModified": "2022-06-14T07:40:53.381Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-force.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-zxV/SsA+U4yte8051P4ECydjD/S+qeYtnaIyAs9tgHCqfguma/aAQDjo85A9Z6EKhBirHRJHXIgJUlffT4wdLg==",
+      "tarball": "https://registry.npmjs.org/d3-force/-/d3-force-3.0.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIEaXJpndljZsbLOzkoXMtJv6u9Y+VKyFc/0VrqbaKvbiAiEAizYlMqnPM68IAYCiTxayu0Yf6zsXt4W8weLlb4sWYas="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-format",
+      "name": "d3-format",
+      "version": "3.1.2",
+      "firstPublished": "2014-03-29T21:51:01.145Z",
+      "published": "2026-01-14T18:36:25.869Z",
+      "packageModified": "2026-01-14T18:36:26.150Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-format.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-AJDdYOdnyRDV5b6ArilzCPPwc1ejkHcoyFarqlPqT7zRYjhavcT3uSrqcMvsgh2CgoPbK3RCwyHaVyxYcP2Arg==",
+      "tarball": "https://registry.npmjs.org/d3-format/-/d3-format-3.1.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQDsFEKP7I/yi/uRj5CiXWxPYvSMTVuoxdPahYmvoOP8HwIgeavqgFncVj7ibjsyUAB6V1P+c63U6EQmC9nmeyWTXUQ="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/d3-format@3.1.2",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-geo",
+      "name": "d3-geo",
+      "version": "3.1.1",
+      "firstPublished": "2014-03-29T21:55:42.660Z",
+      "published": "2024-03-12T22:06:03.888Z",
+      "packageModified": "2024-03-12T22:06:04.300Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-geo.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-637ln3gXKXOwhalDzinUgY83KzNWZRKbYubaG+fGVuc/dxO64RRljtCTnf5ecMyE1RIdtqpkVcq0IbtU2S8j2Q==",
+      "tarball": "https://registry.npmjs.org/d3-geo/-/d3-geo-3.1.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIGq443qm4eIZHUlkUc0sJA2itJozyTNb3c16GMyn+axsAiAN9kmv+84enmUP60esXSwYFCJdb7/SKeJPgnv+7L7aSQ=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-hierarchy",
+      "name": "d3-hierarchy",
+      "version": "3.1.2",
+      "firstPublished": "2015-11-04T07:26:52.169Z",
+      "published": "2022-04-02T22:20:25.115Z",
+      "packageModified": "2022-06-14T07:44:58.446Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-hierarchy.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-FX/9frcub54beBdugHjDCdikxThEqjnR93Qt7PvQTOHxyiNCAlvMrHhclk3cD5VeAaq9fxmfRp+CnWw9rEMBuA==",
+      "tarball": "https://registry.npmjs.org/d3-hierarchy/-/d3-hierarchy-3.1.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIEPPHUHSBzrt0QnY8rmWdf5aLSRE2iTuqWsQ5fUgg8XeAiB9JYOWYa/okaFWd1F1iJIIa3Pjh/SD8AA1etepTPIuOw=="
         }
       ],
       "provenance": null,
@@ -4184,6 +5912,300 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/d3-path",
+      "name": "d3-path",
+      "version": "3.1.0",
+      "firstPublished": "2015-11-11T18:39:28.349Z",
+      "published": "2022-12-19T21:50:21.362Z",
+      "packageModified": "2022-12-19T21:50:21.476Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-path.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-p3KP5HCf/bvjBSSKuXid6Zqijx7wIfNW+J/maPs+iwR35at5JCbLUT0LzF1cnjbCHWhqzQTIN2Jpe8pRebIEFQ==",
+      "tarball": "https://registry.npmjs.org/d3-path/-/d3-path-3.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIB0sFa5Jb76PeadU+R6EHHayMdiUVh8p41Av1Dwvb3GOAiEA4zg76bK+ddCr49c4Ej6FYE2wKHBD+MQJuKxvEJFU2ZA="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-polygon",
+      "name": "d3-polygon",
+      "version": "3.0.1",
+      "firstPublished": "2015-07-07T03:40:17.870Z",
+      "published": "2021-06-05T18:39:45.950Z",
+      "packageModified": "2022-06-14T07:49:50.273Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-polygon.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-3vbA7vXYwfe1SYhED++fPUQlWSYTTGmFmQiany/gdbiWgU/iEyQzyymwL9SkJjFFuCS4902BSzewVGsHHmHtXg==",
+      "tarball": "https://registry.npmjs.org/d3-polygon/-/d3-polygon-3.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIB2mwCputaPVVlRYSNOjYVtJKPkKkWVxy+1RxY30iHOnAiA/RzdIFogbpBBCwiJuj6r5uLjeiVmcGZaAPGPon/GlVg=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-quadtree",
+      "name": "d3-quadtree",
+      "version": "3.0.1",
+      "firstPublished": "2015-07-02T18:05:32.874Z",
+      "published": "2021-06-05T18:40:52.989Z",
+      "packageModified": "2022-06-14T07:50:14.839Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-quadtree.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-04xDrxQTDTCFwP5H6hRhsRcb9xxv2RzkcsygFzmkSIOJy3PeRJP7sNk3VRIbKXcog561P9oU0/rVH6vDROAgUw==",
+      "tarball": "https://registry.npmjs.org/d3-quadtree/-/d3-quadtree-3.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQCwzpaMbhsBfSTcfrvXesfMuMqDlQ3Cw2jHbVCeZP3ePgIgVB5kQqdgIPLEcCAw9NltgtGSuryb8503xXVCGrlnaUs="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-random",
+      "name": "d3-random",
+      "version": "3.0.1",
+      "firstPublished": "2014-04-03T15:52:16.205Z",
+      "published": "2021-06-05T18:41:51.228Z",
+      "packageModified": "2022-06-14T07:50:39.301Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-random.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-FXMe9GfxTxqd5D6jFsQ+DJ8BJS4E/fT5mqqdjovykEB2oFbTMDVdg1MGFxfQW+FBOGoB++k8swBrgwSHT1cUXQ==",
+      "tarball": "https://registry.npmjs.org/d3-random/-/d3-random-3.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQCFC4Gtu+Y97lcE2Mbx3YT0g+ouLfspx9llvo6drLhCFgIhANAujK9ScRJp9c2IPtPlIU600WS4+uhLCrIEyrBYrXt+"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-sankey",
+      "name": "d3-sankey",
+      "version": "0.12.3",
+      "firstPublished": "2015-12-03T09:40:18.250Z",
+      "published": "2019-09-02T00:33:53.896Z",
+      "packageModified": "2022-06-14T07:51:52.735Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-sankey.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "xaranke"
+      ],
+      "integrity": "sha512-nQhsBRmM19Ax5xEIPLMY9ZmJ/cDvd1BG3UVvt5h3WRxKg5zGRbvnteTyWAbzeSvlh3tW7ZEmq4VwR5mB3tutmQ==",
+      "tarball": "https://registry.npmjs.org/d3-sankey/-/d3-sankey-0.12.3.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIExT0stpz3JnZ3U7nEqzvFTm/hg1zTMdbI/gmMsZdL44AiEA/6IqlzUopvEhuN1VCsZ197zr3YCAN8QfpBHscju5+3c="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-sankey/node_modules/d3-array",
+      "name": "d3-array",
+      "version": "2.12.1",
+      "firstPublished": "2015-12-09T00:05:07.360Z",
+      "published": "2021-03-24T16:47:25.878Z",
+      "packageModified": "2023-05-30T21:53:24.152Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-array.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-B0ErZK/66mHtEsR1TkPEEkwdy+WDesimkM5gpZr5Dsg54BiTA5RXtYW5qTLIAcekaS9xfZrzBLF/OAkB3Qn1YQ==",
+      "tarball": "https://registry.npmjs.org/d3-array/-/d3-array-2.12.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQDn5ytYo+hy9SKI8ZaqbtHgVf/bGGj60FOzM7AOE2fvgwIhAKWtWbVACuzPwnYSpgR7WyYd191LfGiRyjd6D5TARz8R"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-sankey/node_modules/d3-path",
+      "name": "d3-path",
+      "version": "1.0.9",
+      "firstPublished": "2015-11-11T18:39:28.349Z",
+      "published": "2019-11-16T18:54:23.025Z",
+      "packageModified": "2022-12-19T21:50:21.476Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-path.git"
+      },
+      "maintainers": [
+        "mbostock"
+      ],
+      "integrity": "sha512-VLaYcn81dtHVTjEHd8B+pbe9yHWpXKZUC87PzoFmsFrJqgFwDe/qxfp5MlfsfM1V5E/iVt0MmEbWQ7FVIXh/bg==",
+      "tarball": "https://registry.npmjs.org/d3-path/-/d3-path-1.0.9.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCICZr/ufjpVVjNIoYCTCzjz00rCqM2ivypJ/Bkfv3YTijAiBH3/AAWmGZpLSu6k6GP6cFA4uYvO48vn+42l02b1CQwQ=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-sankey/node_modules/d3-shape",
+      "name": "d3-shape",
+      "version": "1.3.7",
+      "firstPublished": "2015-11-11T19:35:32.768Z",
+      "published": "2019-11-16T21:52:46.460Z",
+      "packageModified": "2023-04-12T04:39:59.194Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-shape.git"
+      },
+      "maintainers": [
+        "mbostock"
+      ],
+      "integrity": "sha512-EUkvKjqPFUAZyOlhY5gzCxCeI0Aep04LwIRpsZ/mLFelJiUfnK56jo5JMDSE7yyP2kLSb6LtF+S5chMk7uqPqw==",
+      "tarball": "https://registry.npmjs.org/d3-shape/-/d3-shape-1.3.7.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIH+/tmQ+RtCjkyfW3/AOLjjtbw02BoA7YmbJj6w85zbXAiEAyqt9ajx7ayJp6dvH51aoIWeSLsp+mdAWvNIvJVWGbY4="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-sankey/node_modules/internmap",
+      "name": "internmap",
+      "version": "1.0.1",
+      "firstPublished": "2021-01-21T20:28:26.810Z",
+      "published": "2021-03-10T20:01:15.723Z",
+      "packageModified": "2022-05-06T01:05:30.176Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mbostock/internmap.git"
+      },
+      "maintainers": [
+        "mbostock"
+      ],
+      "integrity": "sha512-lDB5YccMydFBtasVtxnZ3MRBHuaoE8GKsppq+EchKL2U4nK/DmEpPHNH8MZe5HkMtpSiTSOZwfN0tzYjO/lJEw==",
+      "tarball": "https://registry.npmjs.org/internmap/-/internmap-1.0.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQDKJJ7ihNkLc6pKu9o1xLq58Lqb6KmVdtVX4DR1o0Kp2AIgXnVwv9CO/idwKtACJzMOWFqkgCb37RlM/yNi+h175i0="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-scale",
+      "name": "d3-scale",
+      "version": "4.0.2",
+      "firstPublished": "2014-03-29T22:21:16.311Z",
+      "published": "2021-09-24T17:43:03.930Z",
+      "packageModified": "2023-04-12T04:39:57.280Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-scale.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==",
+      "tarball": "https://registry.npmjs.org/d3-scale/-/d3-scale-4.0.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCICTpwtNeJSnXFdWQzBU/6j2bX1dTLmWXNc0ZVUTZQ6WJAiB5lmT4/7u/25EaOMi7T34oTvYqRjV1x5YmOxZTo87GGQ=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-scale-chromatic",
+      "name": "d3-scale-chromatic",
+      "version": "3.1.0",
+      "firstPublished": "2016-06-04T17:55:35.482Z",
+      "published": "2024-03-12T21:00:11.077Z",
+      "packageModified": "2024-03-12T21:00:11.524Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-scale-chromatic.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-A3s5PWiZ9YCXFye1o246KoscMWqf8BsD9eRiJ3He7C9OBaxKhAd5TFCdEx/7VbKtxxTsu//1mMJFrEt572cEyQ==",
+      "tarball": "https://registry.npmjs.org/d3-scale-chromatic/-/d3-scale-chromatic-3.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQDWcsfeNMHZidXBCLIuoIe/8SXsifDV8WEuRLdAK4uy8gIga+bh6PXInez1dUiDte5V7L1vok/rElZkhCidLxAg2tA="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/d3-selection",
       "name": "d3-selection",
       "version": "3.0.0",
@@ -4204,6 +6226,87 @@
         {
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
           "sig": "MEUCIQCBBXm03rNYNSj4xem0DT0BbUiPfVBdTExIHXr2lCtWAQIgb/Xld4TyR/Hs0bwz4FDmyb2+ViviaZ37Y9J1VPu++hI="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-shape",
+      "name": "d3-shape",
+      "version": "3.2.0",
+      "firstPublished": "2015-11-11T19:35:32.768Z",
+      "published": "2022-12-20T23:39:17.478Z",
+      "packageModified": "2023-04-12T04:39:59.194Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-shape.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-SaLBuwGm3MOViRq2ABk3eLoxwZELpH6zhl3FbAoJ7Vm1gofKx6El1Ib5z23NUEhF9AsGl7y+dzLe5Cw2AArGTA==",
+      "tarball": "https://registry.npmjs.org/d3-shape/-/d3-shape-3.2.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQDTtyw+AtmH6gd2uChXUEmwt8Hpqd75ntYw4hui9d7GpgIhALz/5Dp746uWIQbsJuFjrAJzwiTZLBXwqqxcipxYdD+w"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-time",
+      "name": "d3-time",
+      "version": "3.1.0",
+      "firstPublished": "2014-03-29T22:22:35.844Z",
+      "published": "2022-12-02T23:58:08.483Z",
+      "packageModified": "2022-12-02T23:58:08.574Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-time.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-VqKjzBLejbSMT4IgbmVgDjpkYrNWUYJnbCGo874u7MMKIWsILRX+OpX/gTk8MqjpT1A/c6HY2dCA77ZN0lkQ2Q==",
+      "tarball": "https://registry.npmjs.org/d3-time/-/d3-time-3.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIQCp2H7HdL9HPfkSsdemeLA2cCjiRYE3u5ejtpRIB3jZiwIgFQu39bQjS2Jk2Fohge9VKCABKHgE7HA3A9376CPQJxo="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/d3-time-format",
+      "name": "d3-time-format",
+      "version": "4.1.0",
+      "firstPublished": "2014-04-03T15:59:27.818Z",
+      "published": "2021-12-04T17:02:51.666Z",
+      "packageModified": "2023-04-12T04:40:00.953Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/d3/d3-time-format.git"
+      },
+      "maintainers": [
+        "mbostock",
+        "recifs"
+      ],
+      "integrity": "sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==",
+      "tarball": "https://registry.npmjs.org/d3-time-format/-/d3-time-format-4.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQDgeR9vxyzFyY3MjFJFQaS5GZ5oDjPad91LGj8kXGhY0gIhAM92phjBE+68qa4ppBhywXQs/KhKLyjOnbOD1HsLHvGJ"
         }
       ],
       "provenance": null,
@@ -4292,6 +6395,67 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/dagre-d3-es",
+      "name": "dagre-d3-es",
+      "version": "7.0.14",
+      "firstPublished": "2022-01-06T16:36:50.909Z",
+      "published": "2025-12-03T16:22:42.483Z",
+      "packageModified": "2025-12-03T16:22:42.649Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tbo47/dagre-es.git"
+      },
+      "maintainers": [
+        "teebo47"
+      ],
+      "integrity": "sha512-P4rFMVq9ESWqmOgK+dlXvOtLwYg0i7u0HBGJER0LZDJT2VHIPAMZ/riPxqJceWMStH5+E61QxFra9kIS3AqdMg==",
+      "tarball": "https://registry.npmjs.org/dagre-d3-es/-/dagre-d3-es-7.0.14.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQDFFlBus1UEu6eWg0SnMDPNd0kId8sT0xc19ZtsweaR6QIgJrSrJ6Va2M/fgxkUj2NCruLISC0kHRQIuIZd8W6EpkU="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/dayjs",
+      "name": "dayjs",
+      "version": "1.11.23",
+      "firstPublished": "2018-04-10T01:31:28.265Z",
+      "published": "2026-08-17T11:52:35.217Z",
+      "packageModified": "2026-08-17T11:52:35.546Z",
+      "repository": {
+        "url": "git+https://github.com/iamkun/dayjs.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "iamkun"
+      ],
+      "integrity": "sha512-QDTCU0M0MxR3hQfnlDJfwekQiaanm1ubOD231u73WBckQ/fsamwRLiE2GBz6D3a/xF1NgfiDLJjXBa1hYOYTtQ==",
+      "tarball": "https://registry.npmjs.org/dayjs/-/dayjs-1.11.23.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIB83dt0hJ9z8mt0KKSw2OwqSgFLDXhI4qeN+PWVY0QpNAiByz3gKKXkqOh1+8zv++9T03sbnaGM57ZnV4rboR4RmuQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIGlPicJaECap/wyNnO1jUZgFmWd6dHYr3bX4GmbCKhEmAiEApeZmN3tAH1Lo9ltKQVswLgOH/fgjzf82C+3Bs7JMpA8="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/dayjs@1.11.23",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/debug",
       "name": "debug",
       "version": "4.4.3",
@@ -4338,6 +6502,60 @@
         {
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
           "sig": "MEQCIE8Noe/kFkXqd7U0p6BdIRJBgjhXhJ8YzdLtey37SsKQAiA2U3gBgxYqs4Fl4BCI8hDwg7/9C9e9RQVMStBg2iQMjQ=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/delaunator",
+      "name": "delaunator",
+      "version": "5.1.0",
+      "firstPublished": "2017-05-16T22:01:29.326Z",
+      "published": "2026-03-23T09:53:23.813Z",
+      "packageModified": "2026-03-23T09:53:24.234Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mapbox/delaunator.git"
+      },
+      "maintainers": [
+        "mapbox-npm-01",
+        "mapbox-npm-02",
+        "mapbox-npm-07",
+        "mapbox-npm-03",
+        "mapbox-npm-04",
+        "mapbox-npm-09",
+        "mapbox-npm-05",
+        "mapbox-npm-06",
+        "mapbox-npm-08",
+        "mapbox-npm-advanced-actions",
+        "mapbox-npm-ci",
+        "mapbox-npm",
+        "mapbox-admin",
+        "mapbox-machine-user",
+        "mbx-npm-ci-staging",
+        "mbx-npm-ci-production",
+        "mbx-npm-01-production",
+        "mbx-npm-02-production",
+        "mbx-npm-03-production",
+        "mbx-npm-04-production",
+        "mbx-npm-05-production",
+        "mbx-npm-06-production",
+        "mbx-npm-07-production",
+        "mbx-npm-08-production",
+        "mbx-npm-09-production",
+        "mbx-npm-02-staging",
+        "mbx-npm-advanced-actions-staging",
+        "mbx-npm-advanced-actions-production",
+        "mourner"
+      ],
+      "integrity": "sha512-AGrQ4QSgssa1NGmWmLPqN5NY2KajF5MqxetNEO+o0n3ZwZZeTmt7bBnvzHWrmkZFxGgr4HdyFgelzgi06otLuQ==",
+      "tarball": "https://registry.npmjs.org/delaunator/-/delaunator-5.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIDYrWwMkrmuU/xyKhC0hO80s/CeH737kXH02MBHRx/G+AiBdIlHAnYhDejrqlIfcCCOTjGfHISpME17dayOPewQ+YQ=="
         }
       ],
       "provenance": null,
@@ -4402,6 +6620,38 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/dompurify",
+      "name": "dompurify",
+      "version": "3.4.17",
+      "firstPublished": "2014-05-21T18:34:38.970Z",
+      "published": "2026-10-12T12:41:28.880Z",
+      "packageModified": "2026-10-12T12:41:29.148Z",
+      "repository": {
+        "url": "git://github.com/cure53/DOMPurify.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "cure53"
+      ],
+      "integrity": "sha512-B/pSlYVHQ58kqISD/yDjuJ1yfzI34m1gF4lAod2bwSRhiN4K5Cl3H8Af7hqB2PmTL911tdEudnnXn5FnhRoz0w==",
+      "tarball": "https://registry.npmjs.org/dompurify/-/dompurify-3.4.17.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIBL09a/FRhPiM4b3X+TFZoT/x1DfA/0MJq2cTGk7MQ27AiEAvi1PSlcki3xWeI78qMgy+sOlgQJf7HEQurhVS2+q8MI=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIHQd4PfyWERSfyNFXtW8GM7zQouNEl8+gIMKBaoWIgMBAiBjW6IfIXg+RThMtWUn7s+khCbEzZRMhBNZ3bB307BJhQ=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {
+        "prepare": "husky"
+      },
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/dunder-proto",
       "name": "dunder-proto",
       "version": "1.0.1",
@@ -4448,6 +6698,35 @@
         {
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
           "sig": "MEYCIQCUtx4H3sjHTSa+WQT4//6YPwB6kNDV57J5TMwfv79tvgIhAPnFJlXNMI9X0jWY8b0gWz+kAdwtnfK5HMJt5o2W8Dmk"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/elkjs",
+      "name": "elkjs",
+      "version": "0.9.3",
+      "firstPublished": "2017-07-18T08:27:43.143Z",
+      "published": "2024-04-16T08:28:21.682Z",
+      "packageModified": "2026-07-17T08:07:55.021Z",
+      "repository": {
+        "url": "git+https://github.com/kieler/elkjs.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "uruuru",
+        "spoenemann",
+        "eddykasp",
+        "sdo-inf"
+      ],
+      "integrity": "sha512-f/ZeWvW/BCXbhGEf1Ujp29EASo/lk1FDnETgNKwJrsVvGZhUWCZyg3xLJjAsxfOmt8KjswHmI5EwCQcPMpOYhQ==",
+      "tarball": "https://registry.npmjs.org/elkjs/-/elkjs-0.9.3.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIAKLq1FYvRDbqhuR3i/aAvRSpS6AyBAmHpfn+nxw0tHVAiAVTMLZjK+OTNQ2Dml/6k9IYa0vyA4YdXTsnKFPjS10Vw==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -4586,6 +6865,43 @@
         }
       ],
       "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/es-toolkit",
+      "name": "es-toolkit",
+      "version": "1.53.0",
+      "firstPublished": "2024-05-23T06:21:14.855Z",
+      "published": "2026-10-24T11:53:06.614Z",
+      "packageModified": "2026-10-27T00:36:32.303Z",
+      "repository": {
+        "url": "git+https://github.com/toss/es-toolkit.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "toss-build-bot",
+        "raon0211",
+        "toss-public"
+      ],
+      "integrity": "sha512-3+AYXp9fmJ/UhHBMYj2/U+RaUouMD90SzoItyDOB2Za7W6dB7fQApFGnZPl2MF6K8/Tv1koh1JyirSx/kju6Pw==",
+      "tarball": "https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.53.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQDcM84un7WiKIdKdRVpFE6E1kLT25JYJ8ILxOo101B2XgIhANvYHOT5EFtZnDExMlp2iOxnl1pBQ+/w+GpmvFpgwiMb",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEUCIDLOifkOuL456kPT626OOM8mgdpn87IIhbnFYT5mQ+pAAiEA59D8xaqwuB90pfn21TDcAVkOrWAshxrr34jtEB4eDqU=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/es-toolkit@1.53.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
       "lifecycle": {},
       "scriptsDenied": true
     },
@@ -5178,6 +7494,32 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/hachure-fill",
+      "name": "hachure-fill",
+      "version": "0.5.2",
+      "firstPublished": "2020-05-01T01:47:22.251Z",
+      "published": "2023-09-27T00:57:38.699Z",
+      "packageModified": "2023-09-27T00:57:38.866Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pshihn/hachure-fill.git"
+      },
+      "maintainers": [
+        "shihn"
+      ],
+      "integrity": "sha512-3GKBOn+m2LX9iq+JC1064cSFprJY4jL1jCXTcpnfER5HYE2l/4EfWSGzkPa/ZDBmYI0ZOEj5VHV/eKnPGkHuOg==",
+      "tarball": "https://registry.npmjs.org/hachure-fill/-/hachure-fill-0.5.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIDwu9IQR2/WZip+NtXrX4w8f79SIlSP7ov+Th2RKJJyRAiAoUfknOJ9RP9tmCM2iiWByFlJm81HWH1AhQ1CWSWdHJw=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/has-symbols",
       "name": "has-symbols",
       "version": "1.1.0",
@@ -5319,6 +7661,32 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/import-meta-resolve",
+      "name": "import-meta-resolve",
+      "version": "4.2.0",
+      "firstPublished": "2020-09-01T23:39:32.797Z",
+      "published": "2025-08-29T18:46:15.488Z",
+      "packageModified": "2025-08-29T18:46:15.649Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wooorm/import-meta-resolve.git"
+      },
+      "maintainers": [
+        "wooorm"
+      ],
+      "integrity": "sha512-Iqv2fzaTQN28s/FwZAoFq0ZSs/7hMAHJVX+w8PZl3cY19Pxk6jFFalxQoIfW2826i/fDLXv8IiEZRIT0lDuWcg==",
+      "tarball": "https://registry.npmjs.org/import-meta-resolve/-/import-meta-resolve-4.2.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQCTVeflmv6K9KQq2YDXNNZvh7r1wlb0b/rAttZwWMLC5AIgNYgKVGg4z/HqNPv/U2M6ihXL1zSsAtYRfalIszF3F4M="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/inherits",
       "name": "inherits",
       "version": "2.0.4",
@@ -5338,6 +7706,32 @@
         {
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
           "sig": "MEQCIHXj0k+tuAUqkpeooUqc/nleKcodzFQI19krYf3DkGBZAiBW7yh/k9RVcOvSDyyahK0Lr4vyYCvkybyNbx1ELNPSVw=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/internmap",
+      "name": "internmap",
+      "version": "2.0.3",
+      "firstPublished": "2021-01-21T20:28:26.810Z",
+      "published": "2021-09-20T03:11:43.688Z",
+      "packageModified": "2022-05-06T01:05:30.176Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mbostock/internmap.git"
+      },
+      "maintainers": [
+        "mbostock"
+      ],
+      "integrity": "sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==",
+      "tarball": "https://registry.npmjs.org/internmap/-/internmap-2.0.3.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIHBmnd3DzBtSez8Kl20W7WvRu+LemFDZKGhYGlSGKBa1AiAtnwWs3fEoalUgmnEDaLcfWfnPJTabV1g8Diu9IUIMgQ=="
         }
       ],
       "provenance": null,
@@ -5538,6 +7932,128 @@
         {
           "sig": "MEQCIFo3yXEspmbPxqjrpTUR/niK0ZryS6g6bBGDYDCZTC8HAiB4lOihjPkybe99qO634bSyvmQ2qGFao2xuzqYGr7X7iQ==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/katex",
+      "name": "katex",
+      "version": "0.18.10",
+      "firstPublished": "2014-09-15T10:05:12.455Z",
+      "published": "2026-09-30T17:11:04.346Z",
+      "packageModified": "2026-10-23T20:41:36.457Z",
+      "repository": {
+        "url": "git+https://github.com/KaTeX/KaTeX.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "xymostech",
+        "gagern",
+        "kevinbarabash",
+        "edemaine",
+        "khanacademy",
+        "sophiebits",
+        "ylemkimon"
+      ],
+      "integrity": "sha512-/B6p9eY9DX7aHBfpkHdpirDTZ5QH9xTwL9y837PWuzuv41O5jFdqNQwVQEQsimY0/iVNkwBY4+4hMfhQ7d4Dbw==",
+      "tarball": "https://registry.npmjs.org/katex/-/katex-0.18.10.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCICe9HVLUV+szO0H2AWPOiWLzbdusCXF9Q85hZ6cogd0IAiAByTNoLAIN4aBt4WRdEyntufAd8n05pJy3JBEyIT/wzQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEUCIQDlwKhQpCsXvY9P65nMn6hpgOq5gekAikRcdFImMNOSpwIgVM33JcG405CvNFNu+SUxAZn1i0tXyu/h5EV3Q4FZ2dw=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {
+        "prepare": "husky"
+      },
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/katex/node_modules/commander",
+      "name": "commander",
+      "version": "15.0.0",
+      "firstPublished": "2011-08-14T22:17:51.639Z",
+      "published": "2026-05-29T09:16:23.076Z",
+      "packageModified": "2026-09-02T19:31:26.165Z",
+      "repository": {
+        "url": "git+https://github.com/tj/commander.js.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "shadowspawn",
+        "abetomo"
+      ],
+      "integrity": "sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==",
+      "tarball": "https://registry.npmjs.org/commander/-/commander-15.0.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEQCIHbcPIoW/2H1COiKh18xNP9Hj/L/kyYiMyFnc5mawsIhAiAuIUy3aUtzkIuhVJyC/fWjiXoMnV8IQeBv8XXMza7iVw==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/khroma",
+      "name": "khroma",
+      "version": "2.1.0",
+      "firstPublished": "2020-02-03T18:57:05.302Z",
+      "published": "2023-10-12T23:03:38.130Z",
+      "packageModified": "2023-10-12T23:03:38.311Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fabiospampinato/khroma.git"
+      },
+      "maintainers": [
+        "fabiospampinato"
+      ],
+      "integrity": "sha512-Ls993zuzfayK269Svk9hzpeGUKob/sIgZzyHYdjQoAdQetRKpOLj+k/QQQ/6Qi0Yz65mlROrfd+Ev+1+7dz9Kw==",
+      "tarball": "https://registry.npmjs.org/khroma/-/khroma-2.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQDqSuNt6WtxbVKr+VmzXHgcQW61YpCE5DXnlyWBfzDltQIhAOnNF9+pS6a3hYOcyxPZZSQw7ew9bTH0Zd7uKy+QwsRS"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/layout-base",
+      "name": "layout-base",
+      "version": "1.0.2",
+      "firstPublished": "2019-04-12T08:33:24.169Z",
+      "published": "2019-10-22T07:50:03.937Z",
+      "packageModified": "2022-05-07T17:03:28.715Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iVis-at-Bilkent/layout-base.git"
+      },
+      "maintainers": [
+        "balcihasan",
+        "ivisatbilkent",
+        "leonarddrv",
+        "livogindo",
+        "metincansiper",
+        "mrsfy"
+      ],
+      "integrity": "sha512-8h2oVEZNktL4BH2JCOI90iD1yXwL6iNW7KcCKT2QZgQJR2vbqDsldCTPRU9NifTCqHZci57XvQQ15YTu+sTYPg==",
+      "tarball": "https://registry.npmjs.org/layout-base/-/layout-base-1.0.2.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQCOy/EosiJnUSyjmF+na6w+WFTsw9SK4yLQwVtzmK7v3wIhAK/6+R8YyVt0njlkcNIOrrBTf/2LSkq3FV77iOfU625f"
         }
       ],
       "provenance": null,
@@ -5859,6 +8375,34 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/lodash-es",
+      "name": "lodash-es",
+      "version": "4.18.1",
+      "firstPublished": "2015-01-26T15:44:37.246Z",
+      "published": "2026-04-01T21:04:15.518Z",
+      "packageModified": "2026-04-01T21:04:15.639Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lodash/lodash.git"
+      },
+      "maintainers": [
+        "mathias",
+        "jdalton",
+        "bnjmnt4n"
+      ],
+      "integrity": "sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==",
+      "tarball": "https://registry.npmjs.org/lodash-es/-/lodash-es-4.18.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQD1ZbYD7P03sQv7gtZG1On1OGaSah6FYWvNHh5D2ptbDAIgRRnzF67eLGwcl/27/ZMP8zp1qFhCZgpUZyVoyHQ4rn4="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/magic-string",
       "name": "magic-string",
       "version": "1.4.4",
@@ -5889,6 +8433,40 @@
       ],
       "provenance": {
         "url": "https://registry.npmjs.org/-/npm/v1/attestations/magic-string@1.4.4",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/marked",
+      "name": "marked",
+      "version": "16.4.2",
+      "firstPublished": "2011-07-24T13:15:09.719Z",
+      "published": "2025-11-06T22:29:20.004Z",
+      "packageModified": "2026-10-26T14:54:50.214Z",
+      "repository": {
+        "url": "git://github.com/markedjs/marked.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "chjj",
+        "styfle",
+        "amidknight",
+        "tonybrix"
+      ],
+      "integrity": "sha512-TI3V8YYWvkVf3KJe1dRkpnjs68JUPyEa5vjKrp1XEEJUAOaQc+Qj+L1qWbPd0SJuAdQkFU0h73sXXqwDYxsiDA==",
+      "tarball": "https://registry.npmjs.org/marked/-/marked-16.4.2.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIQDnAj5pOxSgJFJBvm0J8D5mhE+deSXobripY0wpmFACbAIgPBsZJP4tCwBJba0Ypl8WdEiQhpWV5yPxL9nwWqmUiOg=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/marked@16.4.2",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -5978,6 +8556,45 @@
         }
       ],
       "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/mermaid",
+      "name": "mermaid",
+      "version": "12.2.0",
+      "firstPublished": "2014-12-02T17:39:42.546Z",
+      "published": "2026-10-13T08:42:16.513Z",
+      "packageModified": "2026-10-13T08:42:18.053Z",
+      "repository": {
+        "url": "git+https://github.com/mermaid-js/mermaid.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "ashishjain0512",
+        "p_brolin47",
+        "aloisklink",
+        "sidv",
+        "knsv"
+      ],
+      "integrity": "sha512-w7nr/SFrLO7BaVTs3dQTvYSV6nYSBj0Yy9DjBhsIJtAcHqRzXSq4Pg32ujHZ/AdWsAMNEvvhbm5dt9E2tOiHzw==",
+      "tarball": "https://registry.npmjs.org/mermaid/-/mermaid-12.2.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIFjWgZ+G+Bs9opuwrbrvm7pXJJaTzGiS2cXDrput9Sm2AiEA6BCMRMGckvHMKYFd47A1ZWB+WMFJrhmDs+xD1ggxtzU=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIB+cTuhtsuvxD4sGkpu8auBaGb5lkP8Tf3kWoWI5RVt0AiAsETvJNXDq3UxS/2pdDa5GuaFoGTaBtyv+2MFCXjIR7g=="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/mermaid@12.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
       "lifecycle": {},
       "scriptsDenied": true
     },
@@ -6224,7 +8841,7 @@
       "version": "16.4.3",
       "firstPublished": "2011-07-11T11:00:45.416Z",
       "published": "2026-10-23T13:40:24.922Z",
-      "packageModified": "2026-10-26T23:58:31.820Z",
+      "packageModified": "2026-10-27T23:54:12.456Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git"
@@ -6473,6 +9090,43 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/package-manager-detector",
+      "name": "package-manager-detector",
+      "version": "1.9.0",
+      "firstPublished": "2024-08-08T22:24:45.224Z",
+      "published": "2026-10-05T05:38:20.696Z",
+      "packageModified": "2026-10-05T05:38:20.985Z",
+      "repository": {
+        "url": "git+https://github.com/antfu-collective/package-manager-detector.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "antfu",
+        "benmccann",
+        "userquin"
+      ],
+      "integrity": "sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA==",
+      "tarball": "https://registry.npmjs.org/package-manager-detector/-/package-manager-detector-1.9.0.tgz",
+      "signatures": [
+        {
+          "sig": "MEYCIQCcLHPhoF2Uze2osYn0ZR4gjHOC5xRFhkfn/ef9470X5gIhAMtKvb/gIUGqGjXm8sYaEOUyQKxgTeTa2Y/zljCbqT1z",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIEHmEZ+Ib03gTqZKqDgoyPZecv1t5GAxLY5zSpVLdrmUAiEA1lB578loakG/OMtA5eObnWxp4lrU4pg7f0sqXGl4xR8="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/package-manager-detector@1.9.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/parseurl",
       "name": "parseurl",
       "version": "1.3.3",
@@ -6492,6 +9146,32 @@
         {
           "sig": "MEUCIAvTACbSVqWKH77Wew80ikQQrKXAT8/kc+YswvmwJjhOAiEAuTSnUkcu8IslBp1/0uxEsnDI+qxaHVeHtaTFcDzbSxE=",
           "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/path-data-parser",
+      "name": "path-data-parser",
+      "version": "0.1.0",
+      "firstPublished": "2020-04-10T04:40:09.779Z",
+      "published": "2020-04-11T08:34:44.676Z",
+      "packageModified": "2022-05-12T16:27:54.709Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pshihn/path-data-parser.git"
+      },
+      "maintainers": [
+        "shihn"
+      ],
+      "integrity": "sha512-NOnmBpt5Y2RWbuv0LMzsayp3lVylAHLPUTut412ZA3l+C4uw4ZVkQbjShYCQ8TCpUMdPapr4YjUqLYD6v68j+w==",
+      "tarball": "https://registry.npmjs.org/path-data-parser/-/path-data-parser-0.1.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEYCIQDqtvhoe/v5Xo9aSodYgH7nM0ey3xjfNBWWcJ3OXKNT/AIhAIvl7AASXFCo0ZNDjG3ujVQpJbYCBfFcIoSscLx4OJbw"
         }
       ],
       "provenance": null,
@@ -6721,6 +9401,58 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/points-on-curve",
+      "name": "points-on-curve",
+      "version": "0.2.0",
+      "firstPublished": "2020-04-10T21:01:02.508Z",
+      "published": "2020-04-14T22:30:32.582Z",
+      "packageModified": "2023-09-23T20:22:30.673Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pshihn/bezier-points.git"
+      },
+      "maintainers": [
+        "shihn"
+      ],
+      "integrity": "sha512-0mYKnYYe9ZcqMCWhUjItv/oHjvgEsfKvnUTg8sAtnHr3GVy7rGkXCb6d5cSyqrWqL4k81b9CPg3urd+T7aop3A==",
+      "tarball": "https://registry.npmjs.org/points-on-curve/-/points-on-curve-0.2.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIDxHyHRANf1GVRVejWVshZ9Zidc+2kT7RnALYI214+rXAiBrWZyt1vXw5mzfJLrRxfeMrVm8YO5Wlc5P16l/ZFwtmA=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/points-on-path",
+      "name": "points-on-path",
+      "version": "0.2.1",
+      "firstPublished": "2020-04-11T04:59:47.356Z",
+      "published": "2020-05-01T04:16:00.000Z",
+      "packageModified": "2022-05-13T03:58:54.130Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pshihn/points-on-path.git"
+      },
+      "maintainers": [
+        "shihn"
+      ],
+      "integrity": "sha512-25ClnWWuw7JbWZcgqY/gJ4FQWadKxGWk+3kR/7kD0tCaDtPPMj7oHu2ToLaVhfpnHrZzYby2w6tUA0eOIuUg8g==",
+      "tarball": "https://registry.npmjs.org/points-on-path/-/points-on-path-0.2.1.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEQCIGXLpH9Qj+6jMHjefrIpuBv6xSTiTuXfEQDYuWt1hD3ZAiA3ZWLSnVXYM2fNMSW1znIlOOUpZtjksfVBeZFglUMB6A=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/postcss",
       "name": "postcss",
       "version": "8.5.32",
@@ -6789,7 +9521,7 @@
       "version": "6.16.1",
       "firstPublished": "2011-02-04T04:40:23.617Z",
       "published": "2026-10-14T22:06:17.002Z",
-      "packageModified": "2026-10-27T06:23:47.131Z",
+      "packageModified": "2026-10-27T19:27:00.508Z",
       "repository": {
         "url": "git+https://github.com/ljharb/qs.git",
         "type": "git"
@@ -6971,6 +9703,32 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/robust-predicates",
+      "name": "robust-predicates",
+      "version": "3.0.3",
+      "firstPublished": "2019-09-01T09:38:58.155Z",
+      "published": "2026-03-22T10:28:19.122Z",
+      "packageModified": "2026-03-22T10:28:19.263Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mourner/robust-predicates.git"
+      },
+      "maintainers": [
+        "mourner"
+      ],
+      "integrity": "sha512-NS3levdsRIUOmiJ8FZWCP7LG3QpJyrs/TE0Zpf1yvZu8cAJJ6QMW92H1c7kWpdIHo8RvmLxN/o2JXTKHp74lUA==",
+      "tarball": "https://registry.npmjs.org/robust-predicates/-/robust-predicates-3.0.3.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQDvA9x8rXmq8tLZOQYCmVkcZl4/y2HkhVLYc6/2TUF3ggIgKV41mW0vaP5nlTMzhiL5UrTraLmZwhhpg7l4QVLq0vI="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/rolldown",
       "name": "rolldown",
       "version": "1.2.15",
@@ -7010,6 +9768,32 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/roughjs",
+      "name": "roughjs",
+      "version": "4.6.6",
+      "firstPublished": "2018-03-02T06:47:48.281Z",
+      "published": "2023-11-20T04:31:26.059Z",
+      "packageModified": "2023-11-20T04:31:26.237Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pshihn/rough.git"
+      },
+      "maintainers": [
+        "shihn"
+      ],
+      "integrity": "sha512-ZUz/69+SYpFN/g/lUlo2FXcIjRkSu3nDarreVdGGndHEBJ6cXPdKguS8JGxwj5HA5xIbVKSmLgr5b3AWxtRfvQ==",
+      "tarball": "https://registry.npmjs.org/roughjs/-/roughjs-4.6.6.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIEWOu7PtJgEWEYwiD7rnOK2bubDsAgsCfio5UhieJNeVAiEAviwQ2KsTzB+87HqD7fvs7qKtD4IiYHjE31kmhGMZjMw="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/router",
       "name": "router",
       "version": "2.2.0",
@@ -7031,6 +9815,32 @@
         {
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
           "sig": "MEUCIG1z9CfKLZPzyVBKnAK3covJDJ0/O73YnA4SwsesneLYAiEA22tGWJxiFBxRTEU/ot8+oZqloPqUb+g9IoNvUZR6eGM="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/rw",
+      "name": "rw",
+      "version": "1.3.3",
+      "firstPublished": "2014-04-06T18:07:34.851Z",
+      "published": "2017-01-20T17:13:07.806Z",
+      "packageModified": "2022-06-26T14:57:42.939Z",
+      "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/mbostock/rw.git"
+      },
+      "maintainers": [
+        "mbostock"
+      ],
+      "integrity": "sha512-PdhdWy89SiZogBLaw42zdeqtRJ//zFd2PgQavcICDUgJT5oW10QCRKbJ6bg4r0/UY2M6BWd5tkxuGFRvCkgfHQ==",
+      "tarball": "https://registry.npmjs.org/rw/-/rw-1.3.3.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+          "sig": "MEUCIE/iPo3718nxmpAHowzSKkOCr5vGvGFJutU14hIiA3LaAiEAg3mAVu2DGQhrnH7/QKJFYxJ3Q8YFCqshHCoDyeu0ydA="
         }
       ],
       "provenance": null,
@@ -7526,6 +10336,35 @@
       "scriptsDenied": true
     },
     {
+      "path": "node_modules/stylis",
+      "name": "stylis",
+      "version": "4.4.0",
+      "firstPublished": "2016-11-27T07:56:53.578Z",
+      "published": "2026-04-19T14:30:12.694Z",
+      "packageModified": "2026-04-19T14:30:12.817Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thysultan/stylis.js.git"
+      },
+      "maintainers": [
+        "andarist",
+        "thysultan"
+      ],
+      "integrity": "sha512-5Z9ZpRzfuH6l/UAvCPAPUo3665Nk2wLaZU3x+TLHKVzIz33+sbJqbtrYoC3KD4/uVOr2Zp+L0LySezP9OHV9yA==",
+      "tarball": "https://registry.npmjs.org/stylis/-/stylis-4.4.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEQCIGcCeieQH7ygg5WnImvXkTIss9FFCQRYILVXkaUA/O1KAiA73RFaUVDaCCCNCsDTMHLuqP/vAe3TOFvU0k/TxNZ/PA=="
+        }
+      ],
+      "provenance": null,
+      "lifecycle": {
+        "prepare": "npm run build"
+      },
+      "scriptsDenied": true
+    },
+    {
       "path": "node_modules/tinybench",
       "name": "tinybench",
       "version": "6.2.2",
@@ -7647,6 +10486,37 @@
         }
       ],
       "provenance": null,
+      "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/ts-dedent",
+      "name": "ts-dedent",
+      "version": "2.3.0",
+      "firstPublished": "2018-06-14T15:17:54.524Z",
+      "published": "2026-06-10T06:30:02.674Z",
+      "packageModified": "2026-06-10T06:30:02.954Z",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tamino-martinius/node-ts-dedent.git"
+      },
+      "maintainers": [
+        "tamino-martinius"
+      ],
+      "integrity": "sha512-JfJeIHke7y2egdGGgRAvpCwYFUsHlM2gPcrVOxFkznt/4uzQ7HFmvE63iFHVLBJNDuyDOQgijDK/tXH/f6Msjg==",
+      "tarball": "https://registry.npmjs.org/ts-dedent/-/ts-dedent-2.3.0.tgz",
+      "signatures": [
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIQCRLH3N25090ZRhFZlLgqKVErxUJvh9XS/3vUe2PaqkZAIgX6cRYRG//KGqHuoBX+SocBd9FjnjFakmClxnKkUDUQ4="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/ts-dedent@2.3.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
       "lifecycle": {},
       "scriptsDenied": true
     },
@@ -7871,6 +10741,44 @@
         }
       },
       "lifecycle": {},
+      "scriptsDenied": true
+    },
+    {
+      "path": "node_modules/uuid",
+      "name": "uuid",
+      "version": "14.0.3",
+      "firstPublished": "2011-03-31T08:12:51.801Z",
+      "published": "2026-10-10T00:30:19.423Z",
+      "packageModified": "2026-10-10T00:30:19.822Z",
+      "repository": {
+        "url": "git+https://github.com/uuidjs/uuid.git",
+        "type": "git"
+      },
+      "maintainers": [
+        "broofa",
+        "ctavan"
+      ],
+      "integrity": "sha512-Sc5u1VVln93y1Xnz4R+CunOZc7R9LUcTmhj7Rc7Eg3HVcf7rVn2FOoa812fe0W8p3jD7xeoGSYbfqCGGH2B6xw==",
+      "tarball": "https://registry.npmjs.org/uuid/-/uuid-14.0.3.tgz",
+      "signatures": [
+        {
+          "sig": "MEUCIQDX6dRpIRgEwckTu0Wl7Gjrml7JPGMmQ7et8i8UW7+OsgIgbXQshmCAUrDsGraGDnTUhnkfuBAS5UQxPJjDatLJY/w=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+          "sig": "MEUCIFwO+JVZKLzi94DfLgiu2FYiG6SYGJdKmlTniJ2DZfRdAiEA0bQ3dkVctUULak+J+oCVtr+3uB+iJPA0vq8hR0AZ7Fs="
+        }
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/uuid@14.0.3",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "lifecycle": {
+        "prepare": "if [ -d .git ]; then npx lefthook install; fi"
+      },
       "scriptsDenied": true
     },
     {

@@ -9,3 +9,13 @@ Observed online scripts-denied installation: added 191 packages into the previou
 Existing bounded incident evidence remains dated and is not relabeled as a fresh exhaustive investigation. A fresh fetch and parsed membership check of the [StepSecurity affected-package table](https://www.stepsecurity.io/blog/binding-gyp-npm-supply-chain-attack-spreads-like-worm) found no axe-core name overlap; the new installed axe package was scanned against the retained indicator set with zero matches (see axe-incident-observation.json). existing hashes/markers/postinstall-persistence posture is retained in workspace evidence. Registry signatures, exact lock integrity, scripts denied and the old exact version provide bounded acceptance for this test-only addition. No complete private vendor incident list or provenance guarantee is claimed. Node 24 remains the agreed maintenance-LTS line. The product/browser production bundles do not gain axe-core; only test scripts load it explicitly.
 
 Active executable test source was classified separately from historical reports/logs/reproduction captures. Only active developer-home npm/PATH assumptions and active retained-study/audit-asset inputs were repaired. Historical literal paths and dated observations remain intact. Surface/API/CLI/model identifiers are unchanged; this is portability bug repair rather than a terminology migration.
+
+
+## Guided setup flow diagrams (2026-10-27)
+
+Studio adds exact-pinned Mermaid 12.2.0 for local, on-demand diagram rendering.
+The updated lock and registry evidence cover its transitive graph. Installation
+used `--ignore-scripts`; no lifecycle exception or native dependency change was
+introduced. The application uses strict rendering, encoded model captions and no
+CDN scripts. Locked/installed registry metadata and packaged SQLite verification
+passed after installation. Generated applications do not depend on Mermaid.

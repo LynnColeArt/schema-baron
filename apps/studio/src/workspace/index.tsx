@@ -22,7 +22,9 @@ import { SecurityEditor } from "../security-editor/index.js";
 import { MigrationHistory } from "../migration-history/index.js";
 import { QueryBinding } from "../query-designer/binding.js";
 import { QueryDesigner } from "../query-designer/index.js";
-import { FlowMap } from "../flow-map/index.js";
+import { ApplicationFlow } from "../flow-map/preview.js";
+import { ProjectWizard } from "../project-wizard/index.js";
+import { ProjectIcons } from "./project-icons.js";
 import { SchemaEditor } from "../schema-editor/index.js";
 import { ConnectionSetup } from "../connections/index.js";
 import { Dialog, Splitter, Tabs } from "./chrome.js";
@@ -43,6 +45,7 @@ import type { Change, Editor, Kind, ObjectValue, View } from "./state.js";
 import { restore, retain } from "./session.js";
 
 type Modal =
+  | "wizard"
   | "workspace"
   | "connect"
   | "new"
@@ -470,12 +473,23 @@ export default function Workspace() {
       setBusy(false);
     }
   }
+  async function projectShortcut(id: string, destination: "open" | "flow" | "settings") {
+    setBusy(true);
+    try {
+      await openProject(id);
+      if (destination === "flow") { setSchemaActive(false); setQueryActive(false); setFlowActive(true); }
+      if (destination === "settings") dialog("settings");
+    } catch (error) { setDialogError(report(error)); }
+    finally { setBusy(false); }
+  }
   async function listProjects() {
     dialog("open");
     setBusy(true);
     try {
+      const current = await client.capabilities();
+      setCaps(current);
       const lists = await Promise.all(
-        caps.approvedRootIds.map((root) => client.list(root)),
+        current.approvedRootIds.map((root) => client.list(root)),
       );
       setSummaries(lists.flat());
     } catch (e) {
@@ -874,7 +888,7 @@ export default function Workspace() {
       </header>
       <nav className="menubar" aria-label="Studio commands">
         {caps.workspace && <button onClick={() => { setWorkspaceFolderDraft(caps.workspace?.projectsFolder ?? ""); dialog("workspace"); }} disabled={!connected || busy}>Workspace settings…</button>}
-        <button onClick={() => { setNewProjectName(""); dialog(caps.workspace && !caps.workspace.configured ? "workspace" : "new"); }} disabled={!connected || busy}>
+        <button onClick={() => { setNewProjectName(""); dialog(caps.workspace ? (!caps.workspace.configured ? "workspace" : "wizard") : "new"); }} disabled={!connected || busy}>
           New project…
         </button>
         <button
@@ -1012,7 +1026,7 @@ export default function Workspace() {
       </div>
       <div className="workspace-scroll">
         {project && <QueryDesigner key={`query-${project.id}`} active={queryActive} request={queryRequest} project={project} client={client} onChanged={acceptSnapshot} onClose={()=>setQueryActive(false)} onSelectObject={id=>{setQueryActive(false);select(id);}}/>}
-        {project && <div className="schema-viewport" role="region" aria-label="Schema viewport" tabIndex={0} style={{height:"100%",display:schemaActive?"block":"none"}}><SchemaEditor key={project.id} active={schemaActive} onConnection={()=>dialog("connection")} project={project} client={client} caps={caps} onChanged={acceptSnapshot}/></div>}
+        {project && <div className="schema-viewport" role="region" aria-label="Schema viewport" tabIndex={0} style={{height:"100%",display:schemaActive?"block":"none"}}><SchemaEditor key={project.id} active={schemaActive && !modal} onConnection={()=>dialog("connection")} project={project} client={client} caps={caps} onChanged={acceptSnapshot}/></div>}
         <div
           className="docks"
           style={
@@ -1029,7 +1043,8 @@ export default function Workspace() {
             <section className="explorer pane" aria-label="Explorer">
               <h2>Project Explorer</h2>
               <div className="explorer-project">
-                {project?.name ?? "No project"}
+                <span>{project?.name ?? "No project"}</span>
+                {project && <ProjectIcons name={project.name} disabled={busy} onFlow={() => { setSchemaActive(false); setQueryActive(false); setFlowActive(true); }} onSettings={() => dialog("settings")} />}
               </div>
               <div
                 role="tree"
@@ -1153,7 +1168,7 @@ export default function Workspace() {
                   </button>
                 )}
               </div>
-              {flowActive && model ? <div className="document-surface" style={{padding:0,overflow:"hidden"}} role="tabpanel" aria-label="Application flow map"><FlowMap key={model.id} project={model} onSelect={id=>{select(id);setHidden(v=>({...v,inspector:false}));}}/></div> : activePage && model && project ? (
+              {flowActive && model ? <div className="document-surface" style={{padding:0,overflow:"hidden"}} role="tabpanel" aria-label="Application flow map"><ApplicationFlow key={model.id} project={model} onSelect={id=>{select(id);setHidden(v=>({...v,inspector:false}));}}/></div> : activePage && model && project ? (
                 <DocumentModes
                   key={project.id + ":" + activePage.id}
                   project={project} model={model} page={activePage}
@@ -1180,9 +1195,9 @@ export default function Workspace() {
                     </p>
                     <button
                       disabled={!connected || busy}
-                      onClick={() => (project ? dialog("page") : dialog("new"))}
+                      onClick={() => (project ? dialog("page") : dialog(caps.workspace ? (caps.workspace.configured ? "wizard" : "workspace") : "new"))}
                     >
-                      {project ? "New page…" : "New blank project…"}
+                      {project ? "New page…" : caps.workspace ? "Start a project…" : "New blank project…"}
                     </button>
                   </div>
               </div>}
@@ -1455,8 +1470,9 @@ export default function Workspace() {
       </footer>
       {modal && (
         <Dialog
+          className={modal === "wizard" ? "project-setup-dialog" : undefined}
           title={
-            modal === "workspace" ? "Workspace settings" : modal === "connect"
+            modal === "wizard" ? "New project" : modal === "workspace" ? "Workspace settings" : modal === "connect"
               ? "Connect to Studio service"
               : modal === "new"
                 ? "New blank project"
@@ -1481,7 +1497,13 @@ export default function Workspace() {
           busy={busy}
           onCancel={() => setModal(null)}
         >
-          {modal === "workspace" ? (
+          {modal === "wizard" ? (
+            <ProjectWizard client={client} caps={caps} onBusy={setBusy} onCancel={() => setModal(null)} onFinished={async created => {
+              setCaps(await client.capabilities());
+              await openProject(created.id);
+              setSchemaActive(false); setQueryActive(false); setFlowActive(created.pages.length > 0);
+            }} />
+          ) : modal === "workspace" ? (
             <form onSubmit={saveWorkspace}>
               <p>{caps.workspace?.configured ? "Choose where future projects are created. Existing projects keep their current folders." : "Welcome to Schema Baron. Choose a folder for your projects to finish workspace setup."}</p>
               <label className="dialog-field">Projects folder
@@ -1586,23 +1608,13 @@ export default function Workspace() {
                 tab.
               </p>
               <div className="project-list">
-                {summaries.map((summary) => (
-                  <button
-                    key={summary.id}
-                    disabled={busy}
-                    onClick={() => {
-                      setBusy(true);
-                      void openProject(summary.id)
-                        .catch((e) => setDialogError(report(e)))
-                        .finally(() => setBusy(false));
-                    }}
-                  >
-                    <strong>{summary.name}</strong>
-                    <span>
-                      r{summary.revision}
-                      {project?.id === summary.id ? " · Current project" : ""}
-                    </span>
-                  </button>
+                {summaries.map(summary => (
+                  <div className="project-row" key={summary.id}>
+                    <button className="project-open" disabled={busy} onClick={() => void projectShortcut(summary.id, "open")}>
+                      <strong>{summary.name}</strong><span>r{summary.revision}{project?.id === summary.id ? " · Current project" : ""}</span>
+                    </button>
+                    <ProjectIcons name={summary.name} disabled={busy} onFlow={() => void projectShortcut(summary.id, "flow")} onSettings={() => void projectShortcut(summary.id, "settings")} />
+                  </div>
                 ))}
                 {!summaries.length && (
                   <p>

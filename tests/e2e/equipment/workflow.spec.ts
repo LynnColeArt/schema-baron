@@ -1088,9 +1088,7 @@ test('Equipment Desk starts blank and authors schema and forms through supported
   const second = await page.context().newPage();
   await second.goto(url);
   await button(second, 'Open / Switch…').click();
-  await second.getByRole('dialog').getByRole('button', {
-    name: /Equipment Desk/
-  }).click();
+  await second.locator('.project-list .project-open').filter({ hasText: 'Equipment Desk' }).click();
   await second.locator(`[role=treeitem][data-object-id="${settings.pages.find(q => q.route === '/')!.id}"]`).dblclick();
   await second.getByRole('tab', {
     name: 'Format',

@@ -13,7 +13,7 @@ export const entityBatchOperationSchema = z.union(Object.entries(entitySchemas).
 export type EntityBatchOperation = { [K in keyof typeof entitySchemas]: { kind: 'put'; entity: K; id: z.infer<typeof idSchema>; value: z.infer<(typeof entitySchemas)[K]> } | { kind: 'remove'; entity: K; id: z.infer<typeof idSchema> } }[keyof typeof entitySchemas];
 // No raw SQL/filesystem patch operation exists. Adapters consume the same schemas.
 export const operationInputSchemas = {
-  'project.create': z.strictObject({ name: text, approvedRoot: text, target: targetSchema, emptyDatabaseLocation: text.optional(), outputConfig: projectSchema.shape.outputConfig.optional() }),
+  'project.create': z.strictObject({ name: text, approvedRoot: text, target: targetSchema, emptyDatabaseLocation: text.optional(), outputConfig: projectSchema.shape.outputConfig.optional(), schema: schemaSchema.optional(), globalPolicyId: idSchema.optional() }),
   'project.inspect': z.strictObject({ projection: z.enum(['full', 'summary']).optional() }),
   'project.open': z.strictObject({ locator: text }),
   'project.list': z.strictObject({ approvedRoot: text }),

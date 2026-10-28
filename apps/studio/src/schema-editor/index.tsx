@@ -5,6 +5,7 @@ import { ReactFlow, Background, Controls, Handle, Position } from '@xyflow/react
 import type { Connection as FlowConnection, Node, NodeProps } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { createId, expressionSchema, idSchema, columnSchema, scalarTypeSchema, tableSchema, validateProject } from '@schema-baron/model';
+import type { MutableRefObject } from 'react';
 import type { Diagnostic, Expression, Project, ReviewedPlan, ScalarType, StableId, Table } from '@schema-baron/model';
 import { z } from 'zod';
 import { OwnerError } from '../project-ui/api.js';
@@ -227,15 +228,20 @@ function recoverFromStorage(id: string) {
     };
   }
 }
+export interface SchemaEditorController { save: () => Promise<Project | null>; dirty: boolean }
 export function SchemaEditor({
   project,
   client,
   caps,
   onChanged,
   active,
-  onConnection
+  onConnection,
+  draftMode = false,
+  controller
 }: {
   project: Project;
+  draftMode?: boolean;
+  controller?: MutableRefObject<SchemaEditorController | null>;
   active: boolean;
   onConnection: () => void;
   client: StudioClient;
@@ -267,7 +273,7 @@ export function SchemaEditor({
     [search, setSearch] = useState(''),
     [busy, setBusy] = useState(false),
     [messages, setMessages] = useState<Diagnostic[]>([]),
-    [status, setStatus] = useState(initial.warning || 'Schema drafts edit desired definitions. Save stores the model; only reviewed apply changes SQLite.');
+    [status, setStatus] = useState(initial.warning || (draftMode ? 'Create tables, add columns and set keys. Next keeps your proposal; Complete creates the database.' : 'Schema drafts edit desired definitions. Save stores the model; only reviewed apply changes SQLite.'));
   const [review, setReview] = useState<Migration | null>(null),
     [reviewOpen, setReviewOpen] = useState(false),
     [ack, setAck] = useState<string[]>([]),
@@ -453,7 +459,7 @@ export function SchemaEditor({
     setBusy(true);
     try {
       const state = current.current;
-      const snapshot = await client.snapshot(state.project.id);
+      const snapshot = draftMode ? state.project : await client.snapshot(state.project.id);
       const merged = reconcileDrafts(current.current.drafts, snapshot.schema.tables);
       setDrafts(d => reconcileDrafts(d, snapshot.schema.tables));
       onChanged(snapshot);
@@ -472,14 +478,14 @@ export function SchemaEditor({
         throw new OwnerError('VALIDATION_FAILED', 'Correct the highlighted schema diagnostics before saving.', validation.diagnostics);
       }
       const ops = tableOperations(merged);
-      if (ops.length) await client.batch(snapshot, ops, createId());
-      const saved = await client.snapshot(snapshot.id);
+      if (ops.length && !draftMode) await client.batch(snapshot, ops, createId());
+      const saved = draftMode ? { ...desired, revision: snapshot.revision + 1 } : await client.snapshot(snapshot.id);
       onChanged(saved);
       setDrafts(d => checkpointDrafts(d, merged, saved.schema.tables));
       setMessages([]);
       setPast([]);
       setFuture([]);
-      setStatus('Schema definition saved. Connected database is unchanged.');
+      setStatus(draftMode ? 'Schema proposal updated. No database has been created or changed.' : 'Schema definition saved. Connected database is unchanged.');
       return saved;
     } catch (e) {
       report(e);
@@ -489,6 +495,7 @@ export function SchemaEditor({
       setBusy(false);
     }
   }
+  if (controller) controller.current = { save, dirty };
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (active && !relationship && !reviewOpen && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
@@ -652,7 +659,7 @@ export function SchemaEditor({
         update(t);
         select(t.id);
         setTab('Columns');
-      }}>＋ Table</button><button disabled={!tables.length} onClick={() => propose()}>＋ Relationship</button><button disabled={busy || !dirty} onClick={() => void save()}>Save schema</button><button disabled={busy || !project.connections.length || !caps.operations.some(o => o.operation === 'schema.preview')} onClick={() => void preview()}>Review migration…</button><button disabled={!past.length || busy} onClick={() => {
+      }}>＋ Table</button><button disabled={!tables.length} onClick={() => propose()}>＋ Relationship</button><button disabled={busy || !dirty} onClick={() => void save()}>Save schema</button>{!draftMode && <button disabled={busy || !project.connections.length || !caps.operations.some(o => o.operation === 'schema.preview')} onClick={() => void preview()}>Review migration…</button>}<button disabled={!past.length || busy} onClick={() => {
         setFuture(f => [drafts, ...f]);
         setDrafts(past.at(-1)!);
         setPast(p => p.slice(0, -1));
@@ -661,7 +668,7 @@ export function SchemaEditor({
         setDrafts(future[0]!);
         setFuture(f => f.slice(1));
       }}>Redo schema</button><span>{draftCount} drafts · r{project.revision}</span></div>
- {!project.connections.length && <p className="schema-connection-note">No SQLite database is bound. Saved definitions remain separate from database tables. <button onClick={onConnection}>Connect SQLite…</button> to review migrations.</p>}<div className="schema-docks"><aside className="schema-explorer"><h2>Schema Explorer</h2><label className="schema-search">Find table or column<input aria-label="Find table or column" value={search} onChange={e => setSearch(e.target.value)} /></label><div className="schema-table-list">{tables.filter(t => [t.physicalName, ...t.columns.map(c => c.physicalName)].some(n => n.toLowerCase().includes(search.toLowerCase()))).map(t => <button key={t.id} aria-pressed={selected === t.id} onClick={() => select(t.id)}>{t.physicalName || 'Unnamed table'}{drafts[t.id] ? ' *' : ''}<small>{t.columns.length} columns</small></button>)}</div><p className="pane-note">{tables.length} tables · {tables.reduce((n, t) => n + t.columns.length, 0)} columns</p>{Object.entries(drafts).filter(([, d]) => !d.value).map(([id, d]) => <button key={id} onClick={() => setDrafts(ds => {
+ {draftMode && <p className="schema-connection-note">Design the new database here. Complete will create these tables and keys; Back preserves your proposal.</p>}{!draftMode && !project.connections.length && <p className="schema-connection-note">No SQLite database is bound. Saved definitions remain separate from database tables. <button onClick={onConnection}>Connect SQLite…</button> to review migrations.</p>}<div className="schema-docks"><aside className="schema-explorer"><h2>Schema Explorer</h2><label className="schema-search">Find table or column<input aria-label="Find table or column" value={search} onChange={e => setSearch(e.target.value)} /></label><div className="schema-table-list">{tables.filter(t => [t.physicalName, ...t.columns.map(c => c.physicalName)].some(n => n.toLowerCase().includes(search.toLowerCase()))).map(t => <button key={t.id} aria-pressed={selected === t.id} onClick={() => select(t.id)}>{t.physicalName || 'Unnamed table'}{drafts[t.id] ? ' *' : ''}<small>{t.columns.length} columns</small></button>)}</div><p className="pane-note">{tables.length} tables · {tables.reduce((n, t) => n + t.columns.length, 0)} columns</p>{Object.entries(drafts).filter(([, d]) => !d.value).map(([id, d]) => <button key={id} onClick={() => setDrafts(ds => {
           const copy = {
             ...ds
           };

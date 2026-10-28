@@ -5,6 +5,7 @@ import { StorageError } from '@schema-baron/storage';
 import { commandSchema, createId, idSchema, jobSchema, operationInputSchemas, operationResultSchemas } from '@schema-baron/model';
 import type { Command, Job, Operation, OperationResult, Project } from '@schema-baron/model';
 import { z } from 'zod';
+import { ProjectSetup, setupInputSchema } from './setup.js';
 import type { LocalWorkspace } from './workspace.js';
 export interface OwnerOptions extends CoreOptions { localBrowser?: boolean; workspace?: LocalWorkspace; capability: string; maxPayloadBytes?: number; sessionTtlMs?: number }
 export type FeatureEffect<K extends Operation> = Omit<CommandEffect, 'result'> & { result: OperationResult<K> };
@@ -27,6 +28,9 @@ const digest = (value: string) => createHash('sha256').update(value).digest('hex
 const queryInteger = (value: string | null, fallback: number, min = 0) => { if (value === null) return fallback; if (!/^\d+$/.test(value)) throw new StorageError('INVALID_INPUT', 'Invalid integer query parameter.'); const n = Number(value); if (!Number.isSafeInteger(n) || n < min) throw new StorageError('INVALID_INPUT', 'Invalid integer query parameter.'); return n; };
 export class OwnerService {
  readonly core: ProjectCore;
+ private setup: ProjectSetup;
+ private localSession: { token: string; csrf: string; expires: number } | undefined;
+ private cookieName() { return this.options.localBrowser ? `sb_owner_${digest(this.origin ?? "").slice(0, 12)}` : "sb_owner"; }
  private sessions = new Map<string, { csrf: string; expires: number }>();
  private secrets = new Set<string>();
  private origin?: string;
@@ -37,6 +41,7 @@ export class OwnerService {
   if (options.capability.length < 32) throw new Error('Owner capability must have at least 32 characters.');
   this.secrets.add(options.capability);
   this.core = new ProjectCore({...options,runtimeSecrets:[...(options.runtimeSecrets??[]),options.capability]});
+  this.setup = new ProjectSetup(this.core, options, options.workspace);
   this.register('job.inspect', (command, project) => { const job = this.core.job(options.ownerId, command.projectId, command.input.jobId); if (!job) throw new StorageError('NOT_FOUND', 'Unknown job.'); return { result: jobSchema.parse(job) }; });
   this.core.registry.registerAsync('job.cancel', async (input) => {
    if (input.operation !== 'job.cancel') throw new StorageError('INVALID_INPUT', 'Expected job cancellation.');
@@ -98,9 +103,10 @@ export class OwnerService {
   const authorization = request.headers.get('authorization');
   if (authorization !== null) { if (!equal(authorization, `Bearer ${this.options.capability}`)) throw new StorageError('AUTH_REQUIRED', 'Owner authentication is required.'); return {}; }
   const cookies = (request.headers.get('cookie') ?? '').split(';').map(v => v.trim());
-  const matches = cookies.filter(v => v.startsWith('sb_owner='));
+  const prefix = `${this.cookieName()}=`;
+  const matches = cookies.filter(v => v.startsWith(prefix));
   if (matches.length !== 1) throw new StorageError('AUTH_REQUIRED', 'Owner authentication is required.');
-  const key = digest(matches[0]!.slice('sb_owner='.length)); const session = this.sessions.get(key);
+  const key = digest(matches[0]!.slice(prefix.length)); const session = this.sessions.get(key);
   if (!session || session.expires <= Date.now()) { this.sessions.delete(key); throw new StorageError('AUTH_REQUIRED', 'Owner session expired.'); }
   if (request.headers.get('origin') !== this.origin && !(request.headers.get('origin') === null && request.headers.get('sec-fetch-site') === 'same-origin')) throw new StorageError('ACCESS_DENIED', 'Browser session requests require the owner origin.');
   if (!['GET', 'HEAD'].includes(request.method) && !equal(request.headers.get('x-csrf-token') ?? '', session.csrf)) throw new StorageError('ACCESS_DENIED', 'Browser write requires CSRF proof.');
@@ -144,14 +150,30 @@ export class OwnerService {
     if (method === 'POST') {
      if (auth.session || request.headers.get('origin') !== this.origin) throw new StorageError('ACCESS_DENIED', 'Session exchange requires owner capability and same origin.');
      if (!z.strictObject({}).safeParse(await this.body(request)).success) throw new StorageError('INVALID_INPUT', 'Session exchange expects an empty object.');
+     const local = this.localSession;
+     if (localExchange && local && local.expires > Date.now() && this.sessions.has(digest(local.token))) {
+      return this.response({ ok: true, revision: 0, result: { csrfToken: local.csrf }, diagnostics: [] }, { 'set-cookie': `${this.cookieName()}=${local.token}; HttpOnly; SameSite=Strict; Path=/api/v1; Max-Age=${Math.max(1, Math.ceil((local.expires - Date.now()) / 1000))}` });
+     }
      for (const [key, value] of this.sessions) if (value.expires <= Date.now()) this.sessions.delete(key);
      if (this.sessions.size >= 100) throw new StorageError('ACCESS_DENIED', 'Too many owner sessions.');
      const session = token(); const csrfToken = token(); const ttl = this.options.sessionTtlMs ?? 3600000;
      this.secrets.add(session); // Tokens are never logged. CSRF is explicitly returned once.
-     this.sessions.set(digest(session), { csrf: csrfToken, expires: Date.now() + ttl });
-     return this.response({ ok: true, revision: 0, result: { csrfToken }, diagnostics: [] }, { 'set-cookie': `sb_owner=${session}; HttpOnly; SameSite=Strict; Path=/api/v1; Max-Age=${Math.floor(ttl / 1000)}` });
+     const expires = Date.now() + ttl;
+     this.sessions.set(digest(session), { csrf: csrfToken, expires });
+     if (localExchange) this.localSession = { token: session, csrf: csrfToken, expires };
+     return this.response({ ok: true, revision: 0, result: { csrfToken }, diagnostics: [] }, { 'set-cookie': `${this.cookieName()}=${session}; HttpOnly; SameSite=Strict; Path=/api/v1; Max-Age=${Math.floor(ttl / 1000)}` });
     }
-    if (method === 'DELETE' && auth.session) { this.sessions.delete(auth.session); return this.response({ ok: true, revision: 0, result: { revoked: true }, diagnostics: [] }, { 'set-cookie': 'sb_owner=; HttpOnly; SameSite=Strict; Path=/api/v1; Max-Age=0' }); }
+    if (method === 'DELETE' && auth.session) { this.sessions.delete(auth.session); return this.response({ ok: true, revision: 0, result: { revoked: true }, diagnostics: [] }, { 'set-cookie': `${this.cookieName()}=; HttpOnly; SameSite=Strict; Path=/api/v1; Max-Age=0` }); }
+   }
+   if (area === 'setup' && parts.length === 2 && method === 'POST' && this.options.workspace) {
+    this.query(url, []);
+    const body = await this.body(request);
+    let result: unknown;
+    if (id === 'inspect') { const input = z.strictObject({ path: z.string().min(1).max(4096) }).parse(body); result = await this.setup.inspect(input.path); }
+    else if (id === 'preview') result = this.setup.preview(setupInputSchema.parse(body));
+    else if (id === 'complete') result = await this.setup.complete(z.strictObject({ planId: idSchema }).parse(body).planId);
+    else return this.response(failure('NOT_FOUND', 'Unknown setup step.'));
+    return this.response({ ok: true, revision: 0, result, diagnostics: [] });
    }
    if (area === 'workspace' && parts.length === 1 && this.options.workspace) {
     this.query(url, []);
@@ -171,12 +193,12 @@ export class OwnerService {
     if (parts.length === 1 && method === 'GET') { this.query(url, ['approvedRoot']); return this.response(await this.dispatch({ requestId: createId(), projectId: 'catalog', operation: 'project.list', expectedRevision: 0, input: { approvedRoot: url.searchParams.get('approvedRoot') ?? '' } })); }
     if (parts.length === 1 && method === 'POST') {
      this.query(url, []);
-     const body = z.strictObject({ requestId: idSchema, name: z.string().min(1), approvedRoot: z.string(), target: z.literal('next-typescript-sqlite') }).safeParse(await this.body(request));
+     const body = z.strictObject({ requestId: idSchema, name: z.string().min(1), approvedRoot: z.string(), target: z.literal('next-typescript-sqlite'), projectsFolder: z.string().min(1).max(4096).optional() }).safeParse(await this.body(request));
      if (!body.success || /[/\\]/.test(body.data.requestId) || ['.', '..'].includes(body.data.requestId)) return this.response(failure('INVALID_INPUT', 'Invalid project creation request.'));
      // The OpenAPI convenience form uses requestId as project identity, so retries remain stable.
-     const { requestId, ...input } = body.data;
+     const { requestId, projectsFolder, ...input } = body.data;
      if (this.options.workspace && input.approvedRoot === '') {
-      const root = this.options.workspace.project(input.name, requestId, this.core);
+      const root = this.options.workspace.project(input.name, requestId, this.core, projectsFolder);
       return this.response(await this.dispatch({ requestId, projectId: requestId, operation: 'project.create', expectedRevision: 0, input: { ...input, approvedRoot: root, outputConfig: { approvedRootId: root, relativePath: 'generated/app' } } }));
      }
      return this.response(await this.dispatch({ requestId, projectId: requestId, operation: 'project.create', expectedRevision: 0, input }));
@@ -213,5 +235,5 @@ export class OwnerService {
    return this.response(failure('RECOVERY_REQUIRED', 'Owner request failed; inspect recovery before retrying.'));
   }
  }
- close() { this.sessions.clear(); this.secrets.clear(); return this.core.close(); }
+ async close() { this.localSession = undefined; this.sessions.clear(); this.secrets.clear(); await Promise.all([this.setup.close(), this.core.close()]); }
 }

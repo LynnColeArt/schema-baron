@@ -373,7 +373,7 @@ test("two drafts survive project switches and MCP edits; conflict resolution, in
   await page
     .getByRole("button", { name: "Open / Switch…", exact: true })
     .click();
-  await page.getByRole("button", { name: /Revision studio/ }).click();
+  await page.locator(".project-list .project-open").filter({ hasText: "Revision studio" }).click();
   await expect(title).toHaveValue("Beta draft");
   await page.getByRole("treeitem", { name: /Alpha draft/ }).dblclick();
   await expect(title).toHaveValue("Alpha draft");
@@ -499,7 +499,7 @@ test("incomplete and corrected drafts with invalid history survive switch, reloa
     await page
       .getByRole("button", { name: "Open / Switch…", exact: true })
       .click();
-    await page.getByRole("button", { name: new RegExp(name) }).click();
+    await page.locator(".project-list .project-open").filter({ hasText: name }).click();
   };
   await switchBack("Draft recovery regression");
   await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");

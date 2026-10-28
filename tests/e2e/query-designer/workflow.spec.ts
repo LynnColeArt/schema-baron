@@ -1176,7 +1176,7 @@ test("unfinished query and structural history survive all switches, reload and M
     "History switch target",
   );
   await click(page, "Open / Switch…");
-  await page.getByRole("button", { name: /Query history recovery/ }).click();
+  await page.locator(".project-list .project-open").filter({ hasText: "Query history recovery" }).click();
   await expect(page.locator(".titlebar")).toContainText(
     "Query history recovery",
   );

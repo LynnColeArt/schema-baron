@@ -45,9 +45,10 @@ test('keyless first run, project folders, changed preference and restart', async
   await expect(page.getByRole('dialog')).toBeHidden();
   async function create(name: string, base: string) {
    await page.getByRole('button', { name: 'New project…', exact: true }).click();
+   await page.getByRole('radio', { name: /Blank project/ }).check();
    await page.getByLabel('Project name', { exact: true }).fill(name);
    await expect(page.getByText(`${base}/${name}`, { exact: true })).toBeVisible();
-   await page.getByRole('button', { name: 'Create project', exact: true }).click();
+   await page.getByRole('button', { name: 'Create blank project', exact: true }).click();
    await expect(page.getByRole('dialog')).toBeHidden();
    const definitions = readdirSync(join(base, name)).filter(file => file.endsWith('.json'));
    expect(definitions).toHaveLength(1);

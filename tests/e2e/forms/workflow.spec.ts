@@ -546,7 +546,7 @@ test("each wizard, atomic Cancel/errors, MCP parity, composite links and context
   await page
     .getByRole("button", { name: "Open / Switch…", exact: true })
     .click();
-  await page.getByRole("button", { name: /Focused forms/ }).click();
+  await page.locator(".project-list .project-open").filter({ hasText: "Focused forms" }).click();
   await expect(width).toHaveValue("-");
   page.on("dialog", (dialog) => void dialog.accept());
   await page.reload();

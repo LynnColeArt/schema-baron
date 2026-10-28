@@ -1,17 +1,20 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import type { ReactNode } from "react";
 export function Dialog({
   title,
   children,
   onCancel,
   busy = false,
+  className,
 }: {
   title: string;
   children: ReactNode;
   onCancel: () => void;
   busy?: boolean;
+  className?: string | undefined;
 }) {
+  const titleId = useId();
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const prior = document.activeElement as HTMLElement | null;
@@ -24,13 +27,15 @@ export function Dialog({
   return (
     <dialog
       ref={ref}
-      aria-labelledby="dialog-title"
+      className={className}
+      aria-labelledby={titleId}
       onCancel={(event) => {
         event.preventDefault();
+        event.stopPropagation();
         if (!busy) onCancel();
       }}
     >
-      <h2 id="dialog-title">{title}</h2>
+      <h2 id={titleId}>{title}</h2>
       {children}
     </dialog>
   );

@@ -34,7 +34,9 @@ export class StudioClient {
     path: string,
     body?: unknown,
     method = body === undefined ? "GET" : "POST",
+    retrySession = true,
   ): Promise<T> {
+    const encoded = body === undefined ? undefined : JSON.stringify(body);
     let response: Response;
     try {
       response = await fetch(`/api/v1/${path}`, {
@@ -46,7 +48,7 @@ export class StudioClient {
           ...(path === "session" && method === "POST" ? { "x-schema-baron-local": "1" } : {}),
           ...(this.csrf ? { "x-csrf-token": this.csrf } : {}),
         },
-        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        ...(encoded === undefined ? {} : { body: encoded }),
       });
     } catch {
       throw new OwnerError(
@@ -55,6 +57,14 @@ export class StudioClient {
       );
     }
     const outcome = await response.json();
+    if (!outcome.ok && retrySession && path !== "session" && this.csrf &&
+      (outcome.error?.code === "AUTH_REQUIRED" ||
+       (outcome.error?.code === "ACCESS_DENIED" && outcome.error?.message === "Browser write requires CSRF proof."))) {
+      // Authentication rejects before dispatch; retry the same request once after
+      // restoring this origin's current cookie/CSRF pair, including across tabs.
+      await this.resume();
+      return this.read<T>(path, encoded === undefined ? undefined : JSON.parse(encoded), method, false);
+    }
     if (!outcome.ok)
       throw new OwnerError(
         outcome.error?.code ?? "SERVICE_UNAVAILABLE",
@@ -91,12 +101,12 @@ export class StudioClient {
   snapshot(id: string) {
     return this.read<Project>(`projects/${encodeURIComponent(id)}`);
   }
-  create(name: string, approvedRoot: string, requestId: string) {
+  create(name: string, approvedRoot: string, requestId: string, projectsFolder?: string) {
     return this.read<Project>("projects", {
       requestId,
       name,
       approvedRoot,
-      target: "next-typescript-sqlite",
+      ...(projectsFolder ? { projectsFolder } : {}),      target: "next-typescript-sqlite",
     });
   }
   batch(

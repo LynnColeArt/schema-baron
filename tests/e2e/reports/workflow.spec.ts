@@ -64,7 +64,7 @@ test('MCP authored reports, visible canonical properties and standalone exact to
   expect(preview.rows.map((r:any)=>r[total])).toEqual(['0.3000','12.3400','0.0000']);
   // Exercise the ordinary property editor; persisted report inputs are not a separate builder.
   await page.goto(url);await page.getByLabel('Studio service owner key').fill(capability);await page.getByRole('button',{name:'Connect',exact:true}).click();await expect(page.getByRole('dialog')).toBeHidden();
-  await page.getByRole('button',{name:'Open / Switch…',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:/Household balance report/}).click();
+  await page.getByRole('button',{name:'Open / Switch…',exact:true}).click();await page.locator('.project-list .project-open').filter({hasText:'Household balance report'}).click();
   await page.getByRole('treeitem').filter({hasText:'Balances'}).first().dblclick();await page.getByRole('treeitem').filter({hasText:'Rows'}).first().click();await page.getByRole('tab',{name:'Data',exact:true}).click();
   await expect(page.getByLabel('Input source Minimum total')).toHaveValue('runtime');await page.getByLabel('Runtime name Minimum total').fill('threshold');await page.getByRole('button',{name:'▣ Save',exact:true}).click();await expect(page.getByRole('status')).toContainText('Saved');
   await page.getByRole('treeitem').filter({hasText:'Total'}).first().click();await page.getByRole('tab',{name:'Data',exact:true}).click();await page.getByRole('button',{name:'Use derived query expression'}).click();await page.getByLabel('Derived expression field',{exact:true}).selectOption({label:'root.Total'});await page.getByRole('button',{name:'▣ Save',exact:true}).click();await expect(page.getByRole('status')).toContainText('Saved');

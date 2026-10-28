@@ -224,7 +224,7 @@ test('actual authoring: HTML and Design share stable objects, recovery, conflict
   // Switch projects and return through the UI; invalid raw HTML remains session recovered.
   await create(page, 'Separate project');
   await page.getByRole('button', { name: 'Open / Switch…', exact: true }).click();
-  await page.getByRole('dialog').getByRole('button', { name: /Draft notebook/ }).click();
+  await page.locator('.project-list .project-open').filter({ hasText: 'Draft notebook' }).click();
   await expect(html).toHaveValue(invalid);
   await html.fill(stable.replace('Current notebook', 'Local pending layout'));
   snapshot = await owner('projects/' + summary.id);
@@ -303,7 +303,7 @@ test('Design literal braces and encoded HTML survive apply, save and reopen', as
   await expect(html).toHaveAttribute('aria-invalid', 'false');
   await create(page, 'Separate literal project');
   await page.getByRole('button', { name: 'Open / Switch…', exact: true }).click();
-  await page.getByRole('dialog').getByRole('button', { name: /Literal static content/ }).click();
+  await page.locator('.project-list .project-open').filter({ hasText: 'Literal static content' }).click();
   await expect(html).toHaveValue(canonical);
   await expect(html).toHaveAttribute('aria-invalid', 'false');
   await mode(page, 'Preview').click();

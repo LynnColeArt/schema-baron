@@ -9,8 +9,9 @@ export function gridFiles(grid: GridIR, index: number) {
  const prefix = grid.id;
  const parameter = (key: string) => literal(`${prefix}:${key}`);
  const links=(grid.actions??[]).filter(a=>a.operation==='navigate');
+ const globalLinks=links.filter(a=>a.destination && !a.destination.mappings.length && !grid.controls.some(c=>c.fieldId && c.events?.some(e=>e.actionId===a.id)) && grid.controls.filter(c=>c.events?.some(e=>e.actionId===a.id)).length<=1);
  const searchBinding=grid.controls.find(c=>c.kind==='button'&&c.events?.some(e=>(grid.actions??[]).find(a=>a.id===e.actionId)?.operation==='search'));
- const displayedControls=grid.controls.filter(c=>c.id!==searchBinding?.id);
+ const displayedControls=grid.controls.filter(c=>c.id!==searchBinding?.id&&!c.events?.some(e=>globalLinks.some(a=>a.id===e.actionId)));
  const value=(c:GridIR['controls'][number])=>c.fieldId?`formatValue(row[${literal(c.fieldId)}], ${literal(grid.source.fields.find(f=>f.id===c.fieldId)?.type)}, ${literal(c.format)})`:literal(c.label);
  const controls = displayedControls.map(c => c.kind==='link'?`<td>${(c.events??[]).map(e=>links.find(a=>a.id===e.actionId)).filter(Boolean).map(a=>`<NavigationLink actionId={${literal(a!.id)}} row={row} parameters={parameters}>{${value(c)}}</NavigationLink>`).join('')}</td>`:`<td>{${value(c)}}</td>`).join('\n                  ');
  const rowKey = grid.source.keys.length ? `JSON.stringify([${grid.source.keys.map(k => `row[${literal(k)}]`).join(', ')}].map(value => String(value)))` : 'rowIndex';
@@ -28,7 +29,7 @@ export async function GET(request:Request){let db:ReturnType<typeof connect>|und
  const action=actions.find(a=>a.id===id);if(!action)throw Error();
  const parameters:Record<string,string>={};for(const [key,text] of url.searchParams){if(url.searchParams.getAll(key).length!==1)throw Error();if(key==='_action'||config.keys.some((_,i)=>key==='_key:'+i))continue;if(!allowed.some(c=>c.parameter===key))throw Error();parameters[key]=text;}
  context(parameters,allowed);let row:Record<string,unknown>={};
- if(!action.destination.newForms.length){const keys=config.keys.map((key,i)=>{const text=url.searchParams.get('_key:'+i);if(text===null)throw Error();return value(config.fields.find(f=>f.id===key)!,text);});db=connect();row=read(db,{...config,keys:config.keys},keys)??{};if(!Object.keys(row).length)throw Error();}
+ if(action.destination.mappings.length){const keys=config.keys.map((key,i)=>{const text=url.searchParams.get('_key:'+i);if(text===null)throw Error();return value(config.fields.find(f=>f.id===key)!,text);});db=connect();row=read(db,{...config,keys:config.keys},keys)??{};if(!Object.keys(row).length)throw Error();}
  return Response.redirect(new URL(destination(action.destination,row,parameters,allowed),request.url),303);
  }catch(error){return failure(error);}finally{db?.close();}}
 `},
@@ -46,7 +47,7 @@ export function link(id:string,row:Record<string,unknown>,parameters:Parameters)
  const action=actions.find(a=>a.id===id);
  if(!action) return {error:'This navigation action is unavailable.'};
  try{
-  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(!action.destination.newForms.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'${handlerPath('navigation',index)}?'+query};}
+  if(action.access==='authenticated'){const query=new URLSearchParams(context(parameters,allowed));query.set('_action',action.id);if(action.destination.mappings.length)for(const [i,key] of config.keys.entries()){const field=config.fields.find(f=>f.id===key)!;query.set('_key:'+i,entered(field,row[key]));}return {href:'${handlerPath('navigation',index)}?'+query};}
   return {href:destination(action.destination,row,parameters,allowed)};}
  catch{return {error:'This link could not be created. Check the page filters and mapped record values.'};}
 }
@@ -81,7 +82,7 @@ export function Grid${index}({ parameters }: { parameters: Parameters }) {
   return (
     <section>
       <h2>{${literal(grid.label)}}</h2>
-      ${links.filter(a=>(a.destination as {newForms?:string[]})?.newForms?.length).map(a=>`<NavigationLink actionId={${literal(a.id)}} row={{}} parameters={parameters}>New record</NavigationLink>`).join('\n')}
+      ${globalLinks.length ? '<nav aria-label="List navigation" style={{display:"flex",gap:12,flexWrap:"wrap"}}>' + globalLinks.map(a=>`<NavigationLink actionId={${literal(a.id)}} row={{}} parameters={parameters}>{${literal(a.label && a.label !== 'navigate' ? a.label : a.destination?.newForms.length ? 'New record' : 'Open page')}}</NavigationLink>`).join('\n') + '</nav>' : ''}
       <form method="get">
         {Object.entries(retained).filter(([key])=>!key.startsWith(${literal(grid.id+':')})||parentParameters.includes(key)).map(([key,value])=><input key={key} type="hidden" name={key} value={value} />)}
 ${grid.search.map(s => `        <label>

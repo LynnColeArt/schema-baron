@@ -65,6 +65,29 @@ explicit capability exchange unless local-browser mode is enabled.
 existing folders and symlink paths are refused. Preferences and project-root
 mappings persist in `workspace.json` beside the private owner configuration.
 
+## Guided project setup
+
+Normal local Studio uses authenticated, CSRF-protected setup helpers:
+
+- `POST /api/v1/setup/inspect` with `{path}` reads an existing SQLite file using the
+  bounded read-only adapter and returns an expiring inspection ID and imported schema.
+- `POST /api/v1/setup/preview` accepts a new-project identity, location, schema,
+  database choice and page/access options. It materializes ordinary entities through
+  the existing form-construction engine and retains an expiring in-memory proposal.
+- `POST /api/v1/setup/complete` with `{planId}` commits that exact proposal through
+  canonical project, connection, migration, identity and batch commands. Replay of a
+  completed proposal returns the same result. New-schema migrations requiring
+  destructive acknowledgments are refused. A changed existing schema/file identity
+  requires a new inspection. Existing databases receive no setup DDL or row writes.
+
+Cancel and preview create no project folders or databases. An interrupted Complete
+can leave a saved project or newly created empty database for recovery; it never
+removes existing data to roll back setup. Completed projects remain usable through
+normal Schema, Login and access, Flow map and Generate tools. Plan IDs expire after
+30 minutes or owner restart; they are not portable project data. Mermaid 12.2.0 is
+pinned, loaded on demand, and rendered with strict security and encoded data labels.
+No diagram content is fetched from a CDN.
+
 ## HTTP v1
 
 Authenticate requests with `Authorization: Bearer <capability>`. Every request must
@@ -75,7 +98,7 @@ it retains original Host and Origin headers for independent validation.
 
 - `GET /api/v1/capabilities`: implemented operation names, generated strict JSON
   schemas and approved root IDs. Later capabilities are absent until registered.
-- `POST /api/v1/projects`: strict `{requestId,name,approvedRoot,target}` convenience
+- `POST /api/v1/projects`: strict `{requestId,name,approvedRoot,target,projectsFolder?}` convenience
   create; its request ID becomes its stable project ID, so retries select the same
   project. This convenience form rejects slash/backslash and dot-segment IDs. Target is `next-typescript-sqlite`.
 - `GET /api/v1/projects?approvedRoot=projects`: registered project summaries.

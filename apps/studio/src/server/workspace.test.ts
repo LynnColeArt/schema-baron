@@ -93,3 +93,15 @@ test('new projects have separate folders/output; changing the base and restartin
  expect(restored.settings().projectsFolder).toBe(join(root, 'base-two'));
  expect(() => owner.service.core.addApprovedRoot(first.result.outputConfig.approvedRootId, join(root, 'elsewhere'))).toThrow('relocated');
 });
+test('concurrent local tabs share CSRF proof while separate Studio origins have distinct cookies', async () => {
+ const a = fixture(), b = fixture();
+ const firstOwner = await ownerFor(a.workspace, a.root), secondOwner = await ownerFor(b.workspace, b.root);
+ const [first, simultaneous] = await Promise.all([session(firstOwner), session(firstOwner)]);
+ expect(first.cookie).toBe(simultaneous.cookie);
+ expect(first['x-csrf-token']).toBe(simultaneous['x-csrf-token']);
+ const second = await session(secondOwner);
+ expect(first.cookie.split('=')[0]).not.toBe(second.cookie.split('=')[0]);
+ const cookieJar = `${first.cookie}; ${second.cookie}`;
+ expect((await fetch(`${firstOwner.url}/api/v1/workspace`, { headers: { ...first, cookie: cookieJar } })).status).toBe(200);
+ expect((await fetch(`${secondOwner.url}/api/v1/workspace`, { headers: { ...second, cookie: cookieJar } })).status).toBe(200);
+});

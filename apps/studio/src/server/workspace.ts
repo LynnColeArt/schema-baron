@@ -9,6 +9,7 @@ import { z } from 'zod';
 
 const settingsSchema = z.strictObject({
  projectsFolder: z.string().min(1), configured: z.boolean(),
+ databaseRoots: z.record(z.string(), z.string()).default({}),
  projects: z.record(z.string(), z.strictObject({ name: z.string(), rootId: z.string(), directory: z.string() })),
 });
 /** Workspace preferences are private local state, independent of project definitions. */
@@ -17,10 +18,10 @@ export class LocalWorkspace {
  constructor(private file: string, private home = homedir()) {
   this.file = safePath(dirname(file), file);
   this.state = existsSync(this.file) ? settingsSchema.parse(JSON.parse(readFileSync(this.file, 'utf8'))) : {
-   projectsFolder: join(home, 'projects', 'schema-baron'), configured: false, projects: {},
+   projectsFolder: join(home, 'projects', 'schema-baron'), configured: false, projects: {}, databaseRoots: {},
   };
  }
- get roots(): Record<string, string> { return Object.fromEntries(Object.values(this.state.projects).map(p => [p.rootId, p.directory])); }
+ get roots(): Record<string, string> { return { ...this.state.databaseRoots, ...Object.fromEntries(Object.values(this.state.projects).map(p => [p.rootId, p.directory])) }; }
  settings() { return { projectsFolder: this.state.projectsFolder, configured: this.state.configured }; }
  private persist(next: typeof this.state) {
   mkdirSync(dirname(this.file), { recursive: true, mode: 0o700 });
@@ -48,7 +49,14 @@ export class LocalWorkspace {
   this.persist({ ...this.state, projectsFolder: directory, configured: true });
   return this.settings();
  }
- project(name: string, requestId: string, core: ProjectCore) {
+ approveDatabase(path: string, core: ProjectCore) {
+  const directory = safePath(dirname(path), '.');
+  const id = `database-${createHash('sha256').update(directory).digest('hex')}`;
+  core.addApprovedRoot(id, directory);
+  if (!Object.hasOwn(this.state.databaseRoots, id)) this.persist({ ...this.state, databaseRoots: { ...this.state.databaseRoots, [id]: directory } });
+  return id;
+ }
+ project(name: string, requestId: string, core: ProjectCore, projectsFolder?: string) {
   if (!this.state.configured) throw new StorageError('INVALID_INPUT', 'Finish workspace setup before creating a project.');
   if (!idSchema.safeParse(requestId).success) throw new StorageError('INVALID_INPUT', 'Invalid project identity.');
   if (!name.trim() || name !== name.trim() || name.length > 120 || /[\\/\x00-\x1f<>:"|?*]/.test(name) || name.endsWith('.') || ['.', '..'].includes(name) || /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(name))
@@ -56,7 +64,12 @@ export class LocalWorkspace {
   const previous = Object.hasOwn(this.state.projects, requestId) ? this.state.projects[requestId] : undefined;
   if (previous && previous.name !== name) throw new StorageError('IDEMPOTENCY_CONFLICT', 'This creation request already belongs to another project name.');
   if (previous) { core.addApprovedRoot(previous.rootId, previous.directory); return previous.rootId; }
-  const directory = safePath(this.state.projectsFolder, name);
+  const supplied = projectsFolder?.trim() ?? this.state.projectsFolder;
+  const expanded = supplied.startsWith('~/') ? join(this.home, supplied.slice(2)) : supplied;
+  if (!isAbsolute(expanded)) throw new StorageError('INVALID_INPUT', 'Choose an absolute project location or a ~/ path.');
+  const parent = safePath(resolve(expanded), '.');
+  mkdirSync(parent, { recursive: true });
+  const directory = safePath(parent, name);
   try { mkdirSync(directory); }
   catch (error) {
    if ((error as NodeJS.ErrnoException).code === 'EEXIST') throw new StorageError('INVALID_INPUT', 'That project folder already exists. Choose another project name; existing folders are never overwritten.');
