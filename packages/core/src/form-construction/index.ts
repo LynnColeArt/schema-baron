@@ -157,6 +157,19 @@ export function constructForm(original: Project, input: FormConstruction) {
         },
         events: [],
       };
+      // Infer only unambiguous single-column relationships. Composite tuples
+      // remain explicitly authored until the runtime supports tuple pickers.
+      const relationships = table?.foreignKeys.filter(fk => fk.columnIds.includes(id)) ?? [];
+      const relationship = relationships.length === 1 ? relationships[0] : undefined;
+      if (kind === 'Record' && !generated && relationship?.columnIds.length === 1 && relationship.referencedColumnIds.length === 1) {
+        const target = project.schema.tables.find(t => t.id === relationship.referencedTableId);
+        const textFields = target?.columns.filter(c => c.type.kind === 'text' && !relationship.referencedColumnIds.includes(c.id)) ?? [];
+        const label = textFields.find(c => /^(name|title|label|display_name)$/i.test(c.physicalName)) ?? textFields[0];
+        if (target && label) {
+          control.kind = 'select';
+          control.lookup = { source: { kind: 'table', id: target.id }, valueFieldIds: relationship.referencedColumnIds, labelFieldId: label.id };
+        }
+      }
       form.controlIds.push(control.id);
       put("control", control);
     }

@@ -76,6 +76,8 @@ export class LocalWorkspace {
    throw error;
   }
   const rootId = `project-${createHash('sha256').update(requestId).digest('hex')}`;
+  // Initial source promotion requires an existing parent, outside the database.
+  mkdirSync(join(directory, 'generated'));
   this.persist({ ...this.state, projects: { ...this.state.projects, [requestId]: { name, rootId, directory } } });
   core.addApprovedRoot(rootId, directory);
   return rootId;

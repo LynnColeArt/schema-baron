@@ -4,8 +4,8 @@ import { createId } from '@schema-baron/model';
 import type { Project, ReviewedPlan } from '@schema-baron/model';
 import type { Capabilities, StudioClient } from '../project-ui/api.js';
 type Plan=Extract<ReviewedPlan,{kind:'generation'}>;
-export function GenerationReview({project,client,caps,onClose,onBusy}:{project:Project;client:StudioClient;caps:Capabilities;onClose:()=>void;onBusy:(busy:boolean)=>void}) {
- const [location,setLocation]=useState(`${caps.approvedRootIds.includes('output')?'output':caps.approvedRootIds[0]??''}:app`),[plan,setPlan]=useState<Plan|null>(null),[busy,setWorking]=useState(false),[error,setError]=useState(''),[done,setDone]=useState(false),[ack,setAck]=useState<string[]>([]);
+export function GenerationReview({project,client,onClose,onBusy}:{project:Project;client:StudioClient;caps:Capabilities;onClose:()=>void;onBusy:(busy:boolean)=>void}) {
+ const [location,setLocation]=useState(`${project.outputConfig.approvedRootId}:${project.outputConfig.relativePath}`),[plan,setPlan]=useState<Plan|null>(null),[busy,setWorking]=useState(false),[error,setError]=useState(''),[done,setDone]=useState(false),[ack,setAck]=useState<string[]>([]);
  const setBusy=(value:boolean)=>{setWorking(value);onBusy(value);};
  const request=useRef(createId());const stale=plan!==null&&plan.sourceRevision!==project.revision;
  const command=<T,>(operation:string,input:unknown,requestId=createId())=>client.read<T>(`projects/${encodeURIComponent(project.id)}/commands`,{requestId,operation,expectedRevision:project.revision,input});

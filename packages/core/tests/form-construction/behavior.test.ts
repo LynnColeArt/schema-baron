@@ -264,3 +264,24 @@ it("public core enforces revision/permission/replay and keeps invalid pending pa
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+ it("infers name-based single-column lookups without treating composite or ambiguous relationships as scalar", () => {
+   const p = project();
+   p.schema.tables.push({id:id('parents'),physicalName:'departments',columns:[
+     {id:id('parent-key'),physicalName:'code',type:{kind:'integer'},nullable:false},
+     {id:id('description'),physicalName:'description',type:{kind:'text'},nullable:false},
+     {id:id('parent-name'),physicalName:'name',type:{kind:'text'},nullable:false}
+   ],primaryKey:[id('parent-key')],foreignKeys:[],uniqueConstraints:[],checks:[],indexes:[]});
+   const table=p.schema.tables[0]!;
+   const fk={id:id('fk'),columnIds:[id('a')],referencedTableId:id('parents'),referencedColumnIds:[id('parent-key')],onUpdate:'restrict' as const,onDelete:'restrict' as const,deferrable:false};
+   table.foreignKeys=[fk];
+   const control=constructForm(p,input).candidate.controls.find(c=>c.binding?.kind==='stored'&&c.binding.fieldId==='a')!;
+   expect(control.kind).toBe('select');
+   expect(control.lookup).toEqual({source:{kind:'table',id:'parents'},valueFieldIds:['parent-key'],labelFieldId:'parent-name'});
+   expect(constructForm(p,{...input,kind:'Grid',actions:[]}).candidate.controls.every(c=>!c.lookup)).toBe(true);
+   table.foreignKeys.push({...fk,id:id('other-fk')});
+   expect(constructForm(p,input).candidate.controls.every(c=>!c.lookup)).toBe(true);
+   table.foreignKeys=[{...fk,columnIds:[id('a'),id('b')],referencedColumnIds:[id('parent-key'),id('parent-name')]}];
+   p.schema.tables[1]!.uniqueConstraints=[{id:id('tuple'),columnIds:[id('parent-key'),id('parent-name')]}];
+   expect(constructForm(p,input).candidate.controls.every(c=>!c.lookup)).toBe(true);
+ });

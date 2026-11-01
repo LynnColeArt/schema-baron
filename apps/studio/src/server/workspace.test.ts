@@ -75,6 +75,7 @@ test('new projects have separate folders/output; changing the base and restartin
  const first = await create('First', 'first'); expect(first.ok).toBe(true);
  expect(readdirSync(join(root, 'base-one/First'))).toContain('first.json');
  expect(first.result.outputConfig.relativePath).toBe('generated/app');
+ expect(readdirSync(join(root, 'base-one/First'))).toContain('generated');
  expect((await create('First', 'first')).result).toEqual(first.result);
  expect((await create('First', 'other')).error.code).toBe('INVALID_INPUT');
  expect((await create('../escape', 'escape')).ok).toBe(false);

@@ -49,3 +49,36 @@ Complete can leave a saved project for recovery; setup does not delete existing
 files or database rows to roll back an error. Review plans expire after 30 minutes
 or server restart. Existing schema edits remain available afterwards through the
 normal Schema editor and migration review.
+
+## Relationship picker and project output follow-up (2026-10-31)
+
+New Record construction (including linked Record forms in guided setup) infers a
+normal lookup control for an unambiguous, single-column foreign key when its
+referenced table has a descriptive text column. It prefers name/title/label/
+display_name, then another non-key text column. It stores the referenced key and
+displays the text label. Generated columns, composite tuples, ambiguous overlapping
+relationships, and targets without a text label keep their existing controls.
+The normal Data properties can change the inferred lookup. The existing runtime
+lookup limit of 200 options remains in effect.
+
+Generate initializes its destination from the project's outputConfig instead of
+choosing a shared output root. Local project creation prepares the generated
+parent directory so reviewed initial promotion can use generated/app directly.
+Custom destination editing and the reviewed regeneration boundary remain intact.
+
+Workshop Planner was updated through normal Studio control properties, saved at
+revision 7, and regenerated into its own generated/app directory without editing
+the destination. The original workshop and session survived. In the rebuilt app,
+Add sessions still required login and returned to the requested form after login.
+Selecting Introduction to Woodworking by name saved Joinery practice as session 2
+with workshop_id 1; reopening session 2 retained the named selection. The app is
+managed by Studio on loopback port 3100. Its type check, two generated tests, and
+managed production build passed.
+
+Verification: the focused construction/workspace/setup suite passed 18 tests;
+three wizard browser scenarios passed, including automatic default destination,
+preview and actual source creation with no manual directory preparation. Full
+Studio build, workspace type checking, lint, and credential scan passed. Detailed
+local logs and the live dropdown screenshot are under .local/lookup-* and
+.local/workshop-name-picker.jpg (not committed).
+The complete regression suite passed 496 tests across 76 files (224.90 seconds).

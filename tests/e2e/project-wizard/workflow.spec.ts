@@ -55,6 +55,14 @@ test('new SQLite wizard saves keys, preserves Back edits, renders Mermaid, creat
  const completion = page.waitForResponse(response => response.url().endsWith('/api/v1/setup/complete'));
  await page.getByRole('button', { name: 'Complete', exact: true }).click(); const outcome = await (await completion).json(); expect(outcome.ok, JSON.stringify(outcome)).toBe(true);
  await expect(page.getByRole('dialog')).toBeHidden();
+ await page.getByRole('button', {name:'Generate…',exact:true}).click();
+ await expect(page.getByLabel('Output location',{exact:true})).toHaveValue(`${outcome.result.outputConfig.approvedRootId}:generated/app`);
+ await page.getByRole('button',{name:'Preview files',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Create application',exact:true})).toBeEnabled();
+ await page.getByRole('button',{name:'Create application',exact:true}).click();
+ await expect(page.getByRole('dialog').getByRole('status')).toContainText('Application created.');
+ expect(existsSync(join(home,'projects/schema-baron/Workshop/generated/app/package.json'))).toBe(true);
+ await page.getByRole('button',{name:'Close',exact:true}).click();
  const db = new Database(join(home, 'projects/schema-baron/Workshop/application.sqlite')); expect(db.pragma('table_info(work_orders)')).toEqual(expect.arrayContaining([expect.objectContaining({ name: 'id', pk: 1 }), expect.objectContaining({ name: 'description', notnull: 1 })])); db.close();
  await expect(page.getByRole('region', { name: 'Application behavior map', exact: true })).toBeVisible();
  await page.getByRole('button', { name: 'Mermaid diagram', exact: true }).click(); await expect(page.locator('.application-mermaid svg')).toBeVisible();
