@@ -6,7 +6,7 @@ import { value, entered, one, message, type Parameters, type Input, type Binding
 import { destination, context, type ContextField, type Destination } from './navigation.ts';
 export type Control = { readonly kind?:string; readonly fieldId?:string; readonly label:string; readonly readOnly:boolean; readonly validation:{readonly required:boolean;readonly min?:number;readonly max?:number;readonly maxLength?:number}; readonly lookup?:{ readonly source:Source;readonly valueFieldId:string;readonly labelFieldId:string } };
 export type Action = {readonly id:string;readonly operation:string;readonly extensionHookRef?:string;readonly destination?:Destination;readonly success?:Destination;readonly cancel?:Destination};
-export type Config = {readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
+export type Config = {readonly prefills?:readonly {readonly fieldId:string;readonly parameter:string}[];readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
 export type State = {values:Input;errors:Record<string,string>;summary:string;location?:string;saved?:boolean};
 function keys(config:Config,parameters:Parameters) {
  return config.source.keys.map((id,index)=>{const text=one(parameters,config.keyParameters[index]!); if(text===undefined) throw Error('Enter the complete record key.'); const parsed=value(config.source.fields.find(f=>f.id===id)!,text); if(parsed===null) throw Error('Enter the complete record key.'); return parsed;});
@@ -19,6 +19,13 @@ export function load(config:Config,parameters:Parameters) {
   context(parameters,config.context);
   const row=isNew?undefined:read(db,config.source,keys(config,parameters)); if(!isNew&&!row) throw Error('Record no longer exists.');
   const values:Input={}; for(const field of config.source.fields) values[field.id]=entered(field,row?.[field.id]);
+  if(isNew) for(const prefill of config.prefills??[]) {
+   const text=one(parameters,prefill.parameter);if(text===undefined||text==='')continue;
+   const field=config.source.fields.find(f=>f.id===prefill.fieldId)!;
+   const parsed=value(field,text);const canonical=entered(field,parsed);
+   if(values[field.id]!==''&&values[field.id]!==canonical)throw Error('Conflicting parent filters. Choose one parent before adding a record.');
+   values[field.id]=canonical;
+  }
   const options:Record<string,{value:string;label:string}[]>={};
   for(const control of config.controls) if(control.lookup&&control.fieldId) {
    const source=control.lookup.source;

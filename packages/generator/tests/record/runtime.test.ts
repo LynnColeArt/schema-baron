@@ -35,7 +35,9 @@ test('authored Search and Record modules transact against independent quoted/com
  expect(core.execute('owner',{requestId:createId(),projectId:project.id,operation:'project.open',expectedRevision:1,input:{locator:'projects:runtime.json'}})).toMatchObject({ok:true});
  const list={pageId:'page-list',keyMapping:[],filterMapping:[]};
  try {
-  await command('form.construct',{pageId:'page-list',kind:'Search',source:{kind:'table',id:'rows'},fieldIds:['tenant','seq','title'],keyIds:[],actions:[],links:[],style:{label:'Search records'},search:[{fieldId:'title',operator:'contains'},{fieldId:'tenant',operator:'eq'}],sorting:[{fieldId:'seq',direction:'asc'}]});
+  await command('form.construct',{pageId:'page-list',kind:'Search',source:{kind:'table',id:'rows'},fieldIds:['tenant','seq','title','parent'],keyIds:[],actions:[],links:[],style:{label:'Search records'},search:[{fieldId:'title',operator:'contains'},{fieldId:'tenant',operator:'eq'},{fieldId:'parent',operator:'eq'}],sorting:[{fieldId:'seq',direction:'asc'}]});
+  const parentLabel=project.controls.find(c=>c.binding?.kind==='stored'&&c.binding.fieldId==='parent')!;
+  await command('project.batch',{operations:[{kind:'put',entity:'control',id:parentLabel.id,value:{...parentLabel,lookup:{source:{kind:'table',id:'parents'},valueFieldIds:['parent-id'],labelFieldId:'parents-title'}}}]});
   for(const name of ['rows','parents','ordinary','intkey','desckey']) {
    const table=project.schema.tables.find(t=>t.id===name)!;
    const target=name==='rows'?{...list,filterMapping:[{targetFieldId:'tenant',expression:{kind:'field',alias:'root',fieldId:'tenant'}}]}:list;
@@ -72,6 +74,15 @@ const row=()=>db.prepare('SELECT * FROM "register "" rows" WHERE tenant=? AND se
 const count=()=>db.prepare('SELECT count(*) FROM "register "" rows"').pluck().get();
 const cfg=configs.rows,action=operation=>cfg.actions.find(a=>a.operation===operation).id;
 const params={ [cfg.keyParameters[0]]:'A',[cfg.keyParameters[1]]:'1' };
+const gridMeta=${JSON.stringify(ir.routes[0]!.grids[0])};
+const parentControl=gridMeta.controls.find(c=>c.fieldId==='parent');
+db.prepare('UPDATE "register "" rows" SET parent=1 WHERE tenant=?').run('A');
+const named=loadGrid({}).rows.find(row=>row.tenant==='A');assert.equal(named.parent,1n);assert.equal(named['__lookup:'+parentControl.id],'Restricted');
+assert.equal(loadGrid({[gridMeta.id+':filter:parent']:'2'}).rows.length,0);
+db.prepare('UPDATE "register "" rows" SET parent=NULL WHERE tenant=?').run('A');
+assert.equal(load(cfg,{[cfg.id+':mode']:'new',[gridMeta.id+':filter:parent']:'1'}).values.parent,'1');
+assert.equal(load(cfg,{...params,[gridMeta.id+':filter:parent']:'2'}).values.parent,'');
+assert.throws(()=>load(cfg,{[cfg.id+':mode']:'new',[gridMeta.id+':filter:parent']:'bad'}));
 const input={tenant:'A',seq:'1',title:'Changed',parent:'',amount:'1000000000000000000.25'};
 let result=execute(cfg,action('update'),params,{...input,seq:'invalid'});
 assert.ok(result.errors.seq);assert.equal(result.values.seq,'invalid');assert.equal(row().title,'Original');assert.equal(count(),2n);
@@ -100,7 +111,7 @@ for(const table of ['ordinary','intkey','desckey']) {
 }
 const grid=${JSON.stringify(ir.routes[0]!.grids[0])};const list={table:grid.source.name,fields:grid.source.fields,search:grid.search,sorting:grid.sorting,pageSize:1};
 assert.equal(readGrid(list,{[grid.id+':filter:title']:'Other'},grid.id).rows.length,1);assert.ok(readGrid(list,{[grid.id+':sort']:'title; DROP TABLE parents'},grid.id).error);assert.ok(readGrid(list,{[grid.id+':page']:'-1'},grid.id).error);assert.equal(readGrid(list,{[grid.id+':filter:title']:"' OR 1=1 --"},grid.id).rows.length,0);
-assert.equal(loadGrid({[grid.id+':filter:title']:'Other'}).rows.length,1);assert.ok(loadGrid({[grid.id+':sort']:'parent'}).error);assert.ok(loadGrid({[grid.id+':direction']:'sideways'}).error);
+assert.equal(loadGrid({[grid.id+':filter:title']:'Other'}).rows.length,1);assert.ok(loadGrid({[grid.id+':sort']:'unknown-field'}).error);assert.ok(loadGrid({[grid.id+':direction']:'sideways'}).error);
 db.close();console.log('Independent Record/Search SQLite assertions passed');
 `);
  run(['--conditions=react-server','tests/record-behavior.mjs']);

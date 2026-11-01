@@ -82,3 +82,44 @@ Studio build, workspace type checking, lint, and credential scan passed. Detaile
 local logs and the live dropdown screenshot are under .local/lookup-* and
 .local/workshop-name-picker.jpg (not committed).
 The complete regression suite passed 496 tests across 76 files (224.90 seconds).
+
+## Named lists and related-list navigation (2026-10-31)
+
+Table Grid/Search output now consumes a control's ordinary lookup declaration
+when rendering cells. It reads labels in one prepared, bounded-key query per
+lookup for the current page and retains original field values for filters,
+ordering, row identity and navigation. Missing labels fall back to the stored
+value. This is shared generator behavior, with no Workshop-specific templates.
+Search and sort semantics remain bound to their declared source fields.
+
+New table Record forms initialize non-key, non-generated fields from exact-match
+Search/Grid filters and declared parent-key context for the same source table.
+Only new records are initialized this way: existing records retain stored values,
+contains/range predicates are not defaults, and incompatible or conflicting parent
+values are rejected. The retained typed context continues through Add, login,
+Save and Cancel. Dropdown selection remains editable.
+
+Workshop Planner revision 8 was changed through a canonical project.batch:
+its session-list Workshop control uses the existing workshop lookup; the workshop
+name is a navigation link mapping its ID to the session-list workshop equality
+filter. The old unfiltered Go to sessions control was removed. It was regenerated
+into its configured folder and rebuilt. Original rows survived.
+
+Observed in the app on port 3100: following Introduction to Woodworking opens
+its filtered sessions, whose rows display workshop names. Add sessions preselects
+the workshop without typing its ID. Saving Measuring and layout created session 3
+with workshop_id 1 and returned to the same filtered list with confirmation.
+After logout the lists remained public; Add required login and preserved the
+filter/preselection after login. Cancel returned to the filtered list without
+creating another row.
+
+The independent generator runtime regression exercises unrelated quoted/composite
+SQLite tables: lookup labels with unchanged numeric keys, exact parent filtering,
+new-record preselection, existing-record values not overridden by context, and
+invalid parent rejection. It also installs with lifecycle scripts disabled,
+type-checks, tests and builds the generated application. This regression passed.
+The Studio production build, workspace type check and lint passed; Workshop
+Planner's type check, two generated tests and managed production build passed.
+Local logs/screenshots: .local/session-links-*, .local/workshop-filtered-sessions.jpg
+and .local/workshop-session-preselected.jpg (not committed).
+The full regression suite passed 496 tests across 76 files (302.31 seconds).
