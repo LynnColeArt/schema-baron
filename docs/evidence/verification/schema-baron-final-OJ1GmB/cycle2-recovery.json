@@ -1,0 +1,57 @@
+{
+  "name": "cycle2-recovery",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/recovery.spec.ts",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle2-recovery-output"
+  ],
+  "started": "2026-11-02T19:49:29.581Z",
+  "finished": "2026-11-02T19:50:17.888Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 1,
+    "count": 1,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "Library nullable migration, destructive Cancel and explicit declaration restoration preserve exact tuples and another UI project",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": [
+    {
+      "kind": "library-migration-summary.json",
+      "privateSourceSha256": "a765314b24187a729ea34852eabfa17edafc4f298c46700faa12b12190d31c73",
+      "data": {
+        "mode": "ui_journey",
+        "foreignKeys": [],
+        "integrity": "ok",
+        "destructiveCancel": "physical schema and tuples retained; desired declaration pending",
+        "restoration": "visible add column, Save schema, Review, Apply",
+        "occupiedPort": "PROJECT_BUSY; owned sentinel still served its exact response; explicit original-port retry",
+        "unrelatedModelUnchanged": true,
+        "unrelatedDatabaseUnchanged": true
+      }
+    }
+  ]
+}
