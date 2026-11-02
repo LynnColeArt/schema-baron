@@ -22,6 +22,9 @@ requirement_refs:
 planning_base_branch: feat/studio-verification-hardening
 merge_target_branch: feat/studio-verification-hardening
 branch_strategy: Planning artifacts for this mission were generated on feat/studio-verification-hardening. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/studio-verification-hardening unless the human explicitly redirects the landing branch.
+base_branch: kitty/mission-studio-verification-hardening-01M6AQ6R
+base_commit: d32810c90cd76835fbc92cc255cc23aecc59d3fc
+created_at: '2026-11-02T16:58:02.794264+00:00'
 subtasks:
 - T036
 - T037
