@@ -92,7 +92,8 @@ test('schema type changes retire only obsolete decimal buffers and keep other ac
  await expect(label(schema, 'Decimal scale')).toHaveValue('2'); await expect(label(schema, 'Decimal precision')).toHaveValue('18');
  await button(schema, 'Redo schema').click(); await expect(label(schema, 'Logical type')).toHaveValue('integer');
  await choose('reserve', 'decimal'); await label(schema, 'Decimal precision').fill('-');
- await choose('cost', 'integer'); await button(schema, 'Save schema').click();
+ await choose('cost', 'integer'); await label(schema, 'Logical type').selectOption('real');
+ await button(schema, 'Save schema').click();
  await expect(schema.locator('.schema-messages [role=status]')).toContainText('Correct incomplete numeric');
  expect(await studio.project(project.id)).toEqual(firstSaved);
  await button(page, 'Schema').click(); await button(page, 'Schema').click();
@@ -101,7 +102,7 @@ test('schema type changes retire only obsolete decimal buffers and keep other ac
  await label(schema, 'Logical type').selectOption('real'); await saved();
  const final = await studio.project(project.id);
  expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'reserve')!.type).toEqual({ kind: 'real' });
- expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'cost')!.type).toEqual({ kind: 'integer' });
+ expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'cost')!.type).toEqual({ kind: 'real' });
  for (const key of ['pages', 'forms', 'controls', 'queries', 'policies', 'outputConfig'] as const) expect(final[key]).toEqual(project[key]);
 });
 test('page draft restores its active text control and selection after reload', async ({ page }) => {
