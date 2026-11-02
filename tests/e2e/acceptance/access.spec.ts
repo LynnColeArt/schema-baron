@@ -154,6 +154,16 @@ async function sessionChecks(fixture: Fixture, info: TestInfo) {
  await login(app, fixture, target); await expect(label(app, field)).toHaveValue(parentKey);
  await button(app, 'Cancel').click(); await expect(app).toHaveURL(filtered);
  await expect(app.getByRole('banner', { name: 'Visitor identity', exact: true })).toContainText(fixture.username); expect(fixture.rows()).toEqual(initial);
+ // Add from the empty filtered list must keep its preselected typed parent on
+ // Save, then a visible confirmed Delete restores the literal initial fixture.
+ await app.getByRole('link', { name: 'Add ' + child, exact: true }).click(); await expect(label(app, field)).toHaveValue(parentKey);
+ const entry: Record<string, string> = { ...temporary[child]!, id: '92', ...(library ? { barcode: 'CONTEXT-92', note: 'Parent context' } : { title: 'Parent context' }) };
+ delete entry[field]; await fill(app, entry); await button(app, 'Save').click(); await expect(app).toHaveURL(filtered);
+ const added = library ? { id: 92, barcode: 'CONTEXT-92', book_id: 3, replacement_cost: '6.25', note: 'Parent context' } : { id: 92, workshop_id: 2, title: 'Parent context' };
+ const originalRows = initial as Record<string, unknown[]>;
+ expect(fixture.rows()).toEqual({ ...originalRows, [child]: [...originalRows[child]!, added] });
+ await app.getByRole('link', { name: 'Edit record', exact: true }).click(); await app.locator('input[name="_confirmed"]').check(); await button(app, 'Delete').click(); await expect(app).toHaveURL(filtered); expect(fixture.rows()).toEqual(initial);
+
  // Select a real existing row through the filtered list and retain the complete typed key/context.
  await app.goto(origin + route(parent, 'Grid'));
  await app.getByRole('link', { name: library ? 'North Sea' : 'Introduction to Woodworking', exact: true }).click();
@@ -235,7 +245,7 @@ async function sessionChecks(fixture: Fixture, info: TestInfo) {
   expect(rejected.status()).toBe(400); expect(fixture.rows()).toEqual(initial);
  }
 
- writeFileSync(info.outputPath(fixture.project.name + '-sessions.json'), JSON.stringify({ mode: 'ui_journey; expiry evidence is separately labeled fault', selectedParent: parentKey, selectedRecord: key, checks: ['empty filtered list', 'Add/login/Cancel typed context', 'existing selected Save/Cancel', 'cross-tab logout', 'revoked-token direct write', 'expired-token RSC and JSON write', 'relogin preserves selected key', 'external and malformed return rejection', 'malformed typed key'], beforeHash: digest(initial), afterHash: digest(fixture.rows()) }, null, 2), { mode: 0o600 });
+ writeFileSync(info.outputPath(fixture.project.name + '-sessions.json'), JSON.stringify({ mode: 'ui_journey; expiry evidence is separately labeled fault', selectedParent: parentKey, selectedRecord: key, checks: ['empty filtered list', 'Add/login/Cancel typed context', 'empty-parent Add/Save/confirmed Delete retains filtered parent', 'existing selected Save/Cancel', 'cross-tab logout', 'revoked-token direct write', 'expired-token RSC and JSON write', 'relogin preserves selected key', 'external and malformed return rejection', 'malformed typed key'], beforeHash: digest(initial), afterHash: digest(fixture.rows()) }, null, 2), { mode: 0o600 });
 }
 
 async function crossApplication(first: Fixture, second: Fixture, browser: Browser, info: TestInfo) {
