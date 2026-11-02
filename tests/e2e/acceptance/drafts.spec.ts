@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { cpus, loadavg, totalmem } from 'node:os';
 import { execFileSync } from 'node:child_process';
+import type { Project } from '@schema-baron/model';
 import { button, label, startIsolatedStudio, connectLocal, wizardNext, schemaTable, saveProject } from './helpers.js';
 
 test.use({ trace: 'off', actionTimeout: 15000, viewport: { width: 1440, height: 1000 } });
@@ -15,7 +16,7 @@ const hash = (path: string) => createHash('sha256').update(readFileSync(path)).d
 test.beforeEach(async ({ browser }, info) => {
  studio = await startIsolatedStudio('schema-baron-drafts-ui-');
  businessFiles = new Map();
- writeFileSync(info.outputPath('provenance.json'), JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), fixture: 'Fresh UI wizard; Studio-only author drafts; no generated runtime', mode: 'ui_journey', node: process.version, browser: browser.version(), ownerPid: studio.child.pid, zeroRetries: true }, null, 2));
+ writeFileSync(info.outputPath('provenance.json'), JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), fixture: 'Fresh UI wizard; Studio-only author drafts; no generated runtime', mode: 'ui_journey', node: process.version, browser: browser.version(), ownerPid: studio.child.pid, ownerBirth: readFileSync(`/proc/${studio.child.pid}/stat`, 'utf8').split(') ')[1]?.split(' ')[19], port: new URL(studio.url).port, testHash: hash('tests/e2e/acceptance/drafts.spec.ts'), zeroRetries: true }, null, 2));
 });
 test.afterEach(async () => {
  try { for (const [path, before] of businessFiles) expect(hash(path), 'Business database bytes changed during owner draft editing').toBe(before); }
@@ -51,6 +52,18 @@ async function properties(page: Page, id: string) {
  await page.locator(`[role=treeitem][data-object-id="${id}"]`).dblclick();
  await page.getByRole('tab', { name: 'Format', exact: true }).click();
 }
+async function backgroundRevision(page: Page, project: Project, title: string) {
+ const remote = await page.context().newPage();
+ try {
+  await remote.goto(studio.url); await open(remote, project.name);
+  const unrelated = project.pages[1]!;
+  await properties(remote, unrelated.id); await label(remote, 'Title').fill(title); await saveProject(remote);
+  const expected = { ...project, revision: project.revision + 1, pages: project.pages.map(p => p.id === unrelated.id ? { ...p, title } : p) };
+  await expect(page.getByRole('status').filter({ hasText: `Service revision ${expected.revision} received; drafts retained.` })).toBeVisible();
+  expect(await studio.project(project.id)).toEqual(expected);
+  return expected;
+ } finally { await remote.close(); }
+}
 async function selectRange(input: Locator, start: number, end: number) {
  await input.focus();
  await input.press('Home');
@@ -84,6 +97,9 @@ test('schema partial decimal text survives view switch and reload without normal
  await label(schema, 'Table name').fill('books_unsaved');
  await scale.fill(''); await scale.pressSequentially('-');
  await expect(scale).toHaveValue('-');
+ const committed = await backgroundRevision(page, project, 'Unrelated schema notification page');
+ await expect(scale).toHaveValue('-'); await expect(scale).toBeFocused();
+ expect(await scale.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([1,1]);
  await button(schema, 'Save schema').click();
  await expect(schema.locator('.schema-messages [role=status]')).toContainText('Correct incomplete numeric');
  await expect(scale).toHaveValue('-');
@@ -97,7 +113,7 @@ test('schema partial decimal text survives view switch and reload without normal
  await expect(button(schema, 'Save schema')).toBeEnabled();
  expect(await scale.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([1,1]);
  await expect(label(schema, 'Table name')).toHaveValue('books_unsaved');
- expect(await studio.project(project.id)).toEqual(project);
+ expect(await studio.project(project.id)).toEqual(committed);
 });
 
 test('control numeric and query scalar drafts retain invalid text and actionable rejected Save through recovery', async ({ page }) => {
@@ -106,9 +122,12 @@ test('control numeric and query scalar drafts retain invalid text and actionable
  await properties(page, control.id);
  await label(page, 'Label').fill('Unfinished control caption');
  const width = label(page, 'Width'); await width.fill('-'); await selectRange(width, 0, 1);
+ let committed = await backgroundRevision(page, project, 'Unrelated control notification page');
+ await expect(width).toHaveValue('-'); await expect(width).toBeFocused();
+ expect(await width.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([0,1]);
  await button(page, '▣ Save').click();
  await expect(page.getByRole('alert').filter({ hasText: /Width/ }).first()).toBeVisible();
- await expect(width).toHaveValue('-'); expect(await studio.project(project.id)).toEqual(project);
+ await expect(width).toHaveValue('-'); expect(await studio.project(project.id)).toEqual(committed);
  await button(page, 'Schema').click(); await button(page, 'Schema').click();
  await expect(width).toHaveValue('-'); await expect(width).toBeFocused();
  page.on('dialog', dialog => void dialog.accept()); await page.reload();
@@ -121,9 +140,12 @@ test('control numeric and query scalar drafts retain invalid text and actionable
  await button(page.getByRole('navigation', { name: 'Query sections', exact: true }), 'Parameters').click();
  await button(page, 'Add parameter').click(); await label(page, 'Has default').check();
  const scalar = label(page, 'Parameter 1 default'); await scalar.fill('-'); await selectRange(scalar,0,1);
+ committed = await backgroundRevision(page, committed, 'Unrelated query notification page');
+ await expect(scalar).toHaveValue('-'); await expect(scalar).toBeFocused();
+ expect(await scalar.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([0,1]);
  await button(page, 'Save query').click();
  await expect(query.getByRole('status').first()).toContainText(/correct|diagnostic|invalid|failed/i);
- await expect(scalar).toHaveValue('-'); expect(await studio.project(project.id)).toEqual(project);
+ await expect(scalar).toHaveValue('-'); expect(await studio.project(project.id)).toEqual(committed);
  await button(page, 'Queries').click(); await button(page, 'Queries').click();
  await expect(scalar).toHaveValue('-'); await expect(scalar).toBeFocused();
  await open(page, other.name); expect(await studio.project(other.id)).toEqual(other);
@@ -134,7 +156,7 @@ test('control numeric and query scalar drafts retain invalid text and actionable
  await expect(scalar).toBeFocused(); expect(await scalar.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([0,1]);
  await button(page, 'Queries').click();
  await expect(label(page, 'Label')).toHaveValue('Unfinished control caption'); await expect(width).toHaveValue('-');
- expect(await studio.project(project.id)).toEqual(project);
+ expect(await studio.project(project.id)).toEqual(committed);
 });
 
 test('thirty received UI revisions retain draft selection; conflicts and two project drafts stay isolated', async ({ page, context, browser }, info) => {
