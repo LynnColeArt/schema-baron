@@ -27,6 +27,7 @@ const historicalDefects=[
  ['ACCESS-001','high','access.red.json',['access']],['ACCESS-002','medium','access.red.json',['access']],
  ...['DRAFT-01','DRAFT-02','DRAFT-03'].map(id=>[id,'high','drafts.failures.json',['drafts']]),
  ['DRAFT-04','medium','drafts.failures.json',['drafts']],['DRAFT-R1-obsolete-buffer','high','drafts.cycle2.failures.json',['drafts']],
+ ['WP08-report-heldout','high','runs.md',['performance']],['WP08-legacy-select','medium','runs.md',[]],
  ['CODE-configured-output','high','wp07-code-output-red.json',['regeneration']],['WP08-clean-draft-save','medium','runs.md',['performance']],
 ].map(([id,severity,source,retests])=>({id,severity,status:'fixed',historicalSource:'docs/evidence/verification/'+source,retests,qualification:'Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical.'}));
 function publish(name,value){const path=publicRelative+'/'+name+'.json';const bytes=JSON.stringify(value,null,2)+'\n';writeFileSync(join(root,path),bytes,{flag:'wx'});return {path,sha256:sha(bytes)};}
@@ -41,7 +42,7 @@ async function execute(name,command,args,environment=env){
  console.log(name+': '+(record.passed?'passed':'FAILED')+' (private log '+name+'.log)');
  return record;
 }
-async function check(name,command,args){const result=await execute(name,command,args);checks.push(result);publish(name,result);if(!result.passed)throw Error(name+' failed; original private log retained');return result;}
+async function check(name,command,args){const result=await execute(name,command,args);checks.push(result);result.evidence=publish(name,result);if(!result.passed)throw Error(name+' failed; original private log retained');return result;}
 function walk(directory){return !existsSync(directory)?[]:readdirSync(directory,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(directory,e.name)):[join(directory,e.name)]);}
 function sanitizedDetails(output){
  const keep={ 'regeneration-summary.json':['revision','application','cycles','authoredHash','rowsHash','modelHash','identityInvariantsPreserved','fault'], 'independent-summary.json':['revision','application','originalOwnerStopped','ownerProbeUnavailableBeforeAndAfter','checks','rowsHash','authoredHash'], 'performance-summary.json':['application','revision','reference','dataset','method','samples','p95FeedbackMs','p95SaveMs','thresholds','preservation','zeroRetries'], 'library-migration-summary.json':['mode','foreignKeys','integrity','destructiveCancel','restoration','occupiedPort','unrelatedModelUnchanged','unrelatedDatabaseUnchanged'], 'parity-summary.json':['mode','application','scope','observations','authorization'] };
@@ -51,7 +52,7 @@ async function browser(name,args,expected,extra={}){
  const output=join(privateRoot,name+'-output'),json=join(privateRoot,name+'.json'),xml=join(privateRoot,name+'.xml');
  const result=await execute(name,'npm',['exec','playwright','test',...args,'--','--workers=1','--retries=0','--reporter=line,json,junit','--output='+output],{...env,...extra,PLAYWRIGHT_JSON_OUTPUT_FILE:json,PLAYWRIGHT_JUNIT_OUTPUT_FILE:xml});
  const census=existsSync(json)?browserCensus(JSON.parse(readFileSync(json,'utf8')),expected,result.exitCode):{passed:false,count:0,expected,missingReport:true};
- const proof={...result,passed:result.passed&&census.passed,census,details:sanitizedDetails(output)};
+ const proof={...result,mode:name.endsWith('-parity')?'parity':'ui_journey',passed:result.passed&&census.passed,census,details:sanitizedDetails(output)};
  if(/^cycle[12]-/.test(name))proof.passed=validatePhase(name.replace(/^cycle[12]-/,''),proof,revision);
  proof.evidence=publish(name,proof);return proof;
 }
@@ -97,7 +98,7 @@ try{
   for(const script of ['native:verify','native:smoke','typecheck','lint','build','check:credentials','check:dependencies'])await check('check-'+script.replaceAll(':','-'),'npm',['run',script]);
   await check('unit-integration','npm',['test','--','--reporter=json','--outputFile='+join(privateRoot,'unit-results.json')]);
   const unit=JSON.parse(readFileSync(join(privateRoot,'unit-results.json'),'utf8'));if(unit.success!==true||unit.numFailedTests||unit.numPendingTests||unit.numTodoTests||unit.numFailedTestSuites||!unit.numPassedTests)throw Error('Incomplete unit/integration census');publish('unit-census',{revision,tests:unit.numTotalTests,passed:unit.numPassedTests,failed:unit.numFailedTests,pending:unit.numPendingTests,suites:unit.numTotalTestSuites});
-  await check('check-harness-types','node',['node_modules/typescript/bin/tsc','--strict','--noUncheckedIndexedAccess','--exactOptionalPropertyTypes','--target','ES2023','--module','NodeNext','--moduleResolution','NodeNext','--noEmit','--skipLibCheck','--allowJs','tests/e2e/acceptance/performance.spec.ts']);
+  await check('check-harness-types','node',['node_modules/typescript/bin/tsc','--strict','--noUncheckedIndexedAccess','--exactOptionalPropertyTypes','--target','ES2023','--module','NodeNext','--moduleResolution','NodeNext','--noEmit','--skipLibCheck','--allowJs','tests/e2e/acceptance/performance.spec.ts','tests/e2e/equipment/workflow.spec.ts']);
   await check('foundation-report-tests','node',['--test','scripts/acceptance/evidence.test.ts','scripts/acceptance/report.test.ts']);await check('audit','npm',['audit','--audit-level=low']);
  }
  if(['all','browser','legacy'].includes(mode)){
@@ -119,6 +120,6 @@ if(cycles.length){
 if(cycles.length)publish('observations',{revision,records:readObservations(options)});
 let matrix={cases:catalog.cases.map(c=>({case_id:c.case_id,status:'not_run'})),requirements:Object.entries(catalog.requirements).map(([requirement,text])=>({requirement,text,status:'not_run'}))};
 try{matrix=dispositions(readObservations(options),options);}catch(error){failure??=error.message;}
-const report={schema:'acceptance-candidate/v1',revision,proofCommit:'Commit containing this immutable proof is recorded separately in runs.md; source revision above remains authoritative.',runId,checks,cycles,...matrix,defects:historicalDefects.map(d=>({...d,status:cycles.length===2&&cycles.every(c=>d.retests.every(phase=>c.phases.some(p=>p.phase===phase&&p.passed)))?'fixed':'open'})),sourceArtifacts:Object.fromEntries(['fixtures/acceptance/cases.json','fixtures/acceptance/workshop.json','fixtures/acceptance/library.json','scripts/acceptance/run.mjs','scripts/acceptance/report.mjs','tests/e2e/acceptance/performance.spec.ts'].map(path=>[path,sha(readFileSync(path))])),hosted:{status:'unverified',note:'Hosted CI must be read from its actual fresh run; local execution is not hosted success.'},failure};Object.assign(report,qualify(report));publish('report',report);
+const report={schema:'acceptance-candidate/v1',author:'codex-wp08',revision,proofCommit:'Commit containing this immutable proof is recorded separately in runs.md; source revision above remains authoritative.',runId,checks,cycles,...matrix,defects:historicalDefects.map(d=>({...d,status:cycles.length===2&&cycles.every(c=>d.retests.every(phase=>c.phases.some(p=>p.phase===phase&&p.passed)))?'fixed':'open'})),sourceArtifacts:Object.fromEntries(['fixtures/acceptance/cases.json','fixtures/acceptance/workshop.json','fixtures/acceptance/library.json','scripts/acceptance/run.mjs','scripts/acceptance/report.mjs','tests/e2e/acceptance/performance.spec.ts','tests/e2e/equipment/workflow.spec.ts'].map(path=>[path,sha(readFileSync(path))])),hosted:{status:'unverified',note:'Hosted CI must be read from its actual fresh run; local execution is not hosted success.'},failure};Object.assign(report,qualify(report));publish('report',report);
 console.log('Verdict '+report.verdict+'; '+report.reasons.join('; '));
 if(failure||(['all','cycles'].includes(mode)&&report.verdict==='INCOMPLETE'))process.exitCode=1;

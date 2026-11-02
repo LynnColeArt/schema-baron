@@ -30,3 +30,11 @@ jobs:
       # Serialized legacy studies plus two fresh author -> independent consumer cycles.
       # Missing/stale portability handoff remains a hard failure.
       - run: node scripts/acceptance/run.mjs browser
+      - name: Retain sanitized verification reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: studio-verification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: docs/evidence/verification/schema-baron-final-*/**/*.json
+          if-no-files-found: error
+          include-hidden-files: false

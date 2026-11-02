@@ -750,7 +750,11 @@ test('Equipment Desk starts blank and authors schema and forms through supported
       name: 'New record',
       exact: true
     }).click();
-    for (const [name, value] of Object.entries(values)) await label(app, name).fill(value);
+    for (const [name, value] of Object.entries(values)) {
+      const control = label(app, name);
+      if (await control.evaluate(element => element.tagName === 'SELECT')) await control.selectOption(value);
+      else await control.fill(value);
+    }
     await button(app, 'Save').click();
     await expect(app.getByText('Record saved.', {
       exact: false

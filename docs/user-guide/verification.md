@@ -24,3 +24,7 @@ node scripts/acceptance/inventory.mjs check-ledger <private-ledger> <checkout> <
 ```
 
 The command deliberately fails while AC-020 is unverified. WP09 must record its independent passed review observations with defect ID `AC020-independent-review` and `retests_observation` set to `candidate-review/workshop` or `candidate-review/library`, then close that pending review record before final acceptance. The author never supplies those observations.
+
+For a final report API judgment, independent review metadata alone is insufficient. Supply `review.work_package: "WP09"`, an `actor` distinct from report `author`, the exact qualified revision, and two hash references: `ledgerEvidence` points to the actual successful canonical `check-ledger` JSON; `observationsEvidence` points to `{schema:"independent-acceptance-review/v1", revision, work_package:"WP09", reviewer, author, records:[...both linked AC-020 observations...]}`. Every case/application and requirement must already be passed before `PASS` is possible. Candidate reports retain only the exact independent-review dependencies as pending.
+
+After independent observations are appended, regenerate the case/requirement matrix with `dispositions` against the actual ledger before invoking `qualify`; a valid review artifact cannot override pending fields in its input.
