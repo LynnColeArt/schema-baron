@@ -1,0 +1,42 @@
+{
+  "name": "cycle1-access",
+  "revision": "f9e041142c288627bf644106f21df977e1cf3c49",
+  "command": [
+    "npm",
+    "exec",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/access.spec.ts",
+    "--",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle1-access-output"
+  ],
+  "started": "2026-11-02T19:06:27.374Z",
+  "finished": "2026-11-02T19:07:47.977Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 1,
+    "count": 1,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "both UI-authored applications enforce public reads, real write handlers and session boundaries",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": []
+}

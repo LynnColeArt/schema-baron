@@ -1,0 +1,16 @@
+{
+  "name": "unit-integration",
+  "revision": "f9e041142c288627bf644106f21df977e1cf3c49",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--reporter=json",
+    "--outputFile=<private-run>/unit-results.json"
+  ],
+  "started": "2026-11-02T18:47:38.504Z",
+  "finished": "2026-11-02T18:50:55.892Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}
