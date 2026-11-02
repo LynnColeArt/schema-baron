@@ -208,6 +208,7 @@ export async function crossProjectCode(page: Page, f: AccessFixture, studio: Awa
  const completed = page.waitForResponse(r => r.url().endsWith('/api/v1/setup/complete')); await button(page, 'Complete').click();
  const result = await (await completed).json(); expect(result.ok).toBe(true); const other = await studio.project(result.result.id);
  await generate(page);
+ await page.locator(`[role=treeitem][data-object-id="${other.pages[0]!.id}"]`).dblclick();
  if (await button(page, 'Flow map').getAttribute('aria-pressed') === 'true') await button(page, 'Flow map').click();
  await page.getByRole('tab', { name: 'Code', exact: true }).click();
  await expect(label(page, 'Source output')).toHaveValue(other.outputConfig.approvedRootId + ':' + other.outputConfig.relativePath);
@@ -217,6 +218,7 @@ export async function crossProjectCode(page: Page, f: AccessFixture, studio: Awa
  const otherBytes = readFileSync(join(studio.projects, other.name, 'generated/app/server/connection.ts'), 'utf8');
  expect(otherBytes).not.toBe(original); await expect(label(page, 'Source code')).toHaveValue(otherBytes);
  await button(page, 'Open / Switch…').click(); await page.getByRole('dialog').getByRole('button').filter({ hasText: f.project.name }).first().click();
+ await page.locator(`[role=treeitem][data-object-id="${f.project.pages[0]!.id}"]`).dblclick();
  if (await button(page, 'Flow map').getAttribute('aria-pressed') === 'true') await button(page, 'Flow map').click();
  await page.getByRole('tab', { name: 'Code', exact: true }).click();
  await expect(label(page, 'Source output')).toHaveValue(f.project.outputConfig.approvedRootId + ':' + f.project.outputConfig.relativePath);
