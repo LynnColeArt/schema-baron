@@ -18,7 +18,7 @@ requirement_refs:
 - NFR-002
 planning_base_branch: feat/studio-verification-hardening
 merge_target_branch: feat/studio-verification-hardening
-branch_strategy: Single-branch mission on feat/studio-verification-hardening; use runtime lanes.json allocation, never create per-WP branches manually.
+branch_strategy: Planning artifacts for this mission were generated on feat/studio-verification-hardening. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/studio-verification-hardening unless the human explicitly redirects the landing branch.
 subtasks:
 - T031
 - T032
