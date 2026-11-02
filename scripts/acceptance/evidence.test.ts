@@ -7,6 +7,8 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { validateObservation, appendObservation, createRun, appendDefect, readObservations, summarizeLedger } from './evidence.mjs';
 
+type Recorded = {observation: {status: string}};
+type CaseSummary = {case_id: string; status: string};
 const revision = 'a'.repeat(40);
 function fixture(t: TestContext) {
  const root = mkdtempSync(join(tmpdir(), 'baron-evidence-'));
@@ -48,7 +50,7 @@ test('retains failure and linked retest immutably; rejects missing or unrelated 
  appendDefect('initial',{defect_id:'D-001',case_id:o.case_id,severity:'high',revision,reproduction:'Synthetic failure',status:'open'},f.options);
  appendObservation('first',{...o,status:'failed',actual:'Synthetic failure',defect_id:'D-001'},f.options);
  appendObservation('retest',{...o,defect_id:'D-001',retests_observation:`${o.run_id}/first`},f.options);
- assert.deepEqual(readObservations(f.options).map(x=>x.observation.status),['failed','passed']);
+ assert.deepEqual(readObservations(f.options).map((x: Recorded)=>x.observation.status),['failed','passed']);
  assert.throws(()=>appendObservation('first',o,f.options),/exist/i);
  assert.throws(()=>createRun({run_id:o.run_id,revision,application:'workshop',mode:'ui_journey',toolchain:{node:process.versions.node},fixture_sha256:'1'.repeat(64)},f.options),/exist/i);
  assert.throws(()=>appendObservation('bad',{...o,retests_observation:'missing/first'},f.options));
@@ -94,4 +96,45 @@ test('live ledger CLI rejects a missing mandatory disposition',t=>{
  const f=fixture(t);
  const p=spawnSync(process.execPath,['scripts/acceptance/inventory.mjs','check-ledger',f.options.storageDir,f.root,revision],{encoding:'utf8'});
  assert.equal(p.status,1);assert.match(p.stderr,/Missing mandatory dispositions/);
+});
+for(const acrossRuns of [false,true])test(`append ordering ignores reverse identifiers ${acrossRuns?'across runs':'within one run'}`,t=>{
+ const f=fixture(t),o=f.observation;
+ const firstRun='z-early-run',lastRun=acrossRuns?'a-late-run':firstRun;
+ for(const run_id of new Set([firstRun,lastRun]))createRun({run_id,revision,application:'workshop',mode:'ui_journey',toolchain:{node:process.versions.node},fixture_sha256:'1'.repeat(64)},f.options);
+ appendObservation('z-earlier-pass',{...o,run_id:firstRun},f.options);
+ appendObservation('a-later-failure',{...o,run_id:lastRun,status:'failed'},f.options);
+ const records=readObservations(f.options);
+ assert.deepEqual(records.map((r: Recorded)=>r.observation.status),['passed','failed']);
+ assert.equal(summarizeLedger([...records].reverse(),f.options).cases.find((c: CaseSummary)=>c.case_id===o.case_id).status,'failed');
+});
+test('an unlinked pass cannot erase a failure; linked retest explicitly supersedes it',t=>{
+ const f=fixture(t),o=f.observation;
+ createRun({run_id:o.run_id,revision,application:'workshop',mode:'ui_journey',toolchain:{node:process.versions.node},fixture_sha256:'1'.repeat(64)},f.options);
+ appendDefect('initial',{defect_id:'D-002',case_id:o.case_id,severity:'high',revision,reproduction:'Synthetic failure',status:'open'},f.options);
+ appendObservation('z-failure',{...o,status:'failed',defect_id:'D-002'},f.options);
+ appendObservation('a-unlinked-pass',o,f.options);
+ assert.equal(summarizeLedger(readObservations(f.options),f.options).cases.find((c: CaseSummary)=>c.case_id===o.case_id).status,'failed');
+ appendObservation('0-linked-pass',{...o,defect_id:'D-002',retests_observation:`${o.run_id}/z-failure`},f.options);
+ assert.equal(summarizeLedger(readObservations(f.options),f.options).cases.find((c: CaseSummary)=>c.case_id===o.case_id).status,'passed');
+ assert.equal(readObservations(f.options).length,3);
+});
+test('legacy history orders by unique timestamps and ambiguous ties fail closed',t=>{
+ const f=fixture(t),o=f.observation;
+ const early={observation_id:'z-pass',recorded_at:'2026-01-01T00:00:00.000Z',observation:o};
+ const late={observation_id:'a-failure',recorded_at:'2026-01-01T00:00:00.001Z',observation:{...o,status:'failed'}};
+ assert.equal(summarizeLedger([late,early],f.options).cases.find((c: CaseSummary)=>c.case_id===o.case_id).status,'failed');
+ assert.throws(()=>summarizeLedger([early,{...late,recorded_at:early.recorded_at}],f.options),/ambiguous/i);
+});
+test('live CLI cannot hide a later failure behind an older reverse-named pass',t=>{
+ const f=fixture(t),catalog=JSON.parse(readFileSync('fixtures/acceptance/cases.json','utf8'));
+ for(const c of catalog.cases)for(const application of c.application==='both'?['workshop','library']:[c.application]) {
+  const run_id=`z-old-${c.case_id}-${application}`;
+  createRun({run_id,revision,application,mode:c.primary_mode,toolchain:{node:process.versions.node},fixture_sha256:'1'.repeat(64)},f.options);
+  appendObservation('z-old-pass',{...f.observation,run_id,case_id:c.case_id,application,mode:c.primary_mode,requirements:Object.keys(catalog.requirements)},f.options);
+ }
+ const run_id='a-new-run';
+ createRun({run_id,revision,application:'workshop',mode:'ui_journey',toolchain:{node:process.versions.node},fixture_sha256:'1'.repeat(64)},f.options);
+ appendObservation('a-new-failure',{...f.observation,run_id,status:'failed'},f.options);
+ const p=spawnSync(process.execPath,['scripts/acceptance/inventory.mjs','check-ledger',f.options.storageDir,f.root,revision],{encoding:'utf8'});
+ assert.equal(p.status,1,p.stdout);assert.match(p.stderr,/Mandatory cases/);
 });

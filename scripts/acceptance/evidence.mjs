@@ -110,20 +110,58 @@ export function appendObservation(observationId, observation, options = {}) {
   if(previous.case_id!==observation.case_id || previous.application!==observation.application || !['failed','blocked','unverified'].includes(previous.status) || !observation.defect_id || previous.defect_id!==observation.defect_id) reject('Retest target unrelated or not failed');
  }
  const path=resolve(storage,'observations',observation.run_id,`${observationId}.json`);
- const record={observation_id:observationId,recorded_at:new Date().toISOString(),observation};writeNew(path,record);return record;
+ if(existsSync(path))reject('Observation already exists');
+ const orderDirectory=resolve(storage,'append-order');mkdirSync(orderDirectory,{recursive:true,mode:0o700});
+ const orders=readdirSync(orderDirectory).map(name=>Number(name.replace(/\.json$/,'')));
+ if(orders.some(n=>!Number.isSafeInteger(n)||n<1))reject('Invalid persisted append order');
+ const sequence=Math.max(0,...orders)+1;
+ if(!Number.isSafeInteger(sequence))reject('Append order exhausted');
+ // Exclusive reservation makes concurrent writers fail instead of reordering history.
+ // Gaps after an interrupted write are harmless; reserved positions are never reused.
+ writeNew(resolve(orderDirectory,`${String(sequence).padStart(12,'0')}.json`),{sequence,run_id:observation.run_id,observation_id:observationId});
+ const record={record_schema:'acceptance-record/v2',sequence,observation_id:observationId,recorded_at:new Date().toISOString(),observation};writeNew(path,record);return record;
 }
 export function readObservations(options = {}) {
  const directory=resolve(store(options),'observations');if(!existsSync(directory))return [];
- return readdirSync(directory).sort().flatMap(run=>readdirSync(resolve(directory,run)).sort().map(name=>json(resolve(directory,run,name))));
+ return orderedRecords(readdirSync(directory).flatMap(run=>readdirSync(resolve(directory,run)).map(name=>json(resolve(directory,run,name)))));
+}
+function orderedRecords(records) {
+ if(records.length<2)return records;
+ const sequences=new Set(),legacyTimes=new Set();
+ for(const record of records) {
+  if(record.record_schema==='acceptance-record/v2') {
+   if(!Number.isSafeInteger(record.sequence)||record.sequence<1||sequences.has(record.sequence))reject('Ambiguous persisted append order');
+   sequences.add(record.sequence);
+  } else {
+   if(record.record_schema!==undefined||typeof record.recorded_at!=='string'||!Number.isFinite(Date.parse(record.recorded_at)))reject('Missing legacy ordering metadata');
+   const time=Date.parse(record.recorded_at);
+   if(legacyTimes.has(time))reject('Ambiguous legacy timestamps; explicit review required');
+   legacyTimes.add(time);
+  }
+ }
+ // Legacy records remain byte-for-byte intact and precede the upgraded writer.
+ // Legacy timestamp ties are unverified, never broken by a convenient identifier.
+ return [...records].sort((a,b)=>a.sequence!==undefined&&b.sequence!==undefined?a.sequence-b.sequence:a.sequence!==undefined?1:b.sequence!==undefined?-1:Date.parse(a.recorded_at)-Date.parse(b.recorded_at));
 }
 export function summarizeLedger(records, options = {}) {
- const observations=records.map(x=>x.observation);
+ const ordered=orderedRecords(records),observations=ordered.map(x=>x.observation);
  for(const o of observations)validateObservation(o,options);
  const cases=catalog.cases.map(c=>{
   const apps=c.application==='both'?['workshop','library']:[c.application];
   const applications=apps.map(application=>{
-   const values=observations.filter(o=>o.case_id===c.case_id && o.application===application && o.mode===c.primary_mode);
-   return {application,status:values.at(-1)?.status??'not_run',observations:values.length};
+   const values=ordered.filter(r=>r.observation.case_id===c.case_id && r.observation.application===application && r.observation.mode===c.primary_mode);
+   const unresolved=new Map();
+   for(const record of values) {
+    const o=record.observation,key=`${o.run_id}/${record.observation_id}`;
+    if(['failed','blocked','unverified'].includes(o.status))unresolved.set(key,o);
+    if(o.status==='passed' && o.retests_observation) {
+     const prior=unresolved.get(o.retests_observation);
+     if(!prior||!o.defect_id||prior.defect_id!==o.defect_id)reject('Retest must explicitly supersede an earlier matching failure');
+     unresolved.delete(o.retests_observation);
+    }
+   }
+   const unresolvedStatus=[...unresolved.values()].some(o=>o.status==='failed')?'failed':[...unresolved.values()].at(-1)?.status;
+   return {application,status:unresolvedStatus??values.at(-1)?.observation.status??'not_run',observations:values.length};
   });
   const status=applications.every(x=>x.status==='passed')?'passed':applications.find(x=>x.status==='failed')?.status??applications.find(x=>x.status!=='passed')?.status??'not_run';
   return {case_id:c.case_id,application:c.application,status,applications,observations:applications.reduce((sum,a)=>sum+a.observations,0)};

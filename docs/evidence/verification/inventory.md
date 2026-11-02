@@ -120,7 +120,7 @@ The initial test-first run failed because the evidence module did not yet exist.
 The first implemented run caught missing conditional minItems enforcement; the
 schema walker was corrected before handoff. Final focused command:
 
-- `node --test scripts/acceptance/evidence.test.ts`: **14 passed, 0 failed**.
+- `node --test scripts/acceptance/evidence.test.ts`: **14 passed, 0 failed** at the initial implementation; cycle2 adds the chronology regressions below.
 - The live inventory CLI produced 20 Not run cases, 29 requirements and exact
   descriptor hashes. Its arithmetic checks passed as descriptor-only proof.
 - Live `check-ledger` CLI tests rejected missing dispositions and fully dispositioned
@@ -138,3 +138,49 @@ The repository's default Vitest include does not cover `scripts/acceptance/`.
 The explicit Node-native command above is mandatory for this foundation; WP08's
 runner must call it alongside the current repository suite. No acceptance case or
 requirement is marked passed by these synthetic harness checks.
+
+## Cycle2 — independent review remediation
+
+Review R1 reproduced a false case disposition: lexical observation/run IDs could
+put an older pass after a later failure. Its original red output is retained in
+`.local/wp01-review/order-red.json`; the implementation's additional test-first
+red output is retained in `.local/wp01-foundation/cycle2-order-red.log`.
+
+New observation envelopes use `acceptance-record/v2` with a persisted global
+append sequence, reserved through exclusive file creation before the observation
+is written. Concurrent reservation collisions fail rather than retry/reorder;
+interruption can leave a harmless unused sequence gap. IDs and timestamps do not
+choose the order of new records. Existing legacy records remain byte-for-byte
+unchanged and precede the upgraded writer's records; their unique timestamps
+establish their order. Missing/ambiguous legacy order fails closed for review,
+never breaks a tie by identifier. Read and summary both apply this ordering.
+
+A failed observation remains unresolved until a later matching defect-linked
+retest explicitly supersedes it; an unrelated or unlinked pass cannot erase it.
+All records stay retained. Tests cover reverse observation names within one run,
+reverse run names across runs, reversed reader input, later failure, explicit
+retest, and ambiguous legacy ties. The real ledger CLI now rejects the reviewer's
+fully dispositioned false-green construction. The original public reproducer
+reports expected failed / actual failed; it is **synthetic harness proof only**.
+
+- Cycle2 `node --test scripts/acceptance/evidence.test.ts`: **19 passed, 0 failed**.
+  All19 are harness tests, not app acceptance.
+- Strict standalone TypeScript check now uses lane-local compiler and Node types,
+  with no ancestor type-root override; passed.
+- Pinned Node24.22.1/npm11.19.1 `npm ci --ignore-scripts`: passed,291packages added,
+  reported0vulnerabilities. Lockfiles/dependency versions unchanged.
+- `npm run native:verify`: passed reviewed native bytes and SQLite3.53.4 insert,
+  transaction and online backup.
+- `npm run build`: passed lane workspace builds and Next production compilation.
+  Existing source-empty `@schema-baron/ui` reports NOT IMPLEMENTED, not a new pass.
+- Every `node_modules/@schema-baron/*` link resolves to this lane's packages/apps;
+  the executable built owner/MCP/generator artifacts are lane-local. No root
+  workspace aliases are accepted as proof for a future product edit.
+
+Review R2's first broad artifact is retained privately as
+`.local/wp01-foundation/head-junit.xml`:496tests/32failures/0errors. Missing lane
+builds/dependencies affected that attempt. It is not renamed green or overwritten.
+After the allowed lane install/build above, the canonical pre-review gate reruns
+once; its actual result is recorded in the cycle2 handoff and private gate log.
+The original pytest baseline stays untouched and its source comparison remains
+unverified. No application acceptance result is produced by this setup or rerun.
