@@ -1,0 +1,412 @@
+{
+  "name": "legacy-other",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/(?!acceptance/|equipment/|publication/)",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/legacy-other-output"
+  ],
+  "started": "2026-11-02T20:10:01.350Z",
+  "finished": "2026-11-02T20:16:37.653Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "legacy_mixed",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 38,
+    "count": 38,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "UI authors blank project, inspects and binds an existing WAL file, reconnects relocation, then creates a new empty DB while preserving invalid page drafts",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "actual authoring: HTML and Design share stable objects, recovery, conflicts and isolated current draft",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "Design literal braces and encoded HTML survive apply, save and reopen",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "native 200 percent zoom retains keyboard authoring and scrollable modes",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "two visibly authored applications build and read real SQLite after Studio stops",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "behavior map edits canonical edge mappings and matches standalone auth Save/Cancel handlers",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "100-node canonical map survives 20 Properties edits, separate layout, keyboard filters and native 200 percent zoom",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "invalid typed draft edge exposes its diagnostic and stays selectable until Properties repairs it",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "each wizard, atomic Cancel/errors, MCP parity, composite links and contextual editing",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "real wizard authors Grid/Record/Search, then independent production browser CRUD and Cancel preserve data",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "Studio history reviews later-data restore, Cancel preserves it, explicit apply restores and retains both backups",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "new SQLite wizard saves keys, preserves Back edits, renders Mermaid, creates linked protected pages and reuses schema/map tools",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "existing SQLite review is clear, compound keys are retained, Cancel is read-only and Complete leaves rows unchanged",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "nested relationship dialogs keep their own labels and Escape preserves the wizard schema",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "authors joined exact aggregate, typed minimum and reusable source through actual UI; independent SQL, MCP, recovery and limits",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "real preview child cancellation, timeout, bounds and required/null inputs stay read-only",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "native Chromium 200 percent keeps schema footer and query authoring keyboard and pointer reachable",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "unfinished query and structural history survive all switches, reload and MCP rebases; invalid save stays atomic",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "Code-authored hooks survive two reviewed regenerations and run in standalone production",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "MCP authored reports, visible canonical properties and standalone exact totals survive child writes and reopen",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "UI/MCP authoring, managed commands and selected route share authority; export survives owner shutdown",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "blank SQLite is authored visibly with constraints and ordered composite FK, preview/cancel is read-only; drafts and layout survive reload and MCP changes",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "50 tables and 500 columns remain searchable; 20 edits retain selection, invalid drafts and keyboard navigation",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "destructive preview discloses exact impacts and cancellation leaves existing rows intact",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "imported opaque view is clearly read-only and blocks unsafe migration without losing the draft",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "visible secure authoring produces independent public read/protected write app with login return",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "native 200 percent zoom keeps identity setup keyboard reachable",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "mapped identity setup validates fields and clears failed provision credentials",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "keyboard primary journey and full five-mode application checkpoint",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "native 200 percent keyboard primary journey uses actual browser zoom and all five modes",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "real blank lifecycle, atomic Cancel, keyboard authoring, contextual controls, undo/redo, dirty close and reopen",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "two drafts survive project switches and MCP edits; conflict resolution, invalid atomic save, focus, resizing and reduced viewport",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "incomplete and corrected drafts with invalid history survive switch, reload and undo without weakening Save",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "damaged browser recovery preserves unrelated UI-authored drafts and reports safe partial recovery",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "keyless first run, project folders, changed preference and restart",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": []
+}
