@@ -96,7 +96,9 @@ export function qualify(input,options={}){
 export function dispositions(records,options){
  const summary=summarizeLedger(records,{...options,requireComplete:true});
  return {cases:summary.cases.map(c=>({...c,status:c.case_id==='AC-020'&&c.applications.every(a=>a.status==='unverified')?'review_pending':c.status})),requirements:Object.entries(catalog.requirements).map(([requirement,text])=>{
-  const cases=catalog.cases.filter(c=>c.requirements.includes(requirement)).map(c=>c.case_id),statuses=summary.cases.filter(c=>cases.includes(c.case_id)&&c.case_id!=='AC-020').map(c=>c.status);
-  return {requirement,text,cases,status:statuses.every(s=>s==='passed')?(cases.includes('AC-020')?'review_pending':'passed'):'incomplete'};
+  const cases=catalog.cases.filter(c=>c.requirements.includes(requirement)).map(c=>c.case_id),associated=summary.cases.filter(c=>cases.includes(c.case_id));
+  const pending=associated.some(c=>c.case_id==='AC-020'&&c.status==='unverified'&&c.applications.every(a=>a.status==='unverified'));
+  const resolved=associated.every(c=>c.status==='passed'||(pending&&c.case_id==='AC-020'));
+  return {requirement,text,cases,status:resolved?(pending?'review_pending':'passed'):'incomplete'};
  })};
 }

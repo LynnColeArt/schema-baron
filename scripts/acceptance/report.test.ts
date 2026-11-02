@@ -4,7 +4,8 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { browserCensus, qualify, percentile95, catalog, phaseContract, validatePhase, requiredChecks } from './report.mjs';
+import { browserCensus, qualify, percentile95, catalog, phaseContract, validatePhase, requiredChecks, dispositions } from './report.mjs';
+import { createRun, appendDefect, appendObservation, readObservations, summarizeLedger } from './evidence.mjs';
 const revision='a'.repeat(40),artifactRoot=mkdtempSync(join(tmpdir(),'baron-report-tests-')),options={artifactRoot};let sequence=0;
 after(()=>rmSync(artifactRoot,{recursive:true,force:true}));
 function evidence(value:unknown){const path=`docs/evidence/verification/proof-${++sequence}.json`,bytes=JSON.stringify(value,null,2)+'\n';mkdirSync(join(artifactRoot,'docs/evidence/verification'),{recursive:true});writeFileSync(join(artifactRoot,path),bytes);return {path,sha256:createHash('sha256').update(bytes).digest('hex')};}
@@ -53,4 +54,32 @@ test('PASS requires all dispositions passed plus hash-verified canonical ledger 
  assert.equal(qualify(input,options).verdict,'PASS');
  const pending=complete();pending.review=input.review;assert.equal(qualify(pending,options).accepted,false);
  input.review.actor=input.author;assert.equal(qualify(input,options).accepted,false);
+});
+
+test('real ledger pending -> independent linked review -> recomputed dispositions and canonical PASS',()=>{
+ const storageDir=join(artifactRoot,'.local','protocol-ledger'),ledgerOptions={...options,storageDir,revision},note=evidence({scope:'Synthetic protocol integration proof; no application acceptance claim'}),input=complete();
+ for(const mode of ['ui_journey','parity','fault','review'])createRun({run_id:mode==='review'?'candidate-review':'unit-'+mode,revision,application:'both',mode,toolchain:{node:process.version},fixture_sha256:'f'.repeat(64)},ledgerOptions);
+ appendDefect('pending',{defect_id:'AC020-independent-review',revision,case_id:'AC-020',severity:'medium',status:'open',reproduction:'Synthetic pending independent review'},ledgerOptions);
+ for(const c of catalog.cases)for(const application of c.application==='both'?['workshop','library']:[c.application]){
+  const pending=c.case_id==='AC-020';appendObservation(pending?application:c.case_id+'-'+application,{run_id:pending?'candidate-review':'unit-'+c.primary_mode,case_id:c.case_id,requirements:c.requirements,application,mode:c.primary_mode,revision,status:pending?'unverified':'passed',expected:c.expected,actual:pending?'Independent review pending':'Synthetic protocol outcome',evidence:[note],...(pending?{defect_id:'AC020-independent-review'}:{})},ledgerOptions);
+ }
+ Object.assign(input,dispositions(readObservations(ledgerOptions),ledgerOptions));assert.equal(qualify(input,options).verdict,'CANDIDATE_READY');
+ const pendingRecords=readObservations(ledgerOptions),reviewRequirements=catalog.cases.find(c=>c.case_id==='AC-020')!.requirements;
+ for(const status of ['failed','blocked','skipped','not_run']){
+  const bad=structuredClone(pendingRecords);for(const record of bad)if(record.observation.case_id==='AC-020')record.observation.status=status;
+  const matrix=dispositions(bad,ledgerOptions);assert.equal(matrix.requirements.filter(r=>reviewRequirements.includes(r.requirement)).every(r=>r.status==='incomplete'),true);
+  assert.equal(qualify({...input,...matrix},options).verdict,'INCOMPLETE');
+ }
+ assert.throws(()=>summarizeLedger(readObservations(ledgerOptions),{...ledgerOptions,requireComplete:true,requirePassed:true}));
+ createRun({run_id:'independent-review',revision,application:'both',mode:'review',toolchain:{node:process.version},fixture_sha256:'f'.repeat(64)},ledgerOptions);
+ const c=catalog.cases.find(c=>c.case_id==='AC-020')!,records=['workshop','library'].map(application=>({run_id:'independent-review',case_id:c.case_id,requirements:c.requirements,application,mode:'review',revision,status:'passed',expected:c.expected,actual:'Independent synthetic reviewer completed canonical protocol',evidence:[note],defect_id:'AC020-independent-review',retests_observation:'candidate-review/'+application}));
+ appendObservation(records[0]!.application,records[0]!,ledgerOptions);
+ const halfReviewed=dispositions(readObservations(ledgerOptions),ledgerOptions);assert.equal(halfReviewed.requirements.filter(r=>reviewRequirements.includes(r.requirement)).every(r=>r.status==='incomplete'),true);assert.equal(qualify({...input,...halfReviewed},options).verdict,'INCOMPLETE');
+ appendObservation(records[1]!.application,records[1]!,ledgerOptions);
+ appendDefect('closed',{defect_id:'AC020-independent-review',revision,case_id:'AC-020',severity:'medium',status:'fixed',reproduction:'Both explicitly linked independent reviews appended'},ledgerOptions);
+ const canonical=summarizeLedger(readObservations(ledgerOptions),{...ledgerOptions,requireComplete:true,requirePassed:true}),recomputed=dispositions(readObservations(ledgerOptions),ledgerOptions);
+ assert.equal(recomputed.cases.every(c=>c.status==='passed'),true);
+ assert.equal(recomputed.requirements.every(r=>r.status==='passed'),true);
+ Object.assign(input,recomputed,{review:{independent:true,passed:true,revision,work_package:'WP09',actor:'independent-reviewer',ledgerEvidence:evidence(canonical),observationsEvidence:evidence({schema:'independent-acceptance-review/v1',revision,work_package:'WP09',reviewer:'independent-reviewer',author:input.author,records})}});
+ assert.equal(qualify(input,options).verdict,'PASS');
 });
