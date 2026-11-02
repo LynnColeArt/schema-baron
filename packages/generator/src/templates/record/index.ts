@@ -18,7 +18,7 @@ export const config = ${config} as const;
 export function loadRecord(parameters:Parameters) { return load(config,parameters); }
 `},
  {path:`server/record-action-${index}.ts`,content:`'use server';
-import { guardAction } from './auth';
+import { guardAction, AccessError } from './auth';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { config } from './record-${index}';
@@ -55,6 +55,7 @@ export async function submit${index}(_previous:State, data:FormData):Promise<Sta
   return state;
  } catch(error) {
   if(error&&typeof error==='object'&&'digest' in error) throw error;
+  if(error instanceof AccessError) return {...empty,summary:error.message==='CSRF validation failed.'?'Reload this page and sign in again before trying this action.':error.message};
   return {...empty,summary:'The submitted record parameters are invalid.'};
  }
 }
