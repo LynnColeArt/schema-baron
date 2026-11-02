@@ -106,3 +106,16 @@ WCAG2/2.1 A/AA violations (16/17/14 passing rule groups). This is a scoped audit
 not a whole-product accessibility verdict. `drafts.accessibility.json` retains the
 results. `drafts.bundle.json` records the built chunk byte/gzip totals; no bundle
 byte budget is declared, so it makes no invented threshold claim.
+
+The canonical synchronous head gate on `b927d13` completed with exit 0 and
+505 actual JUnit testcases, zero failures/errors/skips, in 234.97 seconds within
+the fixed 300-second budget. It moved WP05 to `for_review`. The raw regression
+JUnit remains private; `drafts.headgate.json` retains its hash, positive census
+and stage timings. Independent review is pending.
+
+This mixed proof does not claim the editor-by-application cross product or separate
+30-sample timing distributions for each full application. Workshop supplies the
+page/30-event measurement; isolated Library supplies schema/query/control recovery.
+Both-app aggregate acceptance, full application journeys and the final NFR verdict
+remain WP08 work. AC-004 here covers editable-property behavior; the broader
+flow/settings proof belongs to the predecessor journey and final aggregation.
