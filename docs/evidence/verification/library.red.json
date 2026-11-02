@@ -30,7 +30,28 @@
         }
       },
       "reproduction": "Create two differently keyed names through the Library forms, then open Add book_authors; separately import the declared 200-row quoted-identifier SQLite input and open its child Add form.",
-      "ownerException": "WP07 generator service.template and existing runtime regression coordinated with root for mandatory WP03 browser gap."
+      "ownerException": "WP07 generator service.template and existing runtime regression coordinated with root for mandatory WP03 browser gap.",
+      "collisionRegression": {
+        "revision": "aadd4f036475419c9c412115817550590a7952e2",
+        "mode": "generated runtime regression, separate from UI journey",
+        "inputLabels": [
+          "Restricted",
+          "Restricted",
+          "Restricted (pk: 1)"
+        ],
+        "keys": [
+          1,
+          2,
+          3
+        ],
+        "actualLabels": [
+          "Restricted (pk: 1)",
+          "Restricted (pk: 2)",
+          "Restricted (pk: 1)"
+        ],
+        "expected": "All labels distinct; unique literal label and all keys unchanged",
+        "status": "failed before collision-safe reservation repair"
+      }
     },
     {
       "id": "LIB-LOOKUP-LIMIT",

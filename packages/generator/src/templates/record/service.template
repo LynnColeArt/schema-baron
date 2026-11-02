@@ -41,7 +41,14 @@ export function load(config:Config,parameters:Parameters) {
    const lookup=control.lookup, valueField=source.fields.find(f=>f.id===lookup.valueFieldId)!;
    const choices=records.map(row=>({value:entered(valueField,row[lookup.valueFieldId]),label:String(row[lookup.labelFieldId]??'')}));
    const counts=new Map<string,number>(); for(const choice of choices) counts.set(choice.label,(counts.get(choice.label)??0)+1);
-   options[control.fieldId]=choices.map(choice=>({...choice,label:counts.get(choice.label)!>1?choice.label+' ('+valueField.name+': '+choice.value+')':choice.label}));
+   // Keep literal unique labels reserved, even if they resemble our key-context suffix.
+   const used=new Set(choices.filter(choice=>counts.get(choice.label)===1).map(choice=>choice.label));
+   options[control.fieldId]=choices.map(choice=>{
+    if(counts.get(choice.label)===1)return choice;
+    const base=choice.label+' ('+valueField.name+': '+choice.value+')'; let label=base;
+    for(let suffix=2;used.has(label);suffix++)label=base+' ['+suffix+']';
+    used.add(label);return {...choice,label};
+   });
   }
   return {isNew,values,options,name:config.displayFields.map(id=>values[id]).filter(Boolean).join(' · '),impacts:isNew?[]:impacts(db,config.source,keys(config,parameters))};
  } finally {db.close();}
