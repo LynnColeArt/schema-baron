@@ -27,7 +27,7 @@ const historicalDefects=[
  ['ACCESS-001','high','access.red.json',['access']],['ACCESS-002','medium','access.red.json',['access']],
  ...['DRAFT-01','DRAFT-02','DRAFT-03'].map(id=>[id,'high','drafts.failures.json',['drafts']]),
  ['DRAFT-04','medium','drafts.failures.json',['drafts']],['DRAFT-R1-obsolete-buffer','high','drafts.cycle2.failures.json',['drafts']],
- ['WP08-report-heldout','high','runs.md',['performance'],['foundation-report-tests']],['WP08-legacy-select','medium','runs.md',[],['legacy-equipment']],['WP08-legacy-publication-noop','medium','runs.md',[],['legacy-publication']],['WP08-legacy-form-wizard','medium','wp08-legacy-dev-red.json',[],['legacy-other']],['WP08-legacy-report-link','medium','wp08-legacy-dev-red.json',[],['legacy-other']],['WP08-save-live-caret','high','wp08-legacy-dev-red.json',['drafts','performance'],['legacy-other']],['WP08-schema-live-caret','high','runs.md',['drafts'],[]],['WP08-external-editor-focus','high','runs.md',['drafts','performance'],['legacy-other']],['WP08-native-widget-activation','medium','runs.md',[],['legacy-other']],['WP08-preview-zero-height','high','runs.md',[],['legacy-other']],['WP08-preview-keyboard','high','wp08-legacy-dev-red.json',[],['legacy-other']],['WP08-capture-isolation','high','runs.md',[],['legacy-other']],
+ ['WP08-npm-exec-filter','medium','runs.md',['variant'],[]],['WP08-report-heldout','high','runs.md',['performance'],['foundation-report-tests']],['WP08-legacy-select','medium','runs.md',[],['legacy-equipment']],['WP08-legacy-publication-noop','medium','runs.md',[],['legacy-publication']],['WP08-legacy-form-wizard','medium','wp08-legacy-dev-red.json',[],['legacy-other']],['WP08-legacy-report-link','medium','wp08-legacy-dev-red.json',[],['legacy-other']],['WP08-save-live-caret','high','wp08-legacy-dev-red.json',['drafts','performance'],['legacy-other']],['WP08-schema-live-caret','high','runs.md',['drafts'],[]],['WP08-external-editor-focus','high','runs.md',['drafts','performance'],['legacy-other']],['WP08-native-widget-activation','medium','runs.md',[],['legacy-other']],['WP08-preview-zero-height','high','runs.md',[],['legacy-other']],['WP08-preview-keyboard','high','wp08-legacy-dev-red.json',[],['legacy-other']],['WP08-capture-isolation','high','runs.md',[],['legacy-other']],
  ['CODE-configured-output','high','wp07-code-output-red.json',['regeneration']],['WP08-clean-draft-save','medium','runs.md',['performance']],
 ].map(([id,severity,source,retests,checkRetests])=>({id,severity,status:'fixed',check_retests:checkRetests??[],historicalSource:'docs/evidence/verification/'+source,retests,qualification:'Fixed only after both current cycles pass all named retest phases and current global checks pass every check_retests entry; prior scoped reports remain historical.'}));
 function publish(name,value){const path=publicRelative+'/'+name+'.json';const bytes=JSON.stringify(value,null,2)+'\n';writeFileSync(join(root,path),bytes,{flag:'wx'});return {path,sha256:sha(bytes)};}
@@ -53,7 +53,7 @@ function sanitizedDetails(output){
 }
 async function browser(name,args,expected,extra={}){
  const output=join(privateRoot,name+'-output'),json=join(privateRoot,name+'.json'),xml=join(privateRoot,name+'.xml');
- const result=await execute(name,'npm',['exec','playwright','test',...args,'--','--workers=1','--retries=0','--reporter=line,json,junit','--output='+output],{...env,...extra,PLAYWRIGHT_JSON_OUTPUT_FILE:json,PLAYWRIGHT_JUNIT_OUTPUT_FILE:xml});
+ const result=await execute(name,'npm',['exec','--','playwright','test',...args,'--workers=1','--retries=0','--reporter=line,json,junit','--output='+output],{...env,...extra,PLAYWRIGHT_JSON_OUTPUT_FILE:json,PLAYWRIGHT_JUNIT_OUTPUT_FILE:xml});
  const census=existsSync(json)?browserCensus(JSON.parse(readFileSync(json,'utf8')),expected,result.exitCode):{passed:false,count:0,expected,missingReport:true};
  const proof={...result,mode:name.startsWith('legacy-')?'legacy_mixed':name.endsWith('-parity')?'parity':'ui_journey',passed:result.passed&&census.passed,census,details:sanitizedDetails(output)};
  if(/^cycle[12]-/.test(name))proof.passed=validatePhase(name.replace(/^cycle[12]-/,''),proof,revision);
@@ -108,7 +108,7 @@ try{
   const legacyEnv={SCHEMA_BARON_EQUIPMENT_STUDY:join(privateRoot,'equipment.json'),SCHEMA_BARON_PUBLICATION_STUDY:join(privateRoot,'publication.json')};
   // Legacy studies have an explicit dependency; generic discovery excludes both and the final mission suite.
   for(const [name,args] of [['legacy-equipment',['tests/e2e/equipment']],['legacy-publication',['tests/e2e/publication/workflow.spec.ts']],['legacy-other',['tests/e2e/(?!acceptance/|equipment/|publication/)']]]){
-   const listed=execFileSync('npm',['exec','playwright','test',...args,'--','--list'],{env:{...env,...legacyEnv},encoding:'utf8'});const match=listed.match(/Total: (\d+) tests?/);if(!match)throw Error('Missing legacy test inventory');
+   const listed=execFileSync('npm',['exec','--','playwright','test',...args,'--list'],{env:{...env,...legacyEnv},encoding:'utf8'});const match=listed.match(/Total: (\d+) tests?/);if(!match)throw Error('Missing legacy test inventory');
    const result=await browser(name,args,Number(match[1]),legacyEnv);checks.push(result);if(!result.passed)throw Error(name+' failed');
   }
  }
