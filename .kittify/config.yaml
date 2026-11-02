@@ -18,3 +18,7 @@ agents:
   - codex
   auto_commit: true
   lint_on_edit: false
+review:
+  test_command: node scripts/workspace/review-gate.mjs {output_file}
+  test_output_format: junit_xml
+  fail_on_pre_review_regression: true
