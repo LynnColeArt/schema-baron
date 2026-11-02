@@ -19,7 +19,7 @@
     "evidence": [
       {
         "path": "docs/evidence/verification/drafts.cycle2.md",
-        "sha256": "ffd555aed5bb3e94e446f45f5629019994fce76633100080bc44292e6f63a19e"
+        "sha256": "38bb80d3f318e8e0831c16386c8bf17a2e8313cb48f11c663c9cabb845d0028d"
       },
       {
         "path": "docs/evidence/verification/drafts.cycle2.timings.json",
@@ -47,7 +47,7 @@
     "evidence": [
       {
         "path": "docs/evidence/verification/drafts.cycle2.md",
-        "sha256": "ffd555aed5bb3e94e446f45f5629019994fce76633100080bc44292e6f63a19e"
+        "sha256": "38bb80d3f318e8e0831c16386c8bf17a2e8313cb48f11c663c9cabb845d0028d"
       },
       {
         "path": "docs/evidence/verification/drafts.cycle2.timings.json",

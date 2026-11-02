@@ -75,3 +75,15 @@ distributions for each full app, or final acceptance. Both full application
 journeys, aggregate coverage and the final load-controlled NFR verdict remain
 WP08 work. The canonical head gate and independent re-review are recorded
 separately; the implementer does not approve its own work.
+
+## Canonical gate closeout
+
+The single synchronous canonical head gate at `0401f963e600d27369eefb04cb49a8c9b7fb1298`
+completed with exit 0 and moved WP05 to `for_review`. The actual retained JUnit
+contains 507 testcases with zero failures, errors or skips. All dependency, native
+and suite stages passed; total wall time was 210.52 seconds within the unchanged
+300-second budget. `drafts.cycle2.headgate.json` records the positive census, raw
+JUnit hash and stage timings. Raw regression output remains private. The command
+reported two unrelated planning dirty files ignored; this lane was clean and none
+were inspected or changed. Independent re-review remains pending. This closeout
+is documentation only; it does not trigger another full source replay.
