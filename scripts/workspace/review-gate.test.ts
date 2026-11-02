@@ -56,6 +56,14 @@ test('local-looking package executable cannot escape to another installation', (
   expect(() => inspectReviewCheckout(root)).toThrow('borrowed package executable');
 });
 
+test('borrowed compiled artifact is refused before a rebuild can write through it', () => {
+  const root = fixture(), other = fixture();
+  file(other, 'compiled/main.js'); mkdirSync(join(root, 'apps/studio/dist'), { recursive: true });
+  symlinkSync(join(other, 'compiled/main.js'), join(root, 'apps/studio/dist/main.js'));
+  expect(() => inspectReviewCheckout(root)).toThrow('borrowed runtime artifact');
+  expect(readFileSync(join(other, 'compiled/main.js'), 'utf8')).toBe('fixture');
+});
+
 test('real failing child exit is retained instead of reported as a green stage', () => {
   try { runReviewCommand(process.execPath, ['-e', 'process.exit(23)'], { stdio: 'pipe' }); throw Error('unexpected success'); }
   catch (error) { expect(error).toHaveProperty('status', 23); }
