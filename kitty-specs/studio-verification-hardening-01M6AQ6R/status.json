@@ -1,7 +1,7 @@
 {
-  "event_count": 59,
-  "last_event_id": "01M6F0RPWWQ749SF22BTGREC1Z",
-  "materialized_at": "2026-11-02T20:56:12.444552+00:00",
+  "event_count": 61,
+  "last_event_id": "01M6F10KTVWPD3DV9DFE1QVWD9",
+  "materialized_at": "2026-11-02T21:00:31.450917+00:00",
   "mission_number": "",
   "mission_slug": "studio-verification-hardening-01M6AQ6R",
   "mission_type": "software-dev",
@@ -12,9 +12,9 @@
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 0,
+    "in_progress": 1,
     "in_review": 0,
-    "planned": 1
+    "planned": 0
   },
   "work_packages": {
     "WP01": {
@@ -258,7 +258,8 @@
       "last_transition_at": "2026-11-02T20:56:12.444552+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
-        "Candidate ready: qualified code ca1a039; two complete fresh cycles, current automated and legacy checks; AC-020 remains pending independent WP09. Evidence: docs/evidence/verification/schema-baron-final-CwG5Na/report.json"
+        "Candidate ready: qualified code ca1a039; two complete fresh cycles, current automated and legacy checks; AC-020 remains pending independent WP09. Evidence: docs/evidence/verification/schema-baron-final-CwG5Na/report.json",
+        "Independent Reviewer Renata (verification_final_review): WP08 approved at qualified ca1a03910d7ab72f874d0e22829068d3f09e30a2; proof aa41854e0ecb716f480b858b6597ba81c48abb89; later provenance/admission docs only. Independent Node 28/28 passed; prior separate real-ledger finalization probe confirmed actual canonical CLI pending/partial rejection and two-linked-review completion without manual matrix promotion. Verified 37 public check/phase hashes, 20 source hashes against qualified git blobs, exact private 70-observation candidate matrix, both zero-retry nine-phase clean cycles, and actual admission JUnit 513 cases/79 suites/0 failures/errors/skips. Anti-pattern checklist: dead code PASS (runner/CI callers); synthetic fixture PASS (real UI/protocol boundaries, synthetic report tests not application proof); silent empty return PASS (fail-closed rejection); FR coverage PASS; frozen surface PASS (historical captures unchanged); locked decision PASS; shared ownership PASS (coordinated narrow frontend/legacy exceptions documented in runs.md); production fragility PASS (explicit fail-loud qualification guards). Source-linked candidate remains CANDIDATE_READY/accepted false; AC020 and final mission acceptance reserved for WP09. Hosted exact-ca1 success separately supplied by coordinator; local proof never substitutes hosted status. No unresolved actionable WP08 issue."
       ],
       "provider": "__resolved_provider_absent__",
       "review_result": {
@@ -279,11 +280,19 @@
       }
     },
     "WP09": {
-      "actor": "finalize-tasks",
+      "actor": "codex",
+      "agent": "codex",
+      "agent_profile": "reviewer-renata",
+      "agent_profile_version": "1.0",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M6E4RK6ZA40GK2S0WT4W4KHN",
-      "last_transition_at": "2026-11-02T12:46:48.543861+00:00"
+      "lane": "in_progress",
+      "last_event_id": "01M6F10KTVWPD3DV9DFE1QVWD9",
+      "last_transition_at": "2026-11-02T21:00:31.450917+00:00",
+      "model": "__resolved_model_absent__",
+      "provider": "__resolved_provider_absent__",
+      "role": "implementer",
+      "shell_pid": 1707809,
+      "shell_pid_created_at": "1793653227.16"
     }
   }
 }
