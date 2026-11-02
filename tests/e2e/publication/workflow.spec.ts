@@ -223,7 +223,20 @@ test('Publication Catalog visibly authors an unrelated composite-key application
  const username='catalog-librarian-'+root.split('-').at(-1),secret=randomBytes(32).toString('base64url');await label(page,'Visitor username').fill(username);await label(page,'Visitor password').fill(secret);await button(page,'Provision user').click();await expect(page.getByText('User provisioned. Credentials were cleared.',{exact:true})).toBeVisible();
  p=await snapshot();for(const f of p.forms.filter(f=>f.kind==='Grid'||f.kind==='Record')){await label(page,'Header form').selectOption(f.id);await button(page,'Place identity in page header').click();await expect.poll(async()=>(await snapshot()).controls.filter(c=>c.formId===f.id&&c.kind==='identity'&&!c.credentialRole).length).toBe(1);}
  for(const f of p.forms.filter(f=>f.kind==='Record')){await label(page,'Policy page').selectOption(f.pageId);await label(page,'Page access').selectOption('authenticated');for(const a of p.actions.filter(a=>a.formId===f.id&&['insert','update','delete'].includes(a.operation)))await label(page,`Access for ${a.operation} ${a.id}`).selectOption('authenticated');}await button(page,'Close').click();
- p=await snapshot();for(const [tableName,field,target] of [['publications','author_id','authors'],['publication_categories','publication_id','publications'],['publication_categories','category_id','categories']]as const){const t=p.schema.tables.find(t=>t.physicalName===tableName)!,f=p.forms.find(f=>f.kind==='Record'&&f.sourceRef?.id===t.id)!,c=p.controls.find(c=>c.formId===f.id&&c.binding?.kind==='stored'&&c.binding.fieldId===t.columns.find(c=>c.physicalName===field)!.id)!;await select(c.id);await label(page,'Lookup relationship').selectOption(p.schema.tables.find(t=>t.physicalName===target)!.id);await save(page);}
+ p=await snapshot();
+ for(const [tableName,field,target] of [['publications','author_id','authors'],['publication_categories','publication_id','publications'],['publication_categories','category_id','categories']] as const){
+  const before=await snapshot(),t=before.schema.tables.find(t=>t.physicalName===tableName)!,f=before.forms.find(f=>f.kind==='Record'&&f.sourceRef?.id===t.id)!,c=before.controls.find(c=>c.formId===f.id&&c.binding?.kind==='stored'&&c.binding.fieldId===t.columns.find(c=>c.physicalName===field)!.id)!,targetId=before.schema.tables.find(t=>t.physicalName===target)!.id;
+  await select(c.id);const relationship=label(page,'Lookup relationship');
+  if(await relationship.inputValue()===targetId){
+   await expect(button(page,'▣ Save')).toBeDisabled();
+   expect(before.controls.find(control=>control.id===c.id)?.lookup?.source.id).toBe(targetId);
+   expect(await snapshot()).toEqual(before);
+  }else{
+   await relationship.selectOption(targetId);await save(page);
+   await expect.poll(async()=>(await snapshot()).controls.find(control=>control.id===c.id)?.lookup?.source.id).toBe(targetId);
+  }
+ }
+
  writeFileSync(info.outputPath('authored-project.json'),JSON.stringify(await snapshot(),null,2));await page.screenshot({path:info.outputPath('visible-authored.png')});
   await button(page, 'Queries').click();
   const kind = async (name: string, value: string) => label(page, name + ' kind').selectOption(value);
