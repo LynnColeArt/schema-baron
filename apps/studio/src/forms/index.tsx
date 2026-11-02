@@ -13,6 +13,7 @@ import type {
 import type { Command } from "@schema-baron/model";
 import "./styles.css";
 import { completeScalar } from "./scalars.js";
+import { actionChoiceLabel } from "./action-labels.js";
 import type { ScalarBuffers, ScalarBuffer } from "./scalars.js";
 type Construction = Extract<Command, { operation: "form.construct" }>["input"];
 const sid = (s: string) => createId(() => s);
@@ -999,7 +1000,7 @@ export function FormProperties({
               event.actionId,
               project.actions
                 .filter((a) => a.formId === form.id)
-                .map((a) => ({ value: a.id, label: a.operation })),
+                .map((a) => ({ value: a.id, label: actionChoiceLabel(project, a) })),
               (id) =>
                 update({
                   ...control,
