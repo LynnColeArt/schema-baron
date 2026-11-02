@@ -24,6 +24,7 @@
   "purpose_context": "Turn the Schema Baron Studio milestone into a bounded, reproducible acceptance baseline. Exercise Workshop Planner and a Library Catalog from clean projects, repair verified gaps, protect business data and authored code across regeneration, and report the remaining limits truthfully.",
   "purpose_tldr": "Prove two unrelated applications can be built and regenerated through Studio without hidden repairs.",
   "slug": "studio-verification-hardening-01M6AQ6R",
+  "status_phase": "1",
   "target_branch": "feat/studio-verification-hardening",
   "topology": "single_branch",
   "vcs": "git",
