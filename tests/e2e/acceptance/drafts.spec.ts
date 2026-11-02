@@ -69,6 +69,7 @@ test('page draft restores its active text control and selection after reload', a
  await page.reload();
  await expect(title).toHaveValue('Unfinished Workshop title');
  await expect(title).toBeFocused();
+ await expect(button(page, '▣ Save')).toBeEnabled();
  expect(await title.evaluate((e: HTMLInputElement) => [e.selectionStart, e.selectionEnd])).toEqual([3, 9]);
  expect(await studio.project(project.id)).toEqual(project);
 });
@@ -93,6 +94,7 @@ test('schema partial decimal text survives view switch and reload without normal
  page.on('dialog', dialog => void dialog.accept()); await page.reload(); await button(page, 'Schema').click();
  await expect(scale).toHaveValue('-');
  await expect(scale).toBeFocused();
+ await expect(button(schema, 'Save schema')).toBeEnabled();
  expect(await scale.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([1,1]);
  await expect(label(schema, 'Table name')).toHaveValue('books_unsaved');
  expect(await studio.project(project.id)).toEqual(project);
@@ -111,6 +113,7 @@ test('control numeric and query scalar drafts retain invalid text and actionable
  await expect(width).toHaveValue('-'); await expect(width).toBeFocused();
  page.on('dialog', dialog => void dialog.accept()); await page.reload();
  await expect(label(page, 'Label')).toHaveValue('Unfinished control caption'); await expect(width).toHaveValue('-');
+ await expect(button(page, '▣ Save')).toBeEnabled();
  await expect(width).toBeFocused(); expect(await width.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([0,1]);
  await button(page, 'Queries').click(); await button(page, 'New query').click();
  await label(page, 'Query name').fill('Unfinished query name');
@@ -127,6 +130,7 @@ test('control numeric and query scalar drafts retain invalid text and actionable
  await open(page, project.name); await expect(scalar).toHaveValue('-');
  await page.reload(); await button(page, 'Queries').click();
  await expect(label(page, 'Query name')).toHaveValue('Unfinished query name'); await expect(scalar).toHaveValue('-');
+ await expect(button(page, 'Save query')).toBeEnabled();
  await expect(scalar).toBeFocused(); expect(await scalar.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([0,1]);
  await button(page, 'Queries').click();
  await expect(label(page, 'Label')).toHaveValue('Unfinished control caption'); await expect(width).toHaveValue('-');
@@ -167,6 +171,20 @@ test('thirty received UI revisions retain draft selection; conflicts and two pro
  const received = await studio.project(workshop.id);
  expect(received.pages.find(p => p.id === draftPage.id)).toEqual(draftPage);
  expect(await studio.project(library.id)).toEqual(library);
+ // Intentional keyboard focus must remain where the author put it on later revisions.
+ const receive = async (next: string) => {
+  await label(remote, 'Title').fill(next); await saveProject(remote);
+  await expect(page.locator(`[role=treeitem][data-object-id="${unrelated.id}"]`)).toContainText(next);
+ };
+ const tree = page.locator('[role=treeitem]'); await tree.first().focus(); await tree.first().press('ArrowDown');
+ await expect(tree.nth(1)).toBeFocused(); await receive('Keyboard tree focus retained'); await expect(tree.nth(1)).toBeFocused();
+ await button(page, 'Schema').focus(); await button(page, 'Schema').press('Tab');
+ await expect(button(page, 'Queries')).toBeFocused(); await receive('Keyboard toolbar focus retained'); await expect(button(page, 'Queries')).toBeFocused();
+ await page.getByRole('tab', { name: 'Data', exact: true }).click();
+ const route = label(page, 'Route'); await selectRange(route, 0, 1);
+ await receive('Another property focus retained'); await expect(route).toBeFocused();
+ expect(await route.evaluate((e: HTMLInputElement) => [e.selectionStart,e.selectionEnd])).toEqual([0,1]);
+ await page.getByRole('tab', { name: 'Format', exact: true }).click();
  // Ordinary same-field Save in another tab is a separately labeled competing revision.
  await properties(remote, draftPage.id); await label(remote, 'Title').fill('Competing service title'); await saveProject(remote);
  await expect(page.getByText('Conflicting service revision', { exact: true })).toBeVisible();
