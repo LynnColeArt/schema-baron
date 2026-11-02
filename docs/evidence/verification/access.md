@@ -95,9 +95,13 @@ all workspace links/artifacts stayed local. Strict TypeScript checks, focused
 regressions, workspace typecheck, dependency verification, diff-scoped lint,
 credential scan and npm audit passed; audit reported zero vulnerabilities.
 `@schema-baron/ui` has no TypeScript source and the existing workspace checker
-reports its typecheck as NOT IMPLEMENTED. The canonical pre-review gate records
-its actual retained JUnit separately; a workflow transition or zero API counts
-are never substituted for reading that report.
+reports its typecheck as NOT IMPLEMENTED. The canonical pre-review gate at evidence head `3a30922379cafa95cf0734ef14e3690beca15fcb`
+passed: actual retained JUnit independently contained 79 suites and 510 testcases,
+with zero failures, errors or skips. Its wall time was 214.915 seconds. Dependency
+and native stages passed; no force or skip was used. The recorded transition
+event is `01M6ED0FMNC7ZC8CWVB8F1HDFZ`. This later evidence-only update changes
+no application/test code and does not require another test-for-prose cycle.
+A workflow transition or zero API counts never substitute for that actual report.
 
 All eight observations passed canonical schema, requirement, artifact-hash and
 privacy validation. AC-005/006/007 pass for each app within this proof. AC-015 is

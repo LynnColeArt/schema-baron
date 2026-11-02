@@ -2035,5 +2035,42 @@
     "weakenedGuardWriteCount": 1,
     "sameUnauthorizedNoWriteInvariant": "red detected",
     "liveApplicationSourcePatched": false
+  },
+  "canonicalPreReviewGate": {
+    "capturedHead": "3a30922379cafa95cf0734ef14e3690beca15fcb",
+    "validatedApplicationAndTestCode": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+    "event": "01M6ED0FMNC7ZC8CWVB8F1HDFZ",
+    "transition": "in_progress to for_review",
+    "actualRetainedJunit": {
+      "suites": 79,
+      "tests": 510,
+      "testcases": 510,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "stages": {
+      "stages": [
+        {
+          "label": "locked dependency verification",
+          "status": "passed",
+          "elapsedSeconds": 0.06227468
+        },
+        {
+          "label": "reviewed native prebuild verification",
+          "status": "passed",
+          "elapsedSeconds": 0.07600531499999999
+        },
+        {
+          "label": "Vitest JUnit suite",
+          "status": "passed",
+          "elapsedSeconds": 214.76841240299999
+        }
+      ],
+      "wallSeconds": 214.915055679
+    },
+    "comparison": "no_new_failures",
+    "forceOrSkip": false,
+    "totalAccounting": "Counts independently read from actual JUnit; zero API accounting fields were not treated as test proof."
   }
 }
