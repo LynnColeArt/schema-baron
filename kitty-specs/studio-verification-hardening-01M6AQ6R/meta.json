@@ -11,5 +11,7 @@
   "purpose_tldr": "Prove two unrelated applications can be built and regenerated through Studio without hidden repairs.",
   "slug": "studio-verification-hardening-01M6AQ6R",
   "target_branch": "feat/studio-verification-hardening",
-  "topology": "single_branch"
+  "topology": "single_branch",
+  "vcs": "git",
+  "vcs_locked_at": "2026-11-02T12:49:31.496396+00:00"
 }
