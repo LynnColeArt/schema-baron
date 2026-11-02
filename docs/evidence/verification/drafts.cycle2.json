@@ -1,0 +1,58 @@
+{
+  "revision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4",
+  "productionRepairRevision": "5164a11d45e9a386739a6f1ddaa433a3974f01d7",
+  "scope": "WP05 R1 plus original mixed Studio-owner draft cases; full two-app aggregation and final performance verdict remain WP08",
+  "retries": 0,
+  "junit": {
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "wallSeconds": 74.87063400000001
+  },
+  "focusedTests": {
+    "files": 6,
+    "tests": 46,
+    "exit": 0
+  },
+  "checks": {
+    "typecheck": 0,
+    "fullBuild": 0,
+    "diffLint": 0,
+    "credentials": 0,
+    "scopedAxeViolations": 0,
+    "canonicalHeadGate": "pending",
+    "independentReview": "pending"
+  },
+  "timing": {
+    "samples": 30,
+    "feedbackP95Ms": 10.471439999997529,
+    "saveP95Ms": 78.40152999999918,
+    "saveMaxMs": 87.82561800000258,
+    "finalVerdict": "WP08"
+  },
+  "semantics": "Only explicit semantic mutations retire obsolete type-specific fields; applicable draft text survives switches/reload; undo restores model values without resurrecting discarded type-specific text",
+  "preservation": "The real UI regression rejects an invalid unselected decimal field even while another column changes type; owner snapshots and each business SQLite file byte hash show no unintended changes",
+  "artifacts": [
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.md",
+      "sha256": "ffd555aed5bb3e94e446f45f5629019994fce76633100080bc44292e6f63a19e"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.junit.xml",
+      "sha256": "44003b88b893dc0f2f252bb751f31d21c24aadd216f446b3d6a331df8b9634ad"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.timings.json",
+      "sha256": "6408a29db5ab1974d5e30c516b4c10897331264611cf41c11c3b7028c562f840"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.accessibility.json",
+      "sha256": "16fbf40b072fb97c4883d2c9f4a49835730f5a4aaf10c1d47ca989119ac8cb0f"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.failures.json",
+      "sha256": "123109402d24e95a7904759bae33883c8974cfafb0bd312ef918da429ed070ab"
+    }
+  ]
+}
