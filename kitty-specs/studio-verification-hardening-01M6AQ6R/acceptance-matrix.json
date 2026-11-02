@@ -78,10 +78,10 @@
       "criterion_id": "FR-008",
       "description": "Public browsing remains public; protected pages and direct write handlers reject anonymous use; login/logout and validated return targets behave consistently across sessions/tabs.",
       "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "evidence": "docs/evidence/verification/review.md; qualified ca1a03910d7ab72f874d0e22829068d3f09e30a2; immutable proof 9ff74079a9903264eaf496f4a7abb6946b0d51f4/docs/evidence/verification/wp09-independent/report.json; requirement FR-008",
+      "pass_fail": "pass",
+      "verified_by": "verification_acceptance_audit",
+      "verified_at": "2026-11-02T21:15:23.954741+00:00",
       "notes": "Not run. Assigned to WP02, WP04. Requires linked UI/durable/reviewer proof as defined in checklists/acceptance.md; automated_test is the scaffold proof category, not a claim that automation alone satisfies the requirement."
     },
     {
