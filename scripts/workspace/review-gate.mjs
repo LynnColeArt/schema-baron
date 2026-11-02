@@ -28,6 +28,7 @@ export function inspectReviewCheckout(root) {
   for (const group of ['apps', 'packages']) {
     for (const directory of readdirSync(join(root, group))) {
       const workspace = join(root, group, directory);
+      if (!local(workspace, root)) throw new Error('Review setup refuses workspace source outside this checkout.');
       const manifest = JSON.parse(readFileSync(join(workspace, 'package.json'), 'utf8'));
       const installed = join(modules, manifest.name);
       if (!existsSync(installed)) dependenciesReady = false;
@@ -41,7 +42,13 @@ export function inspectReviewCheckout(root) {
       exports(manifest.exports);
     }
   }
-  return { dependenciesReady, artifactsReady: artifacts.every(path => existsSync(join(root, path)) && local(join(root, path), root)) };
+  let artifactsReady = true;
+  for (const artifact of artifacts) {
+    const path = join(root, artifact);
+    if (!existsSync(path)) artifactsReady = false;
+    else if (!local(path, root)) throw new Error(`Review setup refuses borrowed runtime artifact: ${artifact}.`);
+  }
+  return { dependenciesReady, artifactsReady };
 }
 
 export function runReviewCommand(command, args, options) {
