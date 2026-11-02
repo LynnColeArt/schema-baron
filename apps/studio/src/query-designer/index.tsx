@@ -263,6 +263,7 @@ export function QueryDesigner({
     setPreview(null);
     setViews((v) => ({ ...v, [value.id]: { tab: "Sources" } }));
   }
+  const restoringFocus = useRef(false);
   useEffect(() => {
     if (!active) return;
     const focus = views[selected]?.focus;
@@ -275,6 +276,7 @@ export function QueryDesigner({
         e.getClientRects().length,
     );
     if (!element) return;
+    restoringFocus.current = true;
     element.focus();
     if (
       element instanceof HTMLInputElement &&
@@ -283,8 +285,10 @@ export function QueryDesigner({
       element.selectionStart !== null
     )
       element.setSelectionRange(focus.start, focus.end);
+    restoringFocus.current = false;
   }, [active, selected, tab]);
   function retainFocus(element: EventTarget) {
+    if (restoringFocus.current) return;
     if (
       !(
         element instanceof HTMLInputElement ||
