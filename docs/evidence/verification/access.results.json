@@ -1,0 +1,2039 @@
+{
+  "scope": "WP04 scoped access proof; not final mission or complete recovery acceptance",
+  "validatedCode": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+  "actualUiJunit": {
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 86.28838400000001
+  },
+  "retries": 0,
+  "sourceHashes": {
+    "tests/e2e/acceptance/access.spec.ts": "cfee2180338af9bcd6507543b7f9cc64b27a4e4bde2e50a14c4246786239abd4",
+    "tests/e2e/acceptance/access-contract.ts": "fa237845b4ab7144230daa9a5fe2d416b929af7c5d579bcabbc920f994a635ca",
+    "tests/e2e/acceptance/workshop-journey.ts": "6e52cb5ccda3382bdfa06d2f06b7b291a0ad5a7b704e6042f4c8bcee13dd31ab",
+    "tests/e2e/acceptance/library-journey.ts": "3600a9d2ba38b18962ac2a34d4f85beac3c47b69a3b149036722bac6e7e324ba",
+    "tests/integration/generated-auth/action-errors.test.ts": "d5c19de8cccef65ca95d4985773ef58563274476264654fc71c2844757b62f8c",
+    "packages/generator/src/templates/record/index.ts": "670c8bf9b212194259f62fd09877ff0209f7bb1eee92ea881e36322116883292"
+  },
+  "applications": {
+    "workshop": {
+      "provenance": {
+        "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+        "node": "v24.22.1",
+        "browser": "156.0.8078.4",
+        "fixtureHash": "c9f017a8a46f5e54ccf07d4e4fa9f0c71650cd0a52ddb8d708e3da154984d8ac",
+        "testHash": "951df8b0b99571057f50c2b325d8c7ae9c98f305cc0bfd756028e4b5cd7df259",
+        "journeyHash": "6e52cb5ccda3382bdfa06d2f06b7b291a0ad5a7b704e6042f4c8bcee13dd31ab"
+      },
+      "initialMatrix": {
+        "mode": "boundary requests against UI-authored fixture",
+        "observations": [
+          {
+            "name": "public /",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "public /sessions",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "public /workshop-report",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          }
+        ],
+        "beforeHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "afterHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "requestCredentialsAndPayloads": "retained only in memory"
+      },
+      "afterStateMatrix": {
+        "mode": "boundary requests against UI-authored fixture",
+        "observations": [
+          {
+            "name": "public /",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "public /sessions",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "public /workshop-report",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "workshops RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "4825cf16fe19eb16aada27b238607786aad7bbc3c4de75a283f3656566427e74"
+          },
+          {
+            "name": "workshops RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "ecf0395fd64975c4ef7353f7c1180df419b3e102e4244fb874177d48fa9ddbb8"
+          },
+          {
+            "name": "workshops RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          },
+          {
+            "name": "sessions RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69"
+          },
+          {
+            "name": "sessions RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2bc6c480ac720169057677894fe4e1754923d1c35cd987941626b09e102cf658"
+          },
+          {
+            "name": "sessions RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+          }
+        ],
+        "beforeHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "afterHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "requestCredentialsAndPayloads": "retained only in memory"
+      },
+      "uiSessions": {
+        "mode": "ui_journey; expiry evidence is separately labeled fault",
+        "selectedParent": "2",
+        "selectedRecord": "1",
+        "checks": [
+          "empty filtered list",
+          "Add/login/Cancel typed context",
+          "empty-parent Add/Save/confirmed Delete retains filtered parent",
+          "existing selected Save/Cancel",
+          "cross-tab logout",
+          "revoked-token direct write",
+          "expired-token RSC and JSON write",
+          "relogin preserves selected key",
+          "external and malformed return rejection",
+          "malformed typed key"
+        ],
+        "beforeHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "afterHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+      },
+      "expiryFault": {
+        "mode": "fault",
+        "fixturePhase": "owned visitor-session expiry",
+        "setup": "real authorized JSON handler controls with temporary business rows",
+        "injection": "expires changed only for current project/token hash",
+        "JSON": [
+          "insert",
+          "update",
+          "delete"
+        ],
+        "capturedRSC": [
+          "insert",
+          "update",
+          "delete"
+        ],
+        "denial": "Sign in is required.",
+        "unchangedFaultRowsHash": "77c93a2f5381fb45b8d91f74f6e2c734a6cc3eb7fc89230941f448c62ca26c69",
+        "beforeBusinessRowsHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "afterAuthorizedCleanupHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c"
+      },
+      "continuedOriginalJourney": {
+        "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+        "fixtureHash": "c9f017a8a46f5e54ccf07d4e4fa9f0c71650cd0a52ddb8d708e3da154984d8ac",
+        "testHash": "951df8b0b99571057f50c2b325d8c7ae9c98f305cc0bfd756028e4b5cd7df259",
+        "journeyHash": "6e52cb5ccda3382bdfa06d2f06b7b291a0ad5a7b704e6042f4c8bcee13dd31ab",
+        "scope": "WP02 Workshop UI journey only; not final mission acceptance",
+        "browser": "156.0.8078.4",
+        "node": "v24.22.1",
+        "retries": 0,
+        "sourceMutations": "None during journey; action-label source fix built before owner startup",
+        "report": {
+          "initial": [
+            [
+              "1",
+              "Introduction to Woodworking",
+              "3"
+            ],
+            [
+              "2",
+              "Garden Design",
+              "0"
+            ]
+          ],
+          "minimumOne": [
+            [
+              "1",
+              "Introduction to Woodworking",
+              "3"
+            ]
+          ],
+          "temporaryGardenCount": 1,
+          "finalGardenCount": 0
+        },
+        "businessRows": {
+          "workshops": [
+            {
+              "id": 1,
+              "name": "Introduction to Woodworking"
+            },
+            {
+              "id": 2,
+              "name": "Garden Design"
+            }
+          ],
+          "sessions": [
+            {
+              "id": 1,
+              "workshop_id": 1,
+              "title": "Safety and basic tools",
+              "duration_minutes": null
+            },
+            {
+              "id": 2,
+              "workshop_id": 1,
+              "title": "Joinery practice",
+              "duration_minutes": null
+            },
+            {
+              "id": 3,
+              "workshop_id": 1,
+              "title": "Measuring and layout",
+              "duration_minutes": null
+            }
+          ]
+        },
+        "checks": [
+          "Cancel creates no project/database",
+          "Wizard creates missing named folder, related SQLite tables, keys, 5pages/5forms and Mermaid preview",
+          "Flow/settings shortcuts and Page/Form/Control properties reopen correctly",
+          "Unique visible action label selects filtered navigation with stable ID",
+          "Public lists/report and protected Record prompt",
+          "Login returns selected Garden Add and default2",
+          "Add/edit/delete/validation/duplicate/restrict errors preserve expected rows",
+          "Save/Cancel retain filtered parent context",
+          "Counts and minimum input respond to row changes",
+          "Nullable migration preserves rows",
+          "Canceled destructive preview leaves database unchanged and desired declaration pending",
+          "Visible reviewed declaration restoration ends coherent",
+          "Project reload preserves schema/data"
+        ],
+        "notCovered": [
+          "Library Catalog",
+          "Direct anonymous write-handler matrix",
+          "Draft/recovery/performance matrix",
+          "Regeneration/source/export independence",
+          "Final two clean cycles and independent mission verdict"
+        ]
+      }
+    },
+    "library": {
+      "provenance": {
+        "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+        "node": "v24.22.1",
+        "browser": "156.0.8078.4",
+        "fixtureHash": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7",
+        "testHash": "670cf4b89497cf11fdd03885205b3a244b08767abe6481c5e56f9920b5da68d5",
+        "journeyHash": "3600a9d2ba38b18962ac2a34d4f85beac3c47b69a3b149036722bac6e7e324ba"
+      },
+      "initialMatrix": {
+        "mode": "boundary requests against UI-authored fixture",
+        "observations": [
+          {
+            "name": "public /",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /books",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /book_authors",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /copies",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /loans",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /counts",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /totals",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          }
+        ],
+        "beforeHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "afterHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "requestCredentialsAndPayloads": "retained only in memory"
+      },
+      "afterStateMatrix": {
+        "mode": "boundary requests against UI-authored fixture",
+        "observations": [
+          {
+            "name": "public /",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /books",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /book_authors",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /copies",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /loans",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /counts",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "public /totals",
+            "expected": "Anonymous public list/report remains readable",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "authors RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3907c923e97c1e98df400ae70f2bfd1fa9a5d5d08739699e05cd38f8dce5e131"
+          },
+          {
+            "name": "authors RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "6daceadddb2c068f840f7dab61f1b2e4cb555f866a0e12c354c11c5e61e6ee44"
+          },
+          {
+            "name": "authors RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "books RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "61d7728c99d65ea40ed523b883c9eb034324ac3a861d6d9e460f932efba6c753"
+          },
+          {
+            "name": "books RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "2390f05f728dbb14979c41824ec13746eea054c9a5eae883f98c783bab87ddaf"
+          },
+          {
+            "name": "books RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "book_authors RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "bbf63046adf33a04bb14435299227eef928b40de6040ab184a593dbb5001a5a1"
+          },
+          {
+            "name": "book_authors RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "651fb3c34892ce9c465614a6489819c7cf038d1f775d5ed85e71c9e0ec8486db"
+          },
+          {
+            "name": "book_authors RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "copies RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260"
+          },
+          {
+            "name": "copies RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "c2174745da99ee11f0e7824acb712d99f8901e6014cb0e9f3dba0cd4ae8c71c3"
+          },
+          {
+            "name": "copies RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans JSON insert anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans JSON insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans JSON insert authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans JSON update anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans JSON update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans JSON update authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans JSON delete anonymous",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans JSON delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans JSON delete authorized control",
+            "expected": "Valid payload actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans RSC insert anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans RSC insert invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          },
+          {
+            "name": "loans RSC insert authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans RSC update anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans RSC update invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "96b02d18806e8e547ca4bc83a925503152da50f54b11d7c9a21fc0cae0526e58"
+          },
+          {
+            "name": "loans RSC update authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans RSC delete anonymous",
+            "expected": "Semantic sign-in denial and exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans RSC delete invalid-origin",
+            "expected": "Denied with exact zero changed rows",
+            "actual": "assertions passed",
+            "rows": "60d9e88a00b54730d244fb5839e7fffd55fff44166eb7d6518fc80bff827e2b4"
+          },
+          {
+            "name": "loans RSC delete authorized control",
+            "expected": "Current-build valid action actually changes rows",
+            "actual": "assertions passed",
+            "rows": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+          }
+        ],
+        "beforeHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "afterHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "requestCredentialsAndPayloads": "retained only in memory"
+      },
+      "uiSessions": {
+        "mode": "ui_journey; expiry evidence is separately labeled fault",
+        "selectedParent": "3",
+        "selectedRecord": "3",
+        "checks": [
+          "empty filtered list",
+          "Add/login/Cancel typed context",
+          "empty-parent Add/Save/confirmed Delete retains filtered parent",
+          "existing selected Save/Cancel",
+          "cross-tab logout",
+          "revoked-token direct write",
+          "expired-token RSC and JSON write",
+          "relogin preserves selected key",
+          "external and malformed return rejection",
+          "malformed typed key"
+        ],
+        "beforeHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "afterHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+      },
+      "expiryFault": {
+        "mode": "fault",
+        "fixturePhase": "owned visitor-session expiry",
+        "setup": "real authorized JSON handler controls with temporary business rows",
+        "injection": "expires changed only for current project/token hash",
+        "JSON": [
+          "insert",
+          "update",
+          "delete"
+        ],
+        "capturedRSC": [
+          "insert",
+          "update",
+          "delete"
+        ],
+        "denial": "Sign in is required.",
+        "unchangedFaultRowsHash": "801c0f5236fd3042b9ac160ad493f359800c7888b5c12a6bfdff5b812e985260",
+        "beforeBusinessRowsHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "afterAuthorizedCleanupHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+      },
+      "continuedOriginalJourney": {
+        "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+        "fixtureHash": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7",
+        "testHash": "670cf4b89497cf11fdd03885205b3a244b08767abe6481c5e56f9920b5da68d5",
+        "journeyHash": "3600a9d2ba38b18962ac2a34d4f85beac3c47b69a3b149036722bac6e7e324ba",
+        "oracleHash": "2df1e620fffcd8adcb2a75fd0a16eba91f757e7e17e87c1fc75b873ab9611435",
+        "scope": "WP03 Library UI only; supplied-DB variant separately recorded; final mission acceptance pending",
+        "reports": {
+          "authorCounts": [
+            [
+              "1",
+              "Mara Vale",
+              "2"
+            ],
+            [
+              "2",
+              "Jules Wren",
+              "1"
+            ],
+            [
+              "3",
+              "Unassigned Author",
+              "0"
+            ]
+          ],
+          "bookTotals": [
+            [
+              "1",
+              "The Glass Orchard",
+              "19.75"
+            ],
+            [
+              "2",
+              "North Sea",
+              "10.00"
+            ],
+            [
+              "3",
+              "Uncatalogued Stories",
+              "0.00"
+            ]
+          ],
+          "mutationTotals": [
+            "16.25",
+            "20.00",
+            "10.00"
+          ]
+        },
+        "existingDatabase": {
+          "hashBefore": "2923bd69cf557682adaddfeee80fc9f4ea57ef4b490a3052a41814c2f74d6663",
+          "hashAfter": "2923bd69cf557682adaddfeee80fc9f4ea57ef4b490a3052a41814c2f74d6663"
+        },
+        "businessRows": {
+          "authors": [
+            {
+              "id": 1,
+              "name": "Mara Vale"
+            },
+            {
+              "id": 2,
+              "name": "Jules Wren"
+            },
+            {
+              "id": 3,
+              "name": "Unassigned Author"
+            }
+          ],
+          "books": [
+            {
+              "id": 1,
+              "catalog_code": "CAT-001",
+              "title": "The Glass Orchard",
+              "publication_date": null
+            },
+            {
+              "id": 2,
+              "catalog_code": "CAT-002",
+              "title": "North Sea",
+              "publication_date": null
+            },
+            {
+              "id": 3,
+              "catalog_code": "CAT-003",
+              "title": "Uncatalogued Stories",
+              "publication_date": null
+            }
+          ],
+          "book_authors": [
+            {
+              "book_id": 1,
+              "author_id": 1
+            },
+            {
+              "book_id": 1,
+              "author_id": 2
+            },
+            {
+              "book_id": 2,
+              "author_id": 1
+            }
+          ],
+          "copies": [
+            {
+              "id": 1,
+              "barcode": "COPY-001",
+              "book_id": 1,
+              "replacement_cost": "12.50",
+              "note": null
+            },
+            {
+              "id": 2,
+              "barcode": "COPY-002",
+              "book_id": 1,
+              "replacement_cost": "7.25",
+              "note": null
+            },
+            {
+              "id": 3,
+              "barcode": "COPY-003",
+              "book_id": 2,
+              "replacement_cost": "10.00",
+              "note": null
+            }
+          ],
+          "loans": [
+            {
+              "id": 1,
+              "copy_id": 1,
+              "checked_out": "2026-01-10",
+              "returned_at": null
+            },
+            {
+              "id": 2,
+              "copy_id": 2,
+              "checked_out": "2026-01-11",
+              "returned_at": "2026-01-18"
+            }
+          ]
+        },
+        "retries": 0
+      }
+    }
+  },
+  "crossApplication": {
+    "mode": "same-browser two UI-authored apps",
+    "checks": [
+      "login A does not authenticate B",
+      "login B preserves A",
+      "A token under B cookie name denied with valid B CSRF",
+      "logout A preserves B"
+    ],
+    "beforeHashes": [
+      "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+      "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+    ],
+    "afterHashes": [
+      "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+      "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f"
+    ]
+  },
+  "lowerSeamNegativeControl": {
+    "mode": "isolated lower-seam authorization negative control",
+    "realEmittedAction": true,
+    "guard": "injected no-op in test execution only",
+    "protectedControlWriteCount": 0,
+    "weakenedGuardWriteCount": 1,
+    "sameUnauthorizedNoWriteInvariant": "red detected",
+    "liveApplicationSourcePatched": false
+  }
+}
