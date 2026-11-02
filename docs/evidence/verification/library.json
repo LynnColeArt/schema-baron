@@ -187,7 +187,7 @@
     "strictAcceptanceTypecheck": "passed",
     "diffScopedLint": "passed",
     "credentials": "passed",
-    "fullHeadGate": "Separate canonical review-transition capture; this scoped summary does not assert a global pass."
+    "fullHeadGate": "Actual retained JUnit505/0fail/0errors/0skips,220.83s wall; baseline comparison unverified."
   },
   "observations": [
     {
@@ -205,20 +205,16 @@
       "actual": "Schema/SQLite assertions passed; supplied snapshot hashes before/after equal; original business rows unchanged.",
       "evidence": [
         {
-          "path": "tests/e2e/acceptance/library.spec.ts",
-          "sha256": "726f5ddaf74a3253ced3e03837b500493b3b4aaa81618984fec6c00049516ad8"
-        },
-        {
-          "path": "tests/e2e/acceptance/oracles.ts",
-          "sha256": "2df1e620fffcd8adcb2a75fd0a16eba91f757e7e17e87c1fc75b873ab9611435"
-        },
-        {
-          "path": "fixtures/acceptance/library.json",
-          "sha256": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7"
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
         },
         {
           "path": "docs/evidence/verification/library.report.png",
           "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
         }
       ]
     },
@@ -237,20 +233,16 @@
       "actual": "Tuple(1,2) moved to(3,2), conflicting(1,1) update rejected atomically, original tuples restored; duplicate/catalog/barcode, amount/date, restrict and Cancel checks passed.",
       "evidence": [
         {
-          "path": "tests/e2e/acceptance/library.spec.ts",
-          "sha256": "726f5ddaf74a3253ced3e03837b500493b3b4aaa81618984fec6c00049516ad8"
-        },
-        {
-          "path": "tests/e2e/acceptance/oracles.ts",
-          "sha256": "2df1e620fffcd8adcb2a75fd0a16eba91f757e7e17e87c1fc75b873ab9611435"
-        },
-        {
-          "path": "fixtures/acceptance/library.json",
-          "sha256": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7"
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
         },
         {
           "path": "docs/evidence/verification/library.report.png",
           "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
         }
       ]
     },
@@ -268,20 +260,16 @@
       "actual": "Reports matched literal row sets; book2 totals16.25/20.00/10.00 and threshold changes passed; NULL-cost copy did not change zero total.",
       "evidence": [
         {
-          "path": "tests/e2e/acceptance/library.spec.ts",
-          "sha256": "726f5ddaf74a3253ced3e03837b500493b3b4aaa81618984fec6c00049516ad8"
-        },
-        {
-          "path": "tests/e2e/acceptance/oracles.ts",
-          "sha256": "2df1e620fffcd8adcb2a75fd0a16eba91f757e7e17e87c1fc75b873ab9611435"
-        },
-        {
-          "path": "fixtures/acceptance/library.json",
-          "sha256": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7"
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
         },
         {
           "path": "docs/evidence/verification/library.report.png",
           "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
         }
       ]
     },
@@ -301,20 +289,16 @@
       "actual": "UI author4 association persisted to key4 and preserved author1; raw quoted child stored parent2 and exact text;200 options usable,201 typed diagnostic displayed and rows unchanged.",
       "evidence": [
         {
-          "path": "tests/e2e/acceptance/library.spec.ts",
-          "sha256": "726f5ddaf74a3253ced3e03837b500493b3b4aaa81618984fec6c00049516ad8"
-        },
-        {
-          "path": "tests/e2e/acceptance/oracles.ts",
-          "sha256": "2df1e620fffcd8adcb2a75fd0a16eba91f757e7e17e87c1fc75b873ab9611435"
-        },
-        {
-          "path": "fixtures/acceptance/library.json",
-          "sha256": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7"
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
         },
         {
           "path": "docs/evidence/verification/library.report.png",
           "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
         }
       ]
     }
@@ -329,5 +313,15 @@
     "12": "Both initial repair UI scenarios passed; superseded by final collision-safe code.",
     "13": "Base passed; second owner startup infrastructure-invalidated by overlapping shared build; not a clean replay.",
     "14": "Final committed source9ef6b17;both tests passed zero retries; all owned processes awaited before handoff."
-  }
+  },
+  "capturedHead": {
+    "revision": "b133849a7158bedb3f152a7f3280d636e1f6cf99",
+    "tests": 505,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "wallSeconds": 220.82901954300002,
+    "comparison": "source_mismatch: invalid baseline text versus JUnit head; actual positive head JUnit inspected"
+  },
+  "proofCorrection": "Documentation-only: source/test/fixture hashes remain provenance; evidence references point only to sanitized public result/image/red artifacts. Validated code and captured head are unchanged."
 }

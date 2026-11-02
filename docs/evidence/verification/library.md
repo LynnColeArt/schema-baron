@@ -6,8 +6,14 @@ business rows through generated visitor forms. A separately identified supplied
 raw SQLite input challenged quoted identifiers and 200/201 lookup behavior.
 
 Validated application/test code: `9ef6b1781e12da82bf00e89f6d7dd6c6b0580298`.
-The documentation commit is separate from this tested code. The [summary](library.json)
-contains source/test/fixture hashes, exact synthetic rows and scoped results;
+The documentation commit is separate from this tested code. The canonical head
+capture at `b133849a7158bedb3f152a7f3280d636e1f6cf99` ran 505 tests with zero failures, errors
+or skips in 220.83 seconds wall time. Its invalid earlier baseline remains
+unverified; the actual positive JUnit was inspected independently of that comparison.
+This later documentation-only correction does not change application/test code. The [summary](library.json)
+contains source, test and fixture provenance, exact synthetic rows and scoped results;
+[retained result facts](library.results.json) distinguish captured outputs from
+assertions verified by the exact hashed passing test;
 [retained red observations](library.red.json) identify the defects before repair.
 
 ## Observed Library journey
