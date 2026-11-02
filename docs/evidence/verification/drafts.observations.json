@@ -1,0 +1,62 @@
+[
+  {
+    "run_id": "wp05-final3-drafts",
+    "case_id": "AC-014",
+    "requirements": [
+      "FR-013",
+      "NFR-005",
+      "FR-014",
+      "NFR-001",
+      "C-002",
+      "C-004"
+    ],
+    "application": "workshop",
+    "mode": "ui_journey",
+    "revision": "659f224fc89b6bea8a08746f8bd4bdebf5bb909b",
+    "status": "passed",
+    "expected": "WP05 composed owner journey: Workshop page and isolated Library schema/query/control drafts retain invalid partial text, ownership, selection and dirty status through actual notifications, supported switches and same-tab recovery. Thirty received unrelated UI revisions must preserve active draft.",
+    "actual": "Four UI tests passed with zero retries or skips. The dirty Workshop page received 30 different-page UI Saves; every title visibly rendered before exact text, [4,11] selection, focus and single-input assertions. Library Schema, Control and Query each received a separately acknowledged unrelated UI revision before switches and reload, retaining their invalid numeric text and exact ranges. An explicit competing-field conflict blocked Save until resolution. Invalid Save and rejected conflicts changed neither the other project nor business database bytes. Three additional received revisions preserved intentional tree, toolbar and other-field keyboard focus. This is combined two-project owner proof; final full-application replay belongs to WP08.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/drafts.md",
+        "sha256": "19c189cb3f5e6334e178f4775c27ad02156596fa2209fa479dfe80cde3cfce30"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.timings.json",
+        "sha256": "2c851b97edbb6dc7c88b69f3187d3552abbf027e9c392e28648ffff3b8f7f1d7"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.failures.json",
+        "sha256": "7e56e6d652cf3d315955dc9a191950c9ed0df174f20a227ae05a263e331d37fe"
+      }
+    ]
+  },
+  {
+    "run_id": "wp05-final3-drafts",
+    "case_id": "AC-018",
+    "requirements": [
+      "NFR-004",
+      "NFR-005"
+    ],
+    "application": "workshop",
+    "mode": "ui_journey",
+    "revision": "659f224fc89b6bea8a08746f8bd4bdebf5bb909b",
+    "status": "passed",
+    "expected": "Local WP05 reference-machine observation: 30 real editing and Save samples at bounded fixture size, p95 feedback <=2000ms and valid Save <=5000ms, with no draft replacement.",
+    "actual": "Thirty raw samples on AMD Ryzen 5 5600X / 12 logical cores, Node 24.22.1 and Chromium 156.0.8078.4: feedback p95 13.113ms, Save p95 89.701ms, maximum Save 103.547ms; zero draft, text, caret or focus replacements. Per-sample load is retained (approximately 4.3-4.9). This is a scoped local measurement; the final load-controlled NFR verdict belongs to WP08.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/drafts.md",
+        "sha256": "19c189cb3f5e6334e178f4775c27ad02156596fa2209fa479dfe80cde3cfce30"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.timings.json",
+        "sha256": "2c851b97edbb6dc7c88b69f3187d3552abbf027e9c392e28648ffff3b8f7f1d7"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.failures.json",
+        "sha256": "7e56e6d652cf3d315955dc9a191950c9ed0df174f20a227ae05a263e331d37fe"
+      }
+    ]
+  }
+]
