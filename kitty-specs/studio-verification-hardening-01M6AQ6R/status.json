@@ -30,7 +30,8 @@
       "notes": [
         "Ready for independent review: 14 Node-native foundation tests, strict scoped TS, lint and credential checks passed; all acceptance remains Not run. Preserved original incompatible pytest/JUnit baseline; real head Vitest gate required.",
         "Independent review rejected: arbitrary lexical observation IDs can hide a later failure; lane-local broad verification remains blocked",
-        "Cycle2: fixed R1 ordering with persisted sequence/explicit retest;19 harness tests, strict lane-local TS, lint, credentials passed. Pinned lane-local npm ci --ignore-scripts/native verify/build passed; workspace links resolve lane. Original pytest baseline and first496/32failed head retained. Run actual provisioned head gate; no product acceptance claim."
+        "Cycle2: fixed R1 ordering with persisted sequence/explicit retest;19 harness tests, strict lane-local TS, lint, credentials passed. Pinned lane-local npm ci --ignore-scripts/native verify/build passed; workspace links resolve lane. Original pytest baseline and first496/32failed head retained. Run actual provisioned head gate; no product acceptance claim.",
+        "Independent cycle2 review approved WP01 foundation only: R1 global immutable ordering/retest regressions and original red repro now correct;19 focused tests pass. R2 lane-local links/build/native verified and actual head JUnit496/0failures/0errors; first496/32failure retained. Original pytest baseline comparison remains unverified/source_mismatch. All application acceptance remains Not run. Reviewer /root/verification_foundation_review differs from implementation author."
       ],
       "provider": "__resolved_provider_absent__",
       "review": null,
