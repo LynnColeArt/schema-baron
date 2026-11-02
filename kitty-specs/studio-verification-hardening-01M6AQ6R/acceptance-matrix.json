@@ -128,10 +128,10 @@
       "criterion_id": "FR-013",
       "description": "Schema/query/page/control drafts survive the documented switch/reload recovery paths and unrelated revision notifications without silent value, focus, caret or project-ownership changes.",
       "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "evidence": "docs/evidence/verification/review.md; qualified ca1a03910d7ab72f874d0e22829068d3f09e30a2; immutable proof 9ff74079a9903264eaf496f4a7abb6946b0d51f4/docs/evidence/verification/wp09-independent/report.json; requirement FR-013",
+      "pass_fail": "pass",
+      "verified_by": "verification_acceptance_audit",
+      "verified_at": "2026-11-02T21:15:38.017490+00:00",
       "notes": "Not run. Assigned to WP05. Requires linked UI/durable/reviewer proof as defined in checklists/acceptance.md; automated_test is the scaffold proof category, not a claim that automation alone satisfies the requirement."
     },
     {
