@@ -20,6 +20,8 @@ head review: artifact existence does not prove freshness. The wrapper rejects a
 borrowed `node_modules` root or workspace links into another checkout rather than
 running against another branch's compiled code. Each invocation creates private,
 separate parity/recovery/migration captures and reports stage wall times.
+Stage completion timings are retained privately beside JUnit as
+`<junit-path>.stages.json`; an interrupted current stage has no completion entry.
 
 Baseline preparation and tests share Spec Kitty's existing 300-second budget.
 That limit is unchanged: a cold run that exceeds it remains timed out/unverified.
