@@ -1,0 +1,69 @@
+{
+  "revision": "659f224fc89b6bea8a08746f8bd4bdebf5bb909b",
+  "productionRepairRevision": "5870c0c0f435a282c39072fd109a3bdf4a8c1b0c",
+  "scope": "WP05 owner drafts only; Studio-only fresh Workshop/Library. AC-004 editable-properties subset; AC-014 draft recovery/render scope; AC-018 local timing observations, final verdict WP08. Not final mission acceptance.",
+  "mode": "ui_journey",
+  "retries": 0,
+  "junit": {
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "proof": {
+    "T021": "Actual schema/query/workspace stores and distinct supported reload procedures inventoried in drafts.md; two freshly UI-authored projects and real object IDs",
+    "T022": "Page text, schema table text/scale minus, control caption/Width minus, query name/parameter minus retain exact text, keyboard selection, active control and dirty Save after received unrelated UI revision, view/document/project switch and reload; invalid Save retains diagnostics and model",
+    "T023": "Thirty second-tab UI Saves on unrelated same-project page, each rendered in first tab before text/focus/range/single-control assertions; three further received revisions preserve intentional tree/toolbar/other-field keyboard focus",
+    "T024": "Real competing same-field UI Save produces explicit conflict; Save disabled until Keep my draft. Invalid Save unchanged; valid resolved Save changes its own page only. Other project retains both durable model and unsaved title/range",
+    "T025": "Four reproduced defects repaired narrowly; 44 focused tests pass; discard-drafts fault killed by four tests; 30 real feedback/Save samples and machine/load retained"
+  },
+  "preservation": "Every authored project business SQLite file byte hash unchanged; owner GET snapshots are read-only and exactly compared; no seeded models, command repairs, raw DB patches, generated apps, visitor identities or live studies used",
+  "measurements": {
+    "sampleCount": 30,
+    "feedbackP95Ms": 13.112758999999642,
+    "saveP95Ms": 89.701390000002,
+    "saveMaxMs": 103.54709599999842,
+    "receiptMaxMs": 1873.7602140000017,
+    "feedbackThresholdMs": 2000,
+    "saveThresholdMs": 5000,
+    "verdict": "Local samples within unchanged thresholds; final NFR verdict and load-controlled remeasurement belong to WP08"
+  },
+  "validation": {
+    "npmCiIgnoreScripts": 0,
+    "nativeVerify": 0,
+    "typecheck": 0,
+    "fullBuild": 0,
+    "focusedTests": {
+      "exit": 0,
+      "files": 6,
+      "tests": 44
+    },
+    "diffLint": 0,
+    "credentialScan": 0,
+    "canonicalHeadGate": "pending shared gate slot",
+    "independentReview": "pending"
+  },
+  "artifacts": [
+    {
+      "path": "docs/evidence/verification/drafts.md",
+      "sha256": "778cf9b139c4d784ba74c4317747836095fea84db3345a6a295b38aef4a7df82"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.failures.json",
+      "sha256": "7e56e6d652cf3d315955dc9a191950c9ed0df174f20a227ae05a263e331d37fe"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.timings-intermediate.json",
+      "sha256": "35397793c757bf0a9864d9bc2a13967688821400909a92788db40ec429e12c63"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.timings.json",
+      "sha256": "2c851b97edbb6dc7c88b69f3187d3552abbf027e9c392e28648ffff3b8f7f1d7"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.junit.xml",
+      "sha256": "b2b777101257310e0fd5723a659ba28441808f2ee53d04b5193ec4e0786120ac"
+    }
+  ]
+}
