@@ -1,7 +1,25 @@
 import { describe, expect, it } from 'vitest';
 import { createId } from '@schema-baron/model';
-import { blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations } from './state.js';
+import { applicableSchemaBuffers, blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations } from './state.js';
 describe('schema drafts', () => {
+  it('only validates buffers for live fields of the desired logical types, including unselected columns', () => {
+    const decimal = (name: string) => ({ id: createId(() => name), physicalName: name, nullable: false, type: { kind: 'decimal' as const, scale: 2, precision: 18, encoding: 'text' as const, rounding: 'half-even' as const } });
+    const cost = decimal('cost'), reserve = decimal('reserve');
+    const table = { ...blankTable(), columns: [{ ...cost, type: { kind: 'integer' as const } }, reserve] };
+    expect(applicableSchemaBuffers({ cost: '-', 'cost:scale': '-', 'cost:precision': '1e', 'reserve:scale': '-', 'reserve:precision': '1e', 'removed:scale': '-', removed: '-' }, [table])).toEqual({ cost: '-', 'reserve:scale': '-', 'reserve:precision': '1e' });
+    expect(applicableSchemaBuffers({ 'reserve:scale': '-' }, [{ ...table, columns: [] }])).toEqual({});
+  });
+  it('an explicit type transition retires old numeric text without erasing another decimal draft; undo keeps model numbers', () => {
+    const cost = { id: createId(() => 'cost'), physicalName: 'cost', nullable: false, type: { kind: 'decimal' as const, scale: 2, precision: 18, encoding: 'text' as const, rounding: 'half-even' as const } };
+    const reserve = { ...cost, id: createId(() => 'reserve'), physicalName: 'reserve' };
+    const table = { ...blankTable(), columns: [cost, reserve] };
+    const buffers = { 'cost:scale': '-', 'cost:precision': '1e', 'reserve:scale': '-' };
+    const changed = { ...table, columns: [{ ...cost, type: { kind: 'integer' as const } }, reserve] };
+    const retained = applicableSchemaBuffers(buffers, [changed]);
+    expect(retained).toEqual({ 'reserve:scale': '-' });
+    expect(applicableSchemaBuffers(retained, [table])).toEqual({ 'reserve:scale': '-' });
+    expect(table.columns[0]!.type).toMatchObject({ kind: 'decimal', scale: 2, precision: 18 });
+  });
   it('merges a later unrelated service edit when checkpointing a save',()=>{const table={...blankTable(),physicalName:'submitted'};const submitted=changeTable({},[],table);const current=changeTable(submitted,[],{...table,physicalName:'typed during save'});const remote={...table,indexes:[{id:createId(),physicalName:'later_index',columnIds:[],unique:false}]};const next=checkpointDrafts(current,submitted,[remote]);expect(next[table.id]!.value!.physicalName).toBe('typed during save');expect(next[table.id]!.value!.indexes).toEqual(remote.indexes);expect(next[table.id]!.conflicts).toEqual([]);});
   it('retains edits typed while its new table save is in flight', () => {
     const table = {
