@@ -1,7 +1,7 @@
 {
-  "event_count": 49,
-  "last_event_id": "01M6EGDPF0633046QC6RB7R8FZ",
-  "materialized_at": "2026-11-02T16:10:34.336785+00:00",
+  "event_count": 51,
+  "last_event_id": "01M6EGEA2DV2QTD5G35A2QP2AG",
+  "materialized_at": "2026-11-02T16:10:54.413227+00:00",
   "mission_number": "",
   "mission_slug": "studio-verification-hardening-01M6AQ6R",
   "mission_type": "software-dev",
@@ -12,9 +12,9 @@
     "claimed": 0,
     "done": 0,
     "for_review": 0,
-    "in_progress": 0,
+    "in_progress": 1,
     "in_review": 0,
-    "planned": 3
+    "planned": 2
   },
   "work_packages": {
     "WP01": {
@@ -216,11 +216,14 @@
       }
     },
     "WP07": {
-      "actor": "finalize-tasks",
+      "actor": "codex",
+      "agent": "codex",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M6E4RG667N7QHD7PHXRSV75T",
-      "last_transition_at": "2026-11-02T12:46:45.446196+00:00"
+      "lane": "in_progress",
+      "last_event_id": "01M6EGEA2DV2QTD5G35A2QP2AG",
+      "last_transition_at": "2026-11-02T16:10:54.413227+00:00",
+      "shell_pid": 1203138,
+      "shell_pid_created_at": "1793635847.56"
     },
     "WP08": {
       "actor": "finalize-tasks",
