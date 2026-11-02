@@ -1,5 +1,5 @@
 // Spec Kitty's declared-command gate runs the repository's real TypeScript suite.
-import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
+import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -78,11 +78,20 @@ function main() {
       SCHEMA_BARON_MIGRATION_EVIDENCE: join(evidence, 'migrations'),
     },
   };
+  const stages = [];
+  const gateStarted = performance.now();
   const stage = (label, args) => {
     const started = performance.now();
     console.log(`Review gate: ${label}`);
+    let status = 'passed';
     try { runReviewCommand(process.execPath, args, options); }
-    finally { console.log(`Review gate: ${label} elapsed ${((performance.now() - started) / 1000).toFixed(2)}s`); }
+    catch (error) { status = 'failed'; throw error; }
+    finally {
+      const elapsedSeconds = (performance.now() - started) / 1000;
+      stages.push({ label, status, elapsedSeconds });
+      writeFileSync(`${report}.stages.json`, JSON.stringify({ stages, wallSeconds: (performance.now() - gateStarted) / 1000 }, null, 2), { mode: 0o600 });
+      console.log(`Review gate: ${label} elapsed ${elapsedSeconds.toFixed(2)}s`);
+    }
   };
   const before = inspectReviewCheckout(root);
   if (!before.dependenciesReady) {
