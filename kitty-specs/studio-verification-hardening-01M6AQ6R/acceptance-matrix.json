@@ -268,10 +268,10 @@
       "criterion_id": "C-004",
       "description": "Repair issues needed for the declared checklist; keep unsupported features explicit. No new targets, hosted service, deployment, complete visual redesign, arbitrary control runtime, large-lookup browser or composite lookup widget is included.",
       "proof_type": "automated_test",
-      "evidence": null,
-      "pass_fail": "pending",
-      "verified_by": null,
-      "verified_at": null,
+      "evidence": "docs/evidence/verification/review.md; qualified ca1a03910d7ab72f874d0e22829068d3f09e30a2; immutable proof 9ff74079a9903264eaf496f4a7abb6946b0d51f4/docs/evidence/verification/wp09-independent/report.json; requirement C-004",
+      "pass_fail": "pass",
+      "verified_by": "verification_acceptance_audit",
+      "verified_at": "2026-11-02T21:16:20.590435+00:00",
       "notes": "Not run. Assigned to WP02, WP03, WP05, WP06, WP08, WP09. Requires linked UI/durable/reviewer proof as defined in checklists/acceptance.md; automated_test is the scaffold proof category, not a claim that automation alone satisfies the requirement."
     },
     {
