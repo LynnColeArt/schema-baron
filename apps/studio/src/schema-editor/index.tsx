@@ -12,7 +12,7 @@ import { useDraftFocus } from '../workspace/draft-focus.js';
 import { OwnerError } from '../project-ui/api.js';
 import type { Capabilities, StudioClient } from '../project-ui/api.js';
 import { Dialog, Tabs } from '../workspace/chrome.js';
-import { blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations, visibleTables } from './state.js';
+import { applicableSchemaBuffers, blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations, visibleTables } from './state.js';
 import type { Drafts } from './state.js';
 import { retainNodeMeasurements } from '../flow-map/state.js';
 import type { NodeMeasurements } from '../flow-map/state.js';
@@ -300,7 +300,8 @@ export function SchemaEditor({
   const tables = useMemo(() => visibleTables(project.schema.tables, drafts), [project.schema.tables, drafts]);
   const table = tables.find(t => t.id === selected),
     currentColumn = table?.columns.find(c => c.id === column);
-  const invalidDefaultIds=Object.keys(buffers).filter(id=>tables.some(t=>t.columns.some(c=>(c.id===id || id===`${c.id}:scale` || id===`${c.id}:precision`))));const draftCount=new Set([...Object.keys(drafts),...tables.filter(t=>t.columns.some(c=>invalidDefaultIds.some(id => id===c.id || id.startsWith(c.id+':')))).map(t=>t.id)]).size;
+  const bufferedTables = tables.filter(table => Object.keys(applicableSchemaBuffers(buffers, [table])).length);
+  const draftCount = new Set([...Object.keys(drafts), ...bufferedTables.map(table => table.id)]).size;
   const dirty = draftCount > 0;
   const draftFocus = useDraftFocus(project.id, `schema:${selected}:${column}:${tab}`, active && !busy);
   const inspectedTable = project.connections[0]?.inspectedSchema?.tables.find(t => t.id === selected);
@@ -404,6 +405,9 @@ export function SchemaEditor({
     return () => clearInterval(timer);
   }, [review]);
   function update(value: Table | null, id = value?.id) {
+    // Explicit schema changes retire fields they remove. View switches and recovery do not.
+    const desired = visibleTables(project.schema.tables, changeTable(drafts, project.schema.tables, value, id));
+    setBuffers(current => applicableSchemaBuffers(current, desired));
     setPast(p => [...p.slice(-49), drafts]);
     setFuture([]);
     setDrafts(d => changeTable(d, project.schema.tables, value, id));
@@ -466,7 +470,7 @@ export function SchemaEditor({
       setDrafts(d => reconcileDrafts(d, snapshot.schema.tables));
       onChanged(snapshot);
       if (Object.values(merged).some(d => d.conflicts.length)) throw new Error('Service edits conflict with schema drafts. Choose Keep draft or Use service on each conflict.');
-      if (Object.keys(current.current.buffers).some(id=>visibleTables(snapshot.schema.tables,merged).some(t=>t.columns.some(c=>(c.id===id || id===`${c.id}:scale` || id===`${c.id}:precision`))))) throw new Error('Correct incomplete numeric or default values before saving. Your text is retained.');
+      if (Object.keys(applicableSchemaBuffers(current.current.buffers, visibleTables(snapshot.schema.tables, merged))).length) throw new Error('Correct incomplete numeric or default values before saving. Your text is retained.');
       const desired = {
         ...snapshot,
         schema: {
@@ -530,7 +534,7 @@ export function SchemaEditor({
       setBusy(false);
     }
   }
-  const stale = !!review && (dirty || invalidDefaultIds.length > 0 || review.sourceRevision !== project.revision || clock >= Date.parse(review.expiresAt));
+  const stale = !!review && (dirty || bufferedTables.length > 0 || review.sourceRevision !== project.revision || clock >= Date.parse(review.expiresAt));
   async function apply() {
     if (!review || stale) return;
     setBusy(true);

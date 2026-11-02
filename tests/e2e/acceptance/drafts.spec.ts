@@ -28,12 +28,12 @@ test.afterEach(async ({ page }, info) => {
   writeFileSync(info.outputPath('visible-failure.txt'), await page.locator('body').innerText(), { mode: 0o600 });
  }
 });
-async function create(page: Page, name: string) {
+async function create(page: Page, name: string, extraDecimal = false) {
  await button(page, 'New project…').click();
  await label(page, 'Project name').fill(name);
  await label(page, 'Project location').fill(join(studio.root, 'authored projects'));
  await wizardNext(page); await wizardNext(page);
- await schemaTable(page.getByRole('region', { name: 'Schema editor', exact: true }), name.includes('Library') ? 'books' : 'workshops', [['id', 'integer'], ['cost', 'decimal']]);
+ await schemaTable(page.getByRole('region', { name: 'Schema editor', exact: true }), name.includes('Library') ? 'books' : 'workshops', [['id', 'integer'], ['cost', 'decimal'], ...(extraDecimal ? [['reserve', 'decimal'] as [string, string]] : [])]);
  for (let i = 0; i < 4; i++) await wizardNext(page);
  const completed = page.waitForResponse(r => r.url().endsWith('/api/v1/setup/complete'));
  await button(page, 'Complete').click();
@@ -70,6 +70,40 @@ async function selectRange(input: Locator, start: number, end: number) {
  for (let i = 0; i < start; i++) await input.press('ArrowRight');
  for (let i = start; i < end; i++) await input.press('Shift+ArrowRight');
 }
+test('schema type changes retire only obsolete decimal buffers and keep other active column drafts', async ({ page }) => {
+ await connectLocal(page, studio); const project = await create(page, 'Library decimal buffer lifecycle', true);
+ await button(page, 'Schema').click();
+ const schema = page.getByRole('region', { name: 'Schema editor', exact: true });
+ await schema.locator('.schema-table-list button').first().click();
+ await schema.getByRole('tab', { name: 'Columns', exact: true }).click();
+ const choose = async (name: string, kind: string) => schema.locator('.schema-column-list').getByRole('button', { name: `${name} · ${kind}`, exact: true }).click();
+ const saved = async () => { await button(schema, 'Save schema').click(); await expect(schema.locator('.schema-messages [role=status]')).toHaveText('Schema definition saved. Connected database is unchanged.'); };
+ await choose('cost', 'decimal'); await label(schema, 'Decimal scale').fill('-');
+ await label(schema, 'Logical type').selectOption('integer');
+ await expect(label(schema, 'Decimal scale')).toHaveCount(0);
+ await saved();
+ const firstSaved = await studio.project(project.id);
+ expect(firstSaved.schema.tables[0]!.columns.find(c => c.physicalName === 'cost')!.type).toEqual({ kind: 'integer' });
+ // Explicit type changes discard that column's old type-specific text. Undo restores model numbers.
+ await label(schema, 'Logical type').selectOption('decimal');
+ await label(schema, 'Decimal scale').fill('-'); await label(schema, 'Decimal precision').fill('1e');
+ await label(schema, 'Logical type').selectOption('integer');
+ await button(schema, 'Undo schema').click();
+ await expect(label(schema, 'Decimal scale')).toHaveValue('2'); await expect(label(schema, 'Decimal precision')).toHaveValue('18');
+ await button(schema, 'Redo schema').click(); await expect(label(schema, 'Logical type')).toHaveValue('integer');
+ await choose('reserve', 'decimal'); await label(schema, 'Decimal precision').fill('-');
+ await choose('cost', 'integer'); await button(schema, 'Save schema').click();
+ await expect(schema.locator('.schema-messages [role=status]')).toContainText('Correct incomplete numeric');
+ expect(await studio.project(project.id)).toEqual(firstSaved);
+ await button(page, 'Schema').click(); await button(page, 'Schema').click();
+ page.on('dialog', dialog => void dialog.accept()); await page.reload(); await button(page, 'Schema').click();
+ await choose('reserve', 'decimal'); await expect(label(schema, 'Decimal precision')).toHaveValue('-');
+ await label(schema, 'Logical type').selectOption('real'); await saved();
+ const final = await studio.project(project.id);
+ expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'reserve')!.type).toEqual({ kind: 'real' });
+ expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'cost')!.type).toEqual({ kind: 'integer' });
+ for (const key of ['pages', 'forms', 'controls', 'queries', 'policies', 'outputConfig'] as const) expect(final[key]).toEqual(project[key]);
+});
 test('page draft restores its active text control and selection after reload', async ({ page }) => {
  await connectLocal(page, studio); const project = await create(page, 'Workshop draft recovery');
  await properties(page, project.pages[0]!.id);
