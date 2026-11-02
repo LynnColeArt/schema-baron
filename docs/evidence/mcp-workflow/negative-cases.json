@@ -1,0 +1,52 @@
+[
+  {
+    "name": "project_batch",
+    "code": "REVISION_CONFLICT",
+    "nonmutation": true
+  },
+  {
+    "name": "exact request replay",
+    "cachedOutcomeEqual": true,
+    "onceOnly": true,
+    "revision": 14
+  },
+  {
+    "name": "project_batch",
+    "code": "IDEMPOTENCY_CONFLICT",
+    "nonmutation": true
+  },
+  {
+    "name": "project_batch",
+    "code": "INVALID_INPUT",
+    "nonmutation": true
+  },
+  {
+    "name": "project_batch",
+    "code": "VALIDATION_FAILED",
+    "nonmutation": true
+  },
+  {
+    "name": "project_export",
+    "code": "PATH_OUTSIDE_ROOT",
+    "nonmutation": true
+  },
+  {
+    "name": "source_read",
+    "code": "ACCESS_DENIED",
+    "nonmutation": true
+  },
+  {
+    "name": "forged capability",
+    "discoveryDenied": true,
+    "readCode": "AUTH_REQUIRED",
+    "nonmutation": true
+  },
+  {
+    "name": "resource snapshot",
+    "ok": true
+  },
+  {
+    "name": "resource diagnostics",
+    "ok": true
+  }
+]
