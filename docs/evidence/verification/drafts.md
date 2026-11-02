@@ -40,7 +40,7 @@ owner keys, project paths, databases or traces.
 
 | Defect | Reproduction and actual result | Narrow repair and regression |
 | --- | --- | --- |
-| DRAFT-01, high, FR-013 | Baseline `5f10082`: type an unsaved page title, keyboard-select a range and reload; text survives but active control does not. The later document-switch case exposed the second click stealing restored focus. | Project/object-scoped selection recovery, also activated when the document opens. The page test checks both switch and reload, exact range, focus and enabled dirty Save. |
+| DRAFT-01, high, FR-013 | Baseline `5f10082`: type an unsaved page title, select a range and reload; text survives but active control does not. The later document-switch case exposed the second click stealing restored focus. | Project/object-scoped selection recovery, also activated when the document opens. The page test checks both switch and reload, exact range, focus and enabled dirty Save. |
 | DRAFT-02, high, FR-013/014 | Baseline Schema Decimal scale: clear then type `-`; rendered value becomes `0`. | Keep unfinished scale/precision text in the existing schema buffer store; reject Save with retained-text status. The schema case checks unrelated receipt, invalid Save, switches, reload, text, range and unchanged committed schema. Root approved the narrow `schema-editor/index.tsx` ownership exception. |
 | DRAFT-03, high, FR-013 | Expanded query recovery: select `[0,1]` in parameter `-`, switch projects, reload; restored selection becomes `[1,1]`. | Suppress Query's focus capture during its own restoration, preserving the original range. Root approved the narrow `query-designer/index.tsx` exception. |
 | DRAFT-04, medium, FR-014 | Empty page title Save retained the draft and model but only said “Command does not match the operation schema.” | Workspace checks the canonical `entitySchemas` before submission and presents the exact field and validation message. Server validation remains authoritative. |
@@ -99,3 +99,10 @@ workspace/schema/query suites passed 44 tests in six files. The empty placeholde
 counted as an implemented UI package. Charter resolution reported no charter;
 that absence is recorded, not represented as a passed charter check. The canonical
 head gate and independent review remain separate from these local results.
+
+A separate fresh UI-authored project was audited with pinned axe-core 4.11.0.
+The changed Properties and Schema Properties states and the Query region had zero
+WCAG2/2.1 A/AA violations (16/17/14 passing rule groups). This is a scoped audit,
+not a whole-product accessibility verdict. `drafts.accessibility.json` retains the
+results. `drafts.bundle.json` records the built chunk byte/gzip totals; no bundle
+byte budget is declared, so it makes no invented threshold claim.

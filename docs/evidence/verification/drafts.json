@@ -42,12 +42,18 @@
     "diffLint": 0,
     "credentialScan": 0,
     "canonicalHeadGate": "pending shared gate slot",
-    "independentReview": "pending"
+    "independentReview": "pending",
+    "scopedAxe": {
+      "exit": 0,
+      "violations": 0,
+      "regions": 3
+    },
+    "bundleObservation": "drafts.bundle.json; no declared byte budget"
   },
   "artifacts": [
     {
       "path": "docs/evidence/verification/drafts.md",
-      "sha256": "778cf9b139c4d784ba74c4317747836095fea84db3345a6a295b38aef4a7df82"
+      "sha256": "19c189cb3f5e6334e178f4775c27ad02156596fa2209fa479dfe80cde3cfce30"
     },
     {
       "path": "docs/evidence/verification/drafts.failures.json",
@@ -64,6 +70,14 @@
     {
       "path": "docs/evidence/verification/drafts.junit.xml",
       "sha256": "b2b777101257310e0fd5723a659ba28441808f2ee53d04b5193ec4e0786120ac"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.accessibility.json",
+      "sha256": "aacd6a0af7fa46d5b3cf2180c12e5cf5c2df8bbb0d5fee14b7ecca713ec02adc"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.bundle.json",
+      "sha256": "aea9bd833b22c879df70e0f17d27f3515ec4615a95be0dcb359e87642ea87457"
     }
   ]
 }
