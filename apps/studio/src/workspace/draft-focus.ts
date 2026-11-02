@@ -24,6 +24,11 @@ export function useDraftFocus(projectId: string, scope: string, active: boolean,
   }
   useEffect(() => {
     if (!active) return;
+    const focused = document.activeElement;
+    // Selecting an object from another editor must not take its live keyboard focus.
+    if (focused && !root.current?.contains(focused) &&
+        ((textControl(focused) && !focused.readOnly && !focused.disabled) ||
+          (focused instanceof HTMLElement && focused.isContentEditable))) return;
     try {
       const selection: unknown = JSON.parse(sessionStorage.getItem(key) ?? '{}')[scope];
       if (!selection || typeof selection !== 'object') return;

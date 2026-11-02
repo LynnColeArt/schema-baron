@@ -303,7 +303,7 @@ export function SchemaEditor({
   const bufferedTables = tables.filter(table => Object.keys(applicableSchemaBuffers(buffers, [table])).length);
   const draftCount = new Set([...Object.keys(drafts), ...bufferedTables.map(table => table.id)]).size;
   const dirty = draftCount > 0;
-  const draftFocus = useDraftFocus(project.id, `schema:${selected}:${column}:${tab}`, active && !busy);
+  const draftFocus = useDraftFocus(project.id, `schema:${selected}:${column}:${tab}`, active);
   const inspectedTable = project.connections[0]?.inspectedSchema?.tables.find(t => t.id === selected);
   const inspectedColumn = inspectedTable?.columns.find(c => c.id === column);
   const physicalDeclaration = project.connections[0]?.physical?.tables.find(t => t.name === inspectedTable?.physicalName)?.columns.find(c => c.name === inspectedColumn?.physicalName)?.type;
