@@ -1,0 +1,231 @@
+{
+  "mode": "ui_journey",
+  "before": {
+    "authors": [
+      {
+        "id": 1,
+        "name": "Mara Vale"
+      },
+      {
+        "id": 2,
+        "name": "Jules Wren"
+      },
+      {
+        "id": 3,
+        "name": "Unassigned Author"
+      }
+    ],
+    "books": [
+      {
+        "id": 1,
+        "catalog_code": "CAT-001",
+        "title": "The Glass Orchard",
+        "publication_date": null
+      },
+      {
+        "id": 2,
+        "catalog_code": "CAT-002",
+        "title": "North Sea",
+        "publication_date": null
+      },
+      {
+        "id": 3,
+        "catalog_code": "CAT-003",
+        "title": "Uncatalogued Stories",
+        "publication_date": null
+      }
+    ],
+    "book_authors": [
+      {
+        "book_id": 1,
+        "author_id": 1
+      },
+      {
+        "book_id": 1,
+        "author_id": 2
+      },
+      {
+        "book_id": 2,
+        "author_id": 1
+      }
+    ],
+    "copies": [
+      {
+        "id": 1,
+        "barcode": "COPY-001",
+        "book_id": 1,
+        "replacement_cost": "12.50",
+        "note": null
+      },
+      {
+        "id": 2,
+        "barcode": "COPY-002",
+        "book_id": 1,
+        "replacement_cost": "7.25",
+        "note": null
+      },
+      {
+        "id": 3,
+        "barcode": "COPY-003",
+        "book_id": 2,
+        "replacement_cost": "10.00",
+        "note": null
+      }
+    ],
+    "loans": [
+      {
+        "id": 1,
+        "copy_id": 1,
+        "checked_out": "2026-01-10",
+        "returned_at": null
+      },
+      {
+        "id": 2,
+        "copy_id": 2,
+        "checked_out": "2026-01-11",
+        "returned_at": "2026-01-18"
+      }
+    ]
+  },
+  "after": {
+    "authors": [
+      {
+        "id": 1,
+        "name": "Mara Vale"
+      },
+      {
+        "id": 2,
+        "name": "Jules Wren"
+      },
+      {
+        "id": 3,
+        "name": "Unassigned Author"
+      }
+    ],
+    "books": [
+      {
+        "id": 1,
+        "catalog_code": "CAT-001",
+        "title": "The Glass Orchard",
+        "publication_date": null,
+        "subtitle": null
+      },
+      {
+        "id": 2,
+        "catalog_code": "CAT-002",
+        "title": "North Sea",
+        "publication_date": null,
+        "subtitle": null
+      },
+      {
+        "id": 3,
+        "catalog_code": "CAT-003",
+        "title": "Uncatalogued Stories",
+        "publication_date": null,
+        "subtitle": null
+      }
+    ],
+    "book_authors": [
+      {
+        "book_id": 1,
+        "author_id": 1
+      },
+      {
+        "book_id": 1,
+        "author_id": 2
+      },
+      {
+        "book_id": 2,
+        "author_id": 1
+      }
+    ],
+    "copies": [
+      {
+        "id": 1,
+        "barcode": "COPY-001",
+        "book_id": 1,
+        "replacement_cost": "12.50",
+        "note": null
+      },
+      {
+        "id": 2,
+        "barcode": "COPY-002",
+        "book_id": 1,
+        "replacement_cost": "7.25",
+        "note": null
+      },
+      {
+        "id": 3,
+        "barcode": "COPY-003",
+        "book_id": 2,
+        "replacement_cost": "10.00",
+        "note": null
+      }
+    ],
+    "loans": [
+      {
+        "id": 1,
+        "copy_id": 1,
+        "checked_out": "2026-01-10",
+        "returned_at": null
+      },
+      {
+        "id": 2,
+        "copy_id": 2,
+        "checked_out": "2026-01-11",
+        "returned_at": "2026-01-18"
+      }
+    ]
+  },
+  "committedRevision": 24,
+  "restoredRevision": 27,
+  "schema": [
+    {
+      "cid": 0,
+      "name": "id",
+      "type": "INTEGER",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 1
+    },
+    {
+      "cid": 1,
+      "name": "catalog_code",
+      "type": "TEXT",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 2,
+      "name": "title",
+      "type": "TEXT",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 3,
+      "name": "publication_date",
+      "type": "TEXT",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 4,
+      "name": "subtitle",
+      "type": "TEXT",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    }
+  ],
+  "foreignKeys": [],
+  "integrity": "ok",
+  "destructiveCancel": "physical schema and tuples retained; desired declaration pending",
+  "restoration": "visible add column, Save schema, Review, Apply",
+  "occupiedPort": "PROJECT_BUSY; owned sentinel still served its exact response; explicit original-port retry",
+  "unrelatedModelUnchanged": true,
+  "unrelatedDatabaseUnchanged": true
+}

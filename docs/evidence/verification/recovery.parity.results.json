@@ -1,0 +1,137 @@
+{
+  "scope": "Bounded MCP/direct smoke only; full MCP workflow separately queued after UI mission",
+  "applications": {
+    "workshop": {
+      "mode": "parity",
+      "application": "workshop",
+      "scope": "Bounded smoke only; full MCP workflow and cold UI proof are separate",
+      "observations": [
+        {
+          "operation": "project.create",
+          "requestId": "create",
+          "expected": "success",
+          "actual": "success",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "write",
+          "expected": "success",
+          "actual": "success",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "write",
+          "expected": "success",
+          "actual": "success",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "stale",
+          "expected": "REVISION_CONFLICT",
+          "actual": "REVISION_CONFLICT",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "write",
+          "expected": "IDEMPOTENCY_CONFLICT",
+          "actual": "IDEMPOTENCY_CONFLICT",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "invalid",
+          "expected": "VALIDATION_FAILED",
+          "actual": "VALIDATION_FAILED",
+          "identical": true
+        },
+        {
+          "operation": "project.export",
+          "requestId": "path",
+          "expected": "PATH_OUTSIDE_ROOT",
+          "actual": "PATH_OUTSIDE_ROOT",
+          "identical": true
+        }
+      ],
+      "snapshotRevision": 2,
+      "pageIds": [
+        "one"
+      ],
+      "authorization": {
+        "mcp": "AUTH_REQUIRED",
+        "http": "AUTH_REQUIRED",
+        "wrongOwner": "ACCESS_DENIED",
+        "unchanged": true
+      }
+    },
+    "library": {
+      "mode": "parity",
+      "application": "library",
+      "scope": "Bounded smoke only; full MCP workflow and cold UI proof are separate",
+      "observations": [
+        {
+          "operation": "project.create",
+          "requestId": "create",
+          "expected": "success",
+          "actual": "success",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "write",
+          "expected": "success",
+          "actual": "success",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "write",
+          "expected": "success",
+          "actual": "success",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "stale",
+          "expected": "REVISION_CONFLICT",
+          "actual": "REVISION_CONFLICT",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "write",
+          "expected": "IDEMPOTENCY_CONFLICT",
+          "actual": "IDEMPOTENCY_CONFLICT",
+          "identical": true
+        },
+        {
+          "operation": "project.batch",
+          "requestId": "invalid",
+          "expected": "VALIDATION_FAILED",
+          "actual": "VALIDATION_FAILED",
+          "identical": true
+        },
+        {
+          "operation": "project.export",
+          "requestId": "path",
+          "expected": "PATH_OUTSIDE_ROOT",
+          "actual": "PATH_OUTSIDE_ROOT",
+          "identical": true
+        }
+      ],
+      "snapshotRevision": 2,
+      "pageIds": [
+        "one"
+      ],
+      "authorization": {
+        "mcp": "AUTH_REQUIRED",
+        "http": "AUTH_REQUIRED",
+        "wrongOwner": "ACCESS_DENIED",
+        "unchanged": true
+      }
+    }
+  }
+}
