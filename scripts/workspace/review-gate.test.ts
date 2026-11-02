@@ -64,6 +64,14 @@ test('borrowed compiled artifact is refused before a rebuild can write through i
   expect(readFileSync(join(other, 'compiled/main.js'), 'utf8')).toBe('fixture');
 });
 
+test('missing runtime file below a borrowed empty output directory is refused', () => {
+  const root = fixture(), other = fixture();
+  mkdirSync(join(other, 'empty-output'));
+  symlinkSync(join(other, 'empty-output'), join(root, 'apps/studio/dist'));
+  expect(() => inspectReviewCheckout(root)).toThrow('borrowed runtime artifact');
+  expect(() => readFileSync(join(other, 'empty-output/main.js'))).toThrow();
+});
+
 test('real failing child exit is retained instead of reported as a green stage', () => {
   try { runReviewCommand(process.execPath, ['-e', 'process.exit(23)'], { stdio: 'pipe' }); throw Error('unexpected success'); }
   catch (error) { expect(error).toHaveProperty('status', 23); }

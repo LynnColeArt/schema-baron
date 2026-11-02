@@ -45,8 +45,19 @@ export function inspectReviewCheckout(root) {
   let artifactsReady = true;
   for (const artifact of artifacts) {
     const path = join(root, artifact);
+    // A missing file may still sit below a borrowed/dangling output-directory link.
+    // Refuse that existing ancestor before a build could write through it.
+    let ancestor = path;
+    while (ancestor !== root) {
+      let present = false;
+      try { lstatSync(ancestor); present = true; } catch (error) { if (error.code !== 'ENOENT') throw error; }
+      if (present) {
+        if (!existsSync(ancestor) || !local(ancestor, root)) throw new Error(`Review setup refuses borrowed runtime artifact: ${artifact}.`);
+        break;
+      }
+      ancestor = dirname(ancestor);
+    }
     if (!existsSync(path)) artifactsReady = false;
-    else if (!local(path, root)) throw new Error(`Review setup refuses borrowed runtime artifact: ${artifact}.`);
   }
   return { dependenciesReady, artifactsReady };
 }
