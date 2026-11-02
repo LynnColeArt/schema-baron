@@ -72,6 +72,7 @@ function main() {
       ...process.env,
       PATH: pinnedBinPath,
       npm_config_ignore_scripts: 'true',
+      NEXT_TELEMETRY_DISABLED: '1',
       SCHEMA_BARON_PARITY_EVIDENCE: join(evidence, 'parity'),
       SCHEMA_BARON_RECOVERY_EVIDENCE: join(evidence, 'recovery'),
       SCHEMA_BARON_MIGRATION_EVIDENCE: join(evidence, 'migrations'),
