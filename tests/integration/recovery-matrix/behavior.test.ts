@@ -12,6 +12,11 @@ const migrationPoints=['before-backup','after-backup','during-rebuild','before-d
 const generationPoints=['stage-complete','before-journal-write','after-journal-write','before-old-rename','after-old-rename','before-new-rename','after-new-rename','before-journal-clear','after-journal-clear'];
 const sha=(value:Buffer|string)=>createHash('sha256').update(value).digest('hex');
 function tree(root:string):Record<string,string>{return Object.fromEntries(readdirSync(root,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?Object.entries(tree(join(root,entry.name))).map(([path,hash])=>[entry.name+'/'+path,hash]):[[entry.name,sha(readFileSync(join(root,entry.name)))]]).sort(([a],[b])=>a!.localeCompare(b!)));}
+// Business values and physical constraints remain authoritative even with uncheckpointed WAL.
+function durableDatabase(path:string) {
+ const db=new Database(path,{readonly:true});
+ try{return {parent:db.prepare('SELECT * FROM parent ORDER BY id').all(),child:db.prepare('SELECT * FROM child ORDER BY id').all(),schema:db.prepare("SELECT type,name,tbl_name,sql FROM sqlite_schema WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name").all(),foreignKeys:db.pragma('foreign_key_check'),integrity:db.pragma('integrity_check')};}finally{db.close();}
+}
 async function child(root:string,action:string,point=''){
  const args=[resolve('tests/integration/recovery-matrix/owner.mjs'),root,action,point];
  const workerFault=action==='migrate'&&['before-backup','after-backup','during-rebuild','before-db-commit','after-db-commit'].includes(point);
@@ -61,11 +66,14 @@ for(const [i,generation] of generationPoints.entries())test(`save → WAL migrat
   }
   journal.observed({phase:'migration-reconciled',oracle});
   if(!committed)expect((await child(root,'finish-migration')).status).toBe(0);
-  const databaseBefore=sha(readFileSync(join(root,'projects/app.sqlite')));
+  const databaseBefore=sha(readFileSync(join(root,'projects/app.sqlite'))),durableBefore=durableDatabase(join(root,'projects/app.sqlite'));
+  const projectBefore=JSON.parse(readFileSync(join(root,'projects/p.json'),'utf8'));
   expect((await child(root,'generate',generation)).status).toBe(91);
   expect((await child(root,'reopen')).status).toBe(0);
   observed=JSON.parse(readFileSync(join(root,'observed.json'),'utf8'));
   const activeTree=tree(join(root,'output/app'));
+  expect(durableDatabase(join(root,'projects/app.sqlite'))).toEqual(durableBefore);
+  expect(observed.project).toEqual(projectBefore);
   expect(readFileSync(join(root,'output/app/authored/rules.ts'))).toEqual(authored);
   expect(sha(readFileSync(join(root,'projects/app.sqlite')))).toBe(databaseBefore);expect(sha(readFileSync(join(root,'secrets/runtime.key')))).toBe(externalSecretHash);
   if(i<2){expect(activeTree).toEqual(oldTree);expect(observed.retries.generation).toBeUndefined();}
@@ -78,8 +86,8 @@ for(const [i,generation] of generationPoints.entries())test(`save → WAL migrat
   const metadata=new Database(join(root,'metadata/metadata.sqlite'),{readonly:true});
   try{expect(metadata.prepare('SELECT count(*) AS n FROM journal').get()).toEqual({n:0});expect(JSON.parse((metadata.prepare("SELECT snapshot FROM projects WHERE id='p'").get() as {snapshot:string}).snapshot)).toEqual(observed.project);expect(JSON.parse(readFileSync(join(root,'projects/p.json'),'utf8'))).toEqual(observed.project);}
   finally{metadata.close();}
-  journal.observed({phase:'restarted',exit:{save:73,migration:migrationChild.status,generation:91},revision:observed.project.revision,oracle,activeTree,oldTree,externalSecretPreserved:true,databaseBefore,databaseAfter:sha(readFileSync(join(root,'projects/app.sqlite')))});
-  const stableProject=observed.project;expect((await child(root,'reopen')).status).toBe(0);expect(JSON.parse(readFileSync(join(root,'observed.json'),'utf8')).project).toEqual(stableProject);expect(tree(join(root,'output/app'))).toEqual(activeTree);
+  journal.observed({phase:'restarted',exit:{save:73,migration:migrationChild.status,generation:91},revision:observed.project.revision,oracle,activeTree,oldTree,externalSecretPreserved:true,durableBefore,durableAfter:durableDatabase(join(root,'projects/app.sqlite')),databaseBefore,databaseAfter:sha(readFileSync(join(root,'projects/app.sqlite')))});
+  const stableProject=observed.project;expect((await child(root,'reopen')).status).toBe(0);expect(JSON.parse(readFileSync(join(root,'observed.json'),'utf8')).project).toEqual(stableProject);expect(tree(join(root,'output/app'))).toEqual(activeTree);expect(durableDatabase(join(root,'projects/app.sqlite'))).toEqual(durableBefore);
   journal.succeed();
  }catch(error){journal.fail(error);throw error;}finally{rmSync(root,{recursive:true,force:true});journal.cleanup({disposableRootRemoved:!existsSync(root)});}
 },120000);
