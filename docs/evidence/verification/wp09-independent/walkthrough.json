@@ -1,0 +1,164 @@
+{
+  "schema": "independent-walkthrough/v1",
+  "reviewer": "verification_acceptance_audit",
+  "qualifiedRevision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "documentationRevision": "a3dbca55738e804e525b93f3fddbb51903e7621b",
+  "sourceEquality": "All application/package/test/runner/fixture/lockfile bytes unchanged from qualified ca1; observed tests honestly record documentation HEAD.",
+  "commands": [
+    "npm exec -- playwright test tests/e2e/acceptance/regeneration.spec.ts --workers=1 --retries=0 --reporter=line,json,junit --output=<private-run>/regeneration-output",
+    "npm exec -- playwright test tests/e2e/acceptance/independence.spec.ts --workers=1 --retries=0 --reporter=line,json,junit --output=<private-run>/independence-output",
+    "node --test scripts/acceptance/evidence.test.ts scripts/acceptance/report.test.ts"
+  ],
+  "regeneration": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 2,
+    "count": 2,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "workshop authored code follows configured output and survives regeneration",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "library authored code follows configured output and survives regeneration",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "independence": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 2,
+    "count": 2,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "workshop portable application runs with its Studio owner stopped",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "library portable application runs with its Studio owner stopped",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "node": {
+    "tests": 28,
+    "passed": 28,
+    "failed": 0,
+    "skipped": 0
+  },
+  "rawReportHashes": {
+    "regeneration": "aaf24416170cca396c8136bcd6307e00596b8029ee054b4b3cd2b37c5e804e4f",
+    "independence": "7808f280f5da01f09437c1e8cd966e997fc84e2fda587ac1a52793df1c42c291",
+    "node": "9368c35a0bd8a2bb37607cb4a082d179a30c9d913c20ff5284fb7f236abab819"
+  },
+  "regenerationSummaries": [
+    {
+      "revision": "a3dbca55738e804e525b93f3fddbb51903e7621b",
+      "application": "Library Catalog",
+      "mode": "ui_journey",
+      "cycles": 2,
+      "authoredHash": "c89cafc4efcccb93c8ae4789d1b1d05faa25ad2176c52943ebb0c5ab5abc22cf",
+      "rowsHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+      "modelHash": "fbf9963d80271f77445c0f0098f1911960b3776593296f1e624e70b296b150d0",
+      "identityInvariantsPreserved": true,
+      "fault": {
+        "mode": "fault",
+        "isolatedCopy": true,
+        "promotionBlocked": true,
+        "restoredReviewedBytesAndFreshPreview": true
+      }
+    },
+    {
+      "revision": "a3dbca55738e804e525b93f3fddbb51903e7621b",
+      "application": "Workshop Planner",
+      "mode": "ui_journey",
+      "cycles": 2,
+      "authoredHash": "e73d509a6968fc428b6f3c785606d40bebbe5b7cdc0aa1ea01b54bd609f3b611",
+      "rowsHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+      "modelHash": "2bd345d2c7d68d8f46a276ac864bdb01c895f128c989ad7857f671864dbaf617",
+      "identityInvariantsPreserved": true,
+      "fault": {
+        "mode": "fault",
+        "isolatedCopy": true,
+        "promotionBlocked": true,
+        "restoredReviewedBytesAndFreshPreview": true
+      }
+    }
+  ],
+  "independenceSummaries": [
+    {
+      "revision": "a3dbca55738e804e525b93f3fddbb51903e7621b",
+      "application": "Library Catalog",
+      "originalOwnerStopped": true,
+      "ownerProbeUnavailableBeforeAndAfter": true,
+      "checks": [
+        "offline install with scripts denied",
+        "typecheck",
+        "test",
+        "build",
+        "real Next start readiness",
+        "anonymous public grid",
+        "fresh visitor login",
+        "authored validator rejection and successful edits",
+        "parent filtered Add/Cancel",
+        "filtered Add/Edit/Delete exact tuples",
+        "independent reports",
+        "identity account invariants"
+      ],
+      "rowsHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+      "authoredHash": "c89cafc4efcccb93c8ae4789d1b1d05faa25ad2176c52943ebb0c5ab5abc22cf"
+    },
+    {
+      "revision": "a3dbca55738e804e525b93f3fddbb51903e7621b",
+      "application": "Workshop Planner",
+      "originalOwnerStopped": true,
+      "ownerProbeUnavailableBeforeAndAfter": true,
+      "checks": [
+        "offline install with scripts denied",
+        "typecheck",
+        "test",
+        "build",
+        "real Next start readiness",
+        "anonymous public grid",
+        "fresh visitor login",
+        "authored validator rejection and successful edits",
+        "parent filtered Add/Cancel",
+        "filtered Add/Edit/Delete exact tuples",
+        "independent reports",
+        "identity account invariants"
+      ],
+      "rowsHash": "2747c465f22c5807a1da3caa20ddf2e667f5ca32e54eeb4a866643809f635fb2",
+      "authoredHash": "e73d509a6968fc428b6f3c785606d40bebbe5b7cdc0aa1ea01b54bd609f3b611"
+    }
+  ],
+  "privacy": "Fresh synthetic projects; raw browser captures, accounts, database/identity files and configuration retained privately. No source/model/data rescue was used. Deliberate owned-source conflict injection used a separately labeled isolated fault copy.",
+  "originalStudy": "Read-only comparison matched its saved ordered business tuples. Both original live applications responded HTTP200. No original study writes or process shutdowns.",
+  "ownershipException": "Coordinator authorized these six sanitized proof JSON paths so canonical ledger/report references can resolve in the qualified source checkout; no production source/test/runner change."
+}
