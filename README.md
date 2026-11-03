@@ -25,12 +25,12 @@ Run the commands below in Bash. Stop on a failed command and resolve its diagnos
 
 ### 1. Select the current source
 
-The verified implementation is currently on the feature branch below; it has not been merged into `main`. Clone source separately from the default application-project folder. The commands refuse an existing destination rather than resetting an existing checkout.
+Install the reviewed implementation from `main`. Clone source separately from the default application-project folder. The commands refuse an existing destination rather than resetting an existing checkout.
 
 ```bash
 set -euo pipefail
 mkdir -p "$HOME/src"
-git clone --branch kitty/mission-studio-verification-hardening-01M6AQ6R-lane-h \
+git clone --branch main \
   https://github.com/LynnColeArt/schema-baron.git "$HOME/src/schema-baron-studio"
 cd "$HOME/src/schema-baron-studio"
 git status --short
