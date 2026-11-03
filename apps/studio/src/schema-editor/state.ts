@@ -6,6 +6,14 @@ export interface Draft {
   conflicts: string[];
 }
 export type Drafts = Record<string, Draft>;
+/** Numeric buffers belong to visible fields of the desired type, not just a column ID. */
+export function applicableSchemaBuffers(buffers: Record<string, string>, tables: Table[]): Record<string, string> {
+  const fields = new Set(tables.flatMap(table => table.columns.flatMap(column => [
+    column.id,
+    ...(column.type.kind === 'decimal' ? [`${column.id}:scale`, `${column.id}:precision`] : []),
+  ])));
+  return Object.fromEntries(Object.entries(buffers).filter(([key]) => fields.has(key)));
+}
 const canonical = (value: unknown): unknown => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).filter(([, v]) => v !== undefined).map(([key, v]) => [key, canonical(v)])) : value;
 const same = (a: unknown, b: unknown) => JSON.stringify(canonical(a)) === JSON.stringify(canonical(b));
 export function blankTable(): Table {

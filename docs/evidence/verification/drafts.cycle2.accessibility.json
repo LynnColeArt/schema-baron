@@ -1,0 +1,23 @@
+{
+  "scope": "Fresh UI-authored owner project; changed property/schema states and query region only",
+  "version": "axe-core 4.11.0",
+  "zeroRetries": true,
+  "scans": [
+    {
+      "scope": ".properties",
+      "violations": [],
+      "passes": 16
+    },
+    {
+      "scope": ".schema-properties",
+      "violations": [],
+      "passes": 17
+    },
+    {
+      "scope": ".qd",
+      "violations": [],
+      "passes": 14
+    }
+  ],
+  "revision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4"
+}

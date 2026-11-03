@@ -1,0 +1,37 @@
+{
+  "validatedHead": "b927d13",
+  "uiSourceRevision": "659f224fc89b6bea8a08746f8bd4bdebf5bb909b",
+  "command": "spec-kitty agent tasks move-task WP05 --to for_review --mission studio-verification-hardening-01M6AQ6R",
+  "exit": 0,
+  "transition": "in_progress to for_review",
+  "actualRetainedJUnit": {
+    "tests": 505,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "actualTestcaseCount": 505,
+  "junitSha256": "0f8be92a9b6d071a239e36a4d7422284d2729af940c3bed8c4a35acadd3fb99c",
+  "stages": {
+    "stages": [
+      {
+        "label": "locked dependency verification",
+        "status": "passed",
+        "elapsedSeconds": 0.083943374
+      },
+      {
+        "label": "reviewed native prebuild verification",
+        "status": "passed",
+        "elapsedSeconds": 0.102958762
+      },
+      {
+        "label": "Vitest JUnit suite",
+        "status": "passed",
+        "elapsedSeconds": 234.769274855
+      }
+    ],
+    "wallSeconds": 234.96911622599998
+  },
+  "censusPolicy": "Positive actual retained JUnit is authoritative; no empty capture counter or transition-only result used",
+  "independentReview": "pending; implementer does not approve"
+}
