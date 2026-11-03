@@ -1,0 +1,7 @@
+{
+  "actualSourceRevision": "5dcf0e2d47826b83b5b28e56e162b9d6286fdc37",
+  "archivedSourceSha256": "2aae444295c9459c51d2f7b54aaae9e641b403c516b76e93cbca438a66bd819c",
+  "independentGitArchiveSha256": "2aae444295c9459c51d2f7b54aaae9e641b403c516b76e93cbca438a66bd819c",
+  "byteIdentical": true,
+  "originalRunnerLimit": "Original runner queried HEAD again at completion. Raw result.sourceRevision is a late observation, not the archive input. This independent byte comparison establishes the actual source; current runner captures and archives a single immutable revision before starting."
+}

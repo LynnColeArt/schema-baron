@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:3829359) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/e2e/security-workflow/workflow.spec.ts:144:1 › visible secure authoring produces independent public read/protected write app with login return (34.6s)
+  ✓  2 tests/e2e/security-workflow/workflow.spec.ts:176:1 › native 200 percent zoom keeps identity setup keyboard reachable (4.2s)
+  ✓  3 tests/e2e/security-workflow/workflow.spec.ts:181:1 › mapped identity setup validates fields and clears failed provision credentials (4.3s)
+
+  3 passed (45.9s)

@@ -1,0 +1,62 @@
+[
+  {
+    "run_id": "wp05-cycle2-exact",
+    "case_id": "AC-014",
+    "requirements": [
+      "FR-013",
+      "NFR-005",
+      "FR-014",
+      "NFR-001",
+      "C-002",
+      "C-004"
+    ],
+    "application": "workshop",
+    "mode": "ui_journey",
+    "revision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4",
+    "status": "passed",
+    "expected": "WP05 composed owner journey: Workshop page and isolated Library schema/query/control drafts retain invalid partial text, ownership, selection and dirty status through actual notifications, supported switches and same-tab recovery. Thirty received unrelated UI revisions must preserve active draft.",
+    "actual": "Five fresh UI tests passed with zero failures, errors, skips or retries. R1 now saves the decimal-to-integer transition without a hidden obsolete buffer. Scale/precision retirement and undo/redo are explicit; another active decimal column retains unfinished text during a different column type change, blocks invalid Save while unselected, survives view/reload, and can then be corrected. The original four mixed Studio cases also pass: Workshop Page with thirty received UI revisions and three keyboard-focus negatives, Library Schema/Query/Control recovery with actual background receipts, explicit conflict and atomic rejected Save, project/model/business-byte preservation. Full per-app aggregate acceptance remains WP08.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/drafts.cycle2.md",
+        "sha256": "38bb80d3f318e8e0831c16386c8bf17a2e8313cb48f11c663c9cabb845d0028d"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.cycle2.timings.json",
+        "sha256": "6408a29db5ab1974d5e30c516b4c10897331264611cf41c11c3b7028c562f840"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.cycle2.failures.json",
+        "sha256": "123109402d24e95a7904759bae33883c8974cfafb0bd312ef918da429ed070ab"
+      }
+    ]
+  },
+  {
+    "run_id": "wp05-cycle2-exact",
+    "case_id": "AC-018",
+    "requirements": [
+      "NFR-004",
+      "NFR-005"
+    ],
+    "application": "workshop",
+    "mode": "ui_journey",
+    "revision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4",
+    "status": "passed",
+    "expected": "Local WP05 reference-machine observation: 30 real editing and Save samples at bounded fixture size, p95 feedback <=2000ms and valid Save <=5000ms, with no draft replacement.",
+    "actual": "Thirty raw Workshop owner samples on the recorded AMD Ryzen 5 5600X reference machine: feedback p95 10.47ms, Save p95 78.40ms, maximum Save 87.83ms; zero draft replacements across thirty received UI revisions. Per-sample shared-host load is retained. This local mixed Studio scope does not claim separate per-app distributions or the final load-controlled NFR verdict, which remains WP08.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/drafts.cycle2.md",
+        "sha256": "38bb80d3f318e8e0831c16386c8bf17a2e8313cb48f11c663c9cabb845d0028d"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.cycle2.timings.json",
+        "sha256": "6408a29db5ab1974d5e30c516b4c10897331264611cf41c11c3b7028c562f840"
+      },
+      {
+        "path": "docs/evidence/verification/drafts.cycle2.failures.json",
+        "sha256": "123109402d24e95a7904759bae33883c8974cfafb0bd312ef918da429ed070ab"
+      }
+    ]
+  }
+]

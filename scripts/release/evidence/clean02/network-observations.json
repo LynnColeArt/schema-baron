@@ -1,0 +1,68 @@
+{
+  "boundary": "unshare -Urn, loopback up, empty external route table; AF_UNIX/filesystem remain host-accessible",
+  "traces": [
+    {
+      "phase": "warm-offline-ci",
+      "traceSha256": "f245c08b02d46239280743c092c4ace1bedcb826b7708415f87b1977948760ff",
+      "internetConnectAttempts": 0,
+      "externalSucceeded": 0,
+      "distinctExternalAttempts": []
+    },
+    {
+      "phase": "equipment",
+      "traceSha256": "cd950e60a8a6f67a3e483ba2d37274153003d68eed04ad2f9ddd487436fc771c",
+      "internetConnectAttempts": 42,
+      "externalSucceeded": 0,
+      "distinctExternalAttempts": [
+        "connect(17, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(19, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(22, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(29, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(31, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)"
+      ]
+    },
+    {
+      "phase": "publication",
+      "traceSha256": "1369405db1613565b6d7ce7860a8c61e078669e732e8319f942111781557c4a4",
+      "internetConnectAttempts": 23,
+      "externalSucceeded": 0,
+      "distinctExternalAttempts": [
+        "connect(17, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(20, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(21, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(22, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(23, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(24, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(25, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)",
+        "connect(29, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)"
+      ]
+    },
+    {
+      "phase": "publication-portable",
+      "traceSha256": "a8c81eb1b5cbd504711e6cbdeb1ff89688914d02d79bbad3eb4706b91b37eb33",
+      "internetConnectAttempts": 1,
+      "externalSucceeded": 0,
+      "distinctExternalAttempts": [
+        "connect(16, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)"
+      ]
+    },
+    {
+      "phase": "equipment-provision",
+      "traceSha256": "28ca3d78a8182a4eb37a2881fc7328d2070b7a39d89daf253db7e926a0384a69",
+      "internetConnectAttempts": 1,
+      "externalSucceeded": 0,
+      "distinctExternalAttempts": [
+        "connect(16, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)"
+      ]
+    },
+    {
+      "phase": "publication-provision",
+      "traceSha256": "a51b7a13d214f970b411633ae710ae3e0f3c80a806447eb5bbe34d718f1e3a64",
+      "internetConnectAttempts": 1,
+      "externalSucceeded": 0,
+      "distinctExternalAttempts": [
+        "connect(17, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, \"2001:4860:4860::8888\", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)"
+      ]
+    }
+  ]
+}

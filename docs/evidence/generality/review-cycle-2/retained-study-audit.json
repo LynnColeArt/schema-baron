@@ -1,0 +1,16 @@
+{
+  "readOnly": true,
+  "revision": 80,
+  "definitionEqualsUIFixture": true,
+  "originalRowsPreserved": true,
+  "integrity": [
+    {
+      "integrity_check": "ok"
+    }
+  ],
+  "foreignKeyViolations": [],
+  "migrationRecords": 2,
+  "liveAndPortableAuthoredBytesPreserved": true,
+  "ownerConfigMode": "0600",
+  "browserProof": "review-renata-publication.log (fresh independent journey passed 2.7 minutes)"
+}

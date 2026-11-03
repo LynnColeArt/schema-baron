@@ -1,0 +1,9 @@
+.application-flow{height:100%;min-height:280px;display:flex;flex-direction:column;min-width:0;background:var(--surface)}
+.application-flow-switch{display:flex;gap:5px;padding:6px 8px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.application-flow-switch [aria-pressed=true]{background:var(--accent);color:white}
+.application-flow>.flow-map{flex:1;min-height:0}
+.application-mermaid{flex:1;overflow:auto;padding:18px;background:#fff;min-height:220px}
+.application-mermaid svg{display:block;min-width:650px;width:100%;height:auto;min-height:220px}
+.mermaid-source{overflow:auto;flex:1;padding:14px;white-space:pre;font-size:12px}
+
+.flow-overview-note{padding:6px 10px;margin:0;font-size:12px;color:var(--muted)}

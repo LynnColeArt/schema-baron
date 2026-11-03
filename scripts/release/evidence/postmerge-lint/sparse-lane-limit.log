@@ -1,0 +1,5 @@
+
+> schema-baron@0.0.0 lint
+> node scripts/workspace/verify.mjs lint
+
+ENOENT: no such file or directory, open '/home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/kitty-specs/schema-baron-studio-01M5W3Q9/status.json'

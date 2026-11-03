@@ -1,0 +1,9 @@
+Command: /tmp/schema-baron-wp26-clean-02/node-v24.22.1-linux-x64/bin/node scripts/release/acquire-output.mjs
+Exit: 0
+
+added 35 packages, and audited 36 packages in 4s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities

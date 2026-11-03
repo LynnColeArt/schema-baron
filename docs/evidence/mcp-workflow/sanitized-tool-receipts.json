@@ -1,0 +1,787 @@
+[
+  {
+    "sequence": 1,
+    "at": "2026-11-02T21:25:43.799Z",
+    "tool": "project_create",
+    "ok": true,
+    "revision": 1
+  },
+  {
+    "sequence": 2,
+    "at": "2026-11-02T21:25:43.964Z",
+    "tool": "connection_inspect",
+    "ok": true,
+    "revision": 1
+  },
+  {
+    "sequence": 3,
+    "at": "2026-11-02T21:25:44.034Z",
+    "tool": "connection_bind",
+    "ok": false,
+    "revision": 0,
+    "errorCode": "INVALID_INPUT",
+    "message": "Command does not match the operation schema."
+  },
+  {
+    "sequence": 4,
+    "at": "2026-11-02T21:25:59.356Z",
+    "tool": "connection_bind",
+    "ok": true,
+    "revision": 2
+  },
+  {
+    "sequence": 5,
+    "at": "2026-11-02T21:25:59.427Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 3
+  },
+  {
+    "sequence": 6,
+    "at": "2026-11-02T21:25:59.608Z",
+    "tool": "schema_preview",
+    "ok": true,
+    "revision": 3
+  },
+  {
+    "sequence": 7,
+    "at": "2026-11-02T21:26:12.732Z",
+    "tool": "schema_apply",
+    "ok": true,
+    "revision": 4,
+    "committed": true,
+    "recoveryRequired": false
+  },
+  {
+    "sequence": 8,
+    "at": "2026-11-02T21:26:12.790Z",
+    "tool": "schema_history",
+    "ok": false,
+    "revision": 0,
+    "errorCode": "INVALID_INPUT",
+    "message": "Command does not match the operation schema."
+  },
+  {
+    "sequence": 9,
+    "at": "2026-11-02T21:26:19.314Z",
+    "tool": "schema_history",
+    "ok": true,
+    "revision": 4
+  },
+  {
+    "sequence": 10,
+    "at": "2026-11-02T21:26:19.371Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 5
+  },
+  {
+    "sequence": 11,
+    "at": "2026-11-02T21:26:19.450Z",
+    "tool": "form_construct",
+    "ok": true,
+    "revision": 6
+  },
+  {
+    "sequence": 12,
+    "at": "2026-11-02T21:26:19.503Z",
+    "tool": "form_construct",
+    "ok": true,
+    "revision": 7
+  },
+  {
+    "sequence": 13,
+    "at": "2026-11-02T21:26:19.556Z",
+    "tool": "identity_configure",
+    "ok": true,
+    "revision": 8,
+    "configured": true
+  },
+  {
+    "sequence": 14,
+    "at": "2026-11-02T21:26:19.810Z",
+    "tool": "identity_provision",
+    "ok": true,
+    "revision": 8
+  },
+  {
+    "sequence": 15,
+    "at": "2026-11-02T21:26:19.867Z",
+    "tool": "form_construct",
+    "ok": true,
+    "revision": 9
+  },
+  {
+    "sequence": 16,
+    "at": "2026-11-02T21:26:19.926Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 10
+  },
+  {
+    "sequence": 17,
+    "at": "2026-11-02T21:26:20.110Z",
+    "tool": "query_preview",
+    "ok": true,
+    "revision": 10,
+    "rowCount": 0,
+    "rows": []
+  },
+  {
+    "sequence": 18,
+    "at": "2026-11-02T21:26:20.167Z",
+    "tool": "form_construct",
+    "ok": true,
+    "revision": 11
+  },
+  {
+    "sequence": 19,
+    "at": "2026-11-02T21:26:32.905Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 12
+  },
+  {
+    "sequence": 20,
+    "at": "2026-11-02T21:26:32.967Z",
+    "tool": "project_validate",
+    "ok": true,
+    "revision": 12,
+    "valid": true,
+    "diagnosticCount": 0
+  },
+  {
+    "sequence": 21,
+    "at": "2026-11-02T21:26:33.032Z",
+    "tool": "flow_inspect",
+    "ok": true,
+    "revision": 12
+  },
+  {
+    "sequence": 22,
+    "at": "2026-11-02T21:26:33.099Z",
+    "tool": "flow_inspect",
+    "ok": true,
+    "revision": 12
+  },
+  {
+    "sequence": 23,
+    "at": "2026-11-02T21:26:33.148Z",
+    "tool": "flow_inspect",
+    "ok": false,
+    "revision": 12,
+    "errorCode": "INVALID_INPUT",
+    "message": "Use the schema editor for schema relationships; flow.inspect supports application and endpoint projections."
+  },
+  {
+    "sequence": 24,
+    "at": "2026-11-02T21:26:33.267Z",
+    "tool": "generation_preview",
+    "ok": false,
+    "revision": 12,
+    "errorCode": "VALIDATION_FAILED",
+    "message": "Select Record name fields in Data properties before enabling Delete."
+  },
+  {
+    "sequence": 25,
+    "at": "2026-11-02T21:26:43.036Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 13
+  },
+  {
+    "sequence": 26,
+    "at": "2026-11-02T21:26:43.252Z",
+    "tool": "generation_preview",
+    "ok": true,
+    "revision": 13
+  },
+  {
+    "sequence": 27,
+    "at": "2026-11-02T21:26:43.641Z",
+    "tool": "generation_apply",
+    "ok": true,
+    "revision": 13,
+    "committed": true,
+    "recoveryRequired": false,
+    "outputTreeRevision": 1
+  },
+  {
+    "sequence": 28,
+    "at": "2026-11-02T21:26:47.680Z",
+    "tool": "extension_read",
+    "ok": true,
+    "revision": 13
+  },
+  {
+    "sequence": 29,
+    "at": "2026-11-02T21:26:57.420Z",
+    "tool": "extension_write",
+    "ok": true,
+    "revision": 13
+  },
+  {
+    "sequence": 30,
+    "at": "2026-11-02T21:26:57.489Z",
+    "tool": "source_read",
+    "ok": true,
+    "revision": 13
+  },
+  {
+    "sequence": 31,
+    "at": "2026-11-02T21:27:12.586Z",
+    "tool": "runtime_start",
+    "ok": true,
+    "revision": 13,
+    "status": "building",
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 32,
+    "at": "2026-11-02T21:27:17.033Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 13,
+    "status": "building",
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 33,
+    "at": "2026-11-02T21:27:17.116Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 13,
+    "status": "running",
+    "committed": false,
+    "jobStatus": "running",
+    "exitCode": null,
+    "outputTreeRevision": 1
+  },
+  {
+    "sequence": 34,
+    "at": "2026-11-02T21:27:24.147Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 13,
+    "status": "building",
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 35,
+    "at": "2026-11-02T21:27:24.218Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 13,
+    "status": "running",
+    "committed": false,
+    "jobStatus": "running",
+    "exitCode": null,
+    "outputTreeRevision": 1
+  },
+  {
+    "sequence": 36,
+    "at": "2026-11-02T21:27:32.288Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 13,
+    "status": "stopped",
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 37,
+    "at": "2026-11-02T21:27:32.338Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 13,
+    "status": "succeeded",
+    "committed": false,
+    "jobStatus": "succeeded",
+    "exitCode": 0,
+    "outputTreeRevision": 1
+  },
+  {
+    "sequence": 38,
+    "at": "2026-11-02T21:27:39.753Z",
+    "tool": "runtime_start",
+    "ok": true,
+    "revision": 13,
+    "status": "starting",
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 39,
+    "at": "2026-11-02T21:29:41.111Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 13,
+    "status": "running",
+    "generatedRevision": 1,
+    "modelRevision": 13,
+    "runningRevision": 1
+  },
+  {
+    "sequence": 40,
+    "at": "2026-11-02T21:29:41.168Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 13,
+    "status": "running",
+    "committed": false,
+    "jobStatus": "running",
+    "exitCode": null,
+    "outputTreeRevision": 1
+  },
+  {
+    "sequence": 41,
+    "at": "2026-11-02T21:29:41.245Z",
+    "tool": "runtime_context",
+    "ok": true,
+    "revision": 13,
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 42,
+    "at": "2026-11-02T21:29:41.306Z",
+    "tool": "runtime_route",
+    "ok": true,
+    "revision": 13,
+    "generatedRevision": 1
+  },
+  {
+    "sequence": 43,
+    "at": "2026-11-02T21:29:41.480Z",
+    "tool": "query_preview",
+    "ok": true,
+    "revision": 13,
+    "rowCount": 1,
+    "rows": [
+      [
+        1,
+        "Outreach",
+        "3.75"
+      ]
+    ]
+  },
+  {
+    "sequence": 44,
+    "at": "2026-11-02T21:29:41.540Z",
+    "tool": "project_export",
+    "ok": true,
+    "revision": 13,
+    "includedData": false
+  },
+  {
+    "sequence": 45,
+    "at": "2026-11-02T21:29:41.586Z",
+    "tool": "project_batch",
+    "ok": false,
+    "revision": 13,
+    "errorCode": "REVISION_CONFLICT",
+    "message": "Read the current revision before changing this project."
+  },
+  {
+    "sequence": 46,
+    "at": "2026-11-02T21:30:42.947Z",
+    "tool": "project_batch",
+    "ok": false,
+    "revision": 13,
+    "errorCode": "REVISION_CONFLICT",
+    "message": "Read the current revision before changing this project."
+  },
+  {
+    "sequence": 47,
+    "at": "2026-11-02T21:30:43.001Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 14
+  },
+  {
+    "sequence": 48,
+    "at": "2026-11-02T21:30:43.045Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 14
+  },
+  {
+    "sequence": 49,
+    "at": "2026-11-02T21:30:43.085Z",
+    "tool": "project_batch",
+    "ok": false,
+    "revision": 0,
+    "errorCode": "IDEMPOTENCY_CONFLICT",
+    "message": "Request ID already identifies a different payload."
+  },
+  {
+    "sequence": 50,
+    "at": "2026-11-02T21:30:43.133Z",
+    "tool": "project_batch",
+    "ok": false,
+    "revision": 0,
+    "errorCode": "INVALID_INPUT",
+    "message": "Command does not match the operation schema."
+  },
+  {
+    "sequence": 51,
+    "at": "2026-11-02T21:30:43.178Z",
+    "tool": "project_batch",
+    "ok": false,
+    "revision": 14,
+    "errorCode": "VALIDATION_FAILED",
+    "message": "Project validation failed"
+  },
+  {
+    "sequence": 52,
+    "at": "2026-11-02T21:30:43.223Z",
+    "tool": "project_export",
+    "ok": false,
+    "revision": 14,
+    "errorCode": "PATH_OUTSIDE_ROOT",
+    "message": "Path leaves an approved root."
+  },
+  {
+    "sequence": 53,
+    "at": "2026-11-02T21:30:52.844Z",
+    "tool": "project_export",
+    "ok": false,
+    "revision": 14,
+    "errorCode": "PATH_OUTSIDE_ROOT",
+    "message": "Path leaves an approved root."
+  },
+  {
+    "sequence": 54,
+    "at": "2026-11-02T21:30:52.900Z",
+    "tool": "source_read",
+    "ok": false,
+    "revision": 14,
+    "errorCode": "ACCESS_DENIED",
+    "message": "Only reviewed owned source is available in this read-only view."
+  },
+  {
+    "sequence": 55,
+    "at": "2026-11-02T21:30:57.276Z",
+    "tool": "source_read",
+    "ok": false,
+    "revision": 14,
+    "errorCode": "ACCESS_DENIED",
+    "message": "Only reviewed owned source is available in this read-only view."
+  },
+  {
+    "sequence": 56,
+    "at": "2026-11-02T21:31:11.020Z",
+    "tool": "runtime_stop",
+    "ok": true,
+    "revision": 14,
+    "status": "stopped",
+    "generatedRevision": 1,
+    "modelRevision": 13
+  },
+  {
+    "sequence": 57,
+    "at": "2026-11-02T21:31:11.099Z",
+    "tool": "project_validate",
+    "ok": true,
+    "revision": 14,
+    "valid": true,
+    "diagnosticCount": 0
+  },
+  {
+    "sequence": 58,
+    "at": "2026-11-02T21:31:11.310Z",
+    "tool": "generation_preview",
+    "ok": true,
+    "revision": 14
+  },
+  {
+    "sequence": 59,
+    "at": "2026-11-02T21:31:11.715Z",
+    "tool": "generation_apply",
+    "ok": true,
+    "revision": 14,
+    "committed": true,
+    "recoveryRequired": false,
+    "outputTreeRevision": 2
+  },
+  {
+    "sequence": 60,
+    "at": "2026-11-02T21:31:35.966Z",
+    "tool": "runtime_start",
+    "ok": true,
+    "revision": 14,
+    "status": "building",
+    "generatedRevision": 2,
+    "modelRevision": 14
+  },
+  {
+    "sequence": 61,
+    "at": "2026-11-02T21:31:46.731Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 14,
+    "status": "building",
+    "generatedRevision": 2,
+    "modelRevision": 14
+  },
+  {
+    "sequence": 62,
+    "at": "2026-11-02T21:31:46.781Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 14,
+    "status": "running",
+    "committed": false,
+    "jobStatus": "running",
+    "exitCode": null,
+    "outputTreeRevision": 2
+  },
+  {
+    "sequence": 63,
+    "at": "2026-11-02T21:32:00.104Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 14,
+    "status": "stopped",
+    "generatedRevision": 2,
+    "modelRevision": 14
+  },
+  {
+    "sequence": 64,
+    "at": "2026-11-02T21:32:00.153Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 14,
+    "status": "succeeded",
+    "committed": false,
+    "jobStatus": "succeeded",
+    "exitCode": 0,
+    "outputTreeRevision": 2
+  },
+  {
+    "sequence": 65,
+    "at": "2026-11-02T21:32:03.847Z",
+    "tool": "runtime_start",
+    "ok": true,
+    "revision": 14,
+    "status": "starting",
+    "generatedRevision": 2,
+    "modelRevision": 14
+  },
+  {
+    "sequence": 66,
+    "at": "2026-11-02T21:32:13.497Z",
+    "tool": "runtime_stop",
+    "ok": true,
+    "revision": 14,
+    "status": "stopped",
+    "generatedRevision": 2,
+    "modelRevision": 14
+  },
+  {
+    "sequence": 67,
+    "at": "2026-11-02T21:32:13.561Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 15
+  },
+  {
+    "sequence": 68,
+    "at": "2026-11-02T21:32:13.618Z",
+    "tool": "project_validate",
+    "ok": true,
+    "revision": 15,
+    "valid": true,
+    "diagnosticCount": 0
+  },
+  {
+    "sequence": 69,
+    "at": "2026-11-02T21:32:13.827Z",
+    "tool": "generation_preview",
+    "ok": true,
+    "revision": 15
+  },
+  {
+    "sequence": 70,
+    "at": "2026-11-02T21:32:14.227Z",
+    "tool": "generation_apply",
+    "ok": true,
+    "revision": 15,
+    "committed": true,
+    "recoveryRequired": false,
+    "outputTreeRevision": 3
+  },
+  {
+    "sequence": 71,
+    "at": "2026-11-02T21:32:45.082Z",
+    "tool": "runtime_start",
+    "ok": true,
+    "revision": 15,
+    "status": "building",
+    "generatedRevision": 3,
+    "modelRevision": 15
+  },
+  {
+    "sequence": 72,
+    "at": "2026-11-02T21:32:45.487Z",
+    "tool": "project_batch",
+    "ok": true,
+    "revision": 14
+  },
+  {
+    "sequence": 73,
+    "at": "2026-11-02T21:32:45.663Z",
+    "tool": "query_preview",
+    "ok": true,
+    "revision": 15,
+    "rowCount": 2,
+    "rows": [
+      [
+        1,
+        "Outreach",
+        "3.75"
+      ],
+      [
+        2,
+        "Logistics",
+        "4.50"
+      ]
+    ]
+  },
+  {
+    "sequence": 74,
+    "at": "2026-11-02T21:32:45.834Z",
+    "tool": "query_preview",
+    "ok": true,
+    "revision": 15,
+    "rowCount": 2,
+    "rows": [
+      [
+        1,
+        "Outreach",
+        "3.75"
+      ],
+      [
+        2,
+        "Logistics",
+        "4.50"
+      ]
+    ]
+  },
+  {
+    "sequence": 75,
+    "at": "2026-11-02T21:32:45.877Z",
+    "tool": "project_validate",
+    "ok": true,
+    "revision": 15,
+    "valid": true,
+    "diagnosticCount": 0
+  },
+  {
+    "sequence": 76,
+    "at": "2026-11-02T21:33:05.874Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 15,
+    "status": "stopped",
+    "generatedRevision": 3,
+    "modelRevision": 15
+  },
+  {
+    "sequence": 77,
+    "at": "2026-11-02T21:33:05.922Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 15,
+    "status": "succeeded",
+    "committed": false,
+    "jobStatus": "succeeded",
+    "exitCode": 0,
+    "outputTreeRevision": 3
+  },
+  {
+    "sequence": 78,
+    "at": "2026-11-02T21:33:09.159Z",
+    "tool": "runtime_start",
+    "ok": true,
+    "revision": 15,
+    "status": "starting",
+    "generatedRevision": 3,
+    "modelRevision": 15
+  },
+  {
+    "sequence": 79,
+    "at": "2026-11-02T21:33:34.017Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 15,
+    "status": "running",
+    "generatedRevision": 3,
+    "modelRevision": 15,
+    "runningRevision": 3
+  },
+  {
+    "sequence": 80,
+    "at": "2026-11-02T21:33:34.077Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 15,
+    "status": "running",
+    "committed": false,
+    "jobStatus": "running",
+    "exitCode": null,
+    "outputTreeRevision": 3
+  },
+  {
+    "sequence": 81,
+    "at": "2026-11-02T21:33:34.149Z",
+    "tool": "runtime_context",
+    "ok": true,
+    "revision": 15,
+    "generatedRevision": 3,
+    "modelRevision": 15
+  },
+  {
+    "sequence": 82,
+    "at": "2026-11-02T21:33:34.212Z",
+    "tool": "runtime_route",
+    "ok": true,
+    "revision": 15,
+    "generatedRevision": 3
+  },
+  {
+    "sequence": 83,
+    "at": "2026-11-02T21:33:34.390Z",
+    "tool": "runtime_stop",
+    "ok": true,
+    "revision": 15,
+    "status": "stopped",
+    "generatedRevision": 3,
+    "modelRevision": 15
+  },
+  {
+    "sequence": 84,
+    "at": "2026-11-02T21:33:34.443Z",
+    "tool": "runtime_status",
+    "ok": true,
+    "revision": 15,
+    "status": "stopped",
+    "generatedRevision": 3,
+    "modelRevision": 15
+  },
+  {
+    "sequence": 85,
+    "at": "2026-11-02T21:33:34.485Z",
+    "tool": "job_inspect",
+    "ok": true,
+    "revision": 15,
+    "status": "canceled",
+    "committed": false,
+    "jobStatus": "canceled",
+    "exitCode": 0,
+    "outputTreeRevision": 3
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "status": "failed",
+  "elapsedMs": 34.60622700000022,
+  "context": {
+    "phase": "command",
+    "operation": "runtime.start",
+    "transport": "http",
+    "requestId": "known-request",
+    "expectedRevision": 16
+  },
+  "events": [
+    {
+      "elapsedMs": 0.6669490000003861,
+      "phase": "offline-install",
+      "operation": "npm.ci",
+      "transport": "child",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 30.26537300000018,
+      "phase": "offline-install",
+      "operation": "npm.ci",
+      "transport": "child",
+      "child": {
+        "status": 7,
+        "signal": null,
+        "stdout": "<redacted>",
+        "stderr": "failed",
+        "durationMs": 29.005263999999443,
+        "timedOut": false
+      },
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 32.32847000000038,
+      "phase": "command",
+      "operation": "runtime.start",
+      "transport": "http",
+      "requestId": "known-request",
+      "expectedRevision": 16,
+      "state": "started"
+    },
+    {
+      "elapsedMs": 34.59603699999934,
+      "phase": "additional-failure",
+      "context": {
+        "phase": "command",
+        "operation": "runtime.start",
+        "transport": "http",
+        "requestId": "known-request",
+        "expectedRevision": 16
+      },
+      "error": {
+        "name": "Error",
+        "message": "cleanup failed after primary failure",
+        "stack": "    at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/tests/contracts/parity/responsiveness.test.ts:35:16\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/node_modules/vitest/dist/chunks/run.BPv-BBRv.js:2801:20"
+      }
+    }
+  ],
+  "failure": {
+    "context": {
+      "phase": "command",
+      "operation": "runtime.start",
+      "transport": "http",
+      "requestId": "known-request",
+      "expectedRevision": 16
+    },
+    "error": {
+      "name": "TypeError",
+      "message": "fetch failed <redacted>",
+      "stack": "    at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/tests/contracts/parity/responsiveness.test.ts:34:16\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/node_modules/vitest/dist/chunks/run.BPv-BBRv.js:2801:20",
+      "cause": {
+        "name": "Error",
+        "message": "read ECONNRESET",
+        "stack": "    at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/tests/contracts/parity/responsiveness.test.ts:34:74\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z/node_modules/vitest/dist/chunks/run.BPv-BBRv.js:2801:20",
+        "code": "ECONNRESET"
+      }
+    }
+  }
+}

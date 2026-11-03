@@ -1,0 +1,82 @@
+{
+  "name": "cycle2-drafts",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/drafts.spec.ts",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle2-drafts-output"
+  ],
+  "started": "2026-11-02T19:48:13.730Z",
+  "finished": "2026-11-02T19:49:29.574Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 5,
+    "count": 5,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "schema type changes retire only obsolete decimal buffers and keep other active column drafts",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "page draft restores its active text control and selection after reload",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "schema partial decimal text survives view switch and reload without normalization",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "control numeric and query scalar drafts retain invalid text and actionable rejected Save through recovery",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "thirty received UI revisions retain draft selection; conflicts and two project drafts stay isolated",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": []
+}

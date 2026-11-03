@@ -1,0 +1,124 @@
+import {validateHooks,beforeHooks,afterHooks} from './extensions.ts';
+import 'server-only';
+import Decimal from 'decimal.js';
+import { connect, read, insert, update, remove, impacts, automaticKey, type Source } from './record-repository.ts';
+import { value, entered, one, message, type Parameters, type Input, type Binding } from './record-validation.ts';
+import { destination, context, type ContextField, type Destination } from './navigation.ts';
+export type Control = { readonly kind?:string; readonly fieldId?:string; readonly label:string; readonly readOnly:boolean; readonly validation:{readonly required:boolean;readonly min?:number;readonly max?:number;readonly maxLength?:number}; readonly lookup?:{ readonly source:Source;readonly valueFieldId:string;readonly labelFieldId:string } };
+export type Action = {readonly id:string;readonly operation:string;readonly extensionHookRef?:string;readonly destination?:Destination;readonly success?:Destination;readonly cancel?:Destination};
+export type Config = {readonly prefills?:readonly {readonly fieldId:string;readonly parameter:string}[];readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
+// Only this deliberate user-facing load error may cross the page boundary.
+export class LookupLimitError extends Error {
+ constructor() { super('Lookup exceeds the supported limit of 200 options. This form needs a smaller lookup source.'); }
+}
+export function recordLoadMessage(error:unknown):string {
+ return error instanceof LookupLimitError ? error.message : 'The record could not be loaded. Check its complete key and the configured database.';
+}
+export type State = {values:Input;errors:Record<string,string>;summary:string;location?:string;saved?:boolean};
+function keys(config:Config,parameters:Parameters) {
+ return config.source.keys.map((id,index)=>{const text=one(parameters,config.keyParameters[index]!); if(text===undefined) throw Error('Enter the complete record key.'); const parsed=value(config.source.fields.find(f=>f.id===id)!,text); if(parsed===null) throw Error('Enter the complete record key.'); return parsed;});
+}
+export function load(config:Config,parameters:Parameters) {
+ const db=connect();
+ try {
+  const isNew=one(parameters,config.id+':mode')==='new';
+  if(one(parameters,config.id+':mode')&&!isNew) throw Error('Invalid record mode.');
+  context(parameters,config.context);
+  const row=isNew?undefined:read(db,config.source,keys(config,parameters)); if(!isNew&&!row) throw Error('Record no longer exists.');
+  const values:Input={}; for(const field of config.source.fields) values[field.id]=entered(field,row?.[field.id]);
+  if(isNew) for(const prefill of config.prefills??[]) {
+   const text=one(parameters,prefill.parameter);if(text===undefined||text==='')continue;
+   const field=config.source.fields.find(f=>f.id===prefill.fieldId)!;
+   const parsed=value(field,text);const canonical=entered(field,parsed);
+   if(values[field.id]!==''&&values[field.id]!==canonical)throw Error('Conflicting parent filters. Choose one parent before adding a record.');
+   values[field.id]=canonical;
+  }
+  const options:Record<string,{value:string;label:string}[]>={};
+  for(const control of config.controls) if(control.lookup&&control.fieldId) {
+   const source=control.lookup.source;
+   const records=db.prepare('SELECT '+source.fields.map(f=>'"'+f.name.replaceAll('"','""')+'" AS "'+f.id.replaceAll('"','""')+'"').join(', ')+' FROM "'+source.table.replaceAll('"','""')+'" LIMIT 201').all() as Record<string,unknown>[];
+   if(records.length>200) throw new LookupLimitError();
+   const lookup=control.lookup, valueField=source.fields.find(f=>f.id===lookup.valueFieldId)!;
+   const choices=records.map(row=>({value:entered(valueField,row[lookup.valueFieldId]),label:String(row[lookup.labelFieldId]??'')}));
+   const counts=new Map<string,number>(); for(const choice of choices) counts.set(choice.label,(counts.get(choice.label)??0)+1);
+   // Keep literal unique labels reserved, even if they resemble our key-context suffix.
+   const used=new Set(choices.filter(choice=>counts.get(choice.label)===1).map(choice=>choice.label));
+   options[control.fieldId]=choices.map(choice=>{
+    if(counts.get(choice.label)===1)return choice;
+    const base=choice.label+' ('+valueField.name+': '+choice.value+')'; let label=base;
+    for(let suffix=2;used.has(label);suffix++)label=base+' ['+suffix+']';
+    used.add(label);return {...choice,label};
+   });
+  }
+  return {isNew,values,options,name:config.displayFields.map(id=>values[id]).filter(Boolean).join(' · '),impacts:isNew?[]:impacts(db,config.source,keys(config,parameters))};
+ } finally {db.close();}
+}
+export function execute(config:Config,actionId:string,parameters:Parameters,input:Input,confirmed=false):State {
+ const state:State={values:{...input},errors:{},summary:''};
+ const action=config.actions.find(a=>a.id===actionId); if(!action) return {...state,summary:'This action is unavailable.'};
+ let db:ReturnType<typeof connect>|undefined;
+ try {
+  context(parameters,config.context);
+  const allowed=[...config.context.map(c=>c.parameter),...config.keyParameters,config.id+':mode'];
+  if(Object.keys(parameters).some(key=>!allowed.includes(key))) throw Error('An undeclared record parameter was submitted.');
+  const isNew=one(parameters,config.id+':mode')==='new';
+  if(one(parameters,config.id+':mode')&&!isNew) throw Error('Invalid record mode.');
+  if(action.operation==='cancel') {
+   const target=action.destination??action.cancel; if(!target) throw Error('Cancel destination is not declared.');
+   // Resolving declared source-field return mappings may read the selected row;
+   // cancellation never starts a transaction or invokes a write.
+   let row:Record<string,unknown>={};
+   if(target.mappings.some(m=>m.expression.kind==='field')) {
+    if(isNew) {for(const field of config.source.fields) if(input[field.id]!==undefined) row[field.id]=value(field,input[field.id]!);}
+    else {db=connect();row=read(db,config.source,keys(config,parameters))??{};}
+   }
+   return {...state,location:destination(target,row,parameters,config.context)};
+  }
+  if(!['insert','update','delete','extension'].includes(action.operation)) throw Error('This action is unavailable.');
+  if(action.operation!=='extension'&&(action.operation==='insert')!==isNew) throw Error('This action does not match the record mode.');
+  db=connect(); const database=db;
+  return database.transaction(()=>{
+   const tuple=isNew?[]:keys(config,parameters), prior=isNew?undefined:read(database,config.source,tuple);
+   if(!isNew&&!prior) throw Error('Record no longer exists.');
+   if(action.operation==='delete'&&!confirmed) throw Error('Confirm deletion of the named record.');
+   const values:Record<string,Binding>={}; const auto=isNew?automaticKey(database,config.source):undefined;
+   if(action.operation!=='delete') {
+    const editable=config.controls.filter(c=>c.fieldId&&!config.source.fields.find(f=>f.id===c.fieldId)?.generated&&(!c.readOnly||isNew&&config.source.keys.includes(c.fieldId!)));
+    for(const id of Object.keys(input)) if(!editable.some(c=>c.fieldId===id)) throw Error('An unavailable input field was submitted.');
+    for(const field of config.source.fields) {
+     if(field.generated) continue;
+     const control=editable.find(c=>c.fieldId===field.id);
+     if(!control) {if(isNew&&field.id!==auto&&!field.nullable&&!field.hasDefault) state.errors[field.id]='Add an editable control for this required field.';continue;}
+     if(isNew&&field.hasDefault&&!(field.id in input)) continue;
+     const text=input[field.id]??'';
+     if(field.id===auto&&text==='') continue;
+     try {
+      if(control.validation.required&&text==='') throw Error('Enter a value.');
+      if(control.validation.maxLength!==undefined&&text.length>control.validation.maxLength) throw Error('Value is too long.');
+      const parsed=value(field,text);
+      if(parsed!==null&&['integer','real','decimal'].includes(field.type.kind)&&control.validation.min!==undefined&&new Decimal(text).lt(control.validation.min)) throw Error('Value is below the minimum.');
+      if(parsed!==null&&['integer','real','decimal'].includes(field.type.kind)&&control.validation.max!==undefined&&new Decimal(text).gt(control.validation.max)) throw Error('Value exceeds the maximum.');
+      values[field.id]=parsed;
+     } catch(error) {state.errors[field.id]=message(error);}
+    }
+    if(Object.keys(state.errors).length) return {...state,summary:'Correct the highlighted fields.'};
+   }
+   const hookContext={version:1 as const,formId:config.id,actionId:action.id,operation:action.operation,values:Object.freeze({...values}),parameters:Object.freeze(Object.fromEntries(Object.keys(parameters).map(key=>[key,one(parameters,key)])))};
+   if(action.operation!=='delete'){Object.assign(state.errors,validateHooks(hookContext));if(Object.keys(state.errors).length)return {...state,summary:'Correct the highlighted fields.'};}
+   beforeHooks(hookContext,action.extensionHookRef);
+   let row:Record<string,unknown>={...prior,...values};
+   if(action.operation==='insert') {const result=insert(database,config.source,values); if(auto) row[auto]=result.lastInsertRowid;}
+   if(action.operation==='update') update(database,config.source,tuple,values);
+   if(action.operation==='delete') remove(database,config.source,tuple);
+   afterHooks(hookContext);
+   const target=action.success??action.destination; if(!target) throw Error('Declare a destination before using this action.');
+   let location=destination(target,row,parameters,config.context);
+   return {...state,location,...(['insert','update'].includes(action.operation)?{saved:true}:{})};
+  }).immediate();
+ } catch(error) {
+  const code=error&&typeof error==='object'&&'code' in error?String(error.code):'';
+  const foreignKey=code.includes('FOREIGNKEY')||(code==='SQLITE_CONSTRAINT_TRIGGER'&&error instanceof Error&&/foreign key constraint failed/i.test(error.message));
+  const summary=foreignKey?(action.operation==='delete'?'RELATED_RECORDS_EXIST: Related records prevent deletion.':'Choose an existing related record.') : code.includes('UNIQUE')||code.includes('PRIMARYKEY')?'A record with these unique values already exists.' : code.startsWith('SQLITE_')?'The record could not be saved. Check the entered values and try again.':error instanceof Error?error.message:'The record could not be saved.';
+  return {...state,summary};
+ } finally {db?.close();}
+}

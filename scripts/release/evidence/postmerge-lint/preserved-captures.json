@@ -1,0 +1,111 @@
+{
+  "approvedSource": "f455d796bcd1c1d65e97f58f795474c875283838",
+  "baseline": "0690035de82e68e068e4f94690a51081413f1030",
+  "historicalCaptures": [
+    {
+      "path": "docs/evidence/generality/review-cycle-2/reviewer-concurrent.log",
+      "approvedGitBlob": "2d2780e9cabf486d5c1f4cb8e470a8bdc2f648fe",
+      "currentGitBlob": "2d2780e9cabf486d5c1f4cb8e470a8bdc2f648fe",
+      "sha256": "e0a9c1625180a5fdb2a505a0e85a8bd49db781bdfb3314d49d22b56128965596",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/generality/review-cycle-2/reviewer-heldout.log",
+      "approvedGitBlob": "e353ab9c50edeeef7c1182be4ab25cf4eafad21e",
+      "currentGitBlob": "e353ab9c50edeeef7c1182be4ab25cf4eafad21e",
+      "sha256": "0e29342b984c6049dabb1f5dc69d2a7227ce99b0321986919996729710e8cc47",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-blocking-warm.log",
+      "approvedGitBlob": "d2bbd16e40d6930c4b56c64d34866e969ef989c2",
+      "currentGitBlob": "d2bbd16e40d6930c4b56c64d34866e969ef989c2",
+      "sha256": "030ba6aceff8fb50cd478da4d7bd90c20c6dbe7a0145dec25f615a1c76bc1a00",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-diagnostic.log",
+      "approvedGitBlob": "cc4f56d9faa02931cc0735508e1da3c2300b2854",
+      "currentGitBlob": "cc4f56d9faa02931cc0735508e1da3c2300b2854",
+      "sha256": "f8f93c14981f9c7628fb9988fde60e460588b35a16c006d9f5b37a5a5da0cd86",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-heldout-fixed.log",
+      "approvedGitBlob": "7da18a8bb92d45f0b5dedcaf1707484edcef0dd5",
+      "currentGitBlob": "7da18a8bb92d45f0b5dedcaf1707484edcef0dd5",
+      "sha256": "82e027cec5321daac0d106866bb0600bd9bb65ebfef0fccb340438eeef2d35f3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-parity.log",
+      "approvedGitBlob": "6eed6c4fd8ce5e23087c7dfe3084b0acdbc7640c",
+      "currentGitBlob": "6eed6c4fd8ce5e23087c7dfe3084b0acdbc7640c",
+      "sha256": "b20e5ba2c918f062c5a53c3706cc83922ec05e7a9c2a281b237ace39a4bc755e",
+      "unchanged": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/cycle1/desired-runtime-red.log",
+      "approvedGitBlob": "1c1f4bc2d4e651aaff2a4d8e683ccb9121e30a56",
+      "currentGitBlob": "1c1f4bc2d4e651aaff2a4d8e683ccb9121e30a56",
+      "sha256": "703294c43e65462683f422fae274b89f2602aed71a6ca321efc3d23afcc623b0",
+      "unchanged": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/generator-boundaries.log",
+      "approvedGitBlob": "eec2f6bda32aad0c082716b03c4a99cef29c9277",
+      "currentGitBlob": "eec2f6bda32aad0c082716b03c4a99cef29c9277",
+      "sha256": "87602274c1553aff6ec146f5b0f020a066287b46411c64c2e370492d490c0e30",
+      "unchanged": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/isolated-instruments.log",
+      "approvedGitBlob": "d1a591b04122ddfd4cdd09709642594239bb1fbb",
+      "currentGitBlob": "d1a591b04122ddfd4cdd09709642594239bb1fbb",
+      "sha256": "aaaf7b4603548367a50e9e1d393e9ab51fb9e274491b3714ef6f030997b0207d",
+      "unchanged": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/isolated-publications.log",
+      "approvedGitBlob": "03a2261b83c6b5d9fa7d430902659f822c3ebe30",
+      "currentGitBlob": "03a2261b83c6b5d9fa7d430902659f822c3ebe30",
+      "sha256": "a44d404bfa7b8e8dd52e9127aee0e272490af5e56b1199a67501a8c542ba41cd",
+      "unchanged": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/desired-red.log",
+      "approvedGitBlob": "c68c648a879c319f4a053e1ca64bce117fec6ade",
+      "currentGitBlob": "c68c648a879c319f4a053e1ca64bce117fec6ade",
+      "sha256": "c0379df6f5d54b4ebe0d14571f585ab4be8e3cc11f70adb8ce00469a7eb522c5",
+      "unchanged": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/focused-green.log",
+      "approvedGitBlob": "4d15c7be426320b9d7d8d7834f12b32b9cd5a43b",
+      "currentGitBlob": "4d15c7be426320b9d7d8d7834f12b32b9cd5a43b",
+      "sha256": "1f4e09dca1ae97c610112af810078947452e382fd278d53715d596d3a82a6075",
+      "unchanged": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/original-red.log",
+      "approvedGitBlob": "e1b2af95e85e2eca7d0a71ea3ed465e34fc425f9",
+      "currentGitBlob": "e1b2af95e85e2eca7d0a71ea3ed465e34fc425f9",
+      "sha256": "dea41c22c4da34752dbc92070525b54da2237724c87e3a8e93da4d119673d814",
+      "unchanged": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/tests.log",
+      "approvedGitBlob": "a4d679c740dc516bfd821c6aae75b95134d2c248",
+      "currentGitBlob": "a4d679c740dc516bfd821c6aae75b95134d2c248",
+      "sha256": "009b39a521b3b4eab37143d010ac82326ffd567fb7495b55891375e9fb79c9ef",
+      "unchanged": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/tests.log",
+      "approvedGitBlob": "2d0e44b13ad200fbe1fbe8946dcf7a5aa2bc84cb",
+      "currentGitBlob": "2d0e44b13ad200fbe1fbe8946dcf7a5aa2bc84cb",
+      "sha256": "4eea5086d75560e696974c5eb8259ae68ab5b19c16e4a1661f1b8c9acf4d353c",
+      "unchanged": true
+    }
+  ]
+}

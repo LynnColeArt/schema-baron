@@ -1,0 +1,157 @@
+[
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-010",
+    "requirements": [
+      "FR-004",
+      "FR-014",
+      "NFR-001"
+    ],
+    "application": "library",
+    "mode": "ui_journey",
+    "expected": "Nullable books.subtitle migration and destructive Cancel preserve original tuples, new NULL values and unrelated UI project; explicitly restore declaration",
+    "actual": "Visible add/review/apply, destructive review Cancel and visible declaration restoration succeeded; exact rows/schema/FK/integrity and unchanged unrelated model/database asserted; full normal Library journey continued",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.library.results.json",
+        "sha256": "d462a702206c731d0f09a356c795d12cb0676a7e25db1e26625b4280dc4ec6ca"
+      },
+      {
+        "path": "docs/evidence/verification/recovery.library-migration-review.png",
+        "sha256": "7b693cd63457dd89964305d76ee82cd55bea96f9fc3ccbbeef4132f37cb939a8"
+      },
+      {
+        "path": "docs/evidence/verification/recovery.library-destructive-review.png",
+        "sha256": "d910885def7a67383e1478ca3aa95e2cd56bfada7377176ecb17a0b2a4bd070e"
+      }
+    ]
+  },
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-015",
+    "requirements": [
+      "FR-014"
+    ],
+    "application": "workshop",
+    "mode": "fault",
+    "expected": "Shared command replays/stale/invalid/default/context/identity/path rejects are atomic; occupied port cannot become readiness",
+    "actual": "Separate shared-core fault fixture: replay once, explicit conflicts, invalid parent/default/context/path and reviewed DB identity replacement rejected with unchanged model and tuples; fresh inspect/bind recovered. Existing runtime occupied-port and probe race regressions passed; Library UI additionally preserved its owned occupied-port sentinel.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.fault.results.json",
+        "sha256": "f779ab3641751c34f3ab2e5d83a977a27656cf69c351ad97017ad9bba1f9bee6"
+      },
+      {
+        "path": "docs/evidence/verification/recovery.library.results.json",
+        "sha256": "d462a702206c731d0f09a356c795d12cb0676a7e25db1e26625b4280dc4ec6ca"
+      }
+    ]
+  },
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-016",
+    "requirements": [
+      "FR-014",
+      "NFR-001"
+    ],
+    "application": "workshop",
+    "mode": "fault",
+    "expected": "Hard process interruptions preserve business tuples, physical schema/constraints/model/authored hashes; second recovery stable or explicit recoverable committed state",
+    "actual": "Separate shared-core disposable WAL fixture: all9 save/migration/promotion combinations passed; storage exit73, worker exit86 or owner87/88, generation91 distinguished from cancellation. Exact tuples/schema/FK/integrity/backup/authored hash and stable second recovery asserted; external postcommit edit remains explicit recovery-pending and mutation blocked.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.fault.results.json",
+        "sha256": "f779ab3641751c34f3ab2e5d83a977a27656cf69c351ad97017ad9bba1f9bee6"
+      }
+    ]
+  },
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-017",
+    "requirements": [
+      "FR-015",
+      "NFR-002"
+    ],
+    "application": "workshop",
+    "mode": "parity",
+    "expected": "Bounded real MCP/direct canonical parity for revision/idempotency/validation/path/authorization and shared snapshot",
+    "actual": "Dedicated parity identity passed canonical direct versus real SDK stdio outcomes, exact replay, stale/reused request conflicts, atomic semantic reject, path reject, resource snapshot and forged transport/wrong-owner rejection with unchanged model; full MCP workflow not claimed.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.parity.results.json",
+        "sha256": "c2a507685ca6bbab3b9c4e2f5127e46fe4f178f5988ca0550c5042f9211c8625"
+      }
+    ]
+  },
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-015",
+    "requirements": [
+      "FR-014"
+    ],
+    "application": "library",
+    "mode": "fault",
+    "expected": "Shared command replays/stale/invalid/default/context/identity/path rejects are atomic; occupied port cannot become readiness",
+    "actual": "Separate shared-core fault fixture: replay once, explicit conflicts, invalid parent/default/context/path and reviewed DB identity replacement rejected with unchanged model and tuples; fresh inspect/bind recovered. Existing runtime occupied-port and probe race regressions passed; Library UI additionally preserved its owned occupied-port sentinel.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.fault.results.json",
+        "sha256": "f779ab3641751c34f3ab2e5d83a977a27656cf69c351ad97017ad9bba1f9bee6"
+      },
+      {
+        "path": "docs/evidence/verification/recovery.library.results.json",
+        "sha256": "d462a702206c731d0f09a356c795d12cb0676a7e25db1e26625b4280dc4ec6ca"
+      }
+    ]
+  },
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-016",
+    "requirements": [
+      "FR-014",
+      "NFR-001"
+    ],
+    "application": "library",
+    "mode": "fault",
+    "expected": "Hard process interruptions preserve business tuples, physical schema/constraints/model/authored hashes; second recovery stable or explicit recoverable committed state",
+    "actual": "Separate shared-core disposable WAL fixture: all9 save/migration/promotion combinations passed; storage exit73, worker exit86 or owner87/88, generation91 distinguished from cancellation. Exact tuples/schema/FK/integrity/backup/authored hash and stable second recovery asserted; external postcommit edit remains explicit recovery-pending and mutation blocked.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.fault.results.json",
+        "sha256": "f779ab3641751c34f3ab2e5d83a977a27656cf69c351ad97017ad9bba1f9bee6"
+      }
+    ]
+  },
+  {
+    "run_id": "wp06-final",
+    "revision": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+    "status": "passed",
+    "case_id": "AC-017",
+    "requirements": [
+      "FR-015",
+      "NFR-002"
+    ],
+    "application": "library",
+    "mode": "parity",
+    "expected": "Bounded real MCP/direct canonical parity for revision/idempotency/validation/path/authorization and shared snapshot",
+    "actual": "Dedicated parity identity passed canonical direct versus real SDK stdio outcomes, exact replay, stale/reused request conflicts, atomic semantic reject, path reject, resource snapshot and forged transport/wrong-owner rejection with unchanged model; full MCP workflow not claimed.",
+    "evidence": [
+      {
+        "path": "docs/evidence/verification/recovery.parity.results.json",
+        "sha256": "c2a507685ca6bbab3b9c4e2f5127e46fe4f178f5988ca0550c5042f9211c8625"
+      }
+    ]
+  }
+]

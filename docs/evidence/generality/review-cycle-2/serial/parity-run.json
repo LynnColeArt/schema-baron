@@ -1,0 +1,42 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 47238.770875,
+  "context": {
+    "phase": "normalized-comparison"
+  },
+  "events": [
+    {
+      "elapsedMs": 1.6536210000000438,
+      "phase": "corpus",
+      "transport": "mcp",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 23433.869507000003,
+      "phase": "corpus",
+      "transport": "mcp",
+      "corpus": "mcp",
+      "completed": true,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 23809.231127000003,
+      "phase": "corpus",
+      "transport": "http",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 46855.658045000004,
+      "phase": "corpus",
+      "transport": "http",
+      "corpus": "http",
+      "completed": true,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 47236.073441,
+      "phase": "normalized-comparison",
+      "state": "started"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "revision": "3d58ea666aed1bd56237962724cc9dd2e6937b17",
+  "scope": "WP03 observed mandatory lookup gaps before repair; separate cold Library and declared raw existing-db variant",
+  "defects": [
+    {
+      "id": "LIB-LOOKUP-LABEL",
+      "severity": "high",
+      "expected": "Distinct keys sharing a display name remain distinguishable to a person selecting a relationship",
+      "actual": {
+        "uiAuthoredAuthors": {
+          "keys": [
+            1,
+            4
+          ],
+          "labels": [
+            "Mara Vale",
+            "Mara Vale"
+          ]
+        },
+        "suppliedVariant": {
+          "keys": [
+            1,
+            2
+          ],
+          "labels": [
+            "Same label",
+            "Same label"
+          ],
+          "options": 200
+        }
+      },
+      "reproduction": "Create two differently keyed names through the Library forms, then open Add book_authors; separately import the declared 200-row quoted-identifier SQLite input and open its child Add form.",
+      "ownerException": "WP07 generator service.template and existing runtime regression coordinated with root for mandatory WP03 browser gap.",
+      "collisionRegression": {
+        "revision": "aadd4f036475419c9c412115817550590a7952e2",
+        "mode": "generated runtime regression, separate from UI journey",
+        "inputLabels": [
+          "Restricted",
+          "Restricted",
+          "Restricted (pk: 1)"
+        ],
+        "keys": [
+          1,
+          2,
+          3
+        ],
+        "actualLabels": [
+          "Restricted (pk: 1)",
+          "Restricted (pk: 2)",
+          "Restricted (pk: 1)"
+        ],
+        "expected": "All labels distinct; unique literal label and all keys unchanged",
+        "status": "failed before collision-safe reservation repair"
+      }
+    },
+    {
+      "id": "LIB-LOOKUP-LIMIT",
+      "severity": "high",
+      "expected": "The supported 200-option lookup works; 201 options gives a useful explicit bound diagnostic without partial choices or writes.",
+      "actual": "The record could not be loaded. Check its complete key and the configured database.",
+      "reproduction": "From the supplied 200-row variant, save parent201 through the generated form, then choose child Add.",
+      "ownerException": "WP07 base/index.ts plus typed safe load error in record/service.template coordinated with root; private/unknown errors remain generic."
+    }
+  ],
+  "attempts": {
+    "10": "Duplicate author choice assertion failed; quoted input persisted correct key2; exceeded-bound screenshot showed masked error (alert locator also needed refinement).",
+    "11": "Scoped main alert assertion directly failed expecting200; both raw duplicate names and masked-limit observations retained."
+  }
+}

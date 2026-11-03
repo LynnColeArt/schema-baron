@@ -1,0 +1,14 @@
+# Acceptance Run and Verdict Contract
+
+1. Acquire pinned tools explicitly with lifecycle scripts disabled. Record acquisition separately; a missing package/browser/system library is infrastructure-blocked, not an application pass.
+2. Create a new private root, explicit owner config, fresh project directory and isolated browser context. Record owned process birth identities/ports. Do not reuse the user's live studies or overwrite historical captures.
+3. Apply the UI journey descriptor, including Schema/Properties/query/source authoring. Raw existing DB fixtures and read-only observer queries are allowed and labeled. No seeded Studio model, project.batch patch, private DB repair or direct generated-owned-file edit can rescue a UI pass.
+4. For each checklist case, record expected/actual state and independent persistence evidence. Take screenshots at key states. Disable raw trace recording where it would capture credentials; sanitize all retained public artifacts and run the credential checks.
+5. Maintain status: not_run, passed, failed, blocked, skipped, unverified. Only passed with evidence satisfies a required case. A retry creates another observation with the earlier result retained.
+6. Capture before/after business rows and model settings; authored module hashes; generated model/tree revisions; and checked runtime readiness. Await stop, regeneration, dependency installation, build and run in order. Don't run build while npm ci is still modifying dependencies.
+7. Failure injection has its own case/run mode and isolated fixture. Rejected stale/duplicate/unauthorized/invalid-path cases assert no unintended effects. Interrupt tests recover through supported procedures and explicitly compare state.
+8. Every critical/high defect and every failed mandatory behavior must be repaired and rerun. Deferrals are for nonblocking medium/low items only, with rationale and a future backlog reference; they never mark an unmet requirement passed.
+9. Run both full fresh journeys twice on final code without automatic retries; run the current required unit/integration/build/type/lint/credential/dependency/native/browser checks. Keep local and hosted statuses separate.
+10. Independent review checks every requirement/case, evidence linkage and exact code revision. A clean automation log is not a substitute for this verdict. Stop with PASS only when all finish-line conditions hold; otherwise record FAIL or BLOCKED/UNVERIFIED with specific remaining work. Do not merge/deploy automatically.
+
+The adjacent evidence schema validates each individual observation. Run manifests and final reports aggregate these observations and link defect/retest records. Paths in public evidence are repository-relative safe artifact paths; private absolute roots are retained only in ignored local manifests. Hashes establish provenance but do not independently prove a behavior passed.

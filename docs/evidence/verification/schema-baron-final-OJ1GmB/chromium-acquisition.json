@@ -1,0 +1,16 @@
+{
+  "name": "chromium-acquisition",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "exec",
+    "playwright",
+    "install",
+    "chromium"
+  ],
+  "started": "2026-11-02T19:14:59.338Z",
+  "finished": "2026-11-02T19:14:59.933Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

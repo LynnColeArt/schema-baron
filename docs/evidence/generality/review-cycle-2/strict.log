@@ -1,0 +1,1 @@
+Observed Node 24.22.1 tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --skipLibCheck --esModuleInterop --lib ES2023,DOM --types node tests/contracts/parity/{behavior.test,harness,responsiveness.test}.ts. Exit status 0; no diagnostics.

@@ -1,0 +1,1959 @@
+{
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "records": [
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 1,
+      "observation_id": "AC-001-workshop",
+      "recorded_at": "2026-11-02T19:41:35.752Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-001",
+        "requirements": [
+          "FR-001",
+          "FR-016",
+          "C-002",
+          "C-005",
+          "C-006"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Fresh isolated workspace; exact source/toolchain/fixture hashes and evidence paths recorded; existing user studies unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-independence.json",
+            "sha256": "49a200e40c1ebdd84447a10df5269f0b2df39f8f3dbedfdcc68c7bacf80f94d2"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 2,
+      "observation_id": "AC-001-library",
+      "recorded_at": "2026-11-02T19:41:35.753Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-001",
+        "requirements": [
+          "FR-001",
+          "FR-016",
+          "C-002",
+          "C-005",
+          "C-006"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Fresh isolated workspace; exact source/toolchain/fixture hashes and evidence paths recorded; existing user studies unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-independence.json",
+            "sha256": "49a200e40c1ebdd84447a10df5269f0b2df39f8f3dbedfdcc68c7bacf80f94d2"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 3,
+      "observation_id": "AC-002-workshop",
+      "recorded_at": "2026-11-02T19:41:35.753Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-002",
+        "requirements": [
+          "FR-002",
+          "FR-004",
+          "C-003"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "New project under a missing path; wizard creates SQLite tables/keys, previews real pages/access/flow and completes; Cancel creates no project/database.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 4,
+      "observation_id": "AC-003-library",
+      "recorded_at": "2026-11-02T19:41:35.753Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-003",
+        "requirements": [
+          "FR-003",
+          "FR-004"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Schema editor creates authors, books, book_authors composite key, copies and loans with unique/FK rules; existing SQLite inspect/review/Cancel is read-only.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-variant.json",
+            "sha256": "27eeac92120625273fbce6a3379cc303f943fed177e6a0dd3de4aa3ac8ee3f40"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 5,
+      "observation_id": "AC-004-workshop",
+      "recorded_at": "2026-11-02T19:41:35.754Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-004",
+        "requirements": [
+          "FR-005"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Page/Form/Control edits work in supported views; flow/settings icons open the right project; completed flow matches proposed behavior.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 6,
+      "observation_id": "AC-004-library",
+      "recorded_at": "2026-11-02T19:41:35.754Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-004",
+        "requirements": [
+          "FR-005"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Page/Form/Control edits work in supported views; flow/settings icons open the right project; completed flow matches proposed behavior.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 7,
+      "observation_id": "AC-005-workshop",
+      "recorded_at": "2026-11-02T19:41:35.755Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-005",
+        "requirements": [
+          "FR-006"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Named relations preserve distinct keys, parent links show only matching children, empty children are supported, Add preselects parent, Save/Cancel retain context.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 8,
+      "observation_id": "AC-005-library",
+      "recorded_at": "2026-11-02T19:41:35.755Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-005",
+        "requirements": [
+          "FR-006"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Named relations preserve distinct keys, parent links show only matching children, empty children are supported, Add preselects parent, Save/Cancel retain context.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 9,
+      "observation_id": "AC-006-workshop",
+      "recorded_at": "2026-11-02T19:41:35.756Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-006",
+        "requirements": [
+          "FR-007"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Valid insert/update, invalid/missing input, duplicate unique/composite key, Cancel, named Delete confirmation and restricted Delete have correct messages and atomic row outcomes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 10,
+      "observation_id": "AC-006-library",
+      "recorded_at": "2026-11-02T19:41:35.756Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-006",
+        "requirements": [
+          "FR-007"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Valid insert/update, invalid/missing input, duplicate unique/composite key, Cancel, named Delete confirmation and restricted Delete have correct messages and atomic row outcomes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 11,
+      "observation_id": "AC-007-workshop",
+      "recorded_at": "2026-11-02T19:41:35.756Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-007",
+        "requirements": [
+          "FR-008",
+          "NFR-002"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Lists public; protected page/direct CRUD rejected anonymously; no partial global lockdown; login/logout/return context and invalid external targets checked.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 12,
+      "observation_id": "AC-007-library",
+      "recorded_at": "2026-11-02T19:41:35.757Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-007",
+        "requirements": [
+          "FR-008",
+          "NFR-002"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Lists public; protected page/direct CRUD rejected anonymously; no partial global lockdown; login/logout/return context and invalid external targets checked.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 13,
+      "observation_id": "AC-008-workshop",
+      "recorded_at": "2026-11-02T19:41:35.757Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-008",
+        "requirements": [
+          "FR-009"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Session count by workshop, zero-session row and minimum-count threshold match independent expected results after row changes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 14,
+      "observation_id": "AC-009-library",
+      "recorded_at": "2026-11-02T19:41:35.757Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-009",
+        "requirements": [
+          "FR-009"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Author/book counts and separate book/copy exact-value totals do not inflate with multi-author fan-out; zero-child/NULL/threshold cases match expected results.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 15,
+      "observation_id": "AC-010-workshop",
+      "recorded_at": "2026-11-02T19:41:35.758Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-010",
+        "requirements": [
+          "FR-004",
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Non-destructive schema change reviewed/applied; destructive preview rejected/canceled safely; existing rows and unrelated project unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Workshop duration migration and reviewed destructive Cancel occur inside the complete original journey. Library recovery adds independent nullable-subtitle, restoration, occupied-port and witness-isolation proof.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-recovery.json",
+            "sha256": "82385e5a0d5d78552f9e8597ce15819e417c17be0041408093de3cb4d8fd0e8f"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 16,
+      "observation_id": "AC-010-library",
+      "recorded_at": "2026-11-02T19:41:35.758Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-010",
+        "requirements": [
+          "FR-004",
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Non-destructive schema change reviewed/applied; destructive preview rejected/canceled safely; existing rows and unrelated project unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Library complete ordinary UI journey includes nullable subtitle migration, destructive Cancel, explicit declaration restoration, occupied-port sentinel and unrelated UI-authored witness preservation.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-recovery.json",
+            "sha256": "82385e5a0d5d78552f9e8597ce15819e417c17be0041408093de3cb4d8fd0e8f"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 17,
+      "observation_id": "AC-011-workshop",
+      "recorded_at": "2026-11-02T19:41:35.758Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-011",
+        "requirements": [
+          "FR-011"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Generated source inspection and one declared authored extension can be configured using supported Studio UI; extension behavior is observable.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 18,
+      "observation_id": "AC-011-library",
+      "recorded_at": "2026-11-02T19:41:35.759Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-011",
+        "requirements": [
+          "FR-011"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Generated source inspection and one declared authored extension can be configured using supported Studio UI; extension behavior is observable.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 19,
+      "observation_id": "AC-012-workshop",
+      "recorded_at": "2026-11-02T19:41:35.759Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-012",
+        "requirements": [
+          "FR-010",
+          "NFR-001"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Two regenerations preserve business rows, identities, model settings, names/links/Add context/reports and declared authored bytes; modified owned source causes a reviewed conflict.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 20,
+      "observation_id": "AC-012-library",
+      "recorded_at": "2026-11-02T19:41:35.759Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-012",
+        "requirements": [
+          "FR-010",
+          "NFR-001"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Two regenerations preserve business rows, identities, model settings, names/links/Add context/reports and declared authored bytes; modified owned source causes a reviewed conflict.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 21,
+      "observation_id": "AC-013-workshop",
+      "recorded_at": "2026-11-02T19:41:35.759Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-013",
+        "requirements": [
+          "FR-012"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Export without private data by default; explicit supported data snapshot verified; independent install/type/test/build/run with Studio stopped, private identity/config external.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-independence.json",
+            "sha256": "49a200e40c1ebdd84447a10df5269f0b2df39f8f3dbedfdcc68c7bacf80f94d2"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 22,
+      "observation_id": "AC-013-library",
+      "recorded_at": "2026-11-02T19:41:35.760Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-013",
+        "requirements": [
+          "FR-012"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Export without private data by default; explicit supported data snapshot verified; independent install/type/test/build/run with Studio stopped, private identity/config external.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-independence.json",
+            "sha256": "49a200e40c1ebdd84447a10df5269f0b2df39f8f3dbedfdcc68c7bacf80f94d2"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 23,
+      "observation_id": "AC-014-workshop",
+      "recorded_at": "2026-11-02T19:41:35.760Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-014",
+        "requirements": [
+          "FR-013",
+          "NFR-005"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Schema/query/page/control drafts, including invalid partial numeric input, survive documented switch/reload paths and 30 unrelated notifications with no unintended caret/text/ownership loss.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Each full application performance journey supplies 30 active page-draft notifications. Separate drafts suite covers schema/query/control invalid partial values and switch/reload; those shared editor fixtures are explicitly small UI-authored projects, not both complete business schemas.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-drafts.json",
+            "sha256": "938a3dfcfecb88af67f04a7eb4c46a86813f1adc4167ef54653041f676cdbbb0"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-performance.json",
+            "sha256": "95fd4073fb8237f57fc5e8598ef3fdc53dc7385566f75e0cbdf07cfdfe5974e7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 24,
+      "observation_id": "AC-014-library",
+      "recorded_at": "2026-11-02T19:41:35.761Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-014",
+        "requirements": [
+          "FR-013",
+          "NFR-005"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Schema/query/page/control drafts, including invalid partial numeric input, survive documented switch/reload paths and 30 unrelated notifications with no unintended caret/text/ownership loss.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Each full application performance journey supplies 30 active page-draft notifications. Separate drafts suite covers schema/query/control invalid partial values and switch/reload; those shared editor fixtures are explicitly small UI-authored projects, not both complete business schemas.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-drafts.json",
+            "sha256": "938a3dfcfecb88af67f04a7eb4c46a86813f1adc4167ef54653041f676cdbbb0"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-performance.json",
+            "sha256": "95fd4073fb8237f57fc5e8598ef3fdc53dc7385566f75e0cbdf07cfdfe5974e7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 25,
+      "observation_id": "AC-015-workshop",
+      "recorded_at": "2026-11-02T19:41:35.761Z",
+      "observation": {
+        "run_id": "cycle1-fault",
+        "case_id": "AC-015",
+        "requirements": [
+          "FR-014"
+        ],
+        "application": "workshop",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate command request, stale model revision, changed database identity, invalid path/context and occupied port are clear, atomic and recoverable; retry only as an explicit fresh/replayed request.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-fault.json",
+            "sha256": "05017a82cbe5545cce7caf54be5aefab084d5176c86df36d024692653522527d"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-recovery.json",
+            "sha256": "82385e5a0d5d78552f9e8597ce15819e417c17be0041408093de3cb4d8fd0e8f"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 26,
+      "observation_id": "AC-015-library",
+      "recorded_at": "2026-11-02T19:41:35.761Z",
+      "observation": {
+        "run_id": "cycle1-fault",
+        "case_id": "AC-015",
+        "requirements": [
+          "FR-014"
+        ],
+        "application": "library",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate command request, stale model revision, changed database identity, invalid path/context and occupied port are clear, atomic and recoverable; retry only as an explicit fresh/replayed request.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-fault.json",
+            "sha256": "05017a82cbe5545cce7caf54be5aefab084d5176c86df36d024692653522527d"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-recovery.json",
+            "sha256": "82385e5a0d5d78552f9e8597ce15819e417c17be0041408093de3cb4d8fd0e8f"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 27,
+      "observation_id": "AC-016-workshop",
+      "recorded_at": "2026-11-02T19:41:35.762Z",
+      "observation": {
+        "run_id": "cycle1-fault",
+        "case_id": "AC-016",
+        "requirements": [
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "workshop",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Controlled interruption of migration/regeneration leaves a verifiable committed state or documented recovery; no false success or business/authored overwrite.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-fault.json",
+            "sha256": "05017a82cbe5545cce7caf54be5aefab084d5176c86df36d024692653522527d"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 28,
+      "observation_id": "AC-016-library",
+      "recorded_at": "2026-11-02T19:41:35.762Z",
+      "observation": {
+        "run_id": "cycle1-fault",
+        "case_id": "AC-016",
+        "requirements": [
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "library",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Controlled interruption of migration/regeneration leaves a verifiable committed state or documented recovery; no false success or business/authored overwrite.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-fault.json",
+            "sha256": "05017a82cbe5545cce7caf54be5aefab084d5176c86df36d024692653522527d"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 29,
+      "observation_id": "AC-017-workshop",
+      "recorded_at": "2026-11-02T19:41:35.762Z",
+      "observation": {
+        "run_id": "cycle1-parity",
+        "case_id": "AC-017",
+        "requirements": [
+          "FR-015",
+          "NFR-002"
+        ],
+        "application": "workshop",
+        "mode": "parity",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Bounded MCP/direct-command parity validates revisions, idempotency, authorization and shared state; this separate smoke never repairs or replaces UI journey evidence.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Separately named bounded real SDK MCP/direct-command fixture; no UI acceptance substitution or claim of full MCP workflow.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-parity.json",
+            "sha256": "8501dcaef26eb5cab1b1a84ad8a261af9d829c517a1cd46eec5487b30a970389"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 30,
+      "observation_id": "AC-017-library",
+      "recorded_at": "2026-11-02T19:41:35.763Z",
+      "observation": {
+        "run_id": "cycle1-parity",
+        "case_id": "AC-017",
+        "requirements": [
+          "FR-015",
+          "NFR-002"
+        ],
+        "application": "library",
+        "mode": "parity",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Bounded MCP/direct-command parity validates revisions, idempotency, authorization and shared state; this separate smoke never repairs or replaces UI journey evidence.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Separately named bounded real SDK MCP/direct-command fixture; no UI acceptance substitution or claim of full MCP workflow.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-parity.json",
+            "sha256": "8501dcaef26eb5cab1b1a84ad8a261af9d829c517a1cd46eec5487b30a970389"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 31,
+      "observation_id": "AC-018-workshop",
+      "recorded_at": "2026-11-02T19:41:35.763Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-018",
+        "requirements": [
+          "NFR-004",
+          "NFR-005"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Recorded reference machine and bounded dataset: 30 UI samples meet p95 2-second feedback / 5-second Save; observed draft stability has zero unintended changes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-performance.json",
+            "sha256": "95fd4073fb8237f57fc5e8598ef3fdc53dc7385566f75e0cbdf07cfdfe5974e7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 32,
+      "observation_id": "AC-018-library",
+      "recorded_at": "2026-11-02T19:41:35.763Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-018",
+        "requirements": [
+          "NFR-004",
+          "NFR-005"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Recorded reference machine and bounded dataset: 30 UI samples meet p95 2-second feedback / 5-second Save; observed draft stability has zero unintended changes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-performance.json",
+            "sha256": "95fd4073fb8237f57fc5e8598ef3fdc53dc7385566f75e0cbdf07cfdfe5974e7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 33,
+      "observation_id": "AC-019-workshop",
+      "recorded_at": "2026-11-02T19:41:35.764Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-019",
+        "requirements": [
+          "FR-006",
+          "FR-007",
+          "FR-017"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate names, quoted identifiers, ordered composite identity and supported/exceeded lookup boundary behave truthfully; each discovered defect has reproduction, severity and regression retest.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Workshop original UI journey proves its simple primary-key, duplicate-name and parent-context cases. Quoted identifiers and 200/201 lookup boundary use the separate supplied Library variant as a shared generic generator bridge; composite identity is Library-specific.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-variant.json",
+            "sha256": "27eeac92120625273fbce6a3379cc303f943fed177e6a0dd3de4aa3ac8ee3f40"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 34,
+      "observation_id": "AC-019-library",
+      "recorded_at": "2026-11-02T19:41:35.764Z",
+      "observation": {
+        "run_id": "cycle1-ui_journey",
+        "case_id": "AC-019",
+        "requirements": [
+          "FR-006",
+          "FR-007",
+          "FR-017"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate names, quoted identifiers, ordered composite identity and supported/exceeded lookup boundary behave truthfully; each discovered defect has reproduction, severity and regression retest.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Library original UI journey proves ordered composite identity and duplicate human names. Separate supplied raw existing-db variant proves quoted identifiers and 200/201 lookups; it does not seed or repair the normal journey.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-variant.json",
+            "sha256": "27eeac92120625273fbce6a3379cc303f943fed177e6a0dd3de4aa3ac8ee3f40"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 35,
+      "observation_id": "AC-001-workshop",
+      "recorded_at": "2026-11-02T19:53:40.387Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-001",
+        "requirements": [
+          "FR-001",
+          "FR-016",
+          "C-002",
+          "C-005",
+          "C-006"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Fresh isolated workspace; exact source/toolchain/fixture hashes and evidence paths recorded; existing user studies unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-independence.json",
+            "sha256": "349544110fbd2ecfbacd0b3a2d28966e0044e75738aebe29094b4d926b33ae53"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 36,
+      "observation_id": "AC-001-library",
+      "recorded_at": "2026-11-02T19:53:40.387Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-001",
+        "requirements": [
+          "FR-001",
+          "FR-016",
+          "C-002",
+          "C-005",
+          "C-006"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Fresh isolated workspace; exact source/toolchain/fixture hashes and evidence paths recorded; existing user studies unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-independence.json",
+            "sha256": "349544110fbd2ecfbacd0b3a2d28966e0044e75738aebe29094b4d926b33ae53"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 37,
+      "observation_id": "AC-002-workshop",
+      "recorded_at": "2026-11-02T19:53:40.387Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-002",
+        "requirements": [
+          "FR-002",
+          "FR-004",
+          "C-003"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "New project under a missing path; wizard creates SQLite tables/keys, previews real pages/access/flow and completes; Cancel creates no project/database.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 38,
+      "observation_id": "AC-003-library",
+      "recorded_at": "2026-11-02T19:53:40.388Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-003",
+        "requirements": [
+          "FR-003",
+          "FR-004"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Schema editor creates authors, books, book_authors composite key, copies and loans with unique/FK rules; existing SQLite inspect/review/Cancel is read-only.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-variant.json",
+            "sha256": "d5ab6548f0e962462216abd9ea18265327f6f50683c960b7e9cc0d722ece7e48"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 39,
+      "observation_id": "AC-004-workshop",
+      "recorded_at": "2026-11-02T19:53:40.388Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-004",
+        "requirements": [
+          "FR-005"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Page/Form/Control edits work in supported views; flow/settings icons open the right project; completed flow matches proposed behavior.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 40,
+      "observation_id": "AC-004-library",
+      "recorded_at": "2026-11-02T19:53:40.389Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-004",
+        "requirements": [
+          "FR-005"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Page/Form/Control edits work in supported views; flow/settings icons open the right project; completed flow matches proposed behavior.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 41,
+      "observation_id": "AC-005-workshop",
+      "recorded_at": "2026-11-02T19:53:40.389Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-005",
+        "requirements": [
+          "FR-006"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Named relations preserve distinct keys, parent links show only matching children, empty children are supported, Add preselects parent, Save/Cancel retain context.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 42,
+      "observation_id": "AC-005-library",
+      "recorded_at": "2026-11-02T19:53:40.390Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-005",
+        "requirements": [
+          "FR-006"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Named relations preserve distinct keys, parent links show only matching children, empty children are supported, Add preselects parent, Save/Cancel retain context.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 43,
+      "observation_id": "AC-006-workshop",
+      "recorded_at": "2026-11-02T19:53:40.390Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-006",
+        "requirements": [
+          "FR-007"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Valid insert/update, invalid/missing input, duplicate unique/composite key, Cancel, named Delete confirmation and restricted Delete have correct messages and atomic row outcomes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 44,
+      "observation_id": "AC-006-library",
+      "recorded_at": "2026-11-02T19:53:40.390Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-006",
+        "requirements": [
+          "FR-007"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Valid insert/update, invalid/missing input, duplicate unique/composite key, Cancel, named Delete confirmation and restricted Delete have correct messages and atomic row outcomes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 45,
+      "observation_id": "AC-007-workshop",
+      "recorded_at": "2026-11-02T19:53:40.391Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-007",
+        "requirements": [
+          "FR-008",
+          "NFR-002"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Lists public; protected page/direct CRUD rejected anonymously; no partial global lockdown; login/logout/return context and invalid external targets checked.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 46,
+      "observation_id": "AC-007-library",
+      "recorded_at": "2026-11-02T19:53:40.391Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-007",
+        "requirements": [
+          "FR-008",
+          "NFR-002"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Lists public; protected page/direct CRUD rejected anonymously; no partial global lockdown; login/logout/return context and invalid external targets checked.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 47,
+      "observation_id": "AC-008-workshop",
+      "recorded_at": "2026-11-02T19:53:40.392Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-008",
+        "requirements": [
+          "FR-009"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Session count by workshop, zero-session row and minimum-count threshold match independent expected results after row changes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 48,
+      "observation_id": "AC-009-library",
+      "recorded_at": "2026-11-02T19:53:40.392Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-009",
+        "requirements": [
+          "FR-009"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Author/book counts and separate book/copy exact-value totals do not inflate with multi-author fan-out; zero-child/NULL/threshold cases match expected results.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 49,
+      "observation_id": "AC-010-workshop",
+      "recorded_at": "2026-11-02T19:53:40.392Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-010",
+        "requirements": [
+          "FR-004",
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Non-destructive schema change reviewed/applied; destructive preview rejected/canceled safely; existing rows and unrelated project unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Workshop duration migration and reviewed destructive Cancel occur inside the complete original journey. Library recovery adds independent nullable-subtitle, restoration, occupied-port and witness-isolation proof.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-recovery.json",
+            "sha256": "096702fa2da83cc1500e54459f526a40c5655e51a604a6dc2c7a069c0840f3f7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 50,
+      "observation_id": "AC-010-library",
+      "recorded_at": "2026-11-02T19:53:40.393Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-010",
+        "requirements": [
+          "FR-004",
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Non-destructive schema change reviewed/applied; destructive preview rejected/canceled safely; existing rows and unrelated project unchanged.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Library complete ordinary UI journey includes nullable subtitle migration, destructive Cancel, explicit declaration restoration, occupied-port sentinel and unrelated UI-authored witness preservation.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-recovery.json",
+            "sha256": "096702fa2da83cc1500e54459f526a40c5655e51a604a6dc2c7a069c0840f3f7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 51,
+      "observation_id": "AC-011-workshop",
+      "recorded_at": "2026-11-02T19:53:40.393Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-011",
+        "requirements": [
+          "FR-011"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Generated source inspection and one declared authored extension can be configured using supported Studio UI; extension behavior is observable.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 52,
+      "observation_id": "AC-011-library",
+      "recorded_at": "2026-11-02T19:53:40.393Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-011",
+        "requirements": [
+          "FR-011"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Generated source inspection and one declared authored extension can be configured using supported Studio UI; extension behavior is observable.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 53,
+      "observation_id": "AC-012-workshop",
+      "recorded_at": "2026-11-02T19:53:40.394Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-012",
+        "requirements": [
+          "FR-010",
+          "NFR-001"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Two regenerations preserve business rows, identities, model settings, names/links/Add context/reports and declared authored bytes; modified owned source causes a reviewed conflict.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 54,
+      "observation_id": "AC-012-library",
+      "recorded_at": "2026-11-02T19:53:40.394Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-012",
+        "requirements": [
+          "FR-010",
+          "NFR-001"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Two regenerations preserve business rows, identities, model settings, names/links/Add context/reports and declared authored bytes; modified owned source causes a reviewed conflict.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 55,
+      "observation_id": "AC-013-workshop",
+      "recorded_at": "2026-11-02T19:53:40.394Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-013",
+        "requirements": [
+          "FR-012"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Export without private data by default; explicit supported data snapshot verified; independent install/type/test/build/run with Studio stopped, private identity/config external.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-independence.json",
+            "sha256": "349544110fbd2ecfbacd0b3a2d28966e0044e75738aebe29094b4d926b33ae53"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 56,
+      "observation_id": "AC-013-library",
+      "recorded_at": "2026-11-02T19:53:40.395Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-013",
+        "requirements": [
+          "FR-012"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Export without private data by default; explicit supported data snapshot verified; independent install/type/test/build/run with Studio stopped, private identity/config external.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-independence.json",
+            "sha256": "349544110fbd2ecfbacd0b3a2d28966e0044e75738aebe29094b4d926b33ae53"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 57,
+      "observation_id": "AC-014-workshop",
+      "recorded_at": "2026-11-02T19:53:40.395Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-014",
+        "requirements": [
+          "FR-013",
+          "NFR-005"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Schema/query/page/control drafts, including invalid partial numeric input, survive documented switch/reload paths and 30 unrelated notifications with no unintended caret/text/ownership loss.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Each full application performance journey supplies 30 active page-draft notifications. Separate drafts suite covers schema/query/control invalid partial values and switch/reload; those shared editor fixtures are explicitly small UI-authored projects, not both complete business schemas.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-drafts.json",
+            "sha256": "31a90200c46a3f3ba428fe780e602083e1b505505e45f470df92f7543930f14c"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-performance.json",
+            "sha256": "1d54f77116dc1a83b600fdf704d1e98c02ca6e1ee8455ec97d47cfa41721f149"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 58,
+      "observation_id": "AC-014-library",
+      "recorded_at": "2026-11-02T19:53:40.395Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-014",
+        "requirements": [
+          "FR-013",
+          "NFR-005"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Schema/query/page/control drafts, including invalid partial numeric input, survive documented switch/reload paths and 30 unrelated notifications with no unintended caret/text/ownership loss.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Each full application performance journey supplies 30 active page-draft notifications. Separate drafts suite covers schema/query/control invalid partial values and switch/reload; those shared editor fixtures are explicitly small UI-authored projects, not both complete business schemas.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-drafts.json",
+            "sha256": "31a90200c46a3f3ba428fe780e602083e1b505505e45f470df92f7543930f14c"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-performance.json",
+            "sha256": "1d54f77116dc1a83b600fdf704d1e98c02ca6e1ee8455ec97d47cfa41721f149"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 59,
+      "observation_id": "AC-015-workshop",
+      "recorded_at": "2026-11-02T19:53:40.396Z",
+      "observation": {
+        "run_id": "cycle2-fault",
+        "case_id": "AC-015",
+        "requirements": [
+          "FR-014"
+        ],
+        "application": "workshop",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate command request, stale model revision, changed database identity, invalid path/context and occupied port are clear, atomic and recoverable; retry only as an explicit fresh/replayed request.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-fault.json",
+            "sha256": "46d6ed71f4bb5200cede8eb8810ecbb72513e325a3d68687f67c780d4e99bce4"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-recovery.json",
+            "sha256": "096702fa2da83cc1500e54459f526a40c5655e51a604a6dc2c7a069c0840f3f7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 60,
+      "observation_id": "AC-015-library",
+      "recorded_at": "2026-11-02T19:53:40.397Z",
+      "observation": {
+        "run_id": "cycle2-fault",
+        "case_id": "AC-015",
+        "requirements": [
+          "FR-014"
+        ],
+        "application": "library",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate command request, stale model revision, changed database identity, invalid path/context and occupied port are clear, atomic and recoverable; retry only as an explicit fresh/replayed request.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-fault.json",
+            "sha256": "46d6ed71f4bb5200cede8eb8810ecbb72513e325a3d68687f67c780d4e99bce4"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-recovery.json",
+            "sha256": "096702fa2da83cc1500e54459f526a40c5655e51a604a6dc2c7a069c0840f3f7"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 61,
+      "observation_id": "AC-016-workshop",
+      "recorded_at": "2026-11-02T19:53:40.397Z",
+      "observation": {
+        "run_id": "cycle2-fault",
+        "case_id": "AC-016",
+        "requirements": [
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "workshop",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Controlled interruption of migration/regeneration leaves a verifiable committed state or documented recovery; no false success or business/authored overwrite.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-fault.json",
+            "sha256": "46d6ed71f4bb5200cede8eb8810ecbb72513e325a3d68687f67c780d4e99bce4"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 62,
+      "observation_id": "AC-016-library",
+      "recorded_at": "2026-11-02T19:53:40.397Z",
+      "observation": {
+        "run_id": "cycle2-fault",
+        "case_id": "AC-016",
+        "requirements": [
+          "FR-014",
+          "NFR-001"
+        ],
+        "application": "library",
+        "mode": "fault",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Controlled interruption of migration/regeneration leaves a verifiable committed state or documented recovery; no false success or business/authored overwrite.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Shared application-independent disposable parent/child contract bridge: actual hard exits, durable recovery and rejection boundaries. Consumed by both apps through the same engine; not two schema-specific interrupted UI journeys.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-fault.json",
+            "sha256": "46d6ed71f4bb5200cede8eb8810ecbb72513e325a3d68687f67c780d4e99bce4"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 63,
+      "observation_id": "AC-017-workshop",
+      "recorded_at": "2026-11-02T19:53:40.398Z",
+      "observation": {
+        "run_id": "cycle2-parity",
+        "case_id": "AC-017",
+        "requirements": [
+          "FR-015",
+          "NFR-002"
+        ],
+        "application": "workshop",
+        "mode": "parity",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Bounded MCP/direct-command parity validates revisions, idempotency, authorization and shared state; this separate smoke never repairs or replaces UI journey evidence.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Separately named bounded real SDK MCP/direct-command fixture; no UI acceptance substitution or claim of full MCP workflow.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-parity.json",
+            "sha256": "577ddfe35e2cb25be1240543018f5cc63d63b9f7e863ae5a7d5d5276e3d094ee"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 64,
+      "observation_id": "AC-017-library",
+      "recorded_at": "2026-11-02T19:53:40.398Z",
+      "observation": {
+        "run_id": "cycle2-parity",
+        "case_id": "AC-017",
+        "requirements": [
+          "FR-015",
+          "NFR-002"
+        ],
+        "application": "library",
+        "mode": "parity",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Bounded MCP/direct-command parity validates revisions, idempotency, authorization and shared state; this separate smoke never repairs or replaces UI journey evidence.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Separately named bounded real SDK MCP/direct-command fixture; no UI acceptance substitution or claim of full MCP workflow.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-parity.json",
+            "sha256": "577ddfe35e2cb25be1240543018f5cc63d63b9f7e863ae5a7d5d5276e3d094ee"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 65,
+      "observation_id": "AC-018-workshop",
+      "recorded_at": "2026-11-02T19:53:40.398Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-018",
+        "requirements": [
+          "NFR-004",
+          "NFR-005"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Recorded reference machine and bounded dataset: 30 UI samples meet p95 2-second feedback / 5-second Save; observed draft stability has zero unintended changes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-performance.json",
+            "sha256": "1d54f77116dc1a83b600fdf704d1e98c02ca6e1ee8455ec97d47cfa41721f149"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 66,
+      "observation_id": "AC-018-library",
+      "recorded_at": "2026-11-02T19:53:40.399Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-018",
+        "requirements": [
+          "NFR-004",
+          "NFR-005"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Recorded reference machine and bounded dataset: 30 UI samples meet p95 2-second feedback / 5-second Save; observed draft stability has zero unintended changes.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Ordinary UI authoring in explicitly mapped phases; read-only observers verify outcomes. No model/data/source repair bypass.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-performance.json",
+            "sha256": "1d54f77116dc1a83b600fdf704d1e98c02ca6e1ee8455ec97d47cfa41721f149"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 67,
+      "observation_id": "AC-019-workshop",
+      "recorded_at": "2026-11-02T19:53:40.399Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-019",
+        "requirements": [
+          "FR-006",
+          "FR-007",
+          "FR-017"
+        ],
+        "application": "workshop",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate names, quoted identifiers, ordered composite identity and supported/exceeded lookup boundary behave truthfully; each discovered defect has reproduction, severity and regression retest.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Workshop original UI journey proves its simple primary-key, duplicate-name and parent-context cases. Quoted identifiers and 200/201 lookup boundary use the separate supplied Library variant as a shared generic generator bridge; composite identity is Library-specific.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-variant.json",
+            "sha256": "d5ab6548f0e962462216abd9ea18265327f6f50683c960b7e9cc0d722ece7e48"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 68,
+      "observation_id": "AC-019-library",
+      "recorded_at": "2026-11-02T19:53:40.399Z",
+      "observation": {
+        "run_id": "cycle2-ui_journey",
+        "case_id": "AC-019",
+        "requirements": [
+          "FR-006",
+          "FR-007",
+          "FR-017"
+        ],
+        "application": "library",
+        "mode": "ui_journey",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "passed",
+        "expected": "Duplicate names, quoted identifiers, ordered composite identity and supported/exceeded lookup boundary behave truthfully; each discovered defect has reproduction, severity and regression retest.",
+        "actual": "All explicitly mapped current phases passed their exact zero-retry test census. Library original UI journey proves ordered composite identity and duplicate human names. Separate supplied raw existing-db variant proves quoted identifiers and 200/201 lookups; it does not seed or repair the normal journey.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          },
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-variant.json",
+            "sha256": "d5ab6548f0e962462216abd9ea18265327f6f50683c960b7e9cc0d722ece7e48"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 69,
+      "observation_id": "workshop",
+      "recorded_at": "2026-11-02T19:53:40.400Z",
+      "observation": {
+        "run_id": "candidate-review",
+        "case_id": "AC-020",
+        "requirements": [
+          "FR-001",
+          "FR-016",
+          "FR-017",
+          "NFR-003",
+          "NFR-006",
+          "C-001",
+          "C-002",
+          "C-003",
+          "C-004",
+          "C-005",
+          "C-006"
+        ],
+        "application": "workshop",
+        "mode": "review",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "unverified",
+        "defect_id": "AC020-independent-review",
+        "expected": "Two consecutive clean full journeys at final revision; required automated/local/hosted checks distinguished; reviewer approves requirement matrix and finite verdict with no mandatory failure or high/critical defect.",
+        "actual": "Candidate only. Independent WP09 review and canonical check-ledger still required.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/candidate-cycle-summary.json",
+            "sha256": "2ff9f3622dadf33686a4af11fbc12de089e27f518d87908b864f89ff5b507905"
+          }
+        ]
+      }
+    },
+    {
+      "record_schema": "acceptance-record/v2",
+      "sequence": 70,
+      "observation_id": "library",
+      "recorded_at": "2026-11-02T19:53:40.401Z",
+      "observation": {
+        "run_id": "candidate-review",
+        "case_id": "AC-020",
+        "requirements": [
+          "FR-001",
+          "FR-016",
+          "FR-017",
+          "NFR-003",
+          "NFR-006",
+          "C-001",
+          "C-002",
+          "C-003",
+          "C-004",
+          "C-005",
+          "C-006"
+        ],
+        "application": "library",
+        "mode": "review",
+        "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+        "status": "unverified",
+        "defect_id": "AC020-independent-review",
+        "expected": "Two consecutive clean full journeys at final revision; required automated/local/hosted checks distinguished; reviewer approves requirement matrix and finite verdict with no mandatory failure or high/critical defect.",
+        "actual": "Candidate only. Independent WP09 review and canonical check-ledger still required.",
+        "evidence": [
+          {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/candidate-cycle-summary.json",
+            "sha256": "2ff9f3622dadf33686a4af11fbc12de089e27f518d87908b864f89ff5b507905"
+          }
+        ]
+      }
+    }
+  ]
+}

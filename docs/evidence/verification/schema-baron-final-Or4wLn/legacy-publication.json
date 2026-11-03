@@ -1,0 +1,42 @@
+{
+  "name": "legacy-publication",
+  "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+  "command": [
+    "npm",
+    "exec",
+    "playwright",
+    "test",
+    "tests/e2e/publication/workflow.spec.ts",
+    "--",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/legacy-publication-output"
+  ],
+  "started": "2026-11-02T17:32:33.311Z",
+  "finished": "2026-11-02T17:33:02.146Z",
+  "exitCode": 1,
+  "signal": null,
+  "passed": false,
+  "mode": "ui_journey",
+  "census": {
+    "passed": false,
+    "exitCode": 1,
+    "expected": 1,
+    "count": 1,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "Publication Catalog visibly authors an unrelated composite-key application",
+        "status": "unexpected",
+        "attempts": [
+          {
+            "status": "failed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": []
+}

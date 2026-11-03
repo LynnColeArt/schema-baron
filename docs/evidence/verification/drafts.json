@@ -1,0 +1,124 @@
+{
+  "revision": "659f224fc89b6bea8a08746f8bd4bdebf5bb909b",
+  "productionRepairRevision": "5870c0c0f435a282c39072fd109a3bdf4a8c1b0c",
+  "scope": "WP05 owner drafts only; Studio-only fresh Workshop/Library. AC-004 editable-properties subset; AC-014 draft recovery/render scope; AC-018 local timing observations, final verdict WP08. Not final mission acceptance.",
+  "mode": "ui_journey",
+  "retries": 0,
+  "junit": {
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "proof": {
+    "T021": "Actual schema/query/workspace stores and distinct supported reload procedures inventoried in drafts.md; two freshly UI-authored projects and real object IDs",
+    "T022": "Page text, schema table text/scale minus, control caption/Width minus, query name/parameter minus retain exact text, keyboard selection, active control and dirty Save after received unrelated UI revision, view/document/project switch and reload; invalid Save retains diagnostics and model",
+    "T023": "Thirty second-tab UI Saves on unrelated same-project page, each rendered in first tab before text/focus/range/single-control assertions; three further received revisions preserve intentional tree/toolbar/other-field keyboard focus",
+    "T024": "Real competing same-field UI Save produces explicit conflict; Save disabled until Keep my draft. Invalid Save unchanged; valid resolved Save changes its own page only. Other project retains both durable model and unsaved title/range",
+    "T025": "Four reproduced defects repaired narrowly; 44 focused tests pass; discard-drafts fault killed by four tests; 30 real feedback/Save samples and machine/load retained"
+  },
+  "preservation": "Every authored project business SQLite file byte hash unchanged; owner GET snapshots are read-only and exactly compared; no seeded models, command repairs, raw DB patches, generated apps, visitor identities or live studies used",
+  "measurements": {
+    "sampleCount": 30,
+    "feedbackP95Ms": 13.112758999999642,
+    "saveP95Ms": 89.701390000002,
+    "saveMaxMs": 103.54709599999842,
+    "receiptMaxMs": 1873.7602140000017,
+    "feedbackThresholdMs": 2000,
+    "saveThresholdMs": 5000,
+    "verdict": "Local samples within unchanged thresholds; final NFR verdict and load-controlled remeasurement belong to WP08"
+  },
+  "validation": {
+    "npmCiIgnoreScripts": 0,
+    "nativeVerify": 0,
+    "typecheck": 0,
+    "fullBuild": 0,
+    "focusedTests": {
+      "exit": 0,
+      "files": 6,
+      "tests": 44
+    },
+    "diffLint": 0,
+    "credentialScan": 0,
+    "canonicalHeadGate": {
+      "validatedHead": "b927d13",
+      "uiSourceRevision": "659f224fc89b6bea8a08746f8bd4bdebf5bb909b",
+      "command": "spec-kitty agent tasks move-task WP05 --to for_review --mission studio-verification-hardening-01M6AQ6R",
+      "exit": 0,
+      "transition": "in_progress to for_review",
+      "actualRetainedJUnit": {
+        "tests": 505,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "actualTestcaseCount": 505,
+      "junitSha256": "0f8be92a9b6d071a239e36a4d7422284d2729af940c3bed8c4a35acadd3fb99c",
+      "stages": {
+        "stages": [
+          {
+            "label": "locked dependency verification",
+            "status": "passed",
+            "elapsedSeconds": 0.083943374
+          },
+          {
+            "label": "reviewed native prebuild verification",
+            "status": "passed",
+            "elapsedSeconds": 0.102958762
+          },
+          {
+            "label": "Vitest JUnit suite",
+            "status": "passed",
+            "elapsedSeconds": 234.769274855
+          }
+        ],
+        "wallSeconds": 234.96911622599998
+      },
+      "censusPolicy": "Positive actual retained JUnit is authoritative; no empty capture counter or transition-only result used",
+      "independentReview": "pending; implementer does not approve"
+    },
+    "independentReview": "pending",
+    "scopedAxe": {
+      "exit": 0,
+      "violations": 0,
+      "regions": 3
+    },
+    "bundleObservation": "drafts.bundle.json; no declared byte budget"
+  },
+  "artifacts": [
+    {
+      "path": "docs/evidence/verification/drafts.md",
+      "sha256": "aed48b717449fe9bfa61cdc8ed6a79125d5cb7c514ef896350565e91f6f3a7f4"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.failures.json",
+      "sha256": "7e56e6d652cf3d315955dc9a191950c9ed0df174f20a227ae05a263e331d37fe"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.timings-intermediate.json",
+      "sha256": "35397793c757bf0a9864d9bc2a13967688821400909a92788db40ec429e12c63"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.timings.json",
+      "sha256": "2c851b97edbb6dc7c88b69f3187d3552abbf027e9c392e28648ffff3b8f7f1d7"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.junit.xml",
+      "sha256": "b2b777101257310e0fd5723a659ba28441808f2ee53d04b5193ec4e0786120ac"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.accessibility.json",
+      "sha256": "aacd6a0af7fa46d5b3cf2180c12e5cf5c2df8bbb0d5fee14b7ecca713ec02adc"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.bundle.json",
+      "sha256": "aea9bd833b22c879df70e0f17d27f3515ec4615a95be0dcb359e87642ea87457"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.headgate.json",
+      "sha256": "5b5424099dd1dc3cdcde6a1d7115f4fc10bf46380b36b37b5ae3c33b2fdcf200"
+    }
+  ],
+  "remainingAggregate": "WP08: both complete application journeys, editor-by-application aggregate coverage and final load-controlled performance verdict; no unobserved per-app cross product is claimed here."
+}

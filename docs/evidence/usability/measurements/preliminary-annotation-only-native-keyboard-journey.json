@@ -1,0 +1,23 @@
+{
+  "pointerActions": 0,
+  "authoring": [
+    "blank project",
+    "blank SQLite",
+    "two tables",
+    "ordered composite FK",
+    "Login wizard",
+    "named query saved and real SQLite preview",
+    "identity source and effective page policy",
+    "selectable map and pan/zoom",
+    "20 property edits",
+    "HTML",
+    "Design",
+    "Preview",
+    "authored Code edit",
+    "two generations",
+    "built runtime",
+    "Live Page route",
+    "draft/output distinction"
+  ],
+  "limitations": []
+}

@@ -1,0 +1,24 @@
+{
+  "completed": true,
+  "sourceRevision": "7055b3754517dd2b601593635bdcd8668ff06b38\n",
+  "runtimeArchiveSha256": "6c172a9ab6718f7b801fb5a7bd486af2ee5e32758086a04b84fcce2aa77095e6",
+  "coldAcquisition": "online",
+  "warmInstall": "npm ci --offline",
+  "networkEvidence": "unshare -Urn with loopback only; failed external probe and connect syscall traces retained",
+  "source": "/tmp/schema-baron-wp26-clean-02/source",
+  "home": "/tmp/schema-baron-wp26-clean-02/home",
+  "cache": "/tmp/schema-baron-wp26-clean-02/home/.npm",
+  "environmentKeys": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "NEXT_TELEMETRY_DISABLED",
+    "npm_config_cache",
+    "npm_config_userconfig",
+    "npm_config_ignore_scripts",
+    "PLAYWRIGHT_BROWSERS_PATH",
+    "SCHEMA_BARON_EQUIPMENT_STUDY",
+    "SCHEMA_BARON_PUBLICATION_STUDY",
+    "SCHEMA_BARON_PUBLICATION_EVIDENCE"
+  ]
+}

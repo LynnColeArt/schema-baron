@@ -1,0 +1,178 @@
+2332029 +++ exited with 0 +++
+2332032 +++ exited with 0 +++
+2332034 +++ exited with 0 +++
+2332033 +++ exited with 0 +++
+2332035 +++ exited with 0 +++
+2332031 +++ exited with 0 +++
+2332045 +++ exited with 0 +++
+2332046 +++ exited with 0 +++
+2332047 +++ exited with 0 +++
+2332044 +++ exited with 0 +++
+2332036 +++ exited with 0 +++
+2332030 +++ exited with 0 +++
+2332022 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2332030, si_uid=0, si_status=0, si_utime=17 /* 0.17 s */, si_stime=7 /* 0.07 s */} ---
+2332076 +++ exited with 0 +++
+2332077 +++ exited with 0 +++
+2332078 +++ exited with 0 +++
+2332075 +++ exited with 0 +++
+2332050 +++ exited with 0 +++
+2332053 +++ exited with 0 +++
+2332052 +++ exited with 0 +++
+2332051 +++ exited with 0 +++
+2332049 +++ exited with 0 +++
+2332054 +++ exited with 1 +++
+2332048 +++ exited with 1 +++
+2332022 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2332048, si_uid=0, si_status=1, si_utime=17 /* 0.17 s */, si_stime=5 /* 0.05 s */} ---
+2332022 connect(22, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332093 +++ exited with 0 +++
+2332022 connect(22, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332022 connect(22, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332086 connect(29, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+2332086 connect(29, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+2332120 connect(22, {sa_family=AF_UNIX, sun_path="/run/dbus/system_bus_socket"}, 29) = 0
+2332120 connect(22, {sa_family=AF_UNIX, sun_path="/run/user/1000/bus"}, 20) = 0
+2332120 connect(26, {sa_family=AF_UNIX, sun_path="/run/dbus/system_bus_socket"}, 29) = 0
+2332120 connect(26, {sa_family=AF_UNIX, sun_path="/run/dbus/system_bus_socket"}, 29) = 0
+2332135 connect(35, {sa_family=AF_UNIX, sun_path="/run/user/1000/bus"}, 110) = 0
+2332120 connect(46, {sa_family=AF_UNIX, sun_path="/run/user/1000/bus"}, 20) = 0
+2332131 connect(13, {sa_family=AF_UNIX, sun_path=@"/tmp/.X11-unix/X0"}, 20) = -1 ECONNREFUSED (Connection refused)
+2332131 connect(13, {sa_family=AF_UNIX, sun_path="/tmp/.X11-unix/X0"}, 110) = 0
+2332131 connect(13, {sa_family=AF_UNIX, sun_path=@"/tmp/.X11-unix/X0"}, 20) = -1 ECONNREFUSED (Connection refused)
+2332131 connect(13, {sa_family=AF_UNIX, sun_path="/tmp/.X11-unix/X0"}, 110) = 0
+2332131 connect(14, {sa_family=AF_UNIX, sun_path=@"/tmp/.X11-unix/X0"}, 20) = -1 ECONNREFUSED (Connection refused)
+2332131 connect(14, {sa_family=AF_UNIX, sun_path="/tmp/.X11-unix/X0"}, 110) = 0
+2332131 connect(14, {sa_family=AF_UNIX, sun_path=@"/tmp/.X11-unix/X0"}, 20) = -1 ECONNREFUSED (Connection refused)
+2332131 connect(14, {sa_family=AF_UNIX, sun_path="/tmp/.X11-unix/X0"}, 110) = 0
+2332132 +++ exited with 0 +++
+2332172 connect(16, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2001:4860:4860::8888", &sin6_addr), sin6_scope_id=0}, 28) = -1 ENETUNREACH (Network is unreachable)
+2332172 connect(16, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332172 connect(19, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332172 connect(20, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332172 connect(22, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332172 connect(23, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332172 connect(24, {sa_family=AF_INET, sin_port=htons(33829), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+2332191 +++ exited with 0 +++
+2332193 +++ exited with 0 +++
+2332190 +++ exited with 0 +++
+2332188 +++ exited with 0 +++
+2332178 +++ exited with 0 +++
+2332151 +++ exited with 0 +++
+2332150 +++ exited with 0 +++
+2332149 +++ exited with 0 +++
+2332147 +++ exited with 0 +++
+2332192 +++ exited with 0 +++
+2332148 +++ exited with 0 +++
+2332180 +++ exited with 0 +++
+2332152 +++ exited with 0 +++
+2332189 +++ exited with 0 +++
+2332146 +++ exited with 0 +++
+2332194 +++ exited with 0 +++
+2332145 +++ exited with 0 +++
+2332114 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2332145, si_uid=0, si_status=0, si_utime=29 /* 0.29 s */, si_stime=15 /* 0.15 s */} ---
+2332141 +++ exited with 0 +++
+2332142 +++ exited with 0 +++
+2332172 +++ exited with 0 +++
+2332168 +++ exited with 0 +++
+2332177 +++ exited with 0 +++
+2332175 +++ exited with 0 +++
+2332176 +++ exited with 0 +++
+2332171 +++ exited with 0 +++
+2332169 +++ exited with 0 +++
+2332166 +++ exited with 0 +++
+2332174 +++ exited with 0 +++
+2332170 +++ exited with 0 +++
+2332173 +++ exited with 0 +++
+2332136 +++ exited with 0 +++
+2332126 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2332136, si_uid=0, si_status=0, si_utime=3 /* 0.03 s */, si_stime=5 /* 0.05 s */} ---
+2332131 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=2332111, si_uid=0} ---
+2332179 ???( <unfinished ...>
+2332187 +++ killed by SIGTERM +++
+2332186 +++ killed by SIGTERM +++
+2332185 +++ killed by SIGTERM +++
+2332184 +++ killed by SIGTERM +++
+2332183 +++ killed by SIGTERM +++
+2332182 +++ killed by SIGTERM +++
+2332181 +++ killed by SIGTERM +++
+2332179 +++ killed by SIGTERM +++
+2332167 +++ killed by SIGTERM +++
+2332165 +++ killed by SIGTERM +++
+2332164 +++ killed by SIGTERM +++
+2332163 +++ killed by SIGTERM +++
+2332162 +++ killed by SIGTERM +++
+2332161 +++ killed by SIGTERM +++
+2332160 +++ killed by SIGTERM +++
+2332159 +++ killed by SIGTERM +++
+2332158 +++ killed by SIGTERM +++
+2332157 +++ killed by SIGTERM +++
+2332156 +++ killed by SIGTERM +++
+2332155 +++ killed by SIGTERM +++
+2332154 +++ killed by SIGTERM +++
+2332153 +++ killed by SIGTERM +++
+2332129 +++ exited with 0 +++
+2332121 +++ exited with 0 +++
+2332116 +++ exited with 0 +++
+2332130 +++ exited with 0 +++
+2332131 +++ killed by SIGTERM +++
+2332113 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2332131, si_uid=0, si_status=SIGTERM, si_utime=3 /* 0.03 s */, si_stime=5 /* 0.05 s */} ---
+2332143 +++ exited with 0 +++
+2332134 +++ exited with 0 +++
+2332126 +++ exited with 0 +++
+2332125 +++ exited with 0 +++
+2332124 +++ exited with 0 +++
+2332123 +++ exited with 0 +++
+2332120 +++ exited with 0 +++
+2332119 +++ exited with 0 +++
+2332118 +++ exited with 0 +++
+2332117 +++ exited with 0 +++
+2332115 +++ exited with 0 +++
+2332112 +++ exited with 0 +++
+2332144 +++ exited with 0 +++
+2332139 +++ exited with 0 +++
+2332138 +++ exited with 0 +++
+2332137 +++ exited with 0 +++
+2332135 +++ exited with 0 +++
+2332122 +++ exited with 0 +++
+2332133 +++ exited with 0 +++
+2332128 +++ exited with 0 +++
+2332127 +++ exited with 0 +++
+2332140 +++ exited with 0 +++
+2332111 +++ exited with 0 +++
+2332022 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2332111, si_uid=0, si_status=0, si_utime=13 /* 0.13 s */, si_stime=18 /* 0.18 s */} ---
+2332113 +++ exited with 0 +++
+2332114 +++ exited with 0 +++
+2332086 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=2332022, si_uid=0} ---
+2332097 +++ exited with 0 +++
+2332096 +++ exited with 0 +++
+2332098 +++ exited with 0 +++
+2332095 +++ exited with 0 +++
+2332088 +++ exited with 0 +++
+2332090 +++ exited with 0 +++
+2332091 +++ exited with 0 +++
+2332089 +++ exited with 0 +++
+2332087 +++ exited with 0 +++
+2332106 +++ exited with 143 +++
+2332109 +++ exited with 143 +++
+2332107 +++ exited with 143 +++
+2332105 +++ exited with 143 +++
+2332104 +++ exited with 143 +++
+2332102 +++ exited with 143 +++
+2332101 +++ exited with 143 +++
+2332100 +++ exited with 143 +++
+2332099 +++ exited with 143 +++
+2332092 +++ exited with 143 +++
+2332108 +++ exited with 143 +++
+2332103 +++ exited with 143 +++
+2332110 +++ exited with 143 +++
+2332086 +++ exited with 143 +++
+2332022 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2332086, si_uid=0, si_status=143, si_utime=79 /* 0.79 s */, si_stime=21 /* 0.21 s */} ---
+2332026 +++ exited with 0 +++
+2332025 +++ exited with 0 +++
+2332027 +++ exited with 0 +++
+2332024 +++ exited with 0 +++
+2332023 +++ exited with 0 +++
+2332081 +++ exited with 0 +++
+2332079 +++ exited with 0 +++
+2332080 +++ exited with 0 +++
+2332082 +++ exited with 0 +++
+2332028 +++ exited with 0 +++
+2332022 +++ exited with 0 +++

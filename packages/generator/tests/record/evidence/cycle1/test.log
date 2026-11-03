@@ -1,0 +1,16 @@
+
+> generated-application@1.0.0 test
+> node --conditions=react-server --test tests/*.test.mjs
+
+✔ declared key return executes its bound predicate rather than erroring or exposing other parents (11.506457ms)
+✔ mixed empty numeric Search is absent in links and Cancel; required numeric Record key stays strict (4.781163ms)
+✔ ordered composite parent values survive a declared return and both bind the list (8.219915ms)
+✔ prepared allowlisted reads, paging and formatting use disposable test data (132.235918ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 199.711083
