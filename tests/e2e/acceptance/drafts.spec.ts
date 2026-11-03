@@ -104,6 +104,26 @@ test('schema type changes retire only obsolete decimal buffers and keep other ac
  expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'reserve')!.type).toEqual({ kind: 'real' });
  expect(final.schema.tables[0]!.columns.find(c => c.physicalName === 'cost')!.type).toEqual({ kind: 'real' });
  for (const key of ['pages', 'forms', 'controls', 'queries', 'policies', 'outputConfig'] as const) expect(final[key]).toEqual(project[key]);
+ // Real delayed schema Save keeps later keyboard input and its live selection.
+ const tableName = label(schema, 'Table name');
+ await tableName.fill('books_checkpoint');
+ let release!: () => void, arrived!: () => void;
+ const gate = new Promise<void>(resolve => { release = resolve; });
+ const seen = new Promise<void>(resolve => { arrived = resolve; });
+ await page.route('**/commands', async route => {
+  if (route.request().postDataJSON()?.operation === 'project.batch') { arrived(); await gate; }
+  await route.continue();
+ });
+ const acknowledged = page.waitForResponse(response => response.url().endsWith('/commands') && response.request().postDataJSON()?.operation === 'project.batch');
+ await tableName.press('Control+s'); await seen;
+ await tableName.press('End'); await tableName.pressSequentially('_later');
+ expect(await tableName.evaluate((element: HTMLInputElement) => [element.selectionStart, element.selectionEnd])).toEqual([22,22]);
+ release(); expect((await (await acknowledged).json()).ok).toBe(true);
+ await expect(button(schema, 'Save schema')).toBeEnabled();
+ await expect(tableName).toHaveValue('books_checkpoint_later'); await expect(tableName).toBeFocused();
+ expect(await tableName.evaluate((element: HTMLInputElement) => [element.selectionStart, element.selectionEnd])).toEqual([22,22]);
+ expect((await studio.project(project.id)).schema.tables[0]!.physicalName).toBe('books_checkpoint');
+ await page.unroute('**/commands');
 });
 test('page draft restores its active text control and selection after reload', async ({ page }) => {
  await connectLocal(page, studio); const project = await create(page, 'Workshop draft recovery');

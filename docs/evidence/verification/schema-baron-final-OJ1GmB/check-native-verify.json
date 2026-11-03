@@ -1,0 +1,14 @@
+{
+  "name": "check-native-verify",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "run",
+    "native:verify"
+  ],
+  "started": "2026-11-02T19:15:18.462Z",
+  "finished": "2026-11-02T19:15:18.628Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

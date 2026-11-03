@@ -1,0 +1,14 @@
+{
+  "name": "install",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "command": [
+    "npm",
+    "ci",
+    "--ignore-scripts"
+  ],
+  "started": "2026-11-02T20:01:40.685Z",
+  "finished": "2026-11-02T20:01:46.149Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

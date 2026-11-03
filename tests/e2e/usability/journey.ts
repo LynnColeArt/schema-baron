@@ -300,7 +300,18 @@ export async function keyboardJourney(page: Page, info: TestInfo, native = false
   }).focus();
   await page.keyboard.press('Enter');
   await tab(page, 'HTML');
-  await text(page, 'HTML source', '<h1>Unsaved current draft</h1>' + existing);
+  const login = (await current(p.name)).forms.find(form => form.kind === 'Login')!;
+  expect(login.appearance.label).toBe('Keyboard login 19');
+  await html.focus(); await html.press('Control+Home');
+  const formOffset = (await html.inputValue()).indexOf(`<sb-form id="${login.id}"`) + 1;
+  expect(formOffset).toBeGreaterThan(0);
+  for (let offset = 0; offset < formOffset; offset++) await page.keyboard.press('ArrowRight');
+  await expect(page.locator(`[role=treeitem][data-object-id="${login.id}"]`)).toHaveAttribute('aria-selected', 'true');
+  await expect(html).toBeFocused();
+  await page.keyboard.press('ControlOrMeta+a'); await expect(html).toBeFocused();
+  await page.keyboard.insertText('<h1>Unsaved current draft</h1>' + existing);
+  await expect(page.getByRole('treeitem', { name: 'Keyboard login 19', exact: true })).toBeVisible();
+  expect((await current(p.name)).forms.find(form => form.id === login.id)!.appearance.label).toBe('Keyboard login 19');
   await tab(page, 'Preview');
   await expect(page.frameLocator('iframe[title="Isolated current draft preview"]').getByRole('heading', {
     name: 'Unsaved current draft'
@@ -309,6 +320,39 @@ export async function keyboardJourney(page: Page, info: TestInfo, native = false
   await expect(live.getByRole('heading', {
     name: 'Saved keyboard heading'
   })).toBeVisible();
+  // Resume keyboard work on Studio after checking the visitor tab.
+  await page.bringToFront();
+  await page.getByLabel('Runtime port', { exact: true }).focus();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Stop runtime', exact: true })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Stop runtime', exact: true })).toBeInViewport();
+  const previewPanel = page.getByRole('tabpanel', { name: 'Preview document', exact: true });
+  expect(await previewPanel.evaluate(element => element.clientHeight)).toBeGreaterThan(0);
+  await previewPanel.focus(); await page.keyboard.press('Shift+Tab');
+  await expect(previewPanel).not.toBeFocused();
+  await page.keyboard.press('Tab'); await expect(previewPanel).toBeFocused();
+  await previewPanel.evaluate(element => new Promise<void>(resolve => {
+    let previous = '', stableFrames = 0;
+    function settled() {
+      const current = [element.scrollTop, element.scrollLeft, element.clientHeight, element.clientWidth, element.scrollHeight, element.scrollWidth].join(',');
+      stableFrames = current === previous ? stableFrames + 1 : 0; previous = current;
+      if (stableFrames === 3) resolve(); else requestAnimationFrame(settled);
+    }
+    requestAnimationFrame(settled);
+  }));
+  const scroll = await previewPanel.evaluate(element => ({ top: element.scrollTop, left: element.scrollLeft, vertical: element.scrollHeight - element.clientHeight, horizontal: element.scrollWidth - element.clientWidth }));
+  if (scroll.vertical > 0 || scroll.horizontal > 0) {
+    const vertical = scroll.vertical > 0, start = vertical ? scroll.top : scroll.left;
+    const towardEnd = (vertical ? scroll.vertical : scroll.horizontal) - start > start;
+    const key = vertical ? (towardEnd ? 'ArrowDown' : 'ArrowUp') : (towardEnd ? 'ArrowRight' : 'ArrowLeft');
+    const position = () => previewPanel.evaluate((element, vertical) => vertical ? element.scrollTop : element.scrollLeft, vertical);
+    // One held arrow gesture, including one repeat, must move the settled viewport.
+    await page.keyboard.down(key);
+    try {
+      await page.keyboard.down(key);
+      if (towardEnd) await expect.poll(position).toBeGreaterThan(start); else await expect.poll(position).toBeLessThan(start);
+    } finally { await page.keyboard.up(key); }
+  }
   await audit(page, info, 'axe-keyboard-workspace');
   if (native) {
     await nativeMetrics(page, info);

@@ -1,0 +1,13 @@
+{
+  "artifact": "volunteer-export.json",
+  "exists": true,
+  "kind": "definition-json",
+  "sha256": "62658999e71f9e4bd390ebccf966363f87f4f62fb8710e3dcfbcf6bf50e587ef",
+  "bytes": 44124,
+  "containsBusinessRows": false,
+  "containsIdentityAccountsOrSessions": false,
+  "containsIdentityConfigurationReference": true,
+  "containsCapabilityOwnerConfigOrPassword": false,
+  "locatorsPortable": true,
+  "includeDataDefault": false
+}

@@ -1,0 +1,339 @@
+{
+  "discoveredToolCount": 31,
+  "tools": [
+    {
+      "name": "project_create",
+      "inputSchemaSha256": "1c44db54b87a05a7ad96146b69bae3bf1dddb0a7675dd21830e882896e878f5d",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "project_inspect",
+      "inputSchemaSha256": "cf36eb3a53fee9a55ac365998cc3ba4cf2581de10d8396be1737a68e443b7cfa",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "project_open",
+      "inputSchemaSha256": "2664934941b2e12453caa2fc7aa0ca42f8b2e463a8916eaccfbff0a4af6ffc9d",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "project_list",
+      "inputSchemaSha256": "fcedde402c9a3aa8bca8fd3558b54c8f72b2f1e6d9b788d358a52b7d4d1a8890",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "project_batch",
+      "inputSchemaSha256": "a322b1634ea46d817715b15ad025269b68f0c4182597e8f45ab5d41a608556ec",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "project_export",
+      "inputSchemaSha256": "d63e0b0f4b3ec2db8415bcc03ba2452b300909248b1641fc862c9382c1668f49",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "connection_inspect",
+      "inputSchemaSha256": "93d84dba5caa514abd538adef14e956133226e2ba6b2959038389cb85efef880",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "connection_bind",
+      "inputSchemaSha256": "a049589959d33036b6ee7b34badf7ee6d470b4fe294d312c9c3fdfb969f2d27b",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "schema_preview",
+      "inputSchemaSha256": "ca57c48268ef55e2d6d2ebc9fef7350e600f7f17829e0c2abaf365074bfecbd9",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "schema_apply",
+      "inputSchemaSha256": "865afb2e45ef658f89dfa339a1923619120cec0322cd7355b915dc0df8a03ed9",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "schema_history",
+      "inputSchemaSha256": "ac94f660a51419df4c5429f6467c72ce6d1c87a47782f5c41fb8ca7eee4544e0",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "schema_restorePreview",
+      "inputSchemaSha256": "66b99a6776e8e3977a09f9632a18517ace5c2bd3ebc17b2c5f12adfb4b7d5fdd",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "schema_restoreApply",
+      "inputSchemaSha256": "865afb2e45ef658f89dfa339a1923619120cec0322cd7355b915dc0df8a03ed9",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "query_preview",
+      "inputSchemaSha256": "df7a8c20f93b30f9f7f1191b762a7a2aa109d627e95c800138176e9ea03c506c",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "form_construct",
+      "inputSchemaSha256": "83a084f11d898b229bf523c9d9b8229769751db0b56e87a2143d177867032b28",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "source_read",
+      "inputSchemaSha256": "f5aebede247f616db28ac5c14d3d2ed7a6562321b5893fa08174f405d56b9a5f",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "extension_read",
+      "inputSchemaSha256": "0f982886e4fb04b078cd56ed3bc7060347712ac2992370a27d6639f9a1b7209c",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "extension_write",
+      "inputSchemaSha256": "e0625ff87c38abae0b295c74a7e751f33f1e03903233d76239b4c979546c3839",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "identity_configure",
+      "inputSchemaSha256": "e0adea42c5d560fd208ae50dcc17cff5cdca27e99433b8a8cf07a70251c55db0",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "identity_provision",
+      "inputSchemaSha256": "9dee8ea7ba8248eb543225861b5b75b98e5942ed5cd57908ead95e82749ae365",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "project_validate",
+      "inputSchemaSha256": "ac99b44ff4476e893f3824162970411a067d191eb10eec0437fd88a77c985812",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "flow_inspect",
+      "inputSchemaSha256": "3339a8d59d147c68c268e1eeac087f411dfc68c2093ccfb14ba7759cb1237102",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "generation_preview",
+      "inputSchemaSha256": "2cf9e9d193580b9b91c63ba02290037aef293688c3c378c4f5ebc664d92988ab",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "generation_apply",
+      "inputSchemaSha256": "865afb2e45ef658f89dfa339a1923619120cec0322cd7355b915dc0df8a03ed9",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "runtime_start",
+      "inputSchemaSha256": "6cc78feb8357a4fdcc4d5ba5fc7bca33cdf9c3a303e421844e4ade58b9e4d590",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "runtime_context",
+      "inputSchemaSha256": "d9e2529ccfb44b2168ef14ace436ec0f16ddfb4dd4344b1a3185c69d0389b39b",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "runtime_route",
+      "inputSchemaSha256": "ecb495ec66f25c702d59ac623ea53e8355537cf22c49f62a6dcb3ba4a1b62a91",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "runtime_stop",
+      "inputSchemaSha256": "561da969e14398d1ce375d856a8e14616b653e3d973180a8300ecf95b3b8c985",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "runtime_status",
+      "inputSchemaSha256": "f855d99145ce9accaa010845a3ff840317124b97acd6f197d3f9184fad35686e",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "job_inspect",
+      "inputSchemaSha256": "79e7156998f7c1bbdd8feea358f23660f0bc9b53260ee4fb090fa1c479776d43",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    },
+    {
+      "name": "job_cancel",
+      "inputSchemaSha256": "79e7156998f7c1bbdd8feea358f23660f0bc9b53260ee4fb090fa1c479776d43",
+      "requiredEnvelope": [
+        "requestId",
+        "projectId",
+        "expectedRevision",
+        "input"
+      ]
+    }
+  ],
+  "resourceTemplates": [
+    {
+      "name": "Project snapshot",
+      "uriTemplate": "schema-baron://projects/{projectId}/snapshot",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "Project diagnostics",
+      "uriTemplate": "schema-baron://projects/{projectId}/diagnostics",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "Job status",
+      "uriTemplate": "schema-baron://projects/{projectId}/jobs/{jobId}",
+      "mimeType": "application/json"
+    }
+  ],
+  "initialResourceCount": 0,
+  "rootIdsRequireTrustedBootstrap": true,
+  "missingCapabilities": [
+    "workspace/root discovery and setup wizard",
+    "dependency acquisition",
+    "business record CRUD/raw SQL"
+  ]
+}

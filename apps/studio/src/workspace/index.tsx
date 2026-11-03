@@ -141,7 +141,7 @@ export default function Workspace() {
         ].find((v) => v.id === view.selected)
       : undefined;
   const activePage = model?.pages.find((p) => p.id === view.activePage);
-  const propertyFocus = useDraftFocus(project?.id ?? "", `${view.selected}:${view.propertyTab}`, !!project && !schemaActive && !queryActive && !modal && !busy, view.activePage);
+  const propertyFocus = useDraftFocus(project?.id ?? "", `${view.selected}:${view.propertyTab}`, !!project && !schemaActive && !queryActive && !modal, view.activePage);
   const dirty =
     Object.keys(editor.drafts).length > 0 || incompleteScalars(editor.buffers) || pendingDocuments(editor.documents);
   const conflicts = Object.values(editor.drafts).filter(

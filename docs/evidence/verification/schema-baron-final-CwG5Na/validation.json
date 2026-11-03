@@ -1,0 +1,32 @@
+{
+  "schema": "candidate-ledger-validation/v1",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "observations": 70,
+  "complete": true,
+  "nonpassed": [
+    {
+      "case_id": "AC-020",
+      "application": "both",
+      "status": "unverified",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "unverified",
+          "observations": 1
+        },
+        {
+          "application": "library",
+          "status": "unverified",
+          "observations": 1
+        }
+      ],
+      "observations": 2
+    }
+  ],
+  "canonicalRequirePassed": {
+    "exitCode": 1,
+    "expectedRejection": true,
+    "reason": "Only AC-020 has unverified independent-review observations; author never supplies review pass"
+  },
+  "note": "This validates a candidate, not final mission approval"
+}

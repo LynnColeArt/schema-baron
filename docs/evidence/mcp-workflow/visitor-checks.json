@@ -1,0 +1,156 @@
+{
+  "retainedNamedChecks": 30,
+  "note": "Checks overlap across stages and regenerations; this is not a count of independent tests. Initial successful login/create is also evidenced by executed script and persisted row oracle. A delayed failed initial harness overwrote its local initial receipt; retained tool output and first error files preserve the chronology.",
+  "checks": [
+    {
+      "receipt": "visitor-initial",
+      "name": "anonymous public teams",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-initial",
+      "name": "anonymous Add guarded by friendly login",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "visitor creates Logistics",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "team name links filtered shifts",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "Add prefills team and Save retains parent",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "related shifts show team names",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "Cancel retains parent",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "authored validator rejects temporary title",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-data",
+      "name": "left join exact totals 3.75 and zero 0.00",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "independent ordered tuples and integer hundredths oracle before Logistics",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "runtime HAVING minimum3.00 excludes zero-child team",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "Logistics Add prefills selected team",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "independent three row oracle agrees 3.75/4.50",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "runtime minimum3.00 now includes both teams",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "invalid required/decimal input leaves all tuples unchanged",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "successful UI create update confirmed Delete restores exact tuples",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "unique team name rejected atomically",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-complete",
+      "name": "FK restrict team delete rejected atomically",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-parent-auth",
+      "name": "revoked first submission preserved exact three rows",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-parent-auth",
+      "name": "logout public selected-parent Add login restores team2 and Cancel context",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-parent-auth",
+      "name": "real generated form token submission after logout rejected without any tuple change",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-parent-auth",
+      "name": "fresh login works after revoked write and preserves parent",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-1",
+      "name": "regen 1 exact rows preserved",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-1",
+      "name": "regen 1 decimal report/filter runtime correct",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-1",
+      "name": "regen 1 same managed account, protected policy, lookup and selected-parent Add survive",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-1",
+      "name": "regen 1 authored rejection atomic and Cancel retains parent",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-2",
+      "name": "regen 2 exact rows preserved",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-2",
+      "name": "regen 2 decimal report/filter runtime correct",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-2",
+      "name": "regen 2 same managed account, protected policy, lookup and selected-parent Add survive",
+      "status": "PASS"
+    },
+    {
+      "receipt": "visitor-regen-2",
+      "name": "regen 2 authored rejection atomic and Cancel retains parent",
+      "status": "PASS"
+    }
+  ]
+}

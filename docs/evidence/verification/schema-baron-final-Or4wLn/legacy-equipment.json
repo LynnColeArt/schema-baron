@@ -1,0 +1,42 @@
+{
+  "name": "legacy-equipment",
+  "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+  "command": [
+    "npm",
+    "exec",
+    "playwright",
+    "test",
+    "tests/e2e/equipment",
+    "--",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/legacy-equipment-output"
+  ],
+  "started": "2026-11-02T17:30:45.143Z",
+  "finished": "2026-11-02T17:32:32.321Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 1,
+    "count": 1,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "Equipment Desk starts blank and authors schema and forms through supported controls",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": []
+}

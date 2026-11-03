@@ -1,0 +1,79 @@
+{
+  "schema": "independent-acceptance-review/v1",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "work_package": "WP09",
+  "reviewer": "verification_acceptance_audit",
+  "author": "codex-wp08",
+  "records": [
+    {
+      "run_id": "wp09-independent",
+      "case_id": "AC-020",
+      "requirements": [
+        "FR-001",
+        "FR-016",
+        "FR-017",
+        "NFR-003",
+        "NFR-006",
+        "C-001",
+        "C-002",
+        "C-003",
+        "C-004",
+        "C-005",
+        "C-006"
+      ],
+      "application": "workshop",
+      "mode": "review",
+      "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+      "status": "passed",
+      "expected": "Two consecutive clean full journeys at final revision; required automated/local/hosted checks distinguished; reviewer approves requirement matrix and finite verdict with no mandatory failure or high/critical defect.",
+      "actual": "Independent reviewer audited current exact-source checks, both fresh zero-retry full cycles, all 20 cases/29 requirements and defect closure; reproduced this entire ordinary UI authoring, auth/report/CRUD/customization/two-regeneration journey and stopped-owner independent export use in a fresh private workspace. Source-identical documentation head is recorded separately. No mandatory or high/critical failure remains.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/wp09-independent/proof-audit.json",
+          "sha256": "4c67816b933405dc7b1ef155886308f2661a1976a57eb88ba63c7c0a3e8eda42"
+        },
+        {
+          "path": "docs/evidence/verification/wp09-independent/walkthrough.json",
+          "sha256": "6f7deae5527b73cf3d3f476715ea68019c42db190fe47be582dd5116283f05fe"
+        }
+      ],
+      "defect_id": "AC020-independent-review",
+      "retests_observation": "candidate-review/workshop"
+    },
+    {
+      "run_id": "wp09-independent",
+      "case_id": "AC-020",
+      "requirements": [
+        "FR-001",
+        "FR-016",
+        "FR-017",
+        "NFR-003",
+        "NFR-006",
+        "C-001",
+        "C-002",
+        "C-003",
+        "C-004",
+        "C-005",
+        "C-006"
+      ],
+      "application": "library",
+      "mode": "review",
+      "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+      "status": "passed",
+      "expected": "Two consecutive clean full journeys at final revision; required automated/local/hosted checks distinguished; reviewer approves requirement matrix and finite verdict with no mandatory failure or high/critical defect.",
+      "actual": "Independent reviewer audited current exact-source checks, both fresh zero-retry full cycles, all 20 cases/29 requirements and defect closure; reproduced this entire ordinary UI authoring, auth/report/CRUD/customization/two-regeneration journey and stopped-owner independent export use in a fresh private workspace. Source-identical documentation head is recorded separately. No mandatory or high/critical failure remains.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/wp09-independent/proof-audit.json",
+          "sha256": "4c67816b933405dc7b1ef155886308f2661a1976a57eb88ba63c7c0a3e8eda42"
+        },
+        {
+          "path": "docs/evidence/verification/wp09-independent/walkthrough.json",
+          "sha256": "6f7deae5527b73cf3d3f476715ea68019c42db190fe47be582dd5116283f05fe"
+        }
+      ],
+      "defect_id": "AC020-independent-review",
+      "retests_observation": "candidate-review/library"
+    }
+  ]
+}

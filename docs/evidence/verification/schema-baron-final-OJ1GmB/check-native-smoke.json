@@ -1,0 +1,14 @@
+{
+  "name": "check-native-smoke",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "run",
+    "native:smoke"
+  ],
+  "started": "2026-11-02T19:15:18.635Z",
+  "finished": "2026-11-02T19:15:18.769Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}
