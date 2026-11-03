@@ -7,6 +7,13 @@ import { destination, context, type ContextField, type Destination } from './nav
 export type Control = { readonly kind?:string; readonly fieldId?:string; readonly label:string; readonly readOnly:boolean; readonly validation:{readonly required:boolean;readonly min?:number;readonly max?:number;readonly maxLength?:number}; readonly lookup?:{ readonly source:Source;readonly valueFieldId:string;readonly labelFieldId:string } };
 export type Action = {readonly id:string;readonly operation:string;readonly extensionHookRef?:string;readonly destination?:Destination;readonly success?:Destination;readonly cancel?:Destination};
 export type Config = {readonly prefills?:readonly {readonly fieldId:string;readonly parameter:string}[];readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
+// Only this deliberate user-facing load error may cross the page boundary.
+export class LookupLimitError extends Error {
+ constructor() { super('Lookup exceeds the supported limit of 200 options. This form needs a smaller lookup source.'); }
+}
+export function recordLoadMessage(error:unknown):string {
+ return error instanceof LookupLimitError ? error.message : 'The record could not be loaded. Check its complete key and the configured database.';
+}
 export type State = {values:Input;errors:Record<string,string>;summary:string;location?:string;saved?:boolean};
 function keys(config:Config,parameters:Parameters) {
  return config.source.keys.map((id,index)=>{const text=one(parameters,config.keyParameters[index]!); if(text===undefined) throw Error('Enter the complete record key.'); const parsed=value(config.source.fields.find(f=>f.id===id)!,text); if(parsed===null) throw Error('Enter the complete record key.'); return parsed;});
@@ -30,8 +37,18 @@ export function load(config:Config,parameters:Parameters) {
   for(const control of config.controls) if(control.lookup&&control.fieldId) {
    const source=control.lookup.source;
    const records=db.prepare('SELECT '+source.fields.map(f=>'"'+f.name.replaceAll('"','""')+'" AS "'+f.id.replaceAll('"','""')+'"').join(', ')+' FROM "'+source.table.replaceAll('"','""')+'" LIMIT 201').all() as Record<string,unknown>[];
-   if(records.length>200) throw Error('Lookup exceeds 200 options. Add a bounded lookup before generating.');
-   const lookup=control.lookup; options[control.fieldId]=records.map(row=>({value:entered(source.fields.find(f=>f.id===lookup.valueFieldId)!,row[lookup.valueFieldId]),label:String(row[lookup.labelFieldId]??'')}));
+   if(records.length>200) throw new LookupLimitError();
+   const lookup=control.lookup, valueField=source.fields.find(f=>f.id===lookup.valueFieldId)!;
+   const choices=records.map(row=>({value:entered(valueField,row[lookup.valueFieldId]),label:String(row[lookup.labelFieldId]??'')}));
+   const counts=new Map<string,number>(); for(const choice of choices) counts.set(choice.label,(counts.get(choice.label)??0)+1);
+   // Keep literal unique labels reserved, even if they resemble our key-context suffix.
+   const used=new Set(choices.filter(choice=>counts.get(choice.label)===1).map(choice=>choice.label));
+   options[control.fieldId]=choices.map(choice=>{
+    if(counts.get(choice.label)===1)return choice;
+    const base=choice.label+' ('+valueField.name+': '+choice.value+')'; let label=base;
+    for(let suffix=2;used.has(label);suffix++)label=base+' ['+suffix+']';
+    used.add(label);return {...choice,label};
+   });
   }
   return {isNew,values,options,name:config.displayFields.map(id=>values[id]).filter(Boolean).join(' · '),impacts:isNew?[]:impacts(db,config.source,keys(config,parameters))};
  } finally {db.close();}

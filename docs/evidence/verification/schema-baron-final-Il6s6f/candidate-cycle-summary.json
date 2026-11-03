@@ -1,0 +1,44 @@
+{
+  "revision": "f9e041142c288627bf644106f21df977e1cf3c49",
+  "cycles": [
+    {
+      "cycle": 1,
+      "passed": false,
+      "phases": [
+        {
+          "phase": "regeneration",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-Il6s6f/cycle1-regeneration.json",
+            "sha256": "cffd6dae06f3a221a4a5976288de4906cde2341d3ef448abe66b303213cff992"
+          }
+        },
+        {
+          "phase": "independence",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-Il6s6f/cycle1-independence.json",
+            "sha256": "f6e4ddce911df9c268b27a370dc4d5dbf5c543d92f96f6254eebbba38d9dd345"
+          }
+        },
+        {
+          "phase": "access",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-Il6s6f/cycle1-access.json",
+            "sha256": "ed17d9f8b397c5e02ec498ec7d2ac467a743f6d729a63f3821ad66eb90cddb26"
+          }
+        },
+        {
+          "phase": "variant",
+          "passed": false,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-Il6s6f/cycle1-variant.json",
+            "sha256": "c6d84053cae10b3a53139f6892e99fc2bdbc25f7cfc7b131f2617cb532220267"
+          }
+        }
+      ]
+    }
+  ],
+  "review": "Pending independent WP09"
+}

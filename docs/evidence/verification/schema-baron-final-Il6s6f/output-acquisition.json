@@ -1,0 +1,13 @@
+{
+  "name": "output-acquisition",
+  "revision": "f9e041142c288627bf644106f21df977e1cf3c49",
+  "command": [
+    "node",
+    "scripts/release/acquire-output.mjs"
+  ],
+  "started": "2026-11-02T18:46:51.344Z",
+  "finished": "2026-11-02T18:46:55.125Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

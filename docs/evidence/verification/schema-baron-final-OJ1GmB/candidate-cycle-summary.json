@@ -1,0 +1,162 @@
+{
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "cycles": [
+    {
+      "cycle": 1,
+      "passed": true,
+      "phases": [
+        {
+          "phase": "regeneration",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-regeneration.json",
+            "sha256": "72e39b1afdc7b869505ccffc9b82a2f9ee0f2a85e3e0cab448a9a3c1f7d9a73e"
+          }
+        },
+        {
+          "phase": "independence",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-independence.json",
+            "sha256": "49a200e40c1ebdd84447a10df5269f0b2df39f8f3dbedfdcc68c7bacf80f94d2"
+          }
+        },
+        {
+          "phase": "access",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-access.json",
+            "sha256": "371e1ef01dd04f84216aa92651fc2adeddd96f711e29c8aea8a3d6fdf3f2fddb"
+          }
+        },
+        {
+          "phase": "variant",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-variant.json",
+            "sha256": "27eeac92120625273fbce6a3379cc303f943fed177e6a0dd3de4aa3ac8ee3f40"
+          }
+        },
+        {
+          "phase": "drafts",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-drafts.json",
+            "sha256": "938a3dfcfecb88af67f04a7eb4c46a86813f1adc4167ef54653041f676cdbbb0"
+          }
+        },
+        {
+          "phase": "recovery",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-recovery.json",
+            "sha256": "82385e5a0d5d78552f9e8597ce15819e417c17be0041408093de3cb4d8fd0e8f"
+          }
+        },
+        {
+          "phase": "parity",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-parity.json",
+            "sha256": "8501dcaef26eb5cab1b1a84ad8a261af9d829c517a1cd46eec5487b30a970389"
+          }
+        },
+        {
+          "phase": "performance",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-performance.json",
+            "sha256": "95fd4073fb8237f57fc5e8598ef3fdc53dc7385566f75e0cbdf07cfdfe5974e7"
+          }
+        },
+        {
+          "phase": "fault",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle1-fault.json",
+            "sha256": "05017a82cbe5545cce7caf54be5aefab084d5176c86df36d024692653522527d"
+          }
+        }
+      ]
+    },
+    {
+      "cycle": 2,
+      "passed": true,
+      "phases": [
+        {
+          "phase": "regeneration",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-regeneration.json",
+            "sha256": "8072e538336483bc147c4b6c98bf9a5d90deabfa7c97b0ed928ced823838ba78"
+          }
+        },
+        {
+          "phase": "independence",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-independence.json",
+            "sha256": "349544110fbd2ecfbacd0b3a2d28966e0044e75738aebe29094b4d926b33ae53"
+          }
+        },
+        {
+          "phase": "access",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-access.json",
+            "sha256": "fa0af76f3d5ca03908d4bc6320652d1c156a5a63d853058fe6e3ecaaffa2eabb"
+          }
+        },
+        {
+          "phase": "variant",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-variant.json",
+            "sha256": "d5ab6548f0e962462216abd9ea18265327f6f50683c960b7e9cc0d722ece7e48"
+          }
+        },
+        {
+          "phase": "drafts",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-drafts.json",
+            "sha256": "31a90200c46a3f3ba428fe780e602083e1b505505e45f470df92f7543930f14c"
+          }
+        },
+        {
+          "phase": "recovery",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-recovery.json",
+            "sha256": "096702fa2da83cc1500e54459f526a40c5655e51a604a6dc2c7a069c0840f3f7"
+          }
+        },
+        {
+          "phase": "parity",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-parity.json",
+            "sha256": "577ddfe35e2cb25be1240543018f5cc63d63b9f7e863ae5a7d5d5276e3d094ee"
+          }
+        },
+        {
+          "phase": "performance",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-performance.json",
+            "sha256": "1d54f77116dc1a83b600fdf704d1e98c02ca6e1ee8455ec97d47cfa41721f149"
+          }
+        },
+        {
+          "phase": "fault",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-OJ1GmB/cycle2-fault.json",
+            "sha256": "46d6ed71f4bb5200cede8eb8810ecbb72513e325a3d68687f67c780d4e99bce4"
+          }
+        }
+      ]
+    }
+  ],
+  "review": "Pending independent WP09"
+}

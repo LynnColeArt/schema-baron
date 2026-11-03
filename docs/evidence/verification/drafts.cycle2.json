@@ -1,0 +1,103 @@
+{
+  "revision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4",
+  "productionRepairRevision": "5164a11d45e9a386739a6f1ddaa433a3974f01d7",
+  "scope": "WP05 R1 plus original mixed Studio-owner draft cases; full two-app aggregation and final performance verdict remain WP08",
+  "retries": 0,
+  "junit": {
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "wallSeconds": 74.87063400000001
+  },
+  "focusedTests": {
+    "files": 6,
+    "tests": 46,
+    "exit": 0
+  },
+  "checks": {
+    "typecheck": 0,
+    "fullBuild": 0,
+    "diffLint": 0,
+    "credentials": 0,
+    "scopedAxeViolations": 0,
+    "canonicalHeadGate": {
+      "validatedHead": "0401f963e600d27369eefb04cb49a8c9b7fb1298",
+      "uiSourceRevision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4",
+      "productionRepairRevision": "5164a11d45e9a386739a6f1ddaa433a3974f01d7",
+      "exit": 0,
+      "transition": "in_progress to for_review",
+      "actualRetainedJUnit": {
+        "tests": 507,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "actualTestcaseCount": 507,
+      "junitSha256": "181c812a3f13d124131271d8273c22b0191821aa2bbca397ae938cccdb9f9381",
+      "stages": {
+        "stages": [
+          {
+            "label": "locked dependency verification",
+            "status": "passed",
+            "elapsedSeconds": 0.067483314
+          },
+          {
+            "label": "reviewed native prebuild verification",
+            "status": "passed",
+            "elapsedSeconds": 0.082574854
+          },
+          {
+            "label": "Vitest JUnit suite",
+            "status": "passed",
+            "elapsedSeconds": 210.35907759
+          }
+        ],
+        "wallSeconds": 210.520481481
+      },
+      "censusPolicy": "Positive actual retained JUnit is authoritative; no empty capture census or transition-only inference",
+      "scopeNote": "Canonical command ignored two unrelated planning dirty files; the lane was clean and no unrelated files were inspected or changed",
+      "independentReview": "pending; no self-approval"
+    },
+    "independentReview": "pending"
+  },
+  "timing": {
+    "samples": 30,
+    "feedbackP95Ms": 10.471439999997529,
+    "saveP95Ms": 78.40152999999918,
+    "saveMaxMs": 87.82561800000258,
+    "finalVerdict": "WP08"
+  },
+  "semantics": "Only explicit semantic mutations retire obsolete type-specific fields; applicable draft text survives switches/reload; undo restores model values without resurrecting discarded type-specific text",
+  "preservation": "The real UI regression rejects an invalid unselected decimal field even while another column changes type; owner snapshots and each business SQLite file byte hash show no unintended changes",
+  "artifacts": [
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.md",
+      "sha256": "38bb80d3f318e8e0831c16386c8bf17a2e8313cb48f11c663c9cabb845d0028d"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.junit.xml",
+      "sha256": "44003b88b893dc0f2f252bb751f31d21c24aadd216f446b3d6a331df8b9634ad"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.timings.json",
+      "sha256": "6408a29db5ab1974d5e30c516b4c10897331264611cf41c11c3b7028c562f840"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.accessibility.json",
+      "sha256": "16fbf40b072fb97c4883d2c9f4a49835730f5a4aaf10c1d47ca989119ac8cb0f"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.failures.json",
+      "sha256": "123109402d24e95a7904759bae33883c8974cfafb0bd312ef918da429ed070ab"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.headgate.json",
+      "sha256": "d81726382134978f3f555b8b5f1d6320a51518d0e347235cd8ba8c852375d489"
+    },
+    {
+      "path": "docs/evidence/verification/drafts.cycle2.observations.json",
+      "sha256": "c31ad594e7962a400517fbfd1883331e52a0abda1b5c6e9a1db9471f4281ceff"
+    }
+  ]
+}

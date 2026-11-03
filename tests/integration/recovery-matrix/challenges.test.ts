@@ -96,3 +96,37 @@ test('recovery output conflicts and transport challenges preserve authored bytes
   journal.observed({conflicts:['modified-owned','unknown','symlink'],security:['forged-capability','cross-origin','csrf','oversize','traversal','symlink-export','secret-redaction'],authoredPreserved:true});journal.succeed();
  }catch(error){journal.fail(error);throw error;}finally{await f.close();}
 },60000);
+
+test('explicit replay, stale revision, invalid parent/default/context and replaced reviewed DB identity never partially write',async()=>{
+ const f=await fixture(),journal=new EvidenceJournal(evidence,'rejected-contexts');
+ try{
+  journal.begin({mode:'fault',scenario:'request-validation-and-identity'});
+  const p=f.snapshot(),table=p.schema.tables.find(t=>t.physicalName==='parent')!;
+  const page={id:'request-page',route:'/request-page',title:'Request page',document:[],formIds:[]};
+  const c=f.command('project.batch',{operations:[{kind:'put',entity:'page',id:page.id,value:page}]},p.revision,'explicit-replay');
+  const accepted=(await f.send(c)).outcome;expect(accepted).toMatchObject({ok:true});
+  expect((await f.send(c)).outcome).toEqual(accepted);
+  const stable=f.snapshot(),bytes=readFileSync(join(f.root,'projects/p.json'));
+  const rejects:[string,unknown,string][]=[
+   ['stale',f.command('project.batch',{operations:[{kind:'put',entity:'page',id:page.id,value:{...page,title:'stale'}}]},p.revision),'REVISION_CONFLICT'],
+   ['idempotency', {...c,input:{operations:[{kind:'put',entity:'page',id:page.id,value:{...page,title:'reused'}}]}},'IDEMPOTENCY_CONFLICT'],
+   ['invalid-parent',f.command('form.construct',{pageId:'missing-parent',kind:'Record',source:{kind:'table',id:table.id},fieldIds:table.columns.map(c=>c.id),keyIds:table.primaryKey,actions:['insert'],links:[],style:{label:'Invalid parent'}}),'VALIDATION_FAILED'],
+   ['invalid-path',f.command('generation.preview',{target:stable.target,projectRevision:stable.revision,outputRoot:'output:../escape'}),'PATH_OUTSIDE_ROOT'],
+   ['mismatched-context',f.command('runtime.context',{generatedRevision:1,pageId:'missing-page'}),'NOT_FOUND'],
+  ];
+  rejects.push(['stale-generated-context',f.command('runtime.context',{generatedRevision:999,pageId:'page'}),'REVISION_CONFLICT']);
+  const schema=structuredClone(stable.schema);schema.revision++;schema.tables.find(t=>t.id===table.id)!.columns.find(c=>c.physicalName==='title')!.default={kind:'literal',value:7,type:{kind:'integer'}} as never;
+  rejects.push(['invalid-default',f.command('project.batch',{operations:[{kind:'put',entity:'schema',id:schema.id,value:schema}]}),'VALIDATION_FAILED']);
+  for(const [name,request,code] of rejects){const result=(await f.send(request)).outcome;expect(result,name).toMatchObject({ok:false,error:{code}});expect(f.snapshot(),name).toEqual(stable);expect(readFileSync(join(f.root,'projects/p.json')),name).toEqual(bytes);journal.observed({name,expected:code,actual:result.ok?'unexpected':result.error.code,modelUnchanged:true});}
+  const inspected=await f.good('connection.inspect',{approvedPath:'projects:app.sqlite',mode:'read-only',connectionId:stable.connections[0]!.id}) as {connection:{id:string;fingerprint:string}};
+  // Deliberate fault-fixture substitution, never a normal UI authoring shortcut.
+  const replacement=join(f.root,'projects/replacement.sqlite');const old=new Database(join(f.root,'projects/app.sqlite'),{readonly:true});try{await old.backup(replacement);}finally{old.close();}
+  const {renameSync}=await import('node:fs');renameSync(join(f.root,'projects/app.sqlite'),join(f.root,'projects/original.sqlite'));renameSync(replacement,join(f.root,'projects/app.sqlite'));
+  const db=new Database(join(f.root,'projects/app.sqlite'),{readonly:true});let tuples:unknown;try{tuples=db.prepare('SELECT * FROM parent ORDER BY id').all();}finally{db.close();}
+  const rejected=(await f.send(f.command('connection.bind',{connectionId:inspected.connection.id,fingerprint:inspected.connection.fingerprint}))).outcome;expect(rejected).toMatchObject({ok:false,error:{code:'DATABASE_CHANGED'}});expect(f.snapshot()).toEqual(stable);
+  const fresh=await f.good('connection.inspect',{approvedPath:'projects:app.sqlite',mode:'read-only',connectionId:stable.connections[0]!.id}) as typeof inspected;
+  await f.good('connection.bind',{connectionId:fresh.connection.id,fingerprint:fresh.connection.fingerprint});
+  const recovered=new Database(join(f.root,'projects/app.sqlite'),{readonly:true});try{expect(recovered.prepare('SELECT * FROM parent ORDER BY id').all()).toEqual(tuples);expect(recovered.prepare('SELECT * FROM child').all()).toEqual([{id:9,parent_id:1}]);expect(recovered.pragma('foreign_key_check')).toEqual([]);expect(recovered.pragma('integrity_check')).toEqual([{integrity_check:'ok'}]);}finally{recovered.close();}
+  journal.observed({name:'replaced-identity',rejected:'DATABASE_CHANGED',recovery:'explicit fresh inspect then bind',tuples,foreignKeys:[],integrity:'ok'});journal.succeed();
+ }catch(error){journal.fail(error);throw error;}finally{await f.close();}
+},60000);

@@ -17,22 +17,24 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: node scripts/release/acquire-output.mjs
       - run: npm run native:verify
+      # Unit/integration includes real browser consumers; install before verify.
+      - run: npx --no-install playwright install --with-deps chromium
       - run: npm run verify
         env:
           SCHEMA_BARON_LINT_BASE: ${{ github.event.pull_request.base.sha || 'HEAD^' }}
+          SCHEMA_BARON_PARITY_EVIDENCE: ${{ runner.temp }}/schema-baron-${{ github.run_id }}-${{ github.run_attempt }}/parity
+          SCHEMA_BARON_RECOVERY_EVIDENCE: ${{ runner.temp }}/schema-baron-${{ github.run_id }}-${{ github.run_attempt }}/recovery
+          SCHEMA_BARON_MIGRATION_EVIDENCE: ${{ runner.temp }}/schema-baron-${{ github.run_id }}-${{ github.run_attempt }}/migration
       - run: npm audit --audit-level=low
-      # Browser journeys are activated by real e2e tests; no pass-with-no-tests flag.
-      - name: Browser acceptance when implemented
-        shell: bash
-        run: |
-          if test -d tests/e2e && find tests/e2e -name '*.spec.ts' -print -quit | read -r file; then
-            npx --no-install playwright install --with-deps chromium
-            proof_root=$(mktemp -d)
-            export SCHEMA_BARON_EQUIPMENT_STUDY="$proof_root/equipment.json"
-            export SCHEMA_BARON_PUBLICATION_STUDY="$proof_root/publication.json"
-            npx --no-install playwright test tests/e2e/equipment --workers=1 --retries=0 --output="$proof_root/equipment-evidence"
-            npx --no-install playwright test tests/e2e/publication/workflow.spec.ts --workers=1 --retries=0 --output="$proof_root/publication-evidence"
-            npx --no-install playwright test --grep-invert 'Equipment Desk starts blank|Publication Catalog visibly' --workers=2 --retries=0
-          else
-            echo 'NOT IMPLEMENTED: browser acceptance tests'
-          fi
+      - run: node --test scripts/acceptance/evidence.test.ts scripts/acceptance/report.test.ts
+      # Serialized legacy studies plus two fresh author -> independent consumer cycles.
+      # Missing/stale portability handoff remains a hard failure.
+      - run: node scripts/acceptance/run.mjs browser
+      - name: Retain sanitized verification reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: studio-verification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: docs/evidence/verification/schema-baron-final-*/**/*.json
+          if-no-files-found: error
+          include-hidden-files: false

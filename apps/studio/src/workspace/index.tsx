@@ -4,7 +4,7 @@ import {RuntimeControls} from '../runtime-ui/index.js';
 import {SourceEditor} from '../source-editor/index.js';
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, FormEvent } from "react";
-import { createId } from "@schema-baron/model";
+import { createId, entitySchemas } from "@schema-baron/model";
 import type { Control, Form, Page, Project, LiteralValue } from "@schema-baron/model";
 import { StudioClient, OwnerError } from "../project-ui/api.js";
 import type { Capabilities, Summary } from "../project-ui/api.js";
@@ -43,6 +43,7 @@ import {
 } from "./state.js";
 import type { Change, Editor, Kind, ObjectValue, View } from "./state.js";
 import { restore, retain } from "./session.js";
+import { useDraftFocus } from "./draft-focus.js";
 
 type Modal =
   | "wizard"
@@ -140,6 +141,7 @@ export default function Workspace() {
         ].find((v) => v.id === view.selected)
       : undefined;
   const activePage = model?.pages.find((p) => p.id === view.activePage);
+  const propertyFocus = useDraftFocus(project?.id ?? "", `${view.selected}:${view.propertyTab}`, !!project && !schemaActive && !queryActive && !modal, view.activePage);
   const dirty =
     Object.keys(editor.drafts).length > 0 || incompleteScalars(editor.buffers) || pendingDocuments(editor.documents);
   const conflicts = Object.values(editor.drafts).filter(
@@ -392,6 +394,16 @@ export default function Workspace() {
       setProject(snapshot);
 
       const ops = operations(merged);
+      const invalid = ops.flatMap(op => {
+        if (op.kind !== "put") return [];
+        const parsed = entitySchemas[op.entity].safeParse(op.value);
+        return parsed.success ? [] : parsed.error.issues.map(issue => ({
+          code: "INVALID_INPUT" as const, severity: "error" as const,
+          objectId: op.id, field: String(issue.path[0] ?? ""),
+          message: `${issue.path.join(".")}: ${issue.message}. Your draft is retained.`,
+        }));
+      });
+      if (invalid.length) throw new OwnerError("INVALID_INPUT", "Correct the highlighted properties before saving.", invalid);
       if (ops.length) await client.batch(snapshot, ops, createId());
       const saved = await client.snapshot(snapshot.id);
       state.current = { ...state.current, project: saved };
@@ -1392,7 +1404,7 @@ export default function Workspace() {
                     "No object selected"
                   )}
                 </div>
-                <div className="property-grid">
+                <div className="property-grid" {...propertyFocus}>
                   {properties()}
                   {selected && editor.drafts[selected.id]?.conflicts.length ? (
                     <div className="conflict" role="alert">

@@ -63,7 +63,7 @@ test('authored Search and Record modules transact against independent quoted/com
  writeFileSync(join(output,'tests/record-behavior.mjs'),`
 import assert from 'node:assert/strict';
 import Database from 'better-sqlite3';
-import {execute,load} from '../server/record-service.ts';
+import {execute,load,LookupLimitError,recordLoadMessage} from '../server/record-service.ts';
 import {automaticKey,connect} from '../server/record-repository.ts';
 import {readGrid} from '../server/repository.ts';
 import {loadGrid} from '../server/grid-0.ts';
@@ -112,6 +112,27 @@ for(const table of ['ordinary','intkey','desckey']) {
 const grid=${JSON.stringify(ir.routes[0]!.grids[0])};const list={table:grid.source.name,fields:grid.source.fields,search:grid.search,sorting:grid.sorting,pageSize:1};
 assert.equal(readGrid(list,{[grid.id+':filter:title']:'Other'},grid.id).rows.length,1);assert.ok(readGrid(list,{[grid.id+':sort']:'title; DROP TABLE parents'},grid.id).error);assert.ok(readGrid(list,{[grid.id+':page']:'-1'},grid.id).error);assert.equal(readGrid(list,{[grid.id+':filter:title']:"' OR 1=1 --"},grid.id).rows.length,0);
 assert.equal(loadGrid({[grid.id+':filter:title']:'Other'}).rows.length,1);assert.ok(loadGrid({[grid.id+':sort']:'unknown-field'}).error);assert.ok(loadGrid({[grid.id+':direction']:'sideways'}).error);
+// Exercise emitted lookup service against real rows, including private-error sanitization.
+const newParameters={[cfg.id+':mode']:'new'};
+assert.equal(load(cfg,newParameters).options.parent[0].label,'Restricted');
+db.prepare('INSERT INTO parents VALUES(?,?)').run(2,'Restricted');
+db.prepare('INSERT INTO parents VALUES(?,?)').run(3,'Restricted (pk: 1)');
+const choices=load(cfg,newParameters).options.parent;
+assert.deepEqual(choices.map(choice=>choice.value),['1','2','3']);
+assert.equal(new Set(choices.map(choice=>choice.label)).size,3);
+assert.equal(choices[2].label,'Restricted (pk: 1)');
+assert.match(choices[0].label,/Restricted.*pk.*1/);assert.match(choices[1].label,/Restricted.*pk.*2/);
+const beforeLookup=db.prepare('SELECT * FROM parents ORDER BY pk').all();
+const lookupInsert=execute(cfg,action('insert'),newParameters,{tenant:'lookup',seq:'1',title:'Selected second duplicate',parent:choices[1].value,amount:''});
+assert.ok(lookupInsert.saved);assert.equal(db.prepare('SELECT parent FROM "register "" rows" WHERE tenant=?').get('lookup').parent,2n);assert.deepEqual(db.prepare('SELECT * FROM parents ORDER BY pk').all(),beforeLookup);
+for(let id=4;id<=200;id++)db.prepare('INSERT INTO parents VALUES(?,?)').run(id,'Parent '+id);
+assert.equal(load(cfg,newParameters).options.parent.length,200);
+const beforeExceeded=db.prepare('SELECT count(*) FROM "register "" rows"').pluck().get();
+db.prepare('INSERT INTO parents VALUES(?,?)').run(201,'Beyond supported bound');
+assert.throws(()=>load(cfg,newParameters),LookupLimitError);
+try {load(cfg,newParameters);} catch(error) {assert.match(recordLoadMessage(error),/lookup.*200/i);}
+assert.equal(db.prepare('SELECT count(*) FROM "register "" rows"').pluck().get(),beforeExceeded);
+assert.equal(recordLoadMessage(new Error('private/database/path and identity secret')),'The record could not be loaded. Check its complete key and the configured database.');
 db.close();console.log('Independent Record/Search SQLite assertions passed');
 `);
  run(['--conditions=react-server','tests/record-behavior.mjs']);

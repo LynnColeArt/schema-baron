@@ -1,0 +1,177 @@
+{
+  "note": "Raw artifacts remain private and are not committed. These are integrity references only.",
+  "artifacts": [
+    {
+      "privateArtifact": "01-discovery.mjs",
+      "sha256": "48fe070443c59c4481ca22735afd8ba9d79047d9d1733551dbc3b9f56ed1a01c"
+    },
+    {
+      "privateArtifact": "02-schema.mjs",
+      "sha256": "d06e231a968e7c6c74d9efc42094092bffd5bf8e89ed799f488acadbb50ec54b"
+    },
+    {
+      "privateArtifact": "03-design.mjs",
+      "sha256": "e550b65a54949f7d7fdd2547cc8bf583020effcf8fc903c551a0e3faa3577977"
+    },
+    {
+      "privateArtifact": "04-promote.mjs",
+      "sha256": "ad84062b2ff33b14b9267ce64742b93fc35549097acb94ee4e18c6b224f5440d"
+    },
+    {
+      "privateArtifact": "05-generate.mjs",
+      "sha256": "0ee4c8acee0389799b96be626b0c7305dda033ca2e56be7a7e5e82b6e720a530"
+    },
+    {
+      "privateArtifact": "06-hook.mjs",
+      "sha256": "426c6589268d321cf92a0a91427fbcdf34b89aeb670ca55556bd297c6dc7b0ef"
+    },
+    {
+      "privateArtifact": "07-hook-write.mjs",
+      "sha256": "f52ae6dda2afcebce79b778fd0bd53738947b93329a603f8c711c95cf3da0f94"
+    },
+    {
+      "privateArtifact": "08-runtime.mjs",
+      "sha256": "61024cd2f91c99fecd38fd07d53195a626fc42f2fc3c0bf55d1b41c1c9a9baab"
+    },
+    {
+      "privateArtifact": "09-visitor-initial.first.mjs",
+      "sha256": "9088908d9307d375fa62b5e9b73818372b2c8394086e6a9890d7dc2c1b3a3279"
+    },
+    {
+      "privateArtifact": "09-visitor-initial.mjs",
+      "sha256": "56e0c3f5c01e15afe097f53b2d897a4195841c876bb229e5a140d05c5a5ff5b1"
+    },
+    {
+      "privateArtifact": "09-visitor-initial.second.mjs",
+      "sha256": "b9824ddd8d9d3984a82fb8d5045b040429ba789301ca31535626feb1351fcd61"
+    },
+    {
+      "privateArtifact": "09-visitor-initial.third.mjs",
+      "sha256": "b52b5e99e7286d9cd70f5f1181aafab649288fe73898a76399edb3d3dfae8aac"
+    },
+    {
+      "privateArtifact": "10-visitor-data.mjs",
+      "sha256": "88df66b2ee0c1d6038a1f834151e98bbd97ab597177ed85b81546c832d4b1340"
+    },
+    {
+      "privateArtifact": "11-visitor-complete.first.mjs",
+      "sha256": "81e0ca20443b67a22f50d1e9e27a48976bb00a1cdf5dea3fec1c6b2dea67ec63"
+    },
+    {
+      "privateArtifact": "11-visitor-complete.mjs",
+      "sha256": "131624e39061d484a9d4977573e269d4118fc64e93ada1c966d6884ee386a769"
+    },
+    {
+      "privateArtifact": "12-mcp-inspect-probes.mjs",
+      "sha256": "b781dec98b1c70b69ac0b36ac2a4a72d7d018db0b0de3cb6b7f7904b947a4732"
+    },
+    {
+      "privateArtifact": "13-parent-auth.mjs",
+      "sha256": "22222c83528091ad1bf779105c156ed3c5283fef11b6869fc3fa03f7a4c1ccb3"
+    },
+    {
+      "privateArtifact": "14-negatives.first.mjs",
+      "sha256": "3d87db58505a7b7696c5ba0dcc585f38a39ffe9187af3757796735f519a0ba7b"
+    },
+    {
+      "privateArtifact": "14-negatives.mjs",
+      "sha256": "50d8e430ba7b0aa08ceb02ef9fbb3309e9dcc2e6d16c73a1da3de824081bcf59"
+    },
+    {
+      "privateArtifact": "14-negatives.second.mjs",
+      "sha256": "af67aa16beedd04e52c0ec20a19c9ca5d4eb971996c824b6173ad93e8fd6c645"
+    },
+    {
+      "privateArtifact": "15-regenerate.mjs",
+      "sha256": "c1fe4f0f04c2370e84965c24d16511400b6da5358b562eba8bf8cfa11a60f820"
+    },
+    {
+      "privateArtifact": "16-visitor-regen.mjs",
+      "sha256": "4d4a539d45157e888548a1fe4e402ff788b287dbee4256714717d660222bf6c2"
+    },
+    {
+      "privateArtifact": "17-final-inspect.mjs",
+      "sha256": "05cd9ffb4a7c3ecf572ab8e5018fdc9da48cd7e288e5c7015d42076416b08fea"
+    },
+    {
+      "privateArtifact": "18-close.mjs",
+      "sha256": "29999d1524f542f97598c86f545351d2adea49b158381497eacef1cf785f1570"
+    },
+    {
+      "privateArtifact": "build.mjs",
+      "sha256": "313189f8a387472a70a1018f98f9948de13576e87ef48e83823b7f22663778ea"
+    },
+    {
+      "privateArtifact": "common.mjs",
+      "sha256": "bcbe75c9d838d3e8aa7d47c0a66f53d3d890f452b7cac6ad9f94aeb6ff8daeee"
+    },
+    {
+      "privateArtifact": "export-privacy.mjs",
+      "sha256": "fa34bb36f17b9327ab4eb60dd2dc754fdb9175e1200948a4c67caa379e9996aa"
+    },
+    {
+      "privateArtifact": "identity-observe.mjs",
+      "sha256": "68407037b2343f4987c4b13ffbea3b07c7e998fd8819870937e632ed74375932"
+    },
+    {
+      "privateArtifact": "install-0.log",
+      "sha256": "e14dc8c541eac30af07712347b11468973fefe05eb3c6b7f528a8d7791b99ac6"
+    },
+    {
+      "privateArtifact": "install-1-active.log",
+      "sha256": "e14dc8c541eac30af07712347b11468973fefe05eb3c6b7f528a8d7791b99ac6"
+    },
+    {
+      "privateArtifact": "install-1.log",
+      "sha256": "e14dc8c541eac30af07712347b11468973fefe05eb3c6b7f528a8d7791b99ac6"
+    },
+    {
+      "privateArtifact": "install-2.log",
+      "sha256": "e14dc8c541eac30af07712347b11468973fefe05eb3c6b7f528a8d7791b99ac6"
+    },
+    {
+      "privateArtifact": "oracle.mjs",
+      "sha256": "d0379058f3a7b8fa8efa756c1cfe80f3dcc882d962188584f696764102245064"
+    },
+    {
+      "privateArtifact": "resources.jsonl",
+      "sha256": "b82d63073daed2e31e30e79ce6fe0d55c73b64ae809fe46d0e0f0bb82583b816"
+    },
+    {
+      "privateArtifact": "run.mjs",
+      "sha256": "d47ffd96c96c9f68b197382521b61f4d7d77420831060f110c66eda551b70333"
+    },
+    {
+      "privateArtifact": "status.mjs",
+      "sha256": "dd6f754b631e8d70928968f8d8661c1e4fc38db955097f0e47816d32aeee2f0a"
+    },
+    {
+      "privateArtifact": "transcript.jsonl",
+      "sha256": "3e02af9fe7d8836895302eecc0cf2a2dbb35c3267f09cc0a0a266b6233583000"
+    },
+    {
+      "privateArtifact": "visitor-common.mjs",
+      "sha256": "d1332592f17da1cf49da47ca81ff8dd14fe37eb04a52c5c8f7c28e322b52bcdb"
+    },
+    {
+      "privateArtifact": "visitor-complete-first-red.txt",
+      "sha256": "3793a4e71b3ef077f8a5d343cfab1b7a3d4385fd61ccc1dfaf65da26c5c05379"
+    },
+    {
+      "privateArtifact": "visitor-complete-second-red.txt",
+      "sha256": "029e2182a73432d8aa7f39293ac9921d423c7487917c0cfc47951fd153cada4f"
+    },
+    {
+      "privateArtifact": "visitor-first-red.txt",
+      "sha256": "45cd1ce691204b8bc88c680e145240796c68cb0734d0426a0fc0593bacb04fc8"
+    },
+    {
+      "privateArtifact": "visitor-next-red.txt",
+      "sha256": "878e09625fd03d512f81b3f4a04eb7bfc247b6a512a44dc491312d7c74c5244d"
+    },
+    {
+      "privateArtifact": "visitor-third-red.txt",
+      "sha256": "fe98a9454f541df695890795711883810de868a5882dff722adaf8c7f79df8c0"
+    }
+  ]
+}

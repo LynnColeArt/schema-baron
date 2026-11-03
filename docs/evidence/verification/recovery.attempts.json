@@ -1,0 +1,38 @@
+{
+  "classification": "Harness corrections; no product defect found",
+  "attempts": [
+    {
+      "attempt": "browser-01",
+      "result": "2 parity harness failures; Library nullable migration and destructive Cancel succeeded, restoration harness failed",
+      "cause": "Forged MCP config was shorter than required32 chars; restoration enumerated acknowledgements before modal readiness",
+      "correction": "Valid-length forged fixture; await named review and checkbox before checking acknowledgements"
+    },
+    {
+      "attempt": "focused-01",
+      "result": "22passed,1failed",
+      "cause": "Invalid-default test used wrong expression property; correctly rejected INVALID_INPUT before semantic validation",
+      "correction": "Typed literal uses type; then semantic invalid default rejected VALIDATION_FAILED"
+    },
+    {
+      "attempt": "browser-02",
+      "result": "2passed,1failed",
+      "cause": "Library migration, destructive Cancel, explicit restoration and unrelated isolation all passed; after reload runtime field reset, defaultport occupied",
+      "actual": "PROJECT_BUSY; legitimate rejected start, no unrelated service mutation or inspection",
+      "correction": "Restore recorded owned port explicitly after reload"
+    },
+    {
+      "attempt": "browser-03",
+      "result": "3passed",
+      "additional": "Owned occupied-port sentinel survives rejection; original-port explicit retry succeeds"
+    },
+    {
+      "attempt": "focused-03",
+      "result": "23passed"
+    },
+    {
+      "attempt": "final-clean-source",
+      "sourceSHA": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+      "result": "3acceptance and23focused passed with zero retries"
+    }
+  ]
+}

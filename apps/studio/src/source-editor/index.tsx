@@ -5,8 +5,12 @@ import type {Project} from '@schema-baron/model';
 import type {StudioClient} from '../project-ui/api.js';
 /** Code mode always uses owner commands. A file hash is captured by Read and must
  * still match on Save; the buffer stays visible on every failed write. */
-export function SourceEditor({project,client,onChanged}:{project:Project;client:StudioClient;onChanged:()=>Promise<void>}) {
- const [output,setOutput]=useState('output:app'),[path,setPath]=useState('app/page.tsx'),[id,setId]=useState(''),[content,setContent]=useState(''),[hash,setHash]=useState(''),[loaded,setLoaded]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[name,setName]=useState(''),[kind,setKind]=useState<'validator'|'action'|'service'|'event'>('validator');
+type Props={project:Project;client:StudioClient;onChanged:()=>Promise<void>};
+export function SourceEditor(props:Props) {
+ return <ProjectSourceEditor key={`${props.project.id}:${props.project.outputConfig.approvedRootId}:${props.project.outputConfig.relativePath}`} {...props}/>;
+}
+function ProjectSourceEditor({project,client,onChanged}:Props) {
+ const [output,setOutput]=useState(`${project.outputConfig.approvedRootId}:${project.outputConfig.relativePath}`),[path,setPath]=useState('app/page.tsx'),[id,setId]=useState(''),[content,setContent]=useState(''),[hash,setHash]=useState(''),[loaded,setLoaded]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[name,setName]=useState(''),[kind,setKind]=useState<'validator'|'action'|'service'|'event'>('validator');
  const extension=project.extensionContracts.find(c=>c.id===id);
  const command=<T,>(operation:string,input:unknown)=>client.read<T>(`projects/${encodeURIComponent(project.id)}/commands`,{requestId:createId(),operation,expectedRevision:project.revision,input});
  const key=output+':'+(extension?.relativePath??path);

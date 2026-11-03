@@ -8,10 +8,11 @@ import { createId, expressionSchema, idSchema, columnSchema, scalarTypeSchema, t
 import type { MutableRefObject } from 'react';
 import type { Diagnostic, Expression, Project, ReviewedPlan, ScalarType, StableId, Table } from '@schema-baron/model';
 import { z } from 'zod';
+import { useDraftFocus } from '../workspace/draft-focus.js';
 import { OwnerError } from '../project-ui/api.js';
 import type { Capabilities, StudioClient } from '../project-ui/api.js';
 import { Dialog, Tabs } from '../workspace/chrome.js';
-import { blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations, visibleTables } from './state.js';
+import { applicableSchemaBuffers, blankTable, changeTable, checkpointDrafts, reconcileDrafts, tableOperations, visibleTables } from './state.js';
 import type { Drafts } from './state.js';
 import { retainNodeMeasurements } from '../flow-map/state.js';
 import type { NodeMeasurements } from '../flow-map/state.js';
@@ -299,8 +300,10 @@ export function SchemaEditor({
   const tables = useMemo(() => visibleTables(project.schema.tables, drafts), [project.schema.tables, drafts]);
   const table = tables.find(t => t.id === selected),
     currentColumn = table?.columns.find(c => c.id === column);
-  const invalidDefaultIds=Object.keys(buffers).filter(id=>tables.some(t=>t.columns.some(c=>c.id===id)));const draftCount=new Set([...Object.keys(drafts),...tables.filter(t=>t.columns.some(c=>invalidDefaultIds.includes(c.id))).map(t=>t.id)]).size;
+  const bufferedTables = tables.filter(table => Object.keys(applicableSchemaBuffers(buffers, [table])).length);
+  const draftCount = new Set([...Object.keys(drafts), ...bufferedTables.map(table => table.id)]).size;
   const dirty = draftCount > 0;
+  const draftFocus = useDraftFocus(project.id, `schema:${selected}:${column}:${tab}`, active);
   const inspectedTable = project.connections[0]?.inspectedSchema?.tables.find(t => t.id === selected);
   const inspectedColumn = inspectedTable?.columns.find(c => c.id === column);
   const physicalDeclaration = project.connections[0]?.physical?.tables.find(t => t.name === inspectedTable?.physicalName)?.columns.find(c => c.name === inspectedColumn?.physicalName)?.type;
@@ -402,6 +405,9 @@ export function SchemaEditor({
     return () => clearInterval(timer);
   }, [review]);
   function update(value: Table | null, id = value?.id) {
+    // Explicit schema changes retire fields they remove. View switches and recovery do not.
+    const desired = visibleTables(project.schema.tables, changeTable(drafts, project.schema.tables, value, id));
+    setBuffers(current => applicableSchemaBuffers(current, desired));
     setPast(p => [...p.slice(-49), drafts]);
     setFuture([]);
     setDrafts(d => changeTable(d, project.schema.tables, value, id));
@@ -464,7 +470,7 @@ export function SchemaEditor({
       setDrafts(d => reconcileDrafts(d, snapshot.schema.tables));
       onChanged(snapshot);
       if (Object.values(merged).some(d => d.conflicts.length)) throw new Error('Service edits conflict with schema drafts. Choose Keep draft or Use service on each conflict.');
-      if (Object.keys(current.current.buffers).some(id=>visibleTables(snapshot.schema.tables,merged).some(t=>t.columns.some(c=>c.id===id)))) throw new Error('Correct invalid default values before saving.');
+      if (Object.keys(applicableSchemaBuffers(current.current.buffers, visibleTables(snapshot.schema.tables, merged))).length) throw new Error('Correct incomplete numeric or default values before saving. Your text is retained.');
       const desired = {
         ...snapshot,
         schema: {
@@ -528,7 +534,7 @@ export function SchemaEditor({
       setBusy(false);
     }
   }
-  const stale = !!review && (dirty || invalidDefaultIds.length > 0 || review.sourceRevision !== project.revision || clock >= Date.parse(review.expiresAt));
+  const stale = !!review && (dirty || bufferedTables.length > 0 || review.sourceRevision !== project.revision || clock >= Date.parse(review.expiresAt));
   async function apply() {
     if (!review || stale) return;
     setBusy(true);
@@ -668,7 +674,7 @@ export function SchemaEditor({
         setDrafts(future[0]!);
         setFuture(f => f.slice(1));
       }}>Redo schema</button><span>{draftCount} drafts · r{project.revision}</span></div>
- {draftMode && <p className="schema-connection-note">Design the new database here. Complete will create these tables and keys; Back preserves your proposal.</p>}{!draftMode && !project.connections.length && <p className="schema-connection-note">No SQLite database is bound. Saved definitions remain separate from database tables. <button onClick={onConnection}>Connect SQLite…</button> to review migrations.</p>}<div className="schema-docks"><aside className="schema-explorer"><h2>Schema Explorer</h2><label className="schema-search">Find table or column<input aria-label="Find table or column" value={search} onChange={e => setSearch(e.target.value)} /></label><div className="schema-table-list">{tables.filter(t => [t.physicalName, ...t.columns.map(c => c.physicalName)].some(n => n.toLowerCase().includes(search.toLowerCase()))).map(t => <button key={t.id} aria-pressed={selected === t.id} onClick={() => select(t.id)}>{t.physicalName || 'Unnamed table'}{drafts[t.id] ? ' *' : ''}<small>{t.columns.length} columns</small></button>)}</div><p className="pane-note">{tables.length} tables · {tables.reduce((n, t) => n + t.columns.length, 0)} columns</p>{Object.entries(drafts).filter(([, d]) => !d.value).map(([id, d]) => <button key={id} onClick={() => setDrafts(ds => {
+ {draftMode && <p className="schema-connection-note">Design the new database here. Complete will create these tables and keys; Back preserves your proposal.</p>}{!draftMode && !project.connections.length && <p className="schema-connection-note">No SQLite database is bound. Saved definitions remain separate from database tables. <button onClick={onConnection}>Connect SQLite…</button> to review migrations.</p>}<div className="schema-docks" {...draftFocus}><aside className="schema-explorer"><h2>Schema Explorer</h2><label className="schema-search">Find table or column<input aria-label="Find table or column" value={search} onChange={e => setSearch(e.target.value)} /></label><div className="schema-table-list">{tables.filter(t => [t.physicalName, ...t.columns.map(c => c.physicalName)].some(n => n.toLowerCase().includes(search.toLowerCase()))).map(t => <button key={t.id} aria-pressed={selected === t.id} onClick={() => select(t.id)}>{t.physicalName || 'Unnamed table'}{drafts[t.id] ? ' *' : ''}<small>{t.columns.length} columns</small></button>)}</div><p className="pane-note">{tables.length} tables · {tables.reduce((n, t) => n + t.columns.length, 0)} columns</p>{Object.entries(drafts).filter(([, d]) => !d.value).map(([id, d]) => <button key={id} onClick={() => setDrafts(ds => {
           const copy = {
             ...ds
           };
@@ -732,16 +738,15 @@ export function SchemaEditor({
                         }>),
                         encoding: e.target.value as 'text' | 'scaled-integer'
                       }
-                    })}><option value="text">TEXT exact decimal</option><option value="scaled-integer">INTEGER scaled</option></select></label>{(['scale', 'precision'] as const).map(key => <label className="schema-field" key={key}>{key}<input aria-label={'Decimal ' + key} type="number" value={(currentColumn.type as Extract<ScalarType, {
-                      kind: 'decimal';
-                    }>)[key]} onChange={e => updateColumn({
-                      type: {
-                        ...(currentColumn.type as Extract<ScalarType, {
-                          kind: 'decimal';
-                        }>),
-                        [key]: Number(e.target.value)
+                    })}><option value="text">TEXT exact decimal</option><option value="scaled-integer">INTEGER scaled</option></select></label>{(['scale', 'precision'] as const).map(key => <label className="schema-field" key={key}>{key}<input aria-label={'Decimal ' + key} inputMode="numeric" aria-invalid={buffers[`${column}:${key}`] !== undefined} value={buffers[`${column}:${key}`] ?? (currentColumn.type as Extract<ScalarType, { kind: 'decimal' }>)[key]} onChange={e => {
+                      const text = e.target.value, bufferKey = `${column}:${key}`;
+                      if (!/^[+-]?\d+$/.test(text) || !Number.isSafeInteger(Number(text))) {
+                        setBuffers(b => ({ ...b, [bufferKey]: text }));
+                      } else {
+                        setBuffers(b => { const next = { ...b }; delete next[bufferKey]; return next; });
+                        updateColumn({ type: { ...(currentColumn.type as Extract<ScalarType, { kind: 'decimal' }>), [key]: Number(text) } });
                       }
-                    })} /></label>)}<label className="schema-field">Rounding<select aria-label="Decimal rounding" value={currentColumn.type.rounding} onChange={e => updateColumn({
+                    }} /></label>)}<label className="schema-field">Rounding<select aria-label="Decimal rounding" value={currentColumn.type.rounding} onChange={e => updateColumn({
                       type: {
                         ...(currentColumn.type as Extract<ScalarType, {
                           kind: 'decimal';

@@ -179,7 +179,11 @@ export function RuntimeControls({
       flex: 1,
       minHeight: 0,
       overflow: 'auto' as const
-    } : {})
+    } : {
+      maxHeight: '40%',
+      minHeight: 0,
+      overflow: 'auto' as const
+    })
   }}>
   <strong>Generated runtime · {state?.status ?? 'Generate output first'}</strong><p>Saved model {project.revision}{hasDrafts ? ' · unsaved draft retained' : ''} · generated tree {state?.generatedRevision ?? 'none'} (model {state?.modelRevision ?? 'none'}) · running tree {state?.runningRevision ?? 'none'}</p>
   {live && <div aria-label="Selected generated page"><h3 style={{

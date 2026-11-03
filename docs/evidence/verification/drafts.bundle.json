@@ -1,0 +1,9 @@
+{
+  "productionRepairRevision": "5870c0c0f435a282c39072fd109a3bdf4a8c1b0c",
+  "scope": "Read-only observation of full Studio build static JavaScript, all chunks; not initial-route transfer size",
+  "chunks": 89,
+  "bytes": 6579406,
+  "gzipBytes": 1901616,
+  "budget": "No bundle-byte budget is declared for this mission; observation only, no invented threshold pass",
+  "dependencyChanges": 0
+}

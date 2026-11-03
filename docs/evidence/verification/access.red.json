@@ -1,0 +1,53 @@
+{
+  "scope": "Retained actual failed attempts; no retries or erased failures",
+  "attempts": [
+    {
+      "id": "attempt1",
+      "productionBase": "5f10082ed4d3496f2415db3e924e332c66b1b750",
+      "testState": "uncommitted access test against unchanged production source",
+      "mode": "real captured anonymous RSC insert, valid CSRF and exact Origin",
+      "expected": "Sign in is required.",
+      "actual": "The submitted record parameters are invalid.",
+      "defect": "ACCESS-001",
+      "status": "failed",
+      "ownedJourneys": "both authored and populated; original remainders completed; owned processes stopped"
+    },
+    {
+      "id": "attempt2",
+      "mode": "test-oracle assumption",
+      "actual": "Visitor identity header was expected on Record but wizard authors it on lists",
+      "resolution": "Assert identity after actual list Cancel; no product change",
+      "status": "failed"
+    },
+    {
+      "id": "attempt3",
+      "mode": "real stale Record after another tab logged out",
+      "expected": "Actionable reload/sign-in guidance",
+      "actual": "CSRF validation failed.",
+      "defect": "ACCESS-002",
+      "status": "failed",
+      "note": "CSRF-first rejection was correct; its presentation needed guidance. Ambiguous Next alert locator was also corrected."
+    },
+    {
+      "id": "attempt4",
+      "status": "passed",
+      "scope": "full initial/post-state matrix before final CSRF presentation requirement"
+    },
+    {
+      "id": "final-fd0f8e7",
+      "status": "passed",
+      "scope": "actionable CSRF presentation plus full matrix; later explicit empty-parent UI Save assertion added"
+    },
+    {
+      "id": "final-92e9246",
+      "status": "passed",
+      "scope": "exact final code, including explicit empty-parent UI Save/confirmed Delete; see results"
+    }
+  ],
+  "lowerSeamRedGreen": {
+    "ACCESS-001": "2 failed/2 passed before AccessError preservation; focused auth/Record set13 passed after repair",
+    "ACCESS-002": "1 failed/4 passed before guidance;5 passed after mapping",
+    "negativeControl": "actual emitted action, injected no-op guard, spy write count1; same unauthorized no-write assertion detected red; protected guard count0",
+    "harnessFailures": "Unsupported TypeScript7 API assumption and then missing context stub in negative-control harness retained privately; corrected without production changes/dependencies"
+  }
+}
