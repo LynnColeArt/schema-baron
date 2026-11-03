@@ -1,7 +1,7 @@
 # Implementation Plan: Studio Verification and Hardening
 
-**Branch**: `feat/studio-verification-hardening` | **Date**: 2026-10-31 | **Spec**: [spec.md](spec.md)  
-**Input**: User-confirmed verification scope and delegated planning choices.  
+**Branch**: `feat/studio-verification-hardening` | **Date**: 2026-10-31 | **Spec**: [spec.md](spec.md)\
+**Input**: User-confirmed verification scope and delegated planning choices.\
 **Status**: Planning complete; implementation and acceptance have not started.
 
 ## Summary
@@ -10,15 +10,15 @@ Build reproducible acceptance around the existing Studio and generator rather th
 
 ## Technical Context
 
-**Language/Version**: Existing TypeScript 7.0.2 on Node 24.22.1 / npm 11.19.1; small existing Node test/runner scripts remain JavaScript modules.  
-**Primary Dependencies**: Existing Next 16.4.3, React 19.3.1, better-sqlite3 13.0.3, Vitest 5.0.5, Playwright 1.64.1 and current lockfiles. No dependency additions/upgrades selected.  
-**Storage**: Private SQLite business/identity stores and canonical project metadata; replaceable generated source remains separate. Acceptance evidence is sanitized JSON/Markdown/screenshots with private raw results outside Git.  
-**Testing**: Vitest behavior/integration tests, Playwright author/visitor journeys, independent read-only SQLite oracles, fault-controlled isolated recovery tests, two fresh complete browser cycles and a separate reviewer walkthrough.  
-**Target Platform**: Supported Linux x64/glibc with loopback services, pinned tools and denied lifecycle scripts.  
-**Project Type**: Existing npm workspace; Studio + core/model/storage/SQLite/generator packages, generated independent Next app.  
-**Performance Goals**: NFR-004/005: bounded fixture, 30 UI samples, p95 feedback ≤2 seconds, valid Save ≤5 seconds, zero unintended draft/caret changes. Record hardware/load and raw samples; do not silently relax thresholds.  
-**Constraints**: No hidden model/data/source repairs; no upgrades, merge or deployment; preserve user studies and historical captures; use documented runtime commands and explicit owned process shutdown only.  
-**Scale/Scope**: Two unrelated applications, 20 mandatory cases, 17 FR, 6 NFR, 6 C; each app regenerated twice in each of two clean cycles. Current lookup support is one table value field and at most 200 options.  
+**Language/Version**: Existing TypeScript 7.0.2 on Node 24.22.1 / npm 11.19.1; small existing Node test/runner scripts remain JavaScript modules.\
+**Primary Dependencies**: Existing Next 16.4.3, React 19.3.1, better-sqlite3 13.0.3, Vitest 5.0.5, Playwright 1.64.1 and current lockfiles. No dependency additions/upgrades selected.\
+**Storage**: Private SQLite business/identity stores and canonical project metadata; replaceable generated source remains separate. Acceptance evidence is sanitized JSON/Markdown/screenshots with private raw results outside Git.\
+**Testing**: Vitest behavior/integration tests, Playwright author/visitor journeys, independent read-only SQLite oracles, fault-controlled isolated recovery tests, two fresh complete browser cycles and a separate reviewer walkthrough.\
+**Target Platform**: Supported Linux x64/glibc with loopback services, pinned tools and denied lifecycle scripts.\
+**Project Type**: Existing npm workspace; Studio + core/model/storage/SQLite/generator packages, generated independent Next app.\
+**Performance Goals**: NFR-004/005: bounded fixture, 30 UI samples, p95 feedback ≤2 seconds, valid Save ≤5 seconds, zero unintended draft/caret changes. Record hardware/load and raw samples; do not silently relax thresholds.\
+**Constraints**: No hidden model/data/source repairs; no upgrades, merge or deployment; preserve user studies and historical captures; use documented runtime commands and explicit owned process shutdown only.\
+**Scale/Scope**: Two unrelated applications, 20 mandatory cases, 17 FR, 6 NFR, 6 C; each app regenerated twice in each of two clean cycles. Current lookup support is one table value field and at most 200 options.\
 **Engineering Alignment**: Use the existing architecture and test tools. Author through Studio, observe independently, fix shared product behavior where needed, replay exact scenarios. User delegated these choices; no unresolved planning questions.
 
 ## Charter Check

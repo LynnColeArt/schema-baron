@@ -1,7 +1,7 @@
 # Specification Quality Checklist: Schema Baron Studio
 
-**Purpose**: Specification readiness for planning, not evidence of implemented behavior.  
-**Created**: 2026-10-26  
+**Purpose**: Specification readiness for planning, not evidence of implemented behavior.\
+**Created**: 2026-10-26\
 **Feature**: [spec.md](../spec.md)
 
 ## Content Quality

@@ -31,9 +31,9 @@ findings: []
 
 # Specification Analysis Report
 
-**Mission**: schema-baron-studio-01M5W3Q9  
-**Analysis scope**: finalized spec, plan, tasks, 26 prompts, data model, command/API contracts, research, acceptance matrix and walkthrough.  
-**Planning commit**: 90e6523e79507b1b4a057d51549a89b608180ca8  
+**Mission**: schema-baron-studio-01M5W3Q9\
+**Analysis scope**: finalized spec, plan, tasks, 26 prompts, data model, command/API contracts, research, acceptance matrix and walkthrough.\
+**Planning commit**: 90e6523e79507b1b4a057d51549a89b608180ca8\
 **Status**: Planning consistency ready; this is not implementation verification or a security audit.
 
 ## Findings

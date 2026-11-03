@@ -1,7 +1,7 @@
 # Work packages: Schema Baron Studio
 
-**Mission**: `schema-baron-studio-01M5W3Q9`  
-**Generated**: 2026-10-26T13:35:53Z  
+**Mission**: `schema-baron-studio-01M5W3Q9`\
+**Generated**: 2026-10-26T13:35:53Z\
 **Planning/consolidation branch**: `feat/schema-baron-studio`; later PR into `main`.
 
 This breakdown implements the confirmed full-app spec. Every WP is required. Priorities and milestones describe execution order, not reductions in scope. All subtasks are planned; markdown rows are references only. Status is solely event-sourced.
@@ -30,10 +30,10 @@ Explicit dependencies below and in prompt frontmatter are authoritative. The fin
 
 ## WP01 — Reproducible workspace and dependency baseline
 
-**Priority**: P1  
-**Dependencies**: None  
-**Prompt**: [tasks/WP01-reproducible-workspace-and-dependency-baseline.md](tasks/WP01-reproducible-workspace-and-dependency-baseline.md)  
-**Size**: 5 subtasks; 321 lines.  
+**Priority**: P1\
+**Dependencies**: None\
+**Prompt**: [tasks/WP01-reproducible-workspace-and-dependency-baseline.md](tasks/WP01-reproducible-workspace-and-dependency-baseline.md)\
+**Size**: 5 subtasks; 321 lines.\
 **Requirement refs**: NFR-006, NFR-010, C-001, C-005, C-006.
 
 A clean checkout has a pinned, compatible TypeScript/Node workspace and repeatable
@@ -57,10 +57,10 @@ T005 Verify bootstrap and supply-chain readiness (WP01)
 
 ## WP02 — Canonical project model and validation
 
-**Priority**: P1  
-**Dependencies**: WP01  
-**Prompt**: [tasks/WP02-canonical-project-model-and-validation.md](tasks/WP02-canonical-project-model-and-validation.md)  
-**Size**: 5 subtasks; 253 lines.  
+**Priority**: P1\
+**Dependencies**: WP01\
+**Prompt**: [tasks/WP02-canonical-project-model-and-validation.md](tasks/WP02-canonical-project-model-and-validation.md)\
+**Size**: 5 subtasks; 253 lines.\
 **Requirement refs**: FR-001, FR-003, FR-007, FR-008, FR-011, FR-016, FR-018, FR-020, FR-029, C-003, C-007.
 
 Define runtime-validated versioned entities and invariants for all downstream features,
@@ -84,10 +84,10 @@ T010 Verify generality and boundary behavior (WP02)
 
 ## WP03 — Project storage and revision-checked command core
 
-**Priority**: P1  
-**Dependencies**: WP02  
-**Prompt**: [tasks/WP03-project-storage-and-revision-checked-command-core.md](tasks/WP03-project-storage-and-revision-checked-command-core.md)  
-**Size**: 5 subtasks; 260 lines.  
+**Priority**: P1\
+**Dependencies**: WP02\
+**Prompt**: [tasks/WP03-project-storage-and-revision-checked-command-core.md](tasks/WP03-project-storage-and-revision-checked-command-core.md)\
+**Size**: 5 subtasks; 260 lines.\
 **Requirement refs**: FR-001, FR-005, FR-025, FR-029, NFR-003, NFR-007, C-003.
 
 Persist readable project definitions safely, provide the shared command registry and
@@ -111,10 +111,10 @@ T015 Verify lifecycle and exportable definitions (WP03)
 
 ## WP04 — Owner HTTP service and day-one MCP adapter
 
-**Priority**: P1  
-**Dependencies**: WP03  
-**Prompt**: [tasks/WP04-owner-http-service-and-day-one-mcp-adapter.md](tasks/WP04-owner-http-service-and-day-one-mcp-adapter.md)  
-**Size**: 5 subtasks; 257 lines.  
+**Priority**: P1\
+**Dependencies**: WP03\
+**Prompt**: [tasks/WP04-owner-http-service-and-day-one-mcp-adapter.md](tasks/WP04-owner-http-service-and-day-one-mcp-adapter.md)\
+**Size**: 5 subtasks; 257 lines.\
 **Requirement refs**: FR-001, FR-028, FR-029, NFR-004, NFR-007, C-003.
 
 Expose the same implemented commands to the browser and local MCP with one project
@@ -138,10 +138,10 @@ T020 Verify transport parity and access boundaries (WP04)
 
 ## WP05 — Compact Studio shell and project editing state
 
-**Priority**: P1  
-**Dependencies**: WP04  
-**Prompt**: [tasks/WP05-compact-studio-shell-and-project-editing-state.md](tasks/WP05-compact-studio-shell-and-project-editing-state.md)  
-**Size**: 5 subtasks; 261 lines.  
+**Priority**: P1\
+**Dependencies**: WP04\
+**Prompt**: [tasks/WP05-compact-studio-shell-and-project-editing-state.md](tasks/WP05-compact-studio-shell-and-project-editing-state.md)\
+**Size**: 5 subtasks; 261 lines.\
 **Requirement refs**: FR-001, FR-002, FR-003, FR-004, FR-005, FR-024, NFR-001, NFR-005, NFR-008, C-002.
 
 Deliver a real compact workspace with contextual object selection, blank-project setup
@@ -165,10 +165,10 @@ T025 Verify workspace and first agent-visible changes (WP05)
 
 ## WP06 — SQLite connections and lossless introspection
 
-**Priority**: P1  
-**Dependencies**: WP04, WP05  
-**Prompt**: [tasks/WP06-sqlite-connections-and-lossless-introspection.md](tasks/WP06-sqlite-connections-and-lossless-introspection.md)  
-**Size**: 5 subtasks; 253 lines.  
+**Priority**: P1\
+**Dependencies**: WP04, WP05\
+**Prompt**: [tasks/WP06-sqlite-connections-and-lossless-introspection.md](tasks/WP06-sqlite-connections-and-lossless-introspection.md)\
+**Size**: 5 subtasks; 253 lines.\
 **Requirement refs**: FR-006, FR-029, NFR-004, C-007.
 
 Connect/create real SQLite databases through Studio and MCP with explicit capabilities
@@ -192,10 +192,10 @@ T030 Verify connection safety and parity (WP06)
 
 ## WP07 — Schema diff and reviewed migration planning
 
-**Priority**: P1  
-**Dependencies**: WP06, WP02  
-**Prompt**: [tasks/WP07-schema-diff-and-reviewed-migration-planning.md](tasks/WP07-schema-diff-and-reviewed-migration-planning.md)  
-**Size**: 5 subtasks; 248 lines.  
+**Priority**: P1\
+**Dependencies**: WP06, WP02\
+**Prompt**: [tasks/WP07-schema-diff-and-reviewed-migration-planning.md](tasks/WP07-schema-diff-and-reviewed-migration-planning.md)\
+**Size**: 5 subtasks; 248 lines.\
 **Requirement refs**: FR-007, FR-008, FR-009, FR-010, NFR-003, C-007.
 
 Compile desired schema changes into immutable reviewed SQL/data-impact plans with
@@ -219,10 +219,10 @@ T035 Verify planning with independent schema assertions (WP07)
 
 ## WP08 — Visual schema table and relationship editor
 
-**Priority**: P1  
-**Dependencies**: WP05, WP07  
-**Prompt**: [tasks/WP08-visual-schema-table-and-relationship-editor.md](tasks/WP08-visual-schema-table-and-relationship-editor.md)  
-**Size**: 5 subtasks; 243 lines.  
+**Priority**: P1\
+**Dependencies**: WP05, WP07\
+**Prompt**: [tasks/WP08-visual-schema-table-and-relationship-editor.md](tasks/WP08-visual-schema-table-and-relationship-editor.md)\
+**Size**: 5 subtasks; 243 lines.\
 **Requirement refs**: FR-007, FR-008, FR-009, NFR-002, NFR-005, C-002.
 
 Create an entirely new schema through modern table editing and a selectable relationship
@@ -246,10 +246,10 @@ T040 Verify visible schema construction (WP08)
 
 ## WP09 — Migration apply, backup and crash recovery
 
-**Priority**: P1  
-**Dependencies**: WP07, WP04  
-**Prompt**: [tasks/WP09-migration-apply-backup-and-crash-recovery.md](tasks/WP09-migration-apply-backup-and-crash-recovery.md)  
-**Size**: 5 subtasks; 248 lines.  
+**Priority**: P1\
+**Dependencies**: WP07, WP04\
+**Prompt**: [tasks/WP09-migration-apply-backup-and-crash-recovery.md](tasks/WP09-migration-apply-backup-and-crash-recovery.md)\
+**Size**: 5 subtasks; 248 lines.\
 **Requirement refs**: FR-009, FR-010, FR-029, NFR-003, NFR-007.
 
 Apply reviewed schema plans with real SQLite transactions/backups, durable outcome
@@ -273,10 +273,10 @@ T045 Verify failure matrix and preservation (WP09)
 
 ## WP10 — First standalone generated public list
 
-**Priority**: P1  
-**Dependencies**: WP05, WP06, WP08, WP09  
-**Prompt**: [tasks/WP10-first-standalone-generated-public-list.md](tasks/WP10-first-standalone-generated-public-list.md)  
-**Size**: 5 subtasks; 267 lines.  
+**Priority**: P1\
+**Dependencies**: WP05, WP06, WP08, WP09\
+**Prompt**: [tasks/WP10-first-standalone-generated-public-list.md](tasks/WP10-first-standalone-generated-public-list.md)\
+**Size**: 5 subtasks; 267 lines.\
 **Requirement refs**: FR-011, FR-012, FR-025, FR-027, NFR-006, C-001, C-004, C-007.
 
 Complete the first real vertical loop: blank project to connected schema to Grid to
@@ -300,10 +300,10 @@ T050 Verify the first authoring-to-output loop (WP10)
 
 ## WP11 — Form controls, focused wizards and binding properties
 
-**Priority**: P1  
-**Dependencies**: WP08, WP10  
-**Prompt**: [tasks/WP11-form-controls-focused-wizards-and-binding-properties.md](tasks/WP11-form-controls-focused-wizards-and-binding-properties.md)  
-**Size**: 5 subtasks; 247 lines.  
+**Priority**: P1\
+**Dependencies**: WP08, WP10\
+**Prompt**: [tasks/WP11-form-controls-focused-wizards-and-binding-properties.md](tasks/WP11-form-controls-focused-wizards-and-binding-properties.md)\
+**Size**: 5 subtasks; 247 lines.\
 **Requirement refs**: FR-003, FR-004, FR-011, FR-024, NFR-005, C-002.
 
 Create and then edit Grid, Record, Search and Login forms as ordinary page objects, with
@@ -327,10 +327,10 @@ T055 Verify wizards and post-wizard editing (WP11)
 
 ## WP12 — Generated search and complete Record lifecycle
 
-**Priority**: P1  
-**Dependencies**: WP11  
-**Prompt**: [tasks/WP12-generated-search-and-complete-record-lifecycle.md](tasks/WP12-generated-search-and-complete-record-lifecycle.md)  
-**Size**: 5 subtasks; 249 lines.  
+**Priority**: P1\
+**Dependencies**: WP11\
+**Prompt**: [tasks/WP12-generated-search-and-complete-record-lifecycle.md](tasks/WP12-generated-search-and-complete-record-lifecycle.md)\
+**Size**: 5 subtasks; 249 lines.\
 **Requirement refs**: FR-012, FR-013, FR-014, NFR-004, NFR-006, C-004, C-007.
 
 Generate server-validated CRUD/search with clear errors, confirmations and correct
@@ -354,10 +354,10 @@ T060 Verify generated behavior against SQLite (WP12)
 
 ## WP13 — Generated identity store, sessions and access enforcement
 
-**Priority**: P1  
-**Dependencies**: WP12  
-**Prompt**: [tasks/WP13-generated-identity-store-sessions-and-access-enforcement.md](tasks/WP13-generated-identity-store-sessions-and-access-enforcement.md)  
-**Size**: 5 subtasks; 253 lines.  
+**Priority**: P1\
+**Dependencies**: WP12\
+**Prompt**: [tasks/WP13-generated-identity-store-sessions-and-access-enforcement.md](tasks/WP13-generated-identity-store-sessions-and-access-enforcement.md)\
+**Size**: 5 subtasks; 253 lines.\
 **Requirement refs**: FR-015, FR-016, FR-017, NFR-004, C-004, C-007.
 
 Provide secure simple local login and server enforcement of explicit global/page/action
@@ -381,10 +381,10 @@ T065 Verify auth boundaries independently (WP13)
 
 ## WP14 — Studio login configuration and protected-page workflow
 
-**Priority**: P1  
-**Dependencies**: WP11, WP13  
-**Prompt**: [tasks/WP14-studio-login-configuration-and-protected-page-workflow.md](tasks/WP14-studio-login-configuration-and-protected-page-workflow.md)  
-**Size**: 5 subtasks; 245 lines.  
+**Priority**: P1\
+**Dependencies**: WP11, WP13\
+**Prompt**: [tasks/WP14-studio-login-configuration-and-protected-page-workflow.md](tasks/WP14-studio-login-configuration-and-protected-page-workflow.md)\
+**Size**: 5 subtasks; 245 lines.\
 **Requirement refs**: FR-004, FR-014, FR-015, FR-016, FR-017, NFR-005, C-002.
 
 Configure simple login through usable project/page/action editors and generate friendly
@@ -408,10 +408,10 @@ T070 Verify public-read/protected-write walkthrough (WP14)
 
 ## WP15 — Safe query compiler and exact derived arithmetic
 
-**Priority**: P2 (required)  
-**Dependencies**: WP06, WP02  
-**Prompt**: [tasks/WP15-safe-query-compiler-and-exact-derived-arithmetic.md](tasks/WP15-safe-query-compiler-and-exact-derived-arithmetic.md)  
-**Size**: 5 subtasks; 252 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP06, WP02\
+**Prompt**: [tasks/WP15-safe-query-compiler-and-exact-derived-arithmetic.md](tasks/WP15-safe-query-compiler-and-exact-derived-arithmetic.md)\
+**Size**: 5 subtasks; 252 lines.\
 **Requirement refs**: FR-018, FR-020, NFR-004, NFR-009, C-007.
 
 Compile reusable structured queries with bound parameters, explicit aggregate grain and
@@ -435,10 +435,10 @@ T075 Verify compiler and numeric semantics (WP15)
 
 ## WP16 — Visual query designer and saved data sources
 
-**Priority**: P2 (required)  
-**Dependencies**: WP08, WP15  
-**Prompt**: [tasks/WP16-visual-query-designer-and-saved-data-sources.md](tasks/WP16-visual-query-designer-and-saved-data-sources.md)  
-**Size**: 5 subtasks; 237 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP08, WP15\
+**Prompt**: [tasks/WP16-visual-query-designer-and-saved-data-sources.md](tasks/WP16-visual-query-designer-and-saved-data-sources.md)\
+**Size**: 5 subtasks; 237 lines.\
 **Requirement refs**: FR-018, FR-019, NFR-005, C-002.
 
 Provide the focused Data Source query window with visible joins, projections,
@@ -462,10 +462,10 @@ T080 Verify the complete query-authoring path (WP16)
 
 ## WP17 — Query-backed reports and refreshed child-derived values
 
-**Priority**: P2 (required)  
-**Dependencies**: WP12, WP16  
-**Prompt**: [tasks/WP17-query-backed-reports-and-refreshed-child-derived-values.md](tasks/WP17-query-backed-reports-and-refreshed-child-derived-values.md)  
-**Size**: 5 subtasks; 249 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP12, WP16\
+**Prompt**: [tasks/WP17-query-backed-reports-and-refreshed-child-derived-values.md](tasks/WP17-query-backed-reports-and-refreshed-child-derived-values.md)\
+**Size**: 5 subtasks; 249 lines.\
 **Requirement refs**: FR-014, FR-019, FR-020, NFR-006, NFR-009, C-007.
 
 Use saved queries to generate public filterable reports with child links, exact totals
@@ -489,10 +489,10 @@ T085 Verify totals and persistence through regeneration (WP17)
 
 ## WP18 — Application behavior map and endpoint projection
 
-**Priority**: P2 (required)  
-**Dependencies**: WP14, WP17  
-**Prompt**: [tasks/WP18-application-behavior-map-and-endpoint-projection.md](tasks/WP18-application-behavior-map-and-endpoint-projection.md)  
-**Size**: 5 subtasks; 244 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP14, WP17\
+**Prompt**: [tasks/WP18-application-behavior-map-and-endpoint-projection.md](tasks/WP18-application-behavior-map-and-endpoint-projection.md)\
+**Size**: 5 subtasks; 244 lines.\
 **Requirement refs**: FR-021, FR-022, NFR-002, NFR-005, C-003.
 
 Derive a selectable flow chart of application behavior and parameter movement, separate
@@ -516,10 +516,10 @@ T090 Verify map/runtime correspondence (WP18)
 
 ## WP19 — Design and HTML editing with working document modes
 
-**Priority**: P2 (required)  
-**Dependencies**: WP11, WP10  
-**Prompt**: [tasks/WP19-design-and-html-editing-with-working-document-modes.md](tasks/WP19-design-and-html-editing-with-working-document-modes.md)  
-**Size**: 5 subtasks; 249 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP11, WP10\
+**Prompt**: [tasks/WP19-design-and-html-editing-with-working-document-modes.md](tasks/WP19-design-and-html-editing-with-working-document-modes.md)\
+**Size**: 5 subtasks; 249 lines.\
 **Requirement refs**: FR-003, FR-005, FR-023, FR-024, NFR-005, NFR-008, C-002.
 
 Make Design/HTML/Code/Preview/Live Page coherent views of the selected page with
@@ -543,10 +543,10 @@ T095 Verify mode continuity and visual density (WP19)
 
 ## WP20 — Regeneration ownership, authored extensions and recovery
 
-**Priority**: P2 (required)  
-**Dependencies**: WP10, WP12, WP13, WP17, WP19  
-**Prompt**: [tasks/WP20-regeneration-ownership-authored-extensions-and-recovery.md](tasks/WP20-regeneration-ownership-authored-extensions-and-recovery.md)  
-**Size**: 5 subtasks; 263 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP10, WP12, WP13, WP17, WP19\
+**Prompt**: [tasks/WP20-regeneration-ownership-authored-extensions-and-recovery.md](tasks/WP20-regeneration-ownership-authored-extensions-and-recovery.md)\
+**Size**: 5 subtasks; 263 lines.\
 **Requirement refs**: FR-023, FR-024, FR-025, FR-026, FR-027, NFR-003, NFR-006, C-004.
 
 Regenerate complete output without overwriting data/custom code, with visible conflicts
@@ -570,10 +570,10 @@ T100 Verify preservation and standalone output (WP20)
 
 ## WP21 — Managed runtime jobs, Live Page and portable export
 
-**Priority**: P2 (required)  
-**Dependencies**: WP04, WP20  
-**Prompt**: [tasks/WP21-managed-runtime-jobs-live-page-and-portable-export.md](tasks/WP21-managed-runtime-jobs-live-page-and-portable-export.md)  
-**Size**: 5 subtasks; 253 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP04, WP20\
+**Prompt**: [tasks/WP21-managed-runtime-jobs-live-page-and-portable-export.md](tasks/WP21-managed-runtime-jobs-live-page-and-portable-export.md)\
+**Size**: 5 subtasks; 253 lines.\
 **Requirement refs**: FR-001, FR-023, FR-027, FR-029, NFR-004, NFR-010.
 
 Build/run/stop generated applications explicitly, navigate the selected Live Page and
@@ -597,10 +597,10 @@ T105 Verify processes, exports and offline authoring (WP21)
 
 ## WP22 — Equipment Desk end-to-end authoring acceptance
 
-**Priority**: P2 (required)  
-**Dependencies**: WP09, WP14, WP17, WP18, WP20, WP21  
-**Prompt**: [tasks/WP22-equipment-desk-end-to-end-authoring-acceptance.md](tasks/WP22-equipment-desk-end-to-end-authoring-acceptance.md)  
-**Size**: 5 subtasks; 274 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP09, WP14, WP17, WP18, WP20, WP21\
+**Prompt**: [tasks/WP22-equipment-desk-end-to-end-authoring-acceptance.md](tasks/WP22-equipment-desk-end-to-end-authoring-acceptance.md)\
+**Size**: 5 subtasks; 274 lines.\
 **Requirement refs**: FR-001, FR-003, FR-004, FR-006, FR-007, FR-008, FR-009, FR-010, FR-011, FR-012, FR-013, FR-014, FR-015, FR-016, FR-017, FR-018, FR-019, FR-020, FR-021, FR-023, FR-024, FR-025, FR-026, FR-027, FR-030, NFR-006, NFR-009, C-007.
 
 Prove the first complete application is authored through the product rather than
@@ -624,10 +624,10 @@ T110 Retain honest walkthrough evidence (WP22)
 
 ## WP23 — Second project generality and UI-MCP parity acceptance
 
-**Priority**: P2 (required)  
-**Dependencies**: WP22  
-**Prompt**: [tasks/WP23-second-project-generality-and-ui-mcp-parity-acceptance.md](tasks/WP23-second-project-generality-and-ui-mcp-parity-acceptance.md)  
-**Size**: 5 subtasks; 251 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP22\
+**Prompt**: [tasks/WP23-second-project-generality-and-ui-mcp-parity-acceptance.md](tasks/WP23-second-project-generality-and-ui-mcp-parity-acceptance.md)\
+**Size**: 5 subtasks; 251 lines.\
 **Requirement refs**: FR-001, FR-028, FR-029, FR-030, NFR-007, C-003, C-007.
 
 Build an unrelated publication catalog with composite keys and prove matching UI/agent
@@ -651,10 +651,10 @@ T115 Publish generality evidence and defect triage (WP23)
 
 ## WP24 — Cross-boundary failure and recovery acceptance
 
-**Priority**: P2 (required)  
-**Dependencies**: WP09, WP20, WP21, WP23  
-**Prompt**: [tasks/WP24-cross-boundary-failure-and-recovery-acceptance.md](tasks/WP24-cross-boundary-failure-and-recovery-acceptance.md)  
-**Size**: 5 subtasks; 248 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP09, WP20, WP21, WP23\
+**Prompt**: [tasks/WP24-cross-boundary-failure-and-recovery-acceptance.md](tasks/WP24-cross-boundary-failure-and-recovery-acceptance.md)\
+**Size**: 5 subtasks; 248 lines.\
 **Requirement refs**: FR-010, FR-025, FR-026, FR-029, NFR-003, NFR-004.
 
 Validate recovery across actual process crashes, external DB changes, output conflicts
@@ -678,10 +678,10 @@ T120 Retain recovery and preservation results (WP24)
 
 ## WP25 — Workspace fidelity, keyboard access and measured scale
 
-**Priority**: P2 (required)  
-**Dependencies**: WP18, WP19, WP21, WP23  
-**Prompt**: [tasks/WP25-workspace-fidelity-keyboard-access-and-measured-scale.md](tasks/WP25-workspace-fidelity-keyboard-access-and-measured-scale.md)  
-**Size**: 5 subtasks; 252 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP18, WP19, WP21, WP23\
+**Prompt**: [tasks/WP25-workspace-fidelity-keyboard-access-and-measured-scale.md](tasks/WP25-workspace-fidelity-keyboard-access-and-measured-scale.md)\
+**Size**: 5 subtasks; 252 lines.\
 **Requirement refs**: FR-002, FR-005, FR-022, NFR-001, NFR-002, NFR-005, NFR-008, C-002, C-006.
 
 Measure editing/query budgets and verify the early-Studio density and complete
@@ -705,10 +705,10 @@ T125 Triage and verify usability regressions (WP25)
 
 ## WP26 — Clean-install documentation and mission readiness
 
-**Priority**: P2 (required)  
-**Dependencies**: WP24, WP25  
-**Prompt**: [tasks/WP26-clean-install-documentation-and-mission-readiness.md](tasks/WP26-clean-install-documentation-and-mission-readiness.md)  
-**Size**: 4 subtasks; 237 lines.  
+**Priority**: P2 (required)\
+**Dependencies**: WP24, WP25\
+**Prompt**: [tasks/WP26-clean-install-documentation-and-mission-readiness.md](tasks/WP26-clean-install-documentation-and-mission-readiness.md)\
+**Size**: 4 subtasks; 237 lines.\
 **Requirement refs**: FR-027, FR-030, NFR-006, NFR-010, C-001, C-004, C-005, C-006, C-008.
 
 Leave a documented runnable product and independently buildable output with complete

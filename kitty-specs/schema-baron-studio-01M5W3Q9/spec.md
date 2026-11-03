@@ -1,10 +1,10 @@
 # Mission Specification: Schema Baron Studio
 
-**Mission**: `schema-baron-studio-01M5W3Q9`  
-**Mission ID**: `01M5W3Q9JMMS8P5573KGNQ95KX`  
-**Mission Branch**: `feat/schema-baron-studio`  
-**Created**: 2026-10-26  
-**Status**: Ready for planning  
+**Mission**: `schema-baron-studio-01M5W3Q9`\
+**Mission ID**: `01M5W3Q9JMMS8P5573KGNQ95KX`\
+**Mission Branch**: `feat/schema-baron-studio`\
+**Created**: 2026-10-26\
+**Status**: Ready for planning\
 **Input**: “Cool. Let's work up a spec kitty mission to build the whole app. Do we need to break apart the manual and visual references into an easier format like html?”
 
 ## Intent and provenance

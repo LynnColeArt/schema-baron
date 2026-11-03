@@ -1,8 +1,8 @@
 # Mission Specification: Studio Verification and Hardening
 
-**Mission Branch**: `feat/studio-verification-hardening`  
-**Created**: 2026-10-31 (America/Chicago; canonical creation timestamp is in meta.json)  
-**Status**: Specified; execution not started  
+**Mission Branch**: `feat/studio-verification-hardening`\
+**Created**: 2026-10-31 (America/Chicago; canonical creation timestamp is in meta.json)\
+**Status**: Specified; execution not started\
 **Input**: “Yes, let's create a Spec Kitty mission for verification and hardening. Use Workshop Planner and a second unrelated app, define the acceptance checklist and finish line, and proceed with your best judgment.”
 
 ## Confirmed Intent and Scope
