@@ -1,0 +1,192 @@
+.qd {
+  height: 100%;
+  min-height: 300px;
+  grid-template-rows: 34px auto minmax(0, 1fr);
+  background: #edf0f3;
+  color: #243444;
+  font-size: 13px;
+}
+.qd header,
+.qd-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #b7c2cb;
+}
+.qd header {
+  background: #e2eaf1;
+}
+.qd header button {
+  margin-left: auto;
+}
+.qd-toolbar {
+  flex-wrap: wrap;
+  background: #f4f6f8;
+}
+.qd-body {
+  display: grid;
+  grid-template-columns: 200px minmax(340px, 1fr) 270px;
+  min-height: 0;
+  overflow: auto;
+}
+.qd aside {
+  overflow: auto;
+  border-right: 1px solid #b7c2cb;
+  background: #f8fafc;
+  padding: 8px;
+}
+.qd aside > button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+}
+.qd-document {
+  overflow: auto;
+  padding: 12px;
+  background: white;
+}
+.qd h2 {
+  font-size: 14px;
+  margin: 8px 0 12px;
+}
+.qd h3 {
+  font-size: 13px;
+}
+.qd nav {
+  display: flex;
+  gap: 5px;
+  border-bottom: 1px solid #b7c2cb;
+  padding: 8px 0;
+}
+.qd button {
+  padding: 5px 9px;
+  cursor: pointer;
+  border: 1px solid #aab8c4;
+  background: #f7f9fb;
+  border-radius: 3px;
+}
+.qd button[aria-pressed="true"] {
+  background: #d6e7f5;
+  border-color: #487aa2;
+}
+.qd button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.qd :focus-visible {
+  outline: 2px solid #176dac;
+  outline-offset: 2px;
+}
+.qd input,
+.qd select {
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid #aab8c4;
+  border-radius: 2px;
+  background: white;
+  color: #243444;
+}
+.qd label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 5px;
+}
+.qd fieldset {
+  border: 1px solid #c2cdd6;
+  padding: 8px;
+  margin: 10px 0;
+  min-width: 0;
+}
+.qd legend {
+  font-weight: 600;
+}
+.qd-expression {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+  background: #f8fafc;
+}
+.qd-expression .qd-expression {
+  flex: 1 1 220px;
+}
+.qd-type {
+  display: inline-flex;
+  gap: 4px;
+}
+.qd-type input {
+  width: 62px;
+}
+.qd-canvas {
+  height: 320px;
+  position: relative;
+  overflow: auto;
+  background: radial-gradient(#c4d1db 1px, transparent 1px);
+  background-size: 16px 16px;
+  border: 1px solid #c2cdd6;
+}
+.qd-node {
+  position: absolute;
+  z-index: 1;
+  width: 200px;
+  border: 1px solid #718da4;
+  background: #fff;
+  box-shadow: 0 2px 5px #0002;
+  display: flex;
+  flex-direction: column;
+}
+.qd-node > strong {
+  background: #dce8f1;
+  padding: 6px;
+}
+.qd-node > span {
+  padding: 3px 6px;
+}
+.qd-node input {
+  width: 70px;
+}
+.qd svg {
+  position: absolute;
+  pointer-events: none;
+}
+.qd pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 10px;
+  background: #f1f4f6;
+}
+.qd table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.qd td,
+.qd th {
+  border: 1px solid #c2cdd6;
+  padding: 7px;
+  text-align: left;
+}
+.qd small {
+  display: block;
+  font-weight: normal;
+}
+.qd-diagnostic {
+  color: #8d342d;
+}
+.qd-diagnostic span {
+  display: block;
+  margin-top: 5px;
+}
+.qd dd {
+  margin: 2px 0 10px;
+}
+.qd dl {
+  margin: 10px 0;
+}
+@media (max-width: 900px) {
+  .qd-body {
+    grid-template-columns: 160px minmax(320px, 1fr) 220px;
+  }
+}

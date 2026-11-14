@@ -1,0 +1,34 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 268.075323,
+  "context": {
+    "scenario": "output-and-security"
+  },
+  "events": [
+    {
+      "elapsedMs": 0.619858999999451,
+      "scenario": "output-and-security",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 267.4517429999996,
+      "scenario": "output-and-security",
+      "conflicts": [
+        "modified-owned",
+        "unknown",
+        "symlink"
+      ],
+      "security": [
+        "forged-capability",
+        "cross-origin",
+        "csrf",
+        "oversize",
+        "traversal",
+        "symlink-export",
+        "secret-redaction"
+      ],
+      "authoredPreserved": true,
+      "state": "observed"
+    }
+  ]
+}

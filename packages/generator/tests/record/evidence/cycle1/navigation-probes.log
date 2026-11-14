@@ -1,0 +1,11 @@
+✔ declared key return executes its bound predicate rather than erroring or exposing other parents (13.494045ms)
+✔ mixed empty numeric Search is absent in links and Cancel; required numeric Record key stays strict (4.366936ms)
+✔ ordered composite parent values survive a declared return and both bind the list (14.320741ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 232.214244

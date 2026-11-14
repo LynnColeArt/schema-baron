@@ -1,0 +1,41 @@
+{
+  "schema": "review-admission-evidence/v1",
+  "work_package": "WP08",
+  "qualifiedCode": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "admissionHead": "538573d41babb1f1ac840c742e625151f70c9ccf",
+  "command": "spec-kitty agent tasks move-task WP08 --to for_review --agent codex --mission studio-verification-hardening-01M6AQ6R",
+  "exitCode": 0,
+  "status": "for_review",
+  "budgetSeconds": 300,
+  "timeoutOverridden": false,
+  "actualJUnit": {
+    "cases": 513,
+    "suites": 79,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "sha256": "585647fa231f7aa64ec7f1453e6802d81c38c41888f0b515aa7a41f56f4ab480"
+  },
+  "stages": {
+    "stages": [
+      {
+        "label": "locked dependency verification",
+        "status": "passed",
+        "elapsedSeconds": 0.071223278
+      },
+      {
+        "label": "reviewed native prebuild verification",
+        "status": "passed",
+        "elapsedSeconds": 0.07775301600000001
+      },
+      {
+        "label": "Vitest JUnit suite",
+        "status": "passed",
+        "elapsedSeconds": 194.432741312
+      }
+    ],
+    "wallSeconds": 194.58892111900002
+  },
+  "scopeMetadata": "unknown/empty installed source assessment; actual retained JUnit is the positive execution census",
+  "note": "Review admission only. No WP self-approval, mission acceptance or AC-020 pass. Hosted sync remained unconsented/refused."
+}

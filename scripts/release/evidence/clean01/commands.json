@@ -1,0 +1,187 @@
+[
+  {
+    "name": "archive",
+    "command": "git",
+    "args": [
+      "archive",
+      "--format=tar",
+      "-o",
+      "/tmp/schema-baron-wp26-clean-01/source.tar",
+      "HEAD"
+    ],
+    "code": 0
+  },
+  {
+    "name": "extract-source",
+    "command": "tar",
+    "args": [
+      "-xf",
+      "/tmp/schema-baron-wp26-clean-01/source.tar",
+      "-C",
+      "/tmp/schema-baron-wp26-clean-01/source"
+    ],
+    "code": 0
+  },
+  {
+    "name": "source-git-init",
+    "command": "git",
+    "args": [
+      "init",
+      "-q"
+    ],
+    "code": 0
+  },
+  {
+    "name": "source-git-add",
+    "command": "git",
+    "args": [
+      "add",
+      "."
+    ],
+    "code": 0
+  },
+  {
+    "name": "source-git-commit",
+    "command": "git",
+    "args": [
+      "-c",
+      "user.name=Clean install verifier",
+      "-c",
+      "user.email=clean-install@localhost",
+      "-c",
+      "commit.gpgsign=false",
+      "commit",
+      "-qm",
+      "Tracked source release verification"
+    ],
+    "code": 0
+  },
+  {
+    "name": "extract-runtime",
+    "command": "tar",
+    "args": [
+      "-xf",
+      "/tmp/schema-baron-wp26-clean-01/node.tar.xz",
+      "-C",
+      "/tmp/schema-baron-wp26-clean-01"
+    ],
+    "code": 0
+  },
+  {
+    "name": "npm-pin",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "install",
+      "--global",
+      "npm@11.19.1",
+      "--ignore-scripts",
+      "--prefix",
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64"
+    ],
+    "code": 0
+  },
+  {
+    "name": "runtime",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "--version"
+    ],
+    "code": 0
+  },
+  {
+    "name": "npm",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "--version"
+    ],
+    "code": 0
+  },
+  {
+    "name": "cold-ci",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "ci",
+      "--ignore-scripts"
+    ],
+    "code": 0
+  },
+  {
+    "name": "native",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "run",
+      "native:verify"
+    ],
+    "code": 0
+  },
+  {
+    "name": "typecheck",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "run",
+      "typecheck"
+    ],
+    "code": 0
+  },
+  {
+    "name": "build",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "run",
+      "build"
+    ],
+    "code": 0
+  },
+  {
+    "name": "browser-acquisition",
+    "command": "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+    "args": [
+      "node_modules/@playwright/test/cli.js",
+      "install",
+      "chromium"
+    ],
+    "code": 0
+  },
+  {
+    "name": "warm-offline-ci",
+    "command": "strace",
+    "args": [
+      "-f",
+      "-e",
+      "trace=connect",
+      "-o",
+      "/tmp/schema-baron-wp26-clean-01/logs/warm-offline-ci-connect.trace",
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+      "ci",
+      "--ignore-scripts",
+      "--offline"
+    ],
+    "code": 0
+  },
+  {
+    "name": "equipment",
+    "command": "strace",
+    "args": [
+      "-f",
+      "-e",
+      "trace=connect",
+      "-o",
+      "/tmp/schema-baron-wp26-clean-01/logs/equipment-connect.trace",
+      "/tmp/schema-baron-wp26-clean-01/node-v24.22.1-linux-x64/bin/node",
+      "node_modules/@playwright/test/cli.js",
+      "test",
+      "tests/e2e/equipment",
+      "--workers=1",
+      "--retries=0",
+      "--output=/tmp/schema-baron-wp26-clean-01/equipment-evidence"
+    ],
+    "code": 1
+  }
+]

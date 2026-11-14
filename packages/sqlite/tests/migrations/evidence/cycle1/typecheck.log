@@ -1,0 +1,6 @@
+
+> schema-baron@0.0.0 typecheck
+> node scripts/workspace/verify.mjs typecheck
+
+NOT IMPLEMENTED: @schema-baron/generator (typecheck)
+NOT IMPLEMENTED: @schema-baron/ui (typecheck)

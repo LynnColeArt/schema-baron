@@ -1,0 +1,105 @@
+
+Running 3 tests using 1 worker
+
+(node:2217435) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen (607ms)
+(node:2217664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection (7.8s)
+(node:2218131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits (1.0s)
+
+
+  1) tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen
+
+    Error: {"ok":false,"revision":0,"error":{"code":"INVALID_INPUT","message":"Command does not match the operation schema.","retryable":false},"diagnostics":[]}
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "ok": true,
+    +   "ok": false,
+      }
+
+       at usability/harness.ts:158
+
+      156 | export async function command(project: Project, operation: string, input: unknown) {
+      157 |  const response = await fetch(url + '/api/v1/projects/' + project.id + '/commands', {method:'POST',headers:{authorization:'Bearer '+capability,'content-type':'application/json'},body:JSON.stringify({requestId:crypto.randomUUID(),projectId:project.id,expectedRevision:project.revision,operation,input})});
+    > 158 |  const outcome = await response.json(); expect(outcome, JSON.stringify(outcome)).toMatchObject({ok:true}); return outcome;
+          |                                                                                  ^
+      159 | }
+      160 | export async function current(name: string): Promise<Project> { const summary=(await owner('projects?approvedRoot=projects')).find((p:Project)=>p.name===name);return owner('projects/'+summary.id); }
+      161 | export async function keyButton(page: BrowserPage, name: string) { const control=page.getByRole('button',{name,exact:true});await control.focus();await expect(control).toBeFocused();await page.keyboard.press('Enter'); }
+        at command (/home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-y/tests/e2e/usability/harness.ts:158:82)
+        at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-y/tests/e2e/usability/scale.spec.ts:13:2
+
+    Error Context: test-results/usability-scale-full-50-pa-46683-y-response-and-ready-reopen/error-context.md
+
+    Error Context: test-results/usability-scale-full-50-pa-46683-y-response-and-ready-reopen/error-context.md
+
+  2) tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByLabel('Schema relationship diagram').locator('.react-flow__node[data-id="2c8ba6e6-3c1c-4af4-aa5f-0ca94240dfc0"]')
+    Expected substring: "Diagram draft 0"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByLabel('Schema relationship diagram').locator('.react-flow__node[data-id="2c8ba6e6-3c1c-4af4-aa5f-0ca94240dfc0"]') with timeout 5000ms
+      - waiting for getByLabel('Schema relationship diagram').locator('.react-flow__node[data-id="2c8ba6e6-3c1c-4af4-aa5f-0ca94240dfc0"]')
+
+
+      45 |  for(let i=0;i<20;i++){
+      46 |   const start=performance.now();const value='Diagram draft '+i;
+    > 47 |   await page.getByLabel('Table name',{exact:true}).fill(value);await expect(node).toContainText(value);
+         |                                                                                   ^
+      48 |   await expect(node).toHaveClass(/selected/);await expect(page.getByLabel('Table name',{exact:true})).toHaveValue(value);
+      49 |   const bounds=await node.boundingBox();sizes.push(bounds);expect(bounds?.width).toBeGreaterThan(100);expect(bounds?.height).toBeGreaterThan(100);
+      50 |   samples.push(performance.now()-start);
+        at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-y/tests/e2e/usability/scale.spec.ts:47:83
+
+    Error Context: test-results/usability-scale-actual-50--c2214--save-drag-and-reprojection/error-context.md
+
+    Error Context: test-results/usability-scale-actual-50--c2214--save-drag-and-reprojection/error-context.md
+
+  3) tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits
+
+    Error: {"ok":false,"revision":2,"error":{"code":"VALIDATION_FAILED","message":"Project validation failed","retryable":false},"diagnostics":[{"code":"VALIDATION_FAILED","severity":"error","objectId":"2925d791-3c41-4841-9b94-0beeb07d90a4","field":"id","message":"Values must be unique."}]}
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "ok": true,
+    +   "ok": false,
+      }
+
+       at usability/harness.ts:158
+
+      156 | export async function command(project: Project, operation: string, input: unknown) {
+      157 |  const response = await fetch(url + '/api/v1/projects/' + project.id + '/commands', {method:'POST',headers:{authorization:'Bearer '+capability,'content-type':'application/json'},body:JSON.stringify({requestId:crypto.randomUUID(),projectId:project.id,expectedRevision:project.revision,operation,input})});
+    > 158 |  const outcome = await response.json(); expect(outcome, JSON.stringify(outcome)).toMatchObject({ok:true}); return outcome;
+          |                                                                                  ^
+      159 | }
+      160 | export async function current(name: string): Promise<Project> { const summary=(await owner('projects?approvedRoot=projects')).find((p:Project)=>p.name===name);return owner('projects/'+summary.id); }
+      161 | export async function keyButton(page: BrowserPage, name: string) { const control=page.getByRole('button',{name,exact:true});await control.focus();await expect(control).toBeFocused();await page.keyboard.press('Enter'); }
+        at command (/home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-y/tests/e2e/usability/harness.ts:158:82)
+        at /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-y/tests/e2e/usability/scale.spec.ts:70:112
+
+    Error Context: test-results/usability-scale-indexed-10-f38d6-node-map-with-20-live-edits/error-context.md
+
+    Error Context: test-results/usability-scale-indexed-10-f38d6-node-map-with-20-live-edits/error-context.md
+
+  3 failed
+    tests/e2e/usability/scale.spec.ts:11:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen
+    tests/e2e/usability/scale.spec.ts:37:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection
+    tests/e2e/usability/scale.spec.ts:63:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits

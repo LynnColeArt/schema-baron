@@ -1,0 +1,180 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 15021.062167999999,
+  "context": {
+    "phase": "after-asynchronous-child-idle",
+    "transport": "http",
+    "operation": "capabilities"
+  },
+  "events": [
+    {
+      "elapsedMs": 27.13283199999995,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 122.25226199999997,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 143.37580699999995,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 199.72247899999996,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 220.14392799999996,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 272.42734199999995,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 293.57269699999995,
+      "phase": "asynchronous-idle-control",
+      "durationMs": 7200,
+      "state": "started"
+    },
+    {
+      "elapsedMs": 7494.990413,
+      "phase": "after-asynchronous-idle",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 7536.255198,
+      "phase": "after-asynchronous-idle",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 7537.041853,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 7576.441548,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 7597.676202,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 7650.0891360000005,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 7671.164701,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 7705.665723,
+      "phase": "warm-pool",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 7726.927107,
+      "phase": "asynchronous-child-start",
+      "durationMs": 7200,
+      "state": "started"
+    },
+    {
+      "elapsedMs": 7982.876239,
+      "phase": "during-asynchronous-child",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 8021.095351000001,
+      "phase": "during-asynchronous-child",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 14963.203204,
+      "phase": "during-asynchronous-child",
+      "transport": "http",
+      "operation": "capabilities",
+      "child": {
+        "status": 0,
+        "signal": null,
+        "stdout": "started\nfinished\n",
+        "stderr": "",
+        "durationMs": 7235.254823,
+        "timedOut": false
+      },
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 14965.527041,
+      "phase": "after-asynchronous-child-idle",
+      "transport": "http",
+      "operation": "capabilities",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 15017.376597999999,
+      "phase": "after-asynchronous-child-idle",
+      "transport": "http",
+      "operation": "capabilities",
+      "httpStatus": 200,
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 15021.047508,
+      "phase": "cleanup",
+      "ownerClosed": true,
+      "childCompleted": true,
+      "scratchRemoved": true
+    }
+  ]
+}

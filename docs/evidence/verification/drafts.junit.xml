@@ -1,0 +1,12 @@
+<testsuites id="" name="" tests="4" failures="0" skipped="0" errors="0" time="72.49725">
+<testsuite name="acceptance/drafts.spec.ts" timestamp="2026-11-02T15:04:59.103Z" hostname="" tests="4" failures="0" skipped="0" time="71.879" errors="0">
+<testcase name="page draft restores its active text control and selection after reload" classname="acceptance/drafts.spec.ts" time="2.68">
+</testcase>
+<testcase name="schema partial decimal text survives view switch and reload without normalization" classname="acceptance/drafts.spec.ts" time="5.537">
+</testcase>
+<testcase name="control numeric and query scalar drafts retain invalid text and actionable rejected Save through recovery" classname="acceptance/drafts.spec.ts" time="7.798">
+</testcase>
+<testcase name="thirty received UI revisions retain draft selection; conflicts and two project drafts stay isolated" classname="acceptance/drafts.spec.ts" time="55.864">
+</testcase>
+</testsuite>
+</testsuites>

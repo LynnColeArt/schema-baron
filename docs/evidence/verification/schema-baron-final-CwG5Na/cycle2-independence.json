@@ -1,0 +1,105 @@
+{
+  "name": "cycle2-independence",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/independence.spec.ts",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle2-independence-output"
+  ],
+  "started": "2026-11-02T20:32:50.923Z",
+  "finished": "2026-11-02T20:33:29.719Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 2,
+    "count": 2,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "workshop portable application runs with its Studio owner stopped",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "library portable application runs with its Studio owner stopped",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": [
+    {
+      "kind": "independent-summary.json",
+      "privateSourceSha256": "09845e27ff98870004f84f1516d0bcca8244b3255fec0afb3fb86cc09b185a23",
+      "data": {
+        "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+        "application": "Library Catalog",
+        "originalOwnerStopped": true,
+        "ownerProbeUnavailableBeforeAndAfter": true,
+        "checks": [
+          "offline install with scripts denied",
+          "typecheck",
+          "test",
+          "build",
+          "real Next start readiness",
+          "anonymous public grid",
+          "fresh visitor login",
+          "authored validator rejection and successful edits",
+          "parent filtered Add/Cancel",
+          "filtered Add/Edit/Delete exact tuples",
+          "independent reports",
+          "identity account invariants"
+        ],
+        "rowsHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "authoredHash": "611dd50b7c0798fd9955ffc3adc2fa8c6601065cb27b316afcd1e6efe8ce5d16"
+      }
+    },
+    {
+      "kind": "independent-summary.json",
+      "privateSourceSha256": "8cf079a36d69f51630608ea88aaec2bdc70ac7ebdffc482ee63b9891a31b0480",
+      "data": {
+        "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+        "application": "Workshop Planner",
+        "originalOwnerStopped": true,
+        "ownerProbeUnavailableBeforeAndAfter": true,
+        "checks": [
+          "offline install with scripts denied",
+          "typecheck",
+          "test",
+          "build",
+          "real Next start readiness",
+          "anonymous public grid",
+          "fresh visitor login",
+          "authored validator rejection and successful edits",
+          "parent filtered Add/Cancel",
+          "filtered Add/Edit/Delete exact tuples",
+          "independent reports",
+          "identity account invariants"
+        ],
+        "rowsHash": "2747c465f22c5807a1da3caa20ddf2e667f5ca32e54eeb4a866643809f635fb2",
+        "authoredHash": "5a7fbc542b33e66181c902bf2d02107842f147105fb26c3c859c57c31a0deb14"
+      }
+    }
+  ]
+}

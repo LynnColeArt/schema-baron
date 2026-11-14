@@ -1,0 +1,13 @@
+PATH=/home/lynn/.nvm/versions/node/v24.22.1/bin:$PATH
+npm ci --ignore-scripts --offline
+npm run build
+npx vitest run tests/integration/recovery-matrix
+node scripts/workspace/verify.mjs module tests/integration/recovery-matrix
+npm run typecheck
+SCHEMA_BARON_MIGRATION_EVIDENCE=docs/evidence/recovery/migrations npx vitest run packages/storage/tests/recovery.test.ts packages/sqlite/tests/migrations/failure-matrix.test.ts packages/sqlite/tests/migrations/namespace-race.test.ts packages/sqlite/tests/migrations/restore-boundaries.test.ts packages/sqlite/tests/migrations/lease-cancel.test.ts packages/generator/tests/regeneration/recovery.test.ts packages/generator/tests/regeneration/commands.test.ts packages/core/tests/transport/behavior.test.ts
+npx vitest run tests/integration/generated-auth/behavior.test.ts
+# Added direct rejection assertion after the full 14-test run; targeted rerun:
+npx vitest run tests/integration/recovery-matrix/behavior.test.ts -t 'external schema changes after committed owner exit'
+node scripts/workspace/verify.mjs module tests/integration/recovery-matrix
+SCHEMA_BARON_LINT_BASE=85458603eab99bac192983e18bc7713f947e5e62 npm run lint
+npm run check:credentials

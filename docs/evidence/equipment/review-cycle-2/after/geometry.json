@@ -1,0 +1,67 @@
+{
+  "selection": "4e983dbd-04b0-4c2d-81a5-0e11a1e21c12:destination",
+  "viewport": "transform: translate(114px, 39px) scale(1);",
+  "nodes": [
+    {
+      "id": "7dfef86a-ca53-4812-8813-3e2cf571d0e6",
+      "text": "form · publicGrid · Catalog7dfef86a-ca53-4812-8813-3e2cf571d0e6",
+      "style": "z-index: 0; transform: translate(0px, 0px); pointer-events: all; visibility: visible;",
+      "bounds": {
+        "x": 370,
+        "y": 271,
+        "width": 210,
+        "height": 70,
+        "top": 271,
+        "right": 580,
+        "bottom": 341,
+        "left": 370
+      },
+      "visibility": "visible",
+      "display": "block"
+    },
+    {
+      "id": "956a51f5-1e77-4eea-96b5-78bf4aa3b27e",
+      "text": "page · authenticatedEdit entry/edit956a51f5-1e77-4eea-96b5-78bf4aa3b27e",
+      "style": "z-index: 0; transform: translate(230px, 0px); pointer-events: all; visibility: visible;",
+      "bounds": {
+        "x": 600,
+        "y": 271,
+        "width": 210,
+        "height": 85,
+        "top": 271,
+        "right": 810,
+        "bottom": 356,
+        "left": 600
+      },
+      "visibility": "visible",
+      "display": "block"
+    },
+    {
+      "id": "4e983dbd-04b0-4c2d-81a5-0e11a1e21c12",
+      "text": "navigate · publicEdit record4e983dbd-04b0-4c2d-81a5-0e11a1e21c12",
+      "style": "z-index: 0; transform: translate(230px, 90px); pointer-events: all; visibility: visible;",
+      "bounds": {
+        "x": 600,
+        "y": 361,
+        "width": 210,
+        "height": 70,
+        "top": 361,
+        "right": 810,
+        "bottom": 431,
+        "left": 600
+      },
+      "visibility": "visible",
+      "display": "block"
+    }
+  ],
+  "bounds": {
+    "x": 245,
+    "y": 164,
+    "width": 690,
+    "height": 467,
+    "top": 164,
+    "right": 935,
+    "bottom": 631,
+    "left": 245
+  }
+}

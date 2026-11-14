@@ -1,0 +1,18 @@
+{
+  "package": "better-sqlite3",
+  "version": "13.0.3",
+  "decision": "Deny all lifecycle scripts; shipped N-API prebuilds suffice. No source-build step approved. Unsupported platform fails with review instructions.",
+  "sha256": {
+    "package.json": "6c9ea355190dfce3646ad4d2a31c9506de36d884a6461b3655a2a0c4ba3d1695",
+    "binding.gyp": "a265a08fb92d0bbb93f596a53134e58ea89c74faec771725dec6940cea63be3f",
+    "lib/binding.js": "4fe0f892facc02af7db0a1770150565d2e944e7da3c6493116d8e2a01a0f9b19",
+    "prebuilds/darwin-arm64.node": "98e0e8acd01c632fe5615243e1296af0372826f8783b18fc31c506f73c47459c",
+    "prebuilds/linuxmusl-arm64.node": "09d5927246024b6d93c079ae1079554cbdd85790792342bf24636987dce7a786",
+    "prebuilds/win32-arm64.node": "a47870d114b98baecaff0baa51cfb93d6280d43f064280adaadefafb6949f1bf",
+    "prebuilds/linux-arm64.node": "8ba771f284dfd9430e3ef8e2ffc373ed7cc5a92fc7c4c0c7baf39dd672863485",
+    "prebuilds/linuxmusl-x64.node": "d661495d2dd4a026ccda893dd8ea1e2c245c3a681bd28224064953c8a9cc0a72",
+    "prebuilds/linux-x64.node": "6fd4292c6c5f352436cd85c9e1cb286978efa43c20ae350973f83414ced9991d",
+    "prebuilds/win32-x64.node": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+    "prebuilds/darwin-x64.node": "e6db154afe9d250e242e2ea3d45d273718ab80a0751d08873637553031752d21"
+  }
+}

@@ -1,0 +1,52 @@
+import 'server-only';
+import {parseQueryInput} from './query-scalar.js';
+import { one, value, entered, type Field, type Parameters } from './record-validation.ts';
+export type Expression = { readonly kind:'field'; readonly fieldId:string } | { readonly kind:'parameter'; readonly parameterId:string } | { readonly kind:'literal'; readonly value:string|number|boolean|null };
+export type Mapping = { readonly parameter:string; readonly field:Field; readonly expression:Expression };
+export type Destination = { readonly path:string; readonly mappings:readonly Mapping[]; readonly newForms:readonly string[] };
+export type ContextField = { readonly parameter:string; readonly field?:Field; readonly kind?:'page'|'sort'|'direction'|'search'|'key'|'query'|'mode'; readonly allowed?:readonly string[] };
+export function context(parameters:Parameters, allowed:readonly ContextField[]):Record<string,string> {
+ const result:Record<string,string>={};
+ for(const item of allowed) {
+  const text=one(parameters,item.parameter); if(text===undefined) continue;
+  // An empty optional Search input means no predicate, exactly as list GETs.
+  // Parent/Record keys do not share that optional-search normalization.
+  if(item.kind==='search'&&text==='') continue;
+  if(item.kind==='mode'){
+   const key=item.parameter.slice(0,-5),input=allowed.find(value=>value.parameter===key);
+   // Record creation and query input modes share the suffix, with distinct declared grammars.
+   if(input?.kind!=='query'){if(text!=='new')throw Error('Invalid record mode.');result[item.parameter]=text;continue;}
+   if(!['default','value','null'].includes(text))throw Error('Invalid query input mode.');
+   const field=input.field;
+   if(text==='null'&&!field?.nullable)throw Error('This input cannot be null.');
+   if(text==='value'&&one(parameters,key)===undefined)throw Error('Missing query input.');
+   result[item.parameter]=text;continue;
+  }
+  if(item.kind==='query'){
+   const mode=one(parameters,item.parameter+':mode');
+   if(mode==='null'&&!item.field?.nullable)throw Error('This input cannot be null.');
+   if(mode==='default'||mode==='null')continue;
+   if(!item.field)throw Error('Missing query input declaration.');
+   parseQueryInput(text,item.field);result[item.parameter]=text;continue;
+  }
+  if(item.field) {const parsed=value(item.field,text);if(item.kind==='key'&&parsed===null)throw Error('Enter a parent key value.');}
+  if(item.kind==='page'&&!/^[1-9]\d{0,4}$/.test(text)) throw Error('Invalid page.');
+  if(item.kind==='direction'&&!['asc','desc'].includes(text)) throw Error('Invalid direction.');
+  if(item.kind==='sort'&&text!==''&&!item.allowed?.includes(text)) throw Error('Invalid sort field.');
+  result[item.parameter]=text;
+ }
+ return result;
+}
+export function destination(config:Destination, row:Record<string,unknown>, parameters:Parameters, allowed:readonly ContextField[]):string {
+ // The path and mapping names are compiled from declarations; request return URLs
+ // and source/table overrides never participate in destination selection.
+ const query=new URLSearchParams(context(parameters,allowed));
+ for(const mapping of config.mappings) {
+  const expr=mapping.expression;
+  const raw=expr.kind==='literal'?expr.value:expr.kind==='field'?row[expr.fieldId]:one(parameters,expr.parameterId);
+  if(raw===undefined||raw===null&&!mapping.field.nullable) throw Error('A required destination value is missing.');
+  const text=expr.kind==='field'?entered(mapping.field,raw):raw===null?'':String(raw); value(mapping.field,text); query.set(mapping.parameter,text);
+ }
+ for(const id of config.newForms) query.set(id+':mode','new');
+ const suffix=query.toString(); return config.path+(suffix?'?'+suffix:'');
+}

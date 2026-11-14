@@ -1,0 +1,31 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 1458.803848,
+  "context": {
+    "point": "before-reconcile",
+    "revision": 6
+  },
+  "events": [
+    {
+      "elapsedMs": 1336.6151330000002,
+      "point": "before-reconcile",
+      "revision": 6,
+      "state": "started"
+    },
+    {
+      "elapsedMs": 1448.334213,
+      "point": "before-reconcile",
+      "revision": 6,
+      "committed": true,
+      "rows": [
+        {
+          "id": 1,
+          "caption": "original"
+        }
+      ],
+      "initialOutcome": "REVISION_CONFLICT",
+      "cancelStatus": "succeeded",
+      "state": "observed"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "wp_id": "WP03",
+  "captured_at": "2026-11-02T13:51:17Z",
+  "base_branch": "feat/studio-verification-hardening",
+  "base_commit": "fed4211c4bc9f0ee4de91898241cf4acb77a38b5",
+  "test_runner": "custom",
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "skipped": 0,
+  "failures": [
+    {
+      "test": "<declared-command>",
+      "error": "sh: 1: vitest: not found",
+      "file": "unknown"
+    }
+  ],
+  "source_identity": "DeclaredCommandScopeSource/text"
+}

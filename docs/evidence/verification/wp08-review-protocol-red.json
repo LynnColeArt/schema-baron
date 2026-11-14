@@ -1,0 +1,29 @@
+{
+  "schema": "report-protocol-red-green/v1",
+  "defectGroup": "WP08-report-heldout",
+  "scope": "Synthetic private-ledger protocol integration only; no real mission approval or application acceptance claim",
+  "before": {
+    "sourceRevision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+    "reportSha256": "2cc62593378d016e1696278407dc44eea3d19163769e959573bc474215ae9264",
+    "command": "node --test scripts/acceptance/report.test.ts",
+    "tests": 9,
+    "passed": 8,
+    "failed": 1,
+    "expected": "After both explicitly linked AC-020 reviews and defect closure, canonical complete/passed ledger recomputes all 29 requirements passed",
+    "actual": "Canonical ledger passed and all 20 cases passed, but the 11 AC-020 requirements remained review_pending"
+  },
+  "after": {
+    "reportSha256": "e11072c9611d62dddc8d487d229c2b7408c72ba656a9470b018411321b413de3",
+    "foundationReportTests": 28,
+    "passed": 28,
+    "failed": 0,
+    "checks": [
+      "Real pending ledger produces candidate and canonical CLI rejects",
+      "Library-only or Workshop-only review remains incomplete",
+      "Failed/blocked/skipped/not_run review cannot promote requirements",
+      "Both actual linked review observations plus closed defect recompute every requirement passed",
+      "Hash-verified distinct WP09 proof permits PASS only after recomputation"
+    ],
+    "independentReverseOrderProbe": "Separate private synthetic ledger: actual inventory CLI rejects pending and Library-only; succeeds after both linked reviews; all 29 requirements passed without matrix mutation"
+  }
+}

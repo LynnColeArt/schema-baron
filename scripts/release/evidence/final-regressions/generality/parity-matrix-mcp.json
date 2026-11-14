@@ -1,0 +1,1484 @@
+[
+  {
+    "operation": "project.create",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 1,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.list",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 1,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.open",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 1,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "connection.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 1,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "connection.bind",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 2,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 2,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 3,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 3,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.preview",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 3,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.apply",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 4,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 4,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.history",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 4,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.restorePreview",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 4,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.restoreApply",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 5,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 5,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 6,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 6,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.preview",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 6,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "schema.apply",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 7,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 7,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 8,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "form.construct",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 9,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 9,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 10,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 10,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 11,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "identity.configure",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 12,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "identity.provision",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 12,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 13,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "form.construct",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 14,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 14,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "query.preview",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 15,
+    "error": "VALIDATION_FAILED",
+    "diagnostics": [
+      {
+        "code": "VALIDATION_FAILED",
+        "severity": "error",
+        "objectId": "bad",
+        "field": "route",
+        "message": "Route must be unique and use internal static path segments."
+      }
+    ],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 15,
+    "error": "INVALID_INPUT",
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 15,
+    "error": "REVISION_CONFLICT",
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.validate",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.validate",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 15,
+    "error": "IDEMPOTENCY_CONFLICT",
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.validate",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "flow.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "flow.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "generation.preview",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "generation.apply",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "extension.read",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "extension.write",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "extension.write",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 15,
+    "error": "OUTPUT_CONFLICT",
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "source.read",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 15,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.batch",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "generation.preview",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "generation.apply",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 16,
+    "error": "IMPACT_NOT_ACKNOWLEDGED",
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "generation.apply",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.context",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.route",
+    "primary": "mcp",
+    "cold": true,
+    "ok": false,
+    "revision": 16,
+    "error": "PROJECT_BUSY",
+    "diagnostics": [
+      {
+        "code": "PROJECT_BUSY",
+        "severity": "error",
+        "objectId": "index",
+        "field": "parameters",
+        "path": "runtime.route",
+        "message": "Start the current generated revision before opening Live Page."
+      }
+    ],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.status",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.start",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": false
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "job.cancel",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.start",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.status",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.status",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.status",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.status",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.route",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "runtime.stop",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.export",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  },
+  {
+    "operation": "project.inspect",
+    "primary": "mcp",
+    "cold": true,
+    "ok": true,
+    "revision": 16,
+    "diagnostics": [],
+    "matchingReplay": true
+  }
+]

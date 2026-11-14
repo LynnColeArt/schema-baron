@@ -1,0 +1,135 @@
+[
+  {
+    "name": "unknown-page-property",
+    "base": "project",
+    "changes": [
+      {
+        "path": [
+          "pages",
+          0,
+          "rawHtml"
+        ],
+        "value": "<script>unsafe</script>"
+      }
+    ],
+    "code": "INVALID_INPUT"
+  },
+  {
+    "name": "unknown-schema-column",
+    "base": "catalog",
+    "changes": [
+      {
+        "path": [
+          "schema",
+          "tables",
+          0,
+          "primaryKey"
+        ],
+        "value": [
+          "catalog-absent"
+        ]
+      }
+    ],
+    "code": "BROKEN_REFERENCE"
+  },
+  {
+    "name": "ordered-key-type-mismatch",
+    "base": "project",
+    "changes": [
+      {
+        "path": [
+          "schema",
+          "tables",
+          1,
+          "columns",
+          0,
+          "type"
+        ],
+        "value": {
+          "kind": "text"
+        }
+      }
+    ],
+    "code": "TYPE_MISMATCH"
+  },
+  {
+    "name": "future-format",
+    "base": "catalog",
+    "changes": [
+      {
+        "path": [
+          "formatVersion"
+        ],
+        "value": 2
+      }
+    ],
+    "code": "UNSUPPORTED_FORMAT"
+  },
+  {
+    "name": "external-route",
+    "base": "project",
+    "changes": [
+      {
+        "path": [
+          "pages",
+          0,
+          "route"
+        ],
+        "value": "https://outside.invalid"
+      }
+    ],
+    "code": "VALIDATION_FAILED"
+  },
+  {
+    "name": "unknown-control-action",
+    "base": "catalog",
+    "changes": [
+      {
+        "path": [
+          "controls",
+          0,
+          "events",
+          0,
+          "actionId"
+        ],
+        "value": "catalog-absent"
+      }
+    ],
+    "code": "BROKEN_REFERENCE"
+  },
+  {
+    "name": "unsafe-query-expression",
+    "base": "project",
+    "changes": [
+      {
+        "path": [
+          "queries",
+          0,
+          "projections",
+          0,
+          "expression"
+        ],
+        "value": {
+          "kind": "javascript",
+          "code": "return process.env"
+        }
+      }
+    ],
+    "code": "UNSAFE_EXPRESSION"
+  },
+  {
+    "name": "incomplete-record-key",
+    "base": "catalog",
+    "changes": [
+      {
+        "path": [
+          "forms",
+          0,
+          "keyMapping"
+        ],
+        "value": []
+      }
+    ],
+    "code": "VALIDATION_FAILED"
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "files": [
+    {
+      "name": "528-772f6f29c6a757ef.js",
+      "bytes": 192347,
+      "gzipBytes": 60472
+    },
+    {
+      "name": "6b3bb038-a944a771b2006f05.js",
+      "bytes": 74166,
+      "gzipBytes": 21843
+    },
+    {
+      "name": "87c73c54-94dfd33dd614faf8.js",
+      "bytes": 203721,
+      "gzipBytes": 64056
+    },
+    {
+      "name": "968-ea63696f41f56fdb.js",
+      "bytes": 242579,
+      "gzipBytes": 67482
+    },
+    {
+      "name": "framework-86d3b250d278cea9.js",
+      "bytes": 218914,
+      "gzipBytes": 68814
+    },
+    {
+      "name": "main-12026e4ded7f800c.js",
+      "bytes": 137383,
+      "gzipBytes": 40606
+    },
+    {
+      "name": "main-app-67684da304592e14.js",
+      "bytes": 507,
+      "gzipBytes": 219
+    },
+    {
+      "name": "polyfills-42372ed130431b0a.js",
+      "bytes": 112594,
+      "gzipBytes": 39627
+    },
+    {
+      "name": "webpack-7bdb4e006a94fd53.js",
+      "bytes": 3261,
+      "gzipBytes": 1650
+    }
+  ],
+  "totalBytes": 1185472,
+  "totalGzipBytes": 364769,
+  "configuredBudget": null,
+  "verdict": "measured; no repository bundle-size threshold defined"
+}

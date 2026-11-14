@@ -1,0 +1,14 @@
+{
+  "name": "check-typecheck",
+  "revision": "52a4313623a5b59df758f65fb2ef7c2f3c1831d4",
+  "command": [
+    "npm",
+    "run",
+    "typecheck"
+  ],
+  "started": "2026-11-02T17:13:12.545Z",
+  "finished": "2026-11-02T17:13:16.282Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

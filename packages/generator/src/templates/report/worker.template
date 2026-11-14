@@ -1,0 +1,14 @@
+import Database from 'better-sqlite3';
+import {executeQueryPreview} from './query-execute.js';
+process.once('message',request=>{
+ let db,result;
+ try {
+  db=new Database(request.databasePath,{readonly:true,fileMustExist:true});
+  db.pragma('query_only = ON');db.pragma('busy_timeout = 1000');db.exec('BEGIN');
+  for(const [key,value] of Object.entries(request.compiled.parameters))if(value&&typeof value==='object'&&value.type==='Buffer')request.compiled.parameters[key]=Buffer.from(value.data);
+  result={ok:true,result:executeQueryPreview(db,request.compiled)};
+ }catch{result={ok:false};}finally{if(db?.inTransaction)db.exec('ROLLBACK');db?.close();}
+ // Cleanup precedes publication; the parent also waits for actual process/IPC close.
+ if(process.connected)process.send(result,()=>process.disconnect());
+});
+process.once('disconnect',()=>process.exit(0));

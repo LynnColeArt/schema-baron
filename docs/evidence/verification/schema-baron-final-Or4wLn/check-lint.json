@@ -1,0 +1,14 @@
+{
+  "name": "check-lint",
+  "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+  "command": [
+    "npm",
+    "run",
+    "lint"
+  ],
+  "started": "2026-11-02T17:27:07.948Z",
+  "finished": "2026-11-02T17:27:08.091Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

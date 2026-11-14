@@ -1,0 +1,33 @@
+{
+  "point": "during-rebuild",
+  "ownerExitCode": 0,
+  "revision": 3,
+  "rows": [
+    {
+      "id": 1,
+      "title": "original"
+    }
+  ],
+  "unrelatedRows": [
+    {
+      "id": 9,
+      "parent_id": 1
+    }
+  ],
+  "index": {
+    "sql": "CREATE INDEX title_lookup ON parent(title)"
+  },
+  "foreignKeyCheck": [],
+  "integrityCheck": [
+    {
+      "integrity_check": "ok"
+    }
+  ],
+  "history": [
+    {
+      "kind": "migration",
+      "outcome": "rolled-back",
+      "backupValidated": true
+    }
+  ]
+}

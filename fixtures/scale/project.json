@@ -1,0 +1,8 @@
+{
+  "purpose": "Test-only scale workload; never acceptance application setup",
+  "workspace": { "pages": 50, "formsPerPage": 4, "controlsPerForm": 5 },
+  "schema": { "tables": 50, "columnsPerTable": 10 },
+  "flow": { "pages": 10, "forms": 30, "navigationActionsPerForm": 2, "nodes": 100 },
+  "data": { "rows": 10000, "pageSize": 100, "index": "INTEGER PRIMARY KEY", "paging": "keyset" },
+  "measurement": { "warmupOperations": 5, "samples": 30, "percentile": "nearest-rank", "selectionPropertyP95Ms": 200, "reopenMs": 3000, "queryP95Ms": 1000 }
+}

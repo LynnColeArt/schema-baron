@@ -1,0 +1,774 @@
+schema_version: 1
+mission_id: 01M5W3Q9JMMS8P5573KGNQ95KX
+mission_slug: schema-baron-studio-01M5W3Q9
+mission_number: 1
+friendly_name: Schema Baron Studio
+mission_type: software-dev
+target_branch: feat/schema-baron-studio
+created_at: '2026-10-27T17:28:38.294701+00:00'
+created_by:
+  kind: runtime
+  id: spec-kitty-generator
+  display: Spec Kitty Generator
+provenance:
+  kind: runtime_post_completion
+  invoked_at: '2026-10-27T17:28:38.294701+00:00'
+  policy_resolved_from:
+    enabled: <default>
+    timing: <default>
+    failure_policy: <default>
+    write_record: <default>
+    generate_proposals: <default>
+    apply_proposals: <default>
+    permissions.write_record: <default>
+    permissions.inspect_mission_artifacts: <default>
+    permissions.propose_glossary_changes: <default>
+    permissions.propose_drg_changes: <default>
+    permissions.propose_doctrine_changes: <default>
+    permissions.apply_low_risk_changes: <default>
+    permissions.apply_structural_changes: <default>
+    precedence: <default>
+    generator: <default>
+policy_source:
+  enabled: <default>
+  timing: <default>
+  failure_policy: <default>
+  write_record: <default>
+  generate_proposals: <default>
+  apply_proposals: <default>
+  permissions.write_record: <default>
+  permissions.inspect_mission_artifacts: <default>
+  permissions.propose_glossary_changes: <default>
+  permissions.propose_drg_changes: <default>
+  permissions.propose_doctrine_changes: <default>
+  permissions.apply_low_risk_changes: <default>
+  permissions.apply_structural_changes: <default>
+  precedence: <default>
+  generator: <default>
+findings_status: has_findings
+helped:
+- id: h-001
+  category: implementation
+  summary: WP04 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-002
+  category: implementation
+  summary: WP08 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-003
+  category: implementation
+  summary: WP11 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-004
+  category: implementation
+  summary: WP13 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-005
+  category: implementation
+  summary: WP14 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-006
+  category: implementation
+  summary: WP24 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-007
+  category: implementation
+  summary: WP25 completed without rejection cycles
+  evidence_refs:
+  - e-031
+- id: h-008
+  category: implementation
+  summary: WP26 completed without rejection cycles
+  evidence_refs:
+  - e-031
+not_helpful:
+- id: n-055
+  category: doc
+  summary: analysis-report.md present with findings
+  evidence_refs:
+  - e-086
+  details: An analysis-report.md artifact is present for this mission. Review its findings to understand documented
+    issues and decisions.
+- id: n-037
+  category: implementation
+  summary: WP01 needed 2 implementation cycles
+  evidence_refs:
+  - e-068
+  details: WP WP01 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-038
+  category: implementation
+  summary: WP02 needed 2 implementation cycles
+  evidence_refs:
+  - e-069
+  details: WP WP02 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-039
+  category: implementation
+  summary: WP03 needed 2 implementation cycles
+  evidence_refs:
+  - e-070
+  details: WP WP03 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-040
+  category: implementation
+  summary: WP05 needed 2 implementation cycles
+  evidence_refs:
+  - e-071
+  details: WP WP05 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-041
+  category: implementation
+  summary: WP06 needed 2 implementation cycles
+  evidence_refs:
+  - e-072
+  details: WP WP06 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-042
+  category: implementation
+  summary: WP07 needed 3 implementation cycles
+  evidence_refs:
+  - e-073
+  details: WP WP07 entered in_progress 3 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-043
+  category: implementation
+  summary: WP09 needed 2 implementation cycles
+  evidence_refs:
+  - e-074
+  details: WP WP09 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-044
+  category: implementation
+  summary: WP10 needed 2 implementation cycles
+  evidence_refs:
+  - e-075
+  details: WP WP10 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-045
+  category: implementation
+  summary: WP12 needed 2 implementation cycles
+  evidence_refs:
+  - e-076
+  details: WP WP12 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-046
+  category: implementation
+  summary: WP15 needed 3 implementation cycles
+  evidence_refs:
+  - e-077
+  details: WP WP15 entered in_progress 3 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-047
+  category: implementation
+  summary: WP16 needed 2 implementation cycles
+  evidence_refs:
+  - e-078
+  details: WP WP16 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-048
+  category: implementation
+  summary: WP17 needed 2 implementation cycles
+  evidence_refs:
+  - e-079
+  details: WP WP17 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-049
+  category: implementation
+  summary: WP18 needed 2 implementation cycles
+  evidence_refs:
+  - e-080
+  details: WP WP18 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-050
+  category: implementation
+  summary: WP19 needed 2 implementation cycles
+  evidence_refs:
+  - e-081
+  details: WP WP19 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-051
+  category: implementation
+  summary: WP20 needed 2 implementation cycles
+  evidence_refs:
+  - e-082
+  details: WP WP20 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-052
+  category: implementation
+  summary: WP21 needed 2 implementation cycles
+  evidence_refs:
+  - e-083
+  details: WP WP21 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-053
+  category: implementation
+  summary: WP22 needed 2 implementation cycles
+  evidence_refs:
+  - e-084
+  details: WP WP22 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-054
+  category: implementation
+  summary: WP23 needed 2 implementation cycles
+  evidence_refs:
+  - e-085
+  details: WP WP23 entered in_progress 2 times. Multiple implementation cycles suggest rework not captured as a
+    documented review rejection; the WP scope or contract may need refinement.
+- id: n-019
+  category: process
+  summary: WP01 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-050
+  details: WP WP01 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-020
+  category: process
+  summary: WP02 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-051
+  details: WP WP02 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-021
+  category: process
+  summary: WP03 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-052
+  details: WP WP03 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-022
+  category: process
+  summary: WP05 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-053
+  details: WP WP05 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-023
+  category: process
+  summary: WP06 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-054
+  details: WP WP06 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-024
+  category: process
+  summary: WP07 required 2 --force override(s) during workflow
+  evidence_refs:
+  - e-055
+  details: WP WP07 required 2 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-025
+  category: process
+  summary: WP09 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-056
+  details: WP WP09 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-026
+  category: process
+  summary: WP10 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-057
+  details: WP WP10 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-027
+  category: process
+  summary: WP12 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-058
+  details: WP WP12 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-028
+  category: process
+  summary: WP15 required 2 --force override(s) during workflow
+  evidence_refs:
+  - e-059
+  details: WP WP15 required 2 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-029
+  category: process
+  summary: WP16 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-060
+  details: WP WP16 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-030
+  category: process
+  summary: WP17 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-061
+  details: WP WP17 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-031
+  category: process
+  summary: WP18 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-062
+  details: WP WP18 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-032
+  category: process
+  summary: WP19 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-063
+  details: WP WP19 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-033
+  category: process
+  summary: WP20 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-064
+  details: WP WP20 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-034
+  category: process
+  summary: WP21 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-065
+  details: WP WP21 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-035
+  category: process
+  summary: WP22 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-066
+  details: WP WP22 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-036
+  category: process
+  summary: WP23 required 1 --force override(s) during workflow
+  evidence_refs:
+  - e-067
+  details: WP WP23 required 1 operator-driven --force lane transition(s). Force overrides typically indicate the runtime
+    guard failed or the operator routed around it; investigate the underlying cause.
+- id: n-001
+  category: review_loop
+  summary: WP01 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-032
+  details: WP WP01 was sent back from review to planning 1 time(s).
+- id: n-002
+  category: review_loop
+  summary: WP02 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-033
+  details: WP WP02 was sent back from review to planning 1 time(s).
+- id: n-003
+  category: review_loop
+  summary: WP03 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-034
+  details: WP WP03 was sent back from review to planning 1 time(s).
+- id: n-004
+  category: review_loop
+  summary: WP05 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-035
+  details: WP WP05 was sent back from review to planning 1 time(s).
+- id: n-005
+  category: review_loop
+  summary: WP06 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-036
+  details: WP WP06 was sent back from review to planning 1 time(s).
+- id: n-006
+  category: review_loop
+  summary: WP07 required 2 rejection cycle(s) before approval
+  evidence_refs:
+  - e-037
+  details: WP WP07 was sent back from review to planning 2 time(s).
+- id: n-007
+  category: review_loop
+  summary: WP09 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-038
+  details: WP WP09 was sent back from review to planning 1 time(s).
+- id: n-008
+  category: review_loop
+  summary: WP10 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-039
+  details: WP WP10 was sent back from review to planning 1 time(s).
+- id: n-009
+  category: review_loop
+  summary: WP12 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-040
+  details: WP WP12 was sent back from review to planning 1 time(s).
+- id: n-010
+  category: review_loop
+  summary: WP15 required 2 rejection cycle(s) before approval
+  evidence_refs:
+  - e-041
+  details: WP WP15 was sent back from review to planning 2 time(s).
+- id: n-011
+  category: review_loop
+  summary: WP16 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-042
+  details: WP WP16 was sent back from review to planning 1 time(s).
+- id: n-012
+  category: review_loop
+  summary: WP17 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-043
+  details: WP WP17 was sent back from review to planning 1 time(s).
+- id: n-013
+  category: review_loop
+  summary: WP18 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-044
+  details: WP WP18 was sent back from review to planning 1 time(s).
+- id: n-014
+  category: review_loop
+  summary: WP19 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-045
+  details: WP WP19 was sent back from review to planning 1 time(s).
+- id: n-015
+  category: review_loop
+  summary: WP20 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-046
+  details: WP WP20 was sent back from review to planning 1 time(s).
+- id: n-016
+  category: review_loop
+  summary: WP21 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-047
+  details: WP WP21 was sent back from review to planning 1 time(s).
+- id: n-017
+  category: review_loop
+  summary: WP22 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-048
+  details: WP WP22 was sent back from review to planning 1 time(s).
+- id: n-018
+  category: review_loop
+  summary: WP23 required 1 rejection cycle(s) before approval
+  evidence_refs:
+  - e-049
+  details: WP WP23 was sent back from review to planning 1 time(s).
+gaps: []
+proposals: []
+evidence_refs:
+- id: e-001
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/meta.json
+- id: e-002
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/spec.md
+- id: e-003
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/plan.md
+- id: e-004
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks.md
+- id: e-005
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP01-reproducible-workspace-and-dependency-baseline.md
+- id: e-006
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP02-canonical-project-model-and-validation.md
+- id: e-007
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP03-project-storage-and-revision-checked-command-core.md
+- id: e-008
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP04-owner-http-service-and-day-one-mcp-adapter.md
+- id: e-009
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP05-compact-studio-shell-and-project-editing-state.md
+- id: e-010
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP06-sqlite-connections-and-lossless-introspection.md
+- id: e-011
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP07-schema-diff-and-reviewed-migration-planning.md
+- id: e-012
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP08-visual-schema-table-and-relationship-editor.md
+- id: e-013
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP09-migration-apply-backup-and-crash-recovery.md
+- id: e-014
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP10-first-standalone-generated-public-list.md
+- id: e-015
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP11-form-controls-focused-wizards-and-binding-properties.md
+- id: e-016
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP12-generated-search-and-complete-record-lifecycle.md
+- id: e-017
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP13-generated-identity-store-sessions-and-access-enforcement.md
+- id: e-018
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP14-studio-login-configuration-and-protected-page-workflow.md
+- id: e-019
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP15-safe-query-compiler-and-exact-derived-arithmetic.md
+- id: e-020
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP16-visual-query-designer-and-saved-data-sources.md
+- id: e-021
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP17-query-backed-reports-and-refreshed-child-derived-values.md
+- id: e-022
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP18-application-behavior-map-and-endpoint-projection.md
+- id: e-023
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP19-design-and-html-editing-with-working-document-modes.md
+- id: e-024
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP20-regeneration-ownership-authored-extensions-and-recovery.md
+- id: e-025
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP21-managed-runtime-jobs-live-page-and-portable-export.md
+- id: e-026
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP22-equipment-desk-end-to-end-authoring-acceptance.md
+- id: e-027
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP23-second-project-generality-and-ui-mcp-parity-acceptance.md
+- id: e-028
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP24-cross-boundary-failure-and-recovery-acceptance.md
+- id: e-029
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP25-workspace-fidelity-keyboard-access-and-measured-scale.md
+- id: e-030
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/tasks/WP26-clean-install-documentation-and-mission-readiness.md
+- id: e-031
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+- id: e-032
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XDVSG9SEJGR0J0QSHW88VV
+- id: e-033
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XFFAFAGGXHRK1E0BD6WABY
+- id: e-034
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XH0SWHRAB67PTTX0SW1E4T
+- id: e-035
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XNT73MNFQV8SS54BYCSHNT
+- id: e-036
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XR7NYN2KTZC7BDJ16RKM3D
+- id: e-037
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XTH5WZASQPJ297FVZBMG13..01M5XV9HW53ZZ0ECA2CKJSETDC
+- id: e-038
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XXSNP3G66AEVV6VZ28493Z
+- id: e-039
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y1XDANF11BR4S5DF6BM0MV
+- id: e-040
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y8SBMAKP05ZSVQEHA8S3XC
+- id: e-041
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XTEP5GD7RC1ZSJRA5FX94D..01M5XVAK5SBM2JPNZPQ52Z3VNB
+- id: e-042
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y0TM3JREQNX11R7HWKYG6H
+- id: e-043
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YCFJF2HF6D6J3W53D0J2TQ
+- id: e-044
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YGDGGQZK9HT801KJVEQ71X
+- id: e-045
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y8HEV4SJXDH1TW0NGJP9TH
+- id: e-046
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YG156VAC008BWDS9WCAADZ
+- id: e-047
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YK5Z2JSCS1P7RX6PBTFT02
+- id: e-048
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YSEKPTBN6W9TJMWX1V9EW0
+- id: e-049
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YZTDPPM0FQNQ3Q1ZDR1XZ5
+- id: e-050
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XDVSG9SEJGR0J0QSHW88VV
+- id: e-051
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XFFAFAGGXHRK1E0BD6WABY
+- id: e-052
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XH0SWHRAB67PTTX0SW1E4T
+- id: e-053
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XNT73MNFQV8SS54BYCSHNT
+- id: e-054
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XR7NYN2KTZC7BDJ16RKM3D
+- id: e-055
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XTH5WZASQPJ297FVZBMG13..01M5XV9HW53ZZ0ECA2CKJSETDC
+- id: e-056
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XXSNP3G66AEVV6VZ28493Z
+- id: e-057
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y1XDANF11BR4S5DF6BM0MV
+- id: e-058
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y8SBMAKP05ZSVQEHA8S3XC
+- id: e-059
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5XTEP5GD7RC1ZSJRA5FX94D..01M5XVAK5SBM2JPNZPQ52Z3VNB
+- id: e-060
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y0TM3JREQNX11R7HWKYG6H
+- id: e-061
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YCFJF2HF6D6J3W53D0J2TQ
+- id: e-062
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YGDGGQZK9HT801KJVEQ71X
+- id: e-063
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5Y8HEV4SJXDH1TW0NGJP9TH
+- id: e-064
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YG156VAC008BWDS9WCAADZ
+- id: e-065
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YK5Z2JSCS1P7RX6PBTFT02
+- id: e-066
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YSEKPTBN6W9TJMWX1V9EW0
+- id: e-067
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: 01M5YZTDPPM0FQNQ3Q1ZDR1XZ5
+- id: e-068
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-069
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-070
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-071
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-072
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-073
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-074
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-075
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-076
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-077
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-078
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-079
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-080
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-081
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-082
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-083
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-084
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-085
+  kind: event_range
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/status.events.jsonl
+  range: implementation_cycles
+- id: e-086
+  kind: file
+  path: kitty-specs/schema-baron-studio-01M5W3Q9/analysis-report.md
+generator_version: '1.0'
+provenance_history: []

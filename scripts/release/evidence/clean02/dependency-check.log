@@ -1,0 +1,5 @@
+
+> schema-baron@0.0.0 check:dependencies
+> node scripts/workspace/dependencies.mjs verify
+
+Installed metadata matches lock: 183; platform-optional absent: 76; registry artifacts: 259

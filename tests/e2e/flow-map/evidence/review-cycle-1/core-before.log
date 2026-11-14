@@ -1,0 +1,76 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-r
+
+ ❯ packages/core/tests/flow/behavior.test.ts (9 tests | 3 failed) 84ms
+   × marks missing source field on the stable edge and clears it only after canonical repair 8ms
+   × marks missing parameter on the stable edge and clears it only after canonical repair 2ms
+   × marks incompatible literal type on the stable edge and clears it only after canonical repair 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/tests/flow/behavior.test.ts > marks missing source field on the stable edge and clears it only after canonical repair
+ FAIL  packages/core/tests/flow/behavior.test.ts > marks missing parameter on the stable edge and clears it only after canonical repair
+AssertionError: expected { id: 'open:destination', …(10) } to match object { valid: false, …(4) }
+(8 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "diagnostics": ArrayContaining [
+-     ObjectContaining {
+-       "code": "BROKEN_REFERENCE",
+-       "objectId": "open",
+-     },
+-   ],
+    "fromId": "open",
+    "sourceObjectId": "open",
+    "toId": "edit",
+-   "valid": false,
+  }
+
+ ❯ packages/core/tests/flow/behavior.test.ts:39:15
+     37|  const before=JSON.stringify(p),graph=projectBehavior(p),edge=graph.ed…
+     38|  expect(()=>compileProject(p)).toThrow();
+     39|  expect(edge).toMatchObject({valid:false,sourceObjectId:action.id,from…
+       |               ^
+     40|  expect(graph.nodes).toHaveLength(projectBehavior(behaviorFixture()).n…
+     41|  expect(graph.edges.find(e=>e.id==='save:success')).toMatchObject({val…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/core/tests/flow/behavior.test.ts > marks incompatible literal type on the stable edge and clears it only after canonical repair
+AssertionError: expected { id: 'open:destination', …(10) } to match object { valid: false, …(4) }
+(8 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "diagnostics": ArrayContaining [
+-     ObjectContaining {
+-       "code": "TYPE_MISMATCH",
+-       "objectId": "open",
+-     },
+-   ],
+    "fromId": "open",
+    "sourceObjectId": "open",
+    "toId": "edit",
+-   "valid": false,
+  }
+
+ ❯ packages/core/tests/flow/behavior.test.ts:39:15
+     37|  const before=JSON.stringify(p),graph=projectBehavior(p),edge=graph.ed…
+     38|  expect(()=>compileProject(p)).toThrow();
+     39|  expect(edge).toMatchObject({valid:false,sourceObjectId:action.id,from…
+       |               ^
+     40|  expect(graph.nodes).toHaveLength(projectBehavior(behaviorFixture()).n…
+     41|  expect(graph.edges.find(e=>e.id==='save:success')).toMatchObject({val…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 6 passed (9)
+   Start at  06:05:13
+   Duration  335ms (import 38%, tests 36%, transform 22%, worker 3%)

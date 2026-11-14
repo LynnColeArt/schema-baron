@@ -1,0 +1,22 @@
+{
+  "run_id": "schema-baron-wp07-qualified_XyVMUu-workshop-AC-012",
+  "case_id": "AC-012",
+  "requirements": [
+    "FR-010",
+    "FR-014",
+    "NFR-001",
+    "C-003"
+  ],
+  "application": "workshop",
+  "mode": "ui_journey",
+  "revision": "60ad8437789f1b0654871fe7a3bdfdea9c31bebb",
+  "status": "passed",
+  "expected": "Two promotions preserve business tuples, all declarations, stable private identity invariants and authored bytes; owned-source conflict blocks promotion.",
+  "actual": "Both stop/install/type/test/build/run cycles passed with exact state comparisons, named parent context and report oracles; a separate canonically generated fault output blocked modified owned source and accepted a fresh preview after reviewed-byte restoration.",
+  "evidence": [
+    {
+      "path": "docs/evidence/verification/wp07-qualified-results.json",
+      "sha256": "0d2e0577b0ec33fe3b69b2b231dd490b6eed94b5a70084b3afc1a8eaf9e90c3c"
+    }
+  ]
+}

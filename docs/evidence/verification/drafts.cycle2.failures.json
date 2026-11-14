@@ -1,0 +1,29 @@
+{
+  "rejectedRevision": "f86b3cab6c2609e096c446f68acd362195fb1793",
+  "reviewEvent": "01M6EDQK7XD31BS1MW7PRSQ1K0",
+  "defect": "R1 obsolete decimal buffer",
+  "mode": "ui_journey",
+  "red": {
+    "tests": 1,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "retries": 0,
+    "expected": "After scale minus then integer type, Save schema succeeds with integer type and no obsolete decimal control",
+    "actual": "Decimal scale control absent; Correct incomplete numeric or default values before saving; original decimal persisted"
+  },
+  "repair": "Desired-schema buffer applicability plus retirement during explicit semantic mutations; all active decimal columns included",
+  "developmentFailuresRetained": [
+    "Two new state tests initially failed before helper existed",
+    "One stale invalidDefaultIds reference caught by typecheck and build; corrected to applicable buffered tables before successful build/UI"
+  ],
+  "green": {
+    "revision": "f6ecb1d89bd6b2c2e0eb31947c65f492e3a581a4",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "retries": 0
+  },
+  "retention": "Earlier cycle-1 artifacts, review red, cycle-2 red, failed checks and earlier explicit five-case pass remain separate; no automatic retry or overwritten failed observation"
+}

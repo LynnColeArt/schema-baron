@@ -1,0 +1,14 @@
+{
+  "name": "native-acquisition",
+  "revision": "f9e041142c288627bf644106f21df977e1cf3c49",
+  "command": [
+    "npm",
+    "run",
+    "native:verify"
+  ],
+  "started": "2026-11-02T18:46:51.160Z",
+  "finished": "2026-11-02T18:46:51.337Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true
+}

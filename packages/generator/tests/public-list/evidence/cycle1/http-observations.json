@@ -1,0 +1,6 @@
+{
+  "output": "/tmp/wp10-cycle1-runtime-7akkmq/application",
+  "databasePath": "/tmp/wp10-cycle1-runtime-7akkmq/live.sqlite",
+  "cases": "eq/gte/lte, SQL NULL, zero, large exact values, supported sort, literal nested route, missing database",
+  "dataPreserved": true
+}

@@ -1,0 +1,3 @@
+Command: node scripts/workspace/verify.mjs module packages/core/src
+Exit status: 0
+No console output.

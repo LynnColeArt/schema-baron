@@ -1,0 +1,10 @@
+
+Running 5 tests using 1 worker
+
+  ✓  1 tests/e2e/usability/scale.spec.ts:14:1 › full 50 page 200 form 1000 control rendered workspace selection/property response and ready reopen (11.3s)
+  ✓  2 tests/e2e/usability/scale.spec.ts:109:1 › actual 50 table 500 column diagram preserves 20 selected drafts through save drag and reprojection (5.1s)
+  ✓  3 tests/e2e/usability/scale.spec.ts:267:1 › indexed 10000 row keyset paging through real owner and 100 node map with 20 live edits (8.3s)
+  ✓  4 tests/e2e/usability/workflow.spec.ts:9:1 › keyboard primary journey and full five-mode application checkpoint (26.9s)
+  ✓  5 tests/e2e/usability/workflow.spec.ts:12:1 › native 200 percent keyboard primary journey uses actual browser zoom and all five modes (26.9s)
+
+  5 passed (1.4m)

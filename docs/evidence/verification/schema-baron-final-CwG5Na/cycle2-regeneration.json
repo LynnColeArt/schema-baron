@@ -1,0 +1,91 @@
+{
+  "name": "cycle2-regeneration",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/regeneration.spec.ts",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle2-regeneration-output"
+  ],
+  "started": "2026-11-02T20:28:36.975Z",
+  "finished": "2026-11-02T20:32:50.915Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 2,
+    "count": 2,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "workshop authored code follows configured output and survives regeneration",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "library authored code follows configured output and survives regeneration",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": [
+    {
+      "kind": "regeneration-summary.json",
+      "privateSourceSha256": "f75f4b65b42a78396973852a60126533526371de3608ba9ddd44270564be9b67",
+      "data": {
+        "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+        "application": "Library Catalog",
+        "cycles": 2,
+        "authoredHash": "611dd50b7c0798fd9955ffc3adc2fa8c6601065cb27b316afcd1e6efe8ce5d16",
+        "rowsHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+        "modelHash": "b1047cfcf3d2331dd55c41c3896489fb53d0191015904b0283aea72f562bdaaf",
+        "identityInvariantsPreserved": true,
+        "fault": {
+          "mode": "fault",
+          "isolatedCopy": true,
+          "promotionBlocked": true,
+          "restoredReviewedBytesAndFreshPreview": true
+        }
+      }
+    },
+    {
+      "kind": "regeneration-summary.json",
+      "privateSourceSha256": "14cf967c986b5820622008c58c6ea65fd5af0d0b5c4eea8c168375764238de48",
+      "data": {
+        "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+        "application": "Workshop Planner",
+        "cycles": 2,
+        "authoredHash": "5a7fbc542b33e66181c902bf2d02107842f147105fb26c3c859c57c31a0deb14",
+        "rowsHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+        "modelHash": "8c297a7b9ce9dd3139d99c6b586eee234bd2851387e7c38c6c038ee4a97ec4f1",
+        "identityInvariantsPreserved": true,
+        "fault": {
+          "mode": "fault",
+          "isolatedCopy": true,
+          "promotionBlocked": true,
+          "restoredReviewedBytesAndFreshPreview": true
+        }
+      }
+    }
+  ]
+}

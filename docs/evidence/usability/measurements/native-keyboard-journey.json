@@ -1,0 +1,37 @@
+{
+  "pointerActions": 0,
+  "functionalCode": {
+    "contractPath": "authored/keyboard.ts",
+    "editedSource": "// Authored validator interface v1. Preserved byte-for-byte by regeneration.\nimport type { ValidatorV1 } from '../server/extension-contracts';\nexport const contractVersion = 1 as const;\nexport const validate: ValidatorV1 = (context) => context.values[\"fe6ca883-5598-4d08-9ad7-4c72853fb0ba\"] === 'blocked' ? {[\"fe6ca883-5598-4d08-9ad7-4c72853fb0ba\"]:'Keyboard-authored validator rejected tenant.'} : ({});\n",
+    "rejectedRows": [],
+    "acceptedRows": [
+      {
+        "tenant": "accepted",
+        "code": "one"
+      }
+    ],
+    "returnRoute": "/keyboard"
+  },
+  "authoring": [
+    "blank project",
+    "blank SQLite",
+    "two tables",
+    "ordered composite FK",
+    "Login wizard",
+    "named query saved and real SQLite preview",
+    "identity source and effective page policy",
+    "selectable map and pan/zoom",
+    "20 property edits",
+    "HTML",
+    "Design",
+    "Preview",
+    "functional authored validator Code edit",
+    "generated Record rejection retains inputs and writes zero rows",
+    "corrected Record saves SQLite and returns declared route",
+    "two generations",
+    "built runtime",
+    "Live Page route",
+    "draft/output distinction"
+  ],
+  "limitations": []
+}

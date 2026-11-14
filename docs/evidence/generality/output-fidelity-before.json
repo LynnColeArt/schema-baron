@@ -1,0 +1,19 @@
+{
+  "label": {
+    "requested": "Store manuscript",
+    "actionLabel": null,
+    "emittedFiles": [
+      "server/record-4.ts"
+    ]
+  },
+  "change": {
+    "accepted": true,
+    "events": [
+      {
+        "event": "change",
+        "actionId": "301ec113-3507-4f27-a248-5c7cbe100226"
+      }
+    ],
+    "diagnostics": []
+  }
+}

@@ -1,0 +1,86 @@
+2345350 execve("/home/lynn/.nvm/versions/node/v24.22.1/bin/node", ["/home/lynn/.nvm/versions/node/v2"..., "/home/lynn/projects/schema-baron"..., "/tmp/baron-cross-boundary-vK3vv5", "migrate", "after-db-commit"], 0x7ffe9ce30648 /* 144 vars */) = 0
+2345350 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x70916aaef990, parent_tid=0x70916aaef990, exit_signal=0, stack=0x70916a2ef000, stack_size=0x7ffdc0, tls=0x70916aaef6c0} => {parent_tid=[2345357]}, 88) = 2345357
+2345350 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x70916a2ee990, parent_tid=0x70916a2ee990, exit_signal=0, stack=0x709169aee000, stack_size=0x7ffdc0, tls=0x70916a2ee6c0} => {parent_tid=[2345358]}, 88) = 2345358
+2345350 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x709169aed990, parent_tid=0x709169aed990, exit_signal=0, stack=0x7091692ed000, stack_size=0x7ffdc0, tls=0x709169aed6c0} => {parent_tid=[2345359]}, 88) = 2345359
+2345350 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7091692ec990, parent_tid=0x7091692ec990, exit_signal=0, stack=0x709168aec000, stack_size=0x7ffdc0, tls=0x7091692ec6c0} => {parent_tid=[2345360]}, 88) = 2345360
+2345350 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x709168aeb990, parent_tid=0x709168aeb990, exit_signal=0, stack=0x7091682eb000, stack_size=0x7ffdc0, tls=0x709168aeb6c0} => {parent_tid=[2345361]}, 88) = 2345361
+2345350 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x70916af0f990, parent_tid=0x70916af0f990, exit_signal=0, stack=0x70916af07000, stack_size=0x7dc0, tls=0x70916af0f6c0} => {parent_tid=[2345363]}, 88) = 2345363
+2345350 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x70916b30c010) = 2345377
+2345377 execve("/home/lynn/.nvm/versions/node/v24.22.1/bin/node", ["/home/lynn/.nvm/versions/node/v2"..., "/home/lynn/projects/schema-baron"...], 0xb7ad340 /* 3 vars */) = 0
+2345377 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7d173deef990, parent_tid=0x7d173deef990, exit_signal=0, stack=0x7d173d6ef000, stack_size=0x7ffdc0, tls=0x7d173deef6c0} => {parent_tid=[2345379]}, 88) = 2345379
+2345377 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7d173d6ee990, parent_tid=0x7d173d6ee990, exit_signal=0, stack=0x7d173ceee000, stack_size=0x7ffdc0, tls=0x7d173d6ee6c0} => {parent_tid=[2345380]}, 88) = 2345380
+2345377 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7d173ceed990, parent_tid=0x7d173ceed990, exit_signal=0, stack=0x7d173c6ed000, stack_size=0x7ffdc0, tls=0x7d173ceed6c0} => {parent_tid=[2345381]}, 88) = 2345381
+2345377 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7d1737fff990, parent_tid=0x7d1737fff990, exit_signal=0, stack=0x7d17377ff000, stack_size=0x7ffdc0, tls=0x7d1737fff6c0} => {parent_tid=[2345382]}, 88) = 2345382
+2345377 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7d17377fe990, parent_tid=0x7d17377fe990, exit_signal=0, stack=0x7d1736ffe000, stack_size=0x7ffdc0, tls=0x7d17377fe6c0} => {parent_tid=[2345383]}, 88) = 2345383
+2345377 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7d173e68f990, parent_tid=0x7d173e68f990, exit_signal=0, stack=0x7d173e687000, stack_size=0x7dc0, tls=0x7d173e68f6c0} => {parent_tid=[2345384]}, 88) = 2345384
+2345381 exit(0 <unfinished ...>
+2345380 exit(0 <unfinished ...>
+2345381 <... exit resumed>)             = ?
+2345380 <... exit resumed>)             = ?
+2345383 exit(0)                         = ?
+2345382 exit(0 <unfinished ...>
+2345381 +++ exited with 0 +++
+2345380 +++ exited with 0 +++
+2345382 <... exit resumed>)             = ?
+2345383 +++ exited with 0 +++
+2345382 +++ exited with 0 +++
+2345379 exit(0)                         = ?
+2345379 +++ exited with 0 +++
+2345377 exit_group(0)                   = ?
+2345384 +++ exited with 0 +++
+2345377 +++ exited with 0 +++
+2345350 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2345377, si_uid=1000, si_status=0, si_utime=13 /* 0.13 s */, si_stime=5 /* 0.05 s */} ---
+2345350 wait4(2345377, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 2345377
+2345350 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x70916b30c010) = 2345415
+2345415 execve("/home/lynn/.nvm/versions/node/v24.22.1/bin/node", ["/home/lynn/.nvm/versions/node/v2"..., "/home/lynn/projects/schema-baron"...], 0xb8c83a0 /* 3 vars */) = 0
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a476edff990, parent_tid=0x7a476edff990, exit_signal=0, stack=0x7a476e5ff000, stack_size=0x7ffdc0, tls=0x7a476edff6c0} => {parent_tid=[2345422]}, 88) = 2345422
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a476e5fe990, parent_tid=0x7a476e5fe990, exit_signal=0, stack=0x7a476ddfe000, stack_size=0x7ffdc0, tls=0x7a476e5fe6c0} => {parent_tid=[2345423]}, 88) = 2345423
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a476ddfd990, parent_tid=0x7a476ddfd990, exit_signal=0, stack=0x7a476d5fd000, stack_size=0x7ffdc0, tls=0x7a476ddfd6c0} => {parent_tid=[2345424]}, 88) = 2345424
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a476d5fc990, parent_tid=0x7a476d5fc990, exit_signal=0, stack=0x7a476cdfc000, stack_size=0x7ffdc0, tls=0x7a476d5fc6c0} => {parent_tid=[2345425]}, 88) = 2345425
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a476cdfb990, parent_tid=0x7a476cdfb990, exit_signal=0, stack=0x7a476c5fb000, stack_size=0x7ffdc0, tls=0x7a476cdfb6c0} => {parent_tid=[2345426]}, 88) = 2345426
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a476f48e990, parent_tid=0x7a476f48e990, exit_signal=0, stack=0x7a476f486000, stack_size=0x7dc0, tls=0x7a476f48e6c0} => {parent_tid=[2345428]}, 88) = 2345428
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a471ffff990, parent_tid=0x7a471ffff990, exit_signal=0, stack=0x7a471f7ff000, stack_size=0x7ffdc0, tls=0x7a471ffff6c0} => {parent_tid=[2345429]}, 88) = 2345429
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a471f7fe990, parent_tid=0x7a471f7fe990, exit_signal=0, stack=0x7a471effe000, stack_size=0x7ffdc0, tls=0x7a471f7fe6c0} => {parent_tid=[2345430]}, 88) = 2345430
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a471effd990, parent_tid=0x7a471effd990, exit_signal=0, stack=0x7a471e7fd000, stack_size=0x7ffdc0, tls=0x7a471effd6c0} => {parent_tid=[2345431]}, 88) = 2345431
+2345415 clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7a471e7fc990, parent_tid=0x7a471e7fc990, exit_signal=0, stack=0x7a471dffc000, stack_size=0x7ffdc0, tls=0x7a471e7fc6c0} => {parent_tid=[2345432]}, 88) = 2345432
+2345432 exit(0 <unfinished ...>
+2345431 exit(0 <unfinished ...>
+2345432 <... exit resumed>)             = ?
+2345431 <... exit resumed>)             = ?
+2345429 exit(0 <unfinished ...>
+2345432 +++ exited with 0 +++
+2345431 +++ exited with 0 +++
+2345429 <... exit resumed>)             = ?
+2345430 exit(0)                         = ?
+2345429 +++ exited with 0 +++
+2345430 +++ exited with 0 +++
+2345426 exit(0)                         = ?
+2345425 exit(0)                         = ?
+2345426 +++ exited with 0 +++
+2345425 +++ exited with 0 +++
+2345424 exit(0)                         = ?
+2345423 exit(0)                         = ?
+2345424 +++ exited with 0 +++
+2345423 +++ exited with 0 +++
+2345422 exit(0)                         = ?
+2345422 +++ exited with 0 +++
+2345415 exit_group(86)                  = ?
+2345428 +++ exited with 86 +++
+2345415 +++ exited with 86 +++
+2345350 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2345415, si_uid=1000, si_status=86, si_utime=4 /* 0.04 s */, si_stime=2 /* 0.02 s */} ---
+2345350 wait4(2345415, [{WIFEXITED(s) && WEXITSTATUS(s) == 86}], WNOHANG, NULL) = 2345415
+2345360 exit(0 <unfinished ...>
+2345358 exit(0 <unfinished ...>
+2345360 <... exit resumed>)             = ?
+2345358 <... exit resumed>)             = ?
+2345360 +++ exited with 0 +++
+2345358 +++ exited with 0 +++
+2345361 exit(0)                         = ?
+2345359 exit(0)                         = ?
+2345361 +++ exited with 0 +++
+2345359 +++ exited with 0 +++
+2345357 exit(0)                         = ?
+2345357 +++ exited with 0 +++
+2345350 exit_group(0)                   = ?
+2345363 +++ exited with 0 +++
+2345350 +++ exited with 0 +++

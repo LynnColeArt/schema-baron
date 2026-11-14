@@ -1,0 +1,35 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 715.4923129999997,
+  "context": {
+    "scenario": "wal-busy-external"
+  },
+  "events": [
+    {
+      "elapsedMs": 0.6381550000005518,
+      "scenario": "wal-busy-external",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 714.9048279999997,
+      "scenario": "wal-busy-external",
+      "busyCode": "PROJECT_BUSY",
+      "rows": [
+        {
+          "id": 1,
+          "title": "original"
+        },
+        {
+          "id": 2,
+          "title": "external"
+        }
+      ],
+      "external": [
+        {
+          "id": 42
+        }
+      ],
+      "state": "observed"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "root": "/tmp/wp12-navigation-t3hjyf",
+  "output": "/tmp/wp12-navigation-t3hjyf/application",
+  "databasePath": "/tmp/wp12-navigation-t3hjyf/definitions/live.sqlite",
+  "recordId": "ea6f480c-5949-4053-af30-37b03b12433c",
+  "parentParameter": "15b4234d-15c6-487d-8c7e-ef1a19d2091a:key:organization-field",
+  "blankSearchParameter": "15b4234d-15c6-487d-8c7e-ef1a19d2091a:filter:entry-field",
+  "productionHttp": true,
+  "browserCancelSaveCreateDelete": true,
+  "independentRowsVerified": true
+}

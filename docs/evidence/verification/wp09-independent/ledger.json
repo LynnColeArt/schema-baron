@@ -1,0 +1,466 @@
+{
+  "schema": "acceptance-ledger/v1",
+  "cases": [
+    {
+      "case_id": "AC-001",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-002",
+      "application": "workshop",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 2
+    },
+    {
+      "case_id": "AC-003",
+      "application": "library",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 2
+    },
+    {
+      "case_id": "AC-004",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-005",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-006",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-007",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-008",
+      "application": "workshop",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 2
+    },
+    {
+      "case_id": "AC-009",
+      "application": "library",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 2
+    },
+    {
+      "case_id": "AC-010",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-011",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-012",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-013",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-014",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-015",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-016",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-017",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-018",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-019",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    },
+    {
+      "case_id": "AC-020",
+      "application": "both",
+      "status": "passed",
+      "applications": [
+        {
+          "application": "workshop",
+          "status": "passed",
+          "observations": 2
+        },
+        {
+          "application": "library",
+          "status": "passed",
+          "observations": 2
+        }
+      ],
+      "observations": 4
+    }
+  ],
+  "requirements": [
+    {
+      "requirement": "FR-001",
+      "observations": 8
+    },
+    {
+      "requirement": "FR-002",
+      "observations": 2
+    },
+    {
+      "requirement": "FR-003",
+      "observations": 2
+    },
+    {
+      "requirement": "FR-004",
+      "observations": 8
+    },
+    {
+      "requirement": "FR-005",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-006",
+      "observations": 8
+    },
+    {
+      "requirement": "FR-007",
+      "observations": 8
+    },
+    {
+      "requirement": "FR-008",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-009",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-010",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-011",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-012",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-013",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-014",
+      "observations": 12
+    },
+    {
+      "requirement": "FR-015",
+      "observations": 4
+    },
+    {
+      "requirement": "FR-016",
+      "observations": 8
+    },
+    {
+      "requirement": "FR-017",
+      "observations": 8
+    },
+    {
+      "requirement": "NFR-001",
+      "observations": 12
+    },
+    {
+      "requirement": "NFR-002",
+      "observations": 8
+    },
+    {
+      "requirement": "NFR-003",
+      "observations": 4
+    },
+    {
+      "requirement": "NFR-004",
+      "observations": 4
+    },
+    {
+      "requirement": "NFR-005",
+      "observations": 8
+    },
+    {
+      "requirement": "NFR-006",
+      "observations": 4
+    },
+    {
+      "requirement": "C-001",
+      "observations": 4
+    },
+    {
+      "requirement": "C-002",
+      "observations": 8
+    },
+    {
+      "requirement": "C-003",
+      "observations": 6
+    },
+    {
+      "requirement": "C-004",
+      "observations": 4
+    },
+    {
+      "requirement": "C-005",
+      "observations": 8
+    },
+    {
+      "requirement": "C-006",
+      "observations": 8
+    }
+  ],
+  "complete": true,
+  "accepted": false,
+  "note": "Foundation summary only. Final verdict additionally requires both apps, final-code clean cycles, defect closure and independent review."
+}

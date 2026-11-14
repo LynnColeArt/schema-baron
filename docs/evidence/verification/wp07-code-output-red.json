@@ -1,0 +1,22 @@
+{
+  "run_id": "wp07-code-output-red-20261102",
+  "case_id": "AC-011",
+  "requirements": [
+    "FR-011",
+    "FR-017",
+    "C-003"
+  ],
+  "application": "workshop",
+  "mode": "ui_journey",
+  "revision": "efbb544febe5d87b86a353299d3e44b7b8a33987",
+  "status": "failed",
+  "expected": "Code opens the generated output configured by the normal project wizard.",
+  "actual": "The cold Source output was output:app rather than the project approved-root locator ending :generated/app. The browser assertion failed with zero retries.",
+  "evidence": [
+    {
+      "path": "docs/evidence/verification/wp07-code-output-red.txt",
+      "sha256": "c094285dbe854b7fb35325ad5f42dcdd64ffef1f6e2c8fdf40b20b10f41c574f"
+    }
+  ],
+  "defect_id": "WP07-code-output-selection"
+}

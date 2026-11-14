@@ -1,0 +1,65 @@
+{
+  "clientDate": "2026-10-26",
+  "performedBy": "independent reviewer-renata dependency challenge",
+  "method": "Read-only Python urllib.request + HTMLParser table extraction; compare all lockfile name/version tuples. os.walk followlinks=False plus SHA256 and byte-marker scan, excluding .git/.worktrees/.local/.kittify; scan preceded retention of the indicators in this report.",
+  "sources": [
+    {
+      "url": "https://www.stepsecurity.io/blog/binding-gyp-npm-supply-chain-attack-spreads-like-worm",
+      "affectedNames": 57,
+      "affectedExactPairs": 286,
+      "lockedArtifactsCompared": 258,
+      "nameOverlaps": 0,
+      "exactOverlaps": 0
+    },
+    {
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/",
+      "purpose": "hash, marker and persistence indicators"
+    },
+    {
+      "url": "https://www.sonatype.com/blog/flooding-dropper-hits-npm-with-850-malicious-packages",
+      "purpose": "import-time code risk; lifecycle denial is incomplete protection"
+    },
+    {
+      "url": "https://guide.sonatype.com/vulnerability/sonatype-2026-003581/sonatype-research",
+      "status": "restricted/unavailable"
+    },
+    {
+      "url": "https://guide.sonatype.com/vulnerability/sonatype-2026-005660/sonatype-research",
+      "status": "restricted/unavailable"
+    }
+  ],
+  "filesScanned": 16683,
+  "bytesScanned": 466563643,
+  "sha256Indicators": [
+    "54dc7ea54a1317cca0e890a2770630cf7fa6c97813e0cb9d2caa93012b350668",
+    "fd3ca4007b225fdf8de7af4345a19179d5efa8c4bb9205f88cda806e5684b1eb",
+    "9fc2570b7cef51c1b8df116d144d11ff4096357be7d2c4c6367cfc2509cf1bcc"
+  ],
+  "markers": [
+    "npm-cache.com",
+    "pypi-get.com",
+    "js-mirror.com",
+    "thebeautifulmarchoftime",
+    "Shai-Hulud: Here We Go Again",
+    "Miasma - The Spreading Blight",
+    "liuende501",
+    "niagA oG eW ereH :duluH-iahS"
+  ],
+  "persistencePaths": [
+    ".claude/setup.mjs",
+    ".vscode/setup.mjs",
+    ".github/setup.js",
+    ".cursor/rules/setup.mdc",
+    ".claude/settings.json",
+    ".gemini/settings.json",
+    ".vscode/tasks.json"
+  ],
+  "hashOrMarkerMatches": 0,
+  "suspiciousMathFilenames": 0,
+  "persistencePathsPresent": [],
+  "bindingGypFiles": [
+    "node_modules/better-sqlite3/binding.gyp",
+    "node_modules/sharp/src/binding.gyp"
+  ],
+  "disposition": "accepted: no overlap/indicators found within bounded check; unrestricted full incident-list coverage unavailable, no exhaustive malware or host-forensics claim. All lifecycle hooks denied; import-time compromise remains a residual risk."
+}

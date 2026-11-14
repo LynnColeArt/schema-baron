@@ -1,0 +1,27 @@
+{
+  "expected": [
+    [
+      1,
+      "Outreach",
+      "3.75"
+    ],
+    [
+      2,
+      "Logistics",
+      "4.50"
+    ]
+  ],
+  "observed": [
+    [
+      1,
+      "Outreach",
+      "3.75"
+    ],
+    [
+      2,
+      "Logistics",
+      "4.50"
+    ]
+  ],
+  "match": true
+}

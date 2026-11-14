@@ -1,0 +1,17 @@
+# Schema Baron baseline: process observations
+
+These closeout notes supplement the runtime-generated [retrospective](../../kitty-specs/schema-baron-studio-01M5W3Q9/retrospective.yaml) and the independent [mission review](mission-review.md). They record agent observations, not human approval or user feedback.
+
+- Prove a second unrelated application early. Publication Catalog's composite keys, independent identity and output, and cross-project switching exposed generic defects that Equipment Desk alone did not constrain.
+- Keep canvas identity and layout stable across draft projections. A table edit reordered the draft array and moved the first table offscreen. Default positions must follow stable IDs; measured dimensions are temporary view state, and saved drag positions retain their existing authority.
+- Keep an in-process HTTP owner responsive during test setup. A synchronous dependency installation stalled its event loop and reproduced a warmed-socket connection reset. An awaited asynchronous child, actual concurrent HTTP probes and durable phase journals resolved the test-harness defect without transport retries or product timeout changes.
+- Verify cold prerequisites separately from offline operation. A workspace install did not populate every generated-target dependency. Explicit acquisition from both pinned lockfiles, fresh source and HOME/toolchain/browser locations, and a disconnected network namespace removed hidden local prerequisites.
+- Preserve evidence bytes. Raw historical command output can contain whitespace that authored code must reject. The final verifier distinguishes explicit capture paths and extensions, retains syntax and credential checks, and has real-Git positive and negative regressions.
+- Preserve exact provenance. Archive one immutable source revision and label later documentation, operator scripts and verification separately. The original late-HEAD receipt was retained with an archive-hash correction rather than silently rewritten.
+- Treat workflow metadata as evidence requiring interpretation. Explicit reviewer identity flags prevent an independent agent's approval from receiving the CLI's default `user` label. The WP26 anomaly has a canonical note identifying the actual reviewer. The automatic retrospective's force/rework heuristics are not proof of approval bypass: independent review inspected all 20 force records and found backward changes-requested transitions, with no forced approval or self-review event.
+
+The installed acceptance command also checked the primary checkout before lane consolidation. The approved implementation was strictly validated first; the documented layout-warning mode was limited to that intermediate mismatch. Strict acceptance was repeated successfully after consolidation and after the reviewed verifier follow-up.
+
+The retrospective summary and synthesis commands were run after formal review. Synthesis was a dry run: zero proposals applied and no doctrine changes. The summary's separate record-state classifier reported a missing state although the generated YAML contains `findings_status: has_findings`; its category totals and the original artifact were preserved, without claiming that classifier was repaired.
+
+Future product work should follow the user's study of the baseline and the explicit support boundaries in the [readiness matrix](../user-guide/readiness.md). No additional product scope, publication, deployment or governance change is implied by these notes.

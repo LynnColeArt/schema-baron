@@ -1,0 +1,26 @@
+{
+  "label": {
+    "componentFilesWithCaption": [
+      "components/record-4.tsx"
+    ],
+    "requested": "Store manuscript",
+    "actionLabel": "Store manuscript",
+    "emittedFiles": [
+      "components/record-4.tsx",
+      "server/record-4.ts"
+    ]
+  },
+  "change": {
+    "accepted": false,
+    "diagnostics": [
+      {
+        "code": "UNSUPPORTED_SCHEMA_OBJECT",
+        "severity": "error",
+        "objectId": "5bbfa03e-0a39-4855-8e3f-dc5068127eee",
+        "field": "events",
+        "message": "This control event is not consumed by the generated target.",
+        "recoveryAction": "Use a click navigation link, a native Record/Login action button, or one table Search submit button. Remove input change handlers and other unsupported bindings."
+      }
+    ]
+  }
+}

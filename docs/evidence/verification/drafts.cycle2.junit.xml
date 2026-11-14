@@ -1,0 +1,14 @@
+<testsuites id="" name="" tests="5" failures="0" skipped="0" errors="0" time="74.87063400000001">
+<testsuite name="acceptance/drafts.spec.ts" timestamp="2026-11-02T15:32:16.415Z" hostname="" tests="5" failures="0" skipped="0" time="74.235" errors="0">
+<testcase name="schema type changes retire only obsolete decimal buffers and keep other active column drafts" classname="acceptance/drafts.spec.ts" time="3.074">
+</testcase>
+<testcase name="page draft restores its active text control and selection after reload" classname="acceptance/drafts.spec.ts" time="2.621">
+</testcase>
+<testcase name="schema partial decimal text survives view switch and reload without normalization" classname="acceptance/drafts.spec.ts" time="5.595">
+</testcase>
+<testcase name="control numeric and query scalar drafts retain invalid text and actionable rejected Save through recovery" classname="acceptance/drafts.spec.ts" time="7.352">
+</testcase>
+<testcase name="thirty received UI revisions retain draft selection; conflicts and two project drafts stay isolated" classname="acceptance/drafts.spec.ts" time="55.593">
+</testcase>
+</testsuite>
+</testsuites>

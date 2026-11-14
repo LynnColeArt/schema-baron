@@ -1,0 +1,23 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-m
+
+ ❯ packages/generator/tests/auth/behavior.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/generator/tests/auth/behavior.test.ts [ packages/generator/tests/auth/behavior.test.ts ]
+Error: Cannot find module '../../src/templates/auth/store.js' imported from /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-m/packages/generator/tests/auth/behavior.test.ts
+ ❯ packages/generator/tests/auth/behavior.test.ts:2:1
+      1| import { expect, test } from 'vitest';
+      2| import { passwordHash, verifyPassword } from '../../src/templates/auth…
+       | ^
+      3| test('versioned salts differ and verification rejects malformed/legacy…
+      4|  const a=await passwordHash('strong trial value'),b=await passwordHash…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  04:13:10
+   Duration  115ms (worker 96%, environment 4%)

@@ -1,0 +1,16 @@
+
+Running 9 tests using 1 worker
+
+(node:1180638) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/e2e/connections/workflow.spec.ts:23:1 › UI authors blank project, inspects and binds an existing WAL file, reconnects relocation, then creates a new empty DB while preserving invalid page drafts (2.8s)
+  ✓  2 tests/e2e/schema-editor/workflow.spec.ts:186:1 › blank SQLite is authored visibly with constraints and ordered composite FK, preview/cancel is read-only; drafts and layout survive reload and MCP changes (7.7s)
+  ✓  3 tests/e2e/schema-editor/workflow.spec.ts:611:1 › 50 tables and 500 columns remain searchable; 20 edits retain selection, invalid drafts and keyboard navigation (9.8s)
+  ✓  4 tests/e2e/schema-editor/workflow.spec.ts:703:1 › destructive preview discloses exact impacts and cancellation leaves existing rows intact (2.2s)
+  ✓  5 tests/e2e/schema-editor/workflow.spec.ts:794:1 › imported opaque view is clearly read-only and blocks unsafe migration without losing the draft (1.3s)
+  ✓  6 tests/e2e/workspace/workflow.spec.ts:136:1 › real blank lifecycle, atomic Cancel, keyboard authoring, contextual controls, undo/redo, dirty close and reopen (1.7s)
+  ✓  7 tests/e2e/workspace/workflow.spec.ts:290:1 › two drafts survive project switches and MCP edits; conflict resolution, invalid atomic save, focus, resizing and reduced viewport (5.8s)
+  ✓  8 tests/e2e/workspace/workflow.spec.ts:430:1 › incomplete and corrected drafts with invalid history survive switch, reload and undo without weakening Save (2.0s)
+  ✓  9 tests/e2e/workspace/workflow.spec.ts:523:1 › damaged browser recovery preserves unrelated UI-authored drafts and reports safe partial recovery (968ms)
+
+  9 passed (37.3s)

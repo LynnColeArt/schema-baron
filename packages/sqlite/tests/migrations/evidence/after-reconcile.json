@@ -1,0 +1,33 @@
+{
+  "point": "after-reconcile",
+  "ownerExitCode": 87,
+  "revision": 4,
+  "rows": [
+    {
+      "id": 1,
+      "caption": "original"
+    }
+  ],
+  "unrelatedRows": [
+    {
+      "id": 9,
+      "parent_id": 1
+    }
+  ],
+  "index": {
+    "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+  },
+  "foreignKeyCheck": [],
+  "integrityCheck": [
+    {
+      "integrity_check": "ok"
+    }
+  ],
+  "history": [
+    {
+      "kind": "migration",
+      "outcome": "committed",
+      "backupValidated": true
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+Command: tsc --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --jsx react-jsx --target ES2023 --module NodeNext --moduleResolution NodeNext --noEmit --skipLibCheck apps/studio/src/workspace/styles.d.ts apps/studio/src/flow-map/index.tsx apps/studio/src/flow-map/state.ts
+Exit status: 0

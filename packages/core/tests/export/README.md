@@ -1,0 +1,1 @@
+Portable export behavior is exercised through the canonical `project.export` command. See ../runtime/EVIDENCE.md for the complete process, snapshot, secret-exclusion, path-race, independent-build/run and UI/MCP evidence.

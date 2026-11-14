@@ -1,0 +1,16 @@
+{
+  "projectId": "97f4868b-1a65-4de7-9597-ad2b32693a9f",
+  "edgeId": "33f129e3-2abd-4024-b687-3f508ef41ba3:destination",
+  "sourceActionId": "33f129e3-2abd-4024-b687-3f508ef41ba3",
+  "nodeCount": 10,
+  "invalidSourceFieldId": "0f8cb799-bc2c-42d6-90ad-11675ba1bcd3",
+  "targetKeyFieldId": "d940f854-a687-4701-a964-e51ea326cc0a",
+  "observed": [
+    "canonical Properties selects incompatible source",
+    "invalid edge ARIA/label/stroke",
+    "selected-edge source-linked TYPE_MISMATCH",
+    "keyboard edge and diagnostic selection",
+    "failed Save preserves snapshot/draft",
+    "Properties repair clears edge invalidity without replacing edge ID"
+  ]
+}

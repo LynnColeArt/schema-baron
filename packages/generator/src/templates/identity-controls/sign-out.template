@@ -1,0 +1,4 @@
+'use client';
+import { useState } from 'react';
+import { Csrf } from './csrf';
+export function SignOut({actionId,label}:{actionId:string;label:string}){const [error,setError]=useState(''),[busy,setBusy]=useState(false);return <form onSubmit={async event=>{event.preventDefault();setBusy(true);setError('');try{const response=await fetch('/runtime/auth',{method:'POST',body:new FormData(event.currentTarget)});const result=await response.json();if(response.ok)location.assign(result.location);else setError(result.error??'Sign out failed.');}catch{setError('Sign out is unavailable. Try again.');}finally{setBusy(false);}}}><Csrf/><input type="hidden" name="_action" value={actionId}/><button disabled={busy}>{label}</button>{error&&<p role="alert">{error}</p>}</form>;}

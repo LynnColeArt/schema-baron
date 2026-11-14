@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 tests/e2e/equipment/workflow.spec.ts:177:1 › Equipment Desk starts blank and authors schema and forms through supported controls (43.0s)
+
+
+  1) tests/e2e/equipment/workflow.spec.ts:177:1 › Equipment Desk starts blank and authors schema and forms through supported controls
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      663 |   });
+      664 |   writeFileSync(info.outputPath('output-install.log'), installed.stdout + installed.stderr);
+    > 665 |   expect(installed.status).toBe(0);
+          |                            ^
+      666 |   for (const script of ['typecheck', 'test']) {
+      667 |     const checked = spawnSync(process.execPath, [npm, 'run', script], {
+      668 |       cwd: output,
+        at /tmp/schema-baron-wp26-clean-01/source/tests/e2e/equipment/workflow.spec.ts:665:28
+
+    Error Context: ../equipment-evidence/equipment-workflow-Equipme-6d6bb--through-supported-controls/error-context.md
+
+    Error Context: ../equipment-evidence/equipment-workflow-Equipme-6d6bb--through-supported-controls/error-context.md
+
+  1 failed
+    tests/e2e/equipment/workflow.spec.ts:177:1 › Equipment Desk starts blank and authors schema and forms through supported controls

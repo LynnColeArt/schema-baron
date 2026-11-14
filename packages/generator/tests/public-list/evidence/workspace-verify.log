@@ -1,0 +1,69 @@
+
+> schema-baron@0.0.0 verify
+> node scripts/workspace/verify.mjs all
+
+SQLite 3.53.4: native insert, transaction and online backup passed
+NOT IMPLEMENTED: @schema-baron/ui (typecheck)
+Diff-scoped syntax/JSON/whitespace lint checked 58 files; TypeScript semantic validation is separate
+
+> @schema-baron/mcp@0.0.0 build
+> tsc --project tsconfig.build.json
+
+
+> @schema-baron/model@0.0.0 build
+> tsc --project tsconfig.build.json
+
+
+> @schema-baron/storage@0.0.0 build
+> tsc --project tsconfig.build.json
+
+
+> @schema-baron/sqlite@0.0.0 build
+> tsc --project tsconfig.build.json
+
+
+> @schema-baron/generator@0.0.0 build
+> tsc --project tsconfig.build.json && node scripts/copy-templates.mjs
+
+
+> @schema-baron/core@0.0.0 build
+> tsc --project tsconfig.build.json
+
+
+> @schema-baron/studio@0.0.0 build
+> tsc --project tsconfig.build.json && next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+✓ Running next.config.ts took 22ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1807ms
+  Running TypeScript ...
+  Finished TypeScript in 884ms ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/3) ...
+✓ Generating static pages using 5 workers (3/3) in 633ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+└ ƒ /api/v1/[...segments]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+NOT IMPLEMENTED: @schema-baron/ui (build)
+Credential patterns checked in 350 files (heuristic; not a guarantee)
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-j
+
+
+ Test Files  29 passed (29)
+      Tests  249 passed (249)
+   Start at  01:38:16
+   Duration  22.46s (tests 95%, import 4%, transform 1%)
+
+Installed metadata matches lock: 182; platform-optional absent: 76; registry artifacts: 258

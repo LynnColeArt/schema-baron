@@ -1,0 +1,168 @@
+{
+  "scope": "WP04 only; full AC-015 recovery and final mission remain outstanding",
+  "validatedCode": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+  "observations": [
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-005",
+      "requirements": [
+        "FR-006"
+      ],
+      "application": "workshop",
+      "mode": "ui_journey",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "passed",
+      "expected": "Named relations preserve distinct keys, parent links show only matching children, empty children are supported, Add preselects parent, Save/Cancel retain context.",
+      "actual": "Fresh normal Studio/generator forms and exact-row assertions passed; distinct boundary/fault proof is linked in results; no seeded model or direct authoring repair.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-006",
+      "requirements": [
+        "FR-007"
+      ],
+      "application": "workshop",
+      "mode": "ui_journey",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "passed",
+      "expected": "Valid insert/update, invalid/missing input, duplicate unique/composite key, Cancel, named Delete confirmation and restricted Delete have correct messages and atomic row outcomes.",
+      "actual": "Fresh normal Studio/generator forms and exact-row assertions passed; distinct boundary/fault proof is linked in results; no seeded model or direct authoring repair.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-007",
+      "requirements": [
+        "FR-008",
+        "NFR-002"
+      ],
+      "application": "workshop",
+      "mode": "ui_journey",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "passed",
+      "expected": "Lists public; protected page/direct CRUD rejected anonymously; no partial global lockdown; login/logout/return context and invalid external targets checked.",
+      "actual": "Fresh normal Studio/generator forms and exact-row assertions passed; distinct boundary/fault proof is linked in results; no seeded model or direct authoring repair.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-015",
+      "requirements": [
+        "FR-014"
+      ],
+      "application": "workshop",
+      "mode": "fault",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "unverified",
+      "expected": "Duplicate command request, stale model revision, changed database identity, invalid path/context and occupied port are clear, atomic and recoverable; retry only as an explicit fresh/replayed request.",
+      "actual": "WP04 access subcases passed: malformed typed key/filter and return rejection, scoped expiry and revoked-session denial; full stale-command/database/path/port/recovery case remains WP06/WP08 scope. This is not aggregate AC-015 completion.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-005",
+      "requirements": [
+        "FR-006"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "passed",
+      "expected": "Named relations preserve distinct keys, parent links show only matching children, empty children are supported, Add preselects parent, Save/Cancel retain context.",
+      "actual": "Fresh normal Studio/generator forms and exact-row assertions passed; distinct boundary/fault proof is linked in results; no seeded model or direct authoring repair.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-006",
+      "requirements": [
+        "FR-007"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "passed",
+      "expected": "Valid insert/update, invalid/missing input, duplicate unique/composite key, Cancel, named Delete confirmation and restricted Delete have correct messages and atomic row outcomes.",
+      "actual": "Fresh normal Studio/generator forms and exact-row assertions passed; distinct boundary/fault proof is linked in results; no seeded model or direct authoring repair.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-007",
+      "requirements": [
+        "FR-008",
+        "NFR-002"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "passed",
+      "expected": "Lists public; protected page/direct CRUD rejected anonymously; no partial global lockdown; login/logout/return context and invalid external targets checked.",
+      "actual": "Fresh normal Studio/generator forms and exact-row assertions passed; distinct boundary/fault proof is linked in results; no seeded model or direct authoring repair.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    },
+    {
+      "run_id": "wp04-access-final2",
+      "case_id": "AC-015",
+      "requirements": [
+        "FR-014"
+      ],
+      "application": "library",
+      "mode": "fault",
+      "revision": "92e9246cb4d2e4f3667d9c15c8357800537f0c96",
+      "status": "unverified",
+      "expected": "Duplicate command request, stale model revision, changed database identity, invalid path/context and occupied port are clear, atomic and recoverable; retry only as an explicit fresh/replayed request.",
+      "actual": "WP04 access subcases passed: malformed typed key/filter and return rejection, scoped expiry and revoked-session denial; full stale-command/database/path/port/recovery case remains WP06/WP08 scope. This is not aggregate AC-015 completion.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/access.results.json",
+          "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+        }
+      ]
+    }
+  ],
+  "retainedRed": {
+    "path": "docs/evidence/verification/access.red.json",
+    "sha256": "5d477f002537465645e84cdce1bc34326c9651a638f005f754c000721b2c6236"
+  },
+  "results": {
+    "path": "docs/evidence/verification/access.results.json",
+    "sha256": "fb85cea10355706e845ea00d6e338886a8d91363178d854d106dd5129be547fd"
+  }
+}

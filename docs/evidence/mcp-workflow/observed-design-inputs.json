@@ -1,0 +1,1035 @@
+{
+  "note": "Actual non-secret MCP design inputs. Allocate fresh UUIDs consistently when reproducing; inspect returned connection/plan IDs and consume returned revisions. Provision credentials privately, not from this file. Schema/generation applies require fresh reviewed plan/hash/acknowledgements, not replayed historic plans.",
+  "projectId": "8853257a-5fe3-4d76-94a0-ccb1d3895ce7",
+  "commands": [
+    {
+      "tool": "project_create",
+      "requestId": "65c72b9d-4b62-4b7d-9c53-8b804a192557",
+      "expectedRevision": 0,
+      "input": {
+        "name": "Volunteer Scheduler",
+        "approvedRoot": "projects",
+        "target": "next-typescript-sqlite",
+        "outputConfig": {
+          "approvedRootId": "output",
+          "relativePath": "volunteer-app"
+        }
+      }
+    },
+    {
+      "tool": "connection_inspect",
+      "requestId": "8dfd7469-b281-495d-b0cb-e7a9f179bd3f",
+      "expectedRevision": 1,
+      "input": {
+        "approvedPath": "data:volunteer.sqlite",
+        "mode": "read-only",
+        "createEmpty": true
+      }
+    },
+    {
+      "tool": "connection_bind",
+      "requestId": "f4add833-e514-4879-b271-e1b80c5d2f3e",
+      "expectedRevision": 1,
+      "input": {
+        "connectionId": "16ecc111-962b-46c4-ab3a-22d50b932e19",
+        "fingerprint": "3c90b8b1d1f3be3a0eb82e9b986f90e7ff01b4d95397e85828287bd696aaa307"
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "dca8625b-3cb9-4eeb-bf82-a8c7090fdd6e",
+      "expectedRevision": 2,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "schema",
+            "id": "572d9b7f-fdfd-44a8-9a83-b89b85bea3a8",
+            "value": {
+              "id": "572d9b7f-fdfd-44a8-9a83-b89b85bea3a8",
+              "revision": 3,
+              "tables": [
+                {
+                  "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9",
+                  "physicalName": "teams",
+                  "columns": [
+                    {
+                      "id": "b28295c4-dedd-438f-8b81-859328bf58d9",
+                      "physicalName": "id",
+                      "type": {
+                        "kind": "integer"
+                      },
+                      "nullable": false
+                    },
+                    {
+                      "id": "8b5e8383-af71-41d0-94e5-7c427240b279",
+                      "physicalName": "name",
+                      "type": {
+                        "kind": "text"
+                      },
+                      "nullable": false
+                    }
+                  ],
+                  "primaryKey": [
+                    "b28295c4-dedd-438f-8b81-859328bf58d9"
+                  ],
+                  "foreignKeys": [],
+                  "uniqueConstraints": [
+                    {
+                      "id": "63053946-755d-4683-af9b-b7cb1dbb4206",
+                      "columnIds": [
+                        "8b5e8383-af71-41d0-94e5-7c427240b279"
+                      ]
+                    }
+                  ],
+                  "checks": [],
+                  "indexes": []
+                },
+                {
+                  "id": "8d727aac-3bcb-4622-afd5-972fe7a71875",
+                  "physicalName": "shifts",
+                  "columns": [
+                    {
+                      "id": "5445fa1c-7d8d-4976-bb05-5f2bf013261d",
+                      "physicalName": "id",
+                      "type": {
+                        "kind": "integer"
+                      },
+                      "nullable": false
+                    },
+                    {
+                      "id": "d8a65730-1186-4182-add8-3a9e03411769",
+                      "physicalName": "team_id",
+                      "type": {
+                        "kind": "integer"
+                      },
+                      "nullable": false
+                    },
+                    {
+                      "id": "094d5258-3296-4c58-9d8c-ce8f4ac6129e",
+                      "physicalName": "title",
+                      "type": {
+                        "kind": "text"
+                      },
+                      "nullable": false
+                    },
+                    {
+                      "id": "41754b57-203e-4ae5-9e9c-31f026b72b2a",
+                      "physicalName": "hours",
+                      "type": {
+                        "kind": "decimal",
+                        "precision": 12,
+                        "scale": 2,
+                        "encoding": "text",
+                        "rounding": "half-even"
+                      },
+                      "nullable": false
+                    },
+                    {
+                      "id": "2bd582c6-79e2-4e8a-84a5-359737df74d0",
+                      "physicalName": "starts_on",
+                      "type": {
+                        "kind": "date",
+                        "encoding": "iso-date"
+                      },
+                      "nullable": true
+                    }
+                  ],
+                  "primaryKey": [
+                    "5445fa1c-7d8d-4976-bb05-5f2bf013261d"
+                  ],
+                  "foreignKeys": [
+                    {
+                      "id": "b28f2821-47cd-4ab4-945a-da4f20546c5f",
+                      "columnIds": [
+                        "d8a65730-1186-4182-add8-3a9e03411769"
+                      ],
+                      "referencedTableId": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9",
+                      "referencedColumnIds": [
+                        "b28295c4-dedd-438f-8b81-859328bf58d9"
+                      ],
+                      "onUpdate": "restrict",
+                      "onDelete": "restrict",
+                      "deferrable": false
+                    }
+                  ],
+                  "uniqueConstraints": [],
+                  "checks": [],
+                  "indexes": []
+                }
+              ],
+              "opaqueObjects": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "e0871933-7939-4196-bca1-f1f10042fa57",
+      "expectedRevision": 4,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "74a50ee9-8d47-4b7b-a235-ddf6286f9f18",
+            "value": {
+              "id": "74a50ee9-8d47-4b7b-a235-ddf6286f9f18",
+              "route": "/teams",
+              "title": "Teams",
+              "document": [],
+              "formIds": []
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+            "value": {
+              "id": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+              "route": "/teams/record",
+              "title": "Team record",
+              "document": [],
+              "formIds": []
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "41d58c12-f874-405c-a34d-0ec8a2f5c6e5",
+            "value": {
+              "id": "41d58c12-f874-405c-a34d-0ec8a2f5c6e5",
+              "route": "/shifts",
+              "title": "Shifts",
+              "document": [],
+              "formIds": []
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+            "value": {
+              "id": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+              "route": "/shifts/record",
+              "title": "Shift record",
+              "document": [],
+              "formIds": []
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "a44c7b70-0228-4963-ac80-6b847996c858",
+            "value": {
+              "id": "a44c7b70-0228-4963-ac80-6b847996c858",
+              "route": "/login",
+              "title": "Login",
+              "document": [],
+              "formIds": []
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+            "value": {
+              "id": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+              "route": "/team-hours",
+              "title": "Team hours",
+              "document": [],
+              "formIds": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "form_construct",
+      "requestId": "e5e5d41d-1315-47c3-a7fc-e5f59ee7306a",
+      "expectedRevision": 5,
+      "input": {
+        "pageId": "74a50ee9-8d47-4b7b-a235-ddf6286f9f18",
+        "kind": "Grid",
+        "source": {
+          "kind": "table",
+          "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9"
+        },
+        "fieldIds": [
+          "b28295c4-dedd-438f-8b81-859328bf58d9",
+          "8b5e8383-af71-41d0-94e5-7c427240b279"
+        ],
+        "keyIds": [
+          "b28295c4-dedd-438f-8b81-859328bf58d9"
+        ],
+        "actions": [],
+        "links": [],
+        "style": {
+          "label": "Teams"
+        },
+        "search": [],
+        "sorting": [],
+        "linkedRecord": {
+          "pageId": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+          "label": "Teams record",
+          "fieldIds": [
+            "b28295c4-dedd-438f-8b81-859328bf58d9",
+            "8b5e8383-af71-41d0-94e5-7c427240b279"
+          ],
+          "keyIds": [
+            "b28295c4-dedd-438f-8b81-859328bf58d9"
+          ]
+        }
+      }
+    },
+    {
+      "tool": "form_construct",
+      "requestId": "d007bad2-8d22-4cc6-9026-1d6ddeea05fb",
+      "expectedRevision": 6,
+      "input": {
+        "pageId": "41d58c12-f874-405c-a34d-0ec8a2f5c6e5",
+        "kind": "Grid",
+        "source": {
+          "kind": "table",
+          "id": "8d727aac-3bcb-4622-afd5-972fe7a71875"
+        },
+        "fieldIds": [
+          "5445fa1c-7d8d-4976-bb05-5f2bf013261d",
+          "d8a65730-1186-4182-add8-3a9e03411769",
+          "094d5258-3296-4c58-9d8c-ce8f4ac6129e",
+          "41754b57-203e-4ae5-9e9c-31f026b72b2a",
+          "2bd582c6-79e2-4e8a-84a5-359737df74d0"
+        ],
+        "keyIds": [
+          "5445fa1c-7d8d-4976-bb05-5f2bf013261d"
+        ],
+        "actions": [],
+        "links": [],
+        "style": {
+          "label": "Shifts"
+        },
+        "search": [
+          {
+            "fieldId": "d8a65730-1186-4182-add8-3a9e03411769",
+            "operator": "eq"
+          }
+        ],
+        "sorting": [],
+        "linkedRecord": {
+          "pageId": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+          "label": "Shifts record",
+          "fieldIds": [
+            "5445fa1c-7d8d-4976-bb05-5f2bf013261d",
+            "d8a65730-1186-4182-add8-3a9e03411769",
+            "094d5258-3296-4c58-9d8c-ce8f4ac6129e",
+            "41754b57-203e-4ae5-9e9c-31f026b72b2a",
+            "2bd582c6-79e2-4e8a-84a5-359737df74d0"
+          ],
+          "keyIds": [
+            "5445fa1c-7d8d-4976-bb05-5f2bf013261d"
+          ]
+        }
+      }
+    },
+    {
+      "tool": "identity_configure",
+      "requestId": "d1fd9dcb-d6b9-4cd6-8aee-a7f87c08adee",
+      "expectedRevision": 7,
+      "input": {
+        "kind": "managed",
+        "storeRef": "03157e46-a3e7-4665-8eeb-5b412918faa0"
+      }
+    },
+    {
+      "tool": "form_construct",
+      "requestId": "8be0abca-e31c-488d-bcd0-eba6a477e51c",
+      "expectedRevision": 8,
+      "input": {
+        "pageId": "a44c7b70-0228-4963-ac80-6b847996c858",
+        "kind": "Login",
+        "fieldIds": [],
+        "keyIds": [],
+        "actions": [
+          "login",
+          "logout"
+        ],
+        "links": [],
+        "style": {
+          "label": "Login"
+        }
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "ec385587-d5ff-4f27-94e5-faf4441ebc3c",
+      "expectedRevision": 9,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "query",
+            "id": "bc528c7c-13f8-4df9-abce-703ffc1593e7",
+            "value": {
+              "id": "bc528c7c-13f8-4df9-abce-703ffc1593e7",
+              "name": "Team hours",
+              "sources": [
+                {
+                  "alias": "t",
+                  "source": {
+                    "kind": "table",
+                    "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9"
+                  }
+                },
+                {
+                  "alias": "s",
+                  "source": {
+                    "kind": "table",
+                    "id": "8d727aac-3bcb-4622-afd5-972fe7a71875"
+                  }
+                }
+              ],
+              "joins": [
+                {
+                  "leftAlias": "t",
+                  "rightAlias": "s",
+                  "kind": "left",
+                  "cardinality": "one-to-many",
+                  "on": {
+                    "kind": "binary",
+                    "operator": "=",
+                    "left": {
+                      "kind": "field",
+                      "alias": "t",
+                      "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                    },
+                    "right": {
+                      "kind": "field",
+                      "alias": "s",
+                      "fieldId": "d8a65730-1186-4182-add8-3a9e03411769"
+                    }
+                  }
+                }
+              ],
+              "projections": [
+                {
+                  "id": "6a55af0c-0da5-49ee-857c-e7f18003ed2b",
+                  "name": "team_id",
+                  "type": {
+                    "kind": "integer"
+                  },
+                  "nullable": false,
+                  "expression": {
+                    "kind": "field",
+                    "alias": "t",
+                    "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                  }
+                },
+                {
+                  "id": "3dc8ea73-e205-4328-9d95-ade845192b53",
+                  "name": "team_name",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "nullable": false,
+                  "expression": {
+                    "kind": "field",
+                    "alias": "t",
+                    "fieldId": "8b5e8383-af71-41d0-94e5-7c427240b279"
+                  }
+                },
+                {
+                  "id": "3d22cf71-79fd-43df-a8c2-3e7c3caea10a",
+                  "name": "total_hours",
+                  "type": {
+                    "kind": "decimal",
+                    "precision": 12,
+                    "scale": 2,
+                    "encoding": "text",
+                    "rounding": "half-even"
+                  },
+                  "nullable": false,
+                  "expression": {
+                    "kind": "aggregate",
+                    "function": "sum",
+                    "argument": {
+                      "kind": "field",
+                      "alias": "s",
+                      "fieldId": "41754b57-203e-4ae5-9e9c-31f026b72b2a"
+                    },
+                    "zeroChildren": "zero"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "id": "67f8c2d3-c90e-4710-9189-686820ee93a1",
+                  "name": "minimum_total",
+                  "type": {
+                    "kind": "decimal",
+                    "precision": 12,
+                    "scale": 2,
+                    "encoding": "text",
+                    "rounding": "half-even"
+                  },
+                  "nullable": false,
+                  "default": "0.00"
+                }
+              ],
+              "groupBy": [
+                {
+                  "kind": "field",
+                  "alias": "t",
+                  "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                },
+                {
+                  "kind": "field",
+                  "alias": "t",
+                  "fieldId": "8b5e8383-af71-41d0-94e5-7c427240b279"
+                }
+              ],
+              "having": {
+                "kind": "binary",
+                "operator": ">=",
+                "left": {
+                  "kind": "aggregate",
+                  "function": "sum",
+                  "argument": {
+                    "kind": "field",
+                    "alias": "s",
+                    "fieldId": "41754b57-203e-4ae5-9e9c-31f026b72b2a"
+                  },
+                  "zeroChildren": "zero"
+                },
+                "right": {
+                  "kind": "parameter",
+                  "parameterId": "67f8c2d3-c90e-4710-9189-686820ee93a1"
+                }
+              },
+              "orderBy": [
+                {
+                  "expression": {
+                    "kind": "field",
+                    "alias": "t",
+                    "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                  },
+                  "direction": "asc"
+                }
+              ],
+              "grain": {
+                "strategy": "grouped",
+                "keys": [
+                  "6a55af0c-0da5-49ee-857c-e7f18003ed2b",
+                  "3dc8ea73-e205-4328-9d95-ade845192b53"
+                ]
+              }
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "extension",
+            "id": "34427b62-bf81-497b-99af-0f8af9f2a91c",
+            "value": {
+              "id": "34427b62-bf81-497b-99af-0f8af9f2a91c",
+              "kind": "validator",
+              "version": 1,
+              "relativePath": "authored/shift-validation.ts"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "form_construct",
+      "requestId": "a219e94d-04f2-45f6-8733-82e98fdd8e07",
+      "expectedRevision": 10,
+      "input": {
+        "pageId": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+        "kind": "Grid",
+        "source": {
+          "kind": "query",
+          "id": "bc528c7c-13f8-4df9-abce-703ffc1593e7"
+        },
+        "fieldIds": [
+          "6a55af0c-0da5-49ee-857c-e7f18003ed2b",
+          "3dc8ea73-e205-4328-9d95-ade845192b53",
+          "3d22cf71-79fd-43df-a8c2-3e7c3caea10a"
+        ],
+        "keyIds": [],
+        "actions": [],
+        "links": [],
+        "style": {
+          "label": "Team hours"
+        },
+        "search": [],
+        "sorting": []
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "e43005d9-7bbe-4980-b9bc-6bac5d323489",
+      "expectedRevision": 11,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "policy",
+            "id": "5e0a2e79-e201-4694-83b7-48ac99cd8c4f",
+            "value": {
+              "id": "5e0a2e79-e201-4694-83b7-48ac99cd8c4f",
+              "scope": "page",
+              "ownerId": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+              "access": "authenticated"
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+            "value": {
+              "id": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+              "route": "/teams/record",
+              "title": "Team record",
+              "document": [
+                {
+                  "kind": "form",
+                  "formId": "c1f05104-5523-4709-8289-05cd914f81f5"
+                }
+              ],
+              "formIds": [
+                "c1f05104-5523-4709-8289-05cd914f81f5"
+              ],
+              "policyId": "5e0a2e79-e201-4694-83b7-48ac99cd8c4f"
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "policy",
+            "id": "dffd5a21-cab3-45b2-9cf9-8326cfff4c98",
+            "value": {
+              "id": "dffd5a21-cab3-45b2-9cf9-8326cfff4c98",
+              "scope": "page",
+              "ownerId": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+              "access": "authenticated"
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+            "value": {
+              "id": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+              "route": "/shifts/record",
+              "title": "Shift record",
+              "document": [
+                {
+                  "kind": "form",
+                  "formId": "4da14a59-be63-4fd7-a5cc-a52f9b64f781"
+                }
+              ],
+              "formIds": [
+                "4da14a59-be63-4fd7-a5cc-a52f9b64f781"
+              ],
+              "policyId": "dffd5a21-cab3-45b2-9cf9-8326cfff4c98"
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "action",
+            "id": "9329fe2c-3c5b-43e9-bcc7-d99c196780bd",
+            "value": {
+              "id": "9329fe2c-3c5b-43e9-bcc7-d99c196780bd",
+              "formId": "9ca30d28-7fe5-418b-885c-b702eb570cee",
+              "operation": "navigate",
+              "destination": {
+                "pageId": "41d58c12-f874-405c-a34d-0ec8a2f5c6e5",
+                "keyMapping": [],
+                "filterMapping": [
+                  {
+                    "targetFieldId": "d8a65730-1186-4182-add8-3a9e03411769",
+                    "expression": {
+                      "kind": "field",
+                      "alias": "root",
+                      "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "form",
+            "id": "9ca30d28-7fe5-418b-885c-b702eb570cee",
+            "value": {
+              "id": "9ca30d28-7fe5-418b-885c-b702eb570cee",
+              "pageId": "74a50ee9-8d47-4b7b-a235-ddf6286f9f18",
+              "kind": "Grid",
+              "sourceRef": {
+                "kind": "table",
+                "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9"
+              },
+              "keyMapping": [
+                {
+                  "targetFieldId": "b28295c4-dedd-438f-8b81-859328bf58d9",
+                  "expression": {
+                    "kind": "field",
+                    "alias": "root",
+                    "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                  }
+                }
+              ],
+              "controlIds": [
+                "72516706-8569-475a-a1a9-bf41ef03e9d2",
+                "b0ad84a0-7d45-4ac6-974c-4b5003ef079a",
+                "d0c79f0c-d55c-4e18-8b83-4619a5ede727",
+                "c4455cd9-3221-4401-bf24-49f5d4141360"
+              ],
+              "actionIds": [
+                "5fe54b67-b53d-4692-a691-6d8eba309c80",
+                "c5630c26-173a-44a4-ba91-817012921240",
+                "9329fe2c-3c5b-43e9-bcc7-d99c196780bd"
+              ],
+              "search": [],
+              "paging": {
+                "pageSize": 20
+              },
+              "sorting": [],
+              "appearance": {
+                "label": "Teams"
+              }
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "control",
+            "id": "b0ad84a0-7d45-4ac6-974c-4b5003ef079a",
+            "value": {
+              "id": "b0ad84a0-7d45-4ac6-974c-4b5003ef079a",
+              "formId": "9ca30d28-7fe5-418b-885c-b702eb570cee",
+              "kind": "link",
+              "binding": {
+                "kind": "stored",
+                "fieldId": "8b5e8383-af71-41d0-94e5-7c427240b279"
+              },
+              "readOnly": true,
+              "appearance": {
+                "label": "name"
+              },
+              "validation": {
+                "required": false
+              },
+              "events": [
+                {
+                  "event": "click",
+                  "actionId": "9329fe2c-3c5b-43e9-bcc7-d99c196780bd"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "control",
+            "id": "c2b7033b-c874-444a-a19f-8023e5109d87",
+            "value": {
+              "id": "c2b7033b-c874-444a-a19f-8023e5109d87",
+              "formId": "9b077a87-84f4-47a9-826c-feb8bdc8a70b",
+              "kind": "label",
+              "binding": {
+                "kind": "stored",
+                "fieldId": "d8a65730-1186-4182-add8-3a9e03411769"
+              },
+              "readOnly": true,
+              "appearance": {
+                "label": "Team"
+              },
+              "validation": {
+                "required": false
+              },
+              "events": [],
+              "lookup": {
+                "source": {
+                  "kind": "table",
+                  "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9"
+                },
+                "valueFieldIds": [
+                  "b28295c4-dedd-438f-8b81-859328bf58d9"
+                ],
+                "labelFieldId": "8b5e8383-af71-41d0-94e5-7c427240b279"
+              }
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "control",
+            "id": "af3ee320-2702-4a02-95df-336ab519e4f8",
+            "value": {
+              "id": "af3ee320-2702-4a02-95df-336ab519e4f8",
+              "formId": "4da14a59-be63-4fd7-a5cc-a52f9b64f781",
+              "kind": "select",
+              "binding": {
+                "kind": "stored",
+                "fieldId": "d8a65730-1186-4182-add8-3a9e03411769"
+              },
+              "readOnly": false,
+              "appearance": {
+                "label": "Team"
+              },
+              "validation": {
+                "required": true
+              },
+              "events": [],
+              "lookup": {
+                "source": {
+                  "kind": "table",
+                  "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9"
+                },
+                "valueFieldIds": [
+                  "b28295c4-dedd-438f-8b81-859328bf58d9"
+                ],
+                "labelFieldId": "8b5e8383-af71-41d0-94e5-7c427240b279"
+              }
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "form",
+            "id": "0a5aab45-a8e0-491f-a470-c0615448a607",
+            "value": {
+              "id": "0a5aab45-a8e0-491f-a470-c0615448a607",
+              "pageId": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+              "kind": "Grid",
+              "sourceRef": {
+                "kind": "query",
+                "id": "bc528c7c-13f8-4df9-abce-703ffc1593e7"
+              },
+              "keyMapping": [],
+              "controlIds": [
+                "739d7846-71b2-4a8c-9067-3a9ee49ae70a",
+                "01b88acf-5ae9-48e1-a278-7877df4bd43c",
+                "ada6d5a3-53ad-46ea-80f1-f0b3da1ad514"
+              ],
+              "actionIds": [],
+              "search": [],
+              "paging": {
+                "pageSize": 20
+              },
+              "sorting": [],
+              "appearance": {
+                "label": "Team hours"
+              },
+              "queryParameters": [
+                {
+                  "parameterId": "67f8c2d3-c90e-4710-9189-686820ee93a1",
+                  "runtime": {
+                    "name": "minimum_total"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "control",
+            "id": "c4455cd9-3221-4401-bf24-49f5d4141360",
+            "value": {
+              "id": "c4455cd9-3221-4401-bf24-49f5d4141360",
+              "formId": "9ca30d28-7fe5-418b-885c-b702eb570cee",
+              "kind": "identity",
+              "readOnly": true,
+              "appearance": {
+                "label": "Signed in"
+              },
+              "validation": {
+                "required": false
+              },
+              "events": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "2a8d972b-b7b4-4aad-8125-7add9f7be5c9",
+      "expectedRevision": 12,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "form",
+            "id": "c1f05104-5523-4709-8289-05cd914f81f5",
+            "value": {
+              "id": "c1f05104-5523-4709-8289-05cd914f81f5",
+              "pageId": "239e3a49-ce7e-4eca-a30b-2768691c423b",
+              "kind": "Record",
+              "sourceRef": {
+                "kind": "table",
+                "id": "77f833be-ecd0-4c5e-a2e8-cf836a7ff5d9"
+              },
+              "keyMapping": [
+                {
+                  "targetFieldId": "b28295c4-dedd-438f-8b81-859328bf58d9",
+                  "expression": {
+                    "kind": "field",
+                    "alias": "root",
+                    "fieldId": "b28295c4-dedd-438f-8b81-859328bf58d9"
+                  }
+                }
+              ],
+              "controlIds": [
+                "103cf010-ce87-437f-9be7-f51711f94737",
+                "ebb3c750-7bdb-4316-bafb-16c2a73b5919",
+                "48364219-907d-4f43-9432-f6edfe4e3a09",
+                "1db017b7-d90c-42fb-8290-3be9f27c33d1",
+                "57fd99cb-0b1f-46aa-bb60-0f137b947a50",
+                "4d23198d-7c12-440b-af45-239b4c127ae5"
+              ],
+              "actionIds": [
+                "932c4263-1cab-492d-b11b-c95272da71e1",
+                "fae67da4-a932-405b-843e-6a96110d3069",
+                "54422e15-d7f2-4975-aae3-77b8082c6eda",
+                "6da244db-56c7-4006-9ee3-9843b539043f"
+              ],
+              "search": [],
+              "paging": {
+                "pageSize": 20
+              },
+              "sorting": [],
+              "appearance": {
+                "label": "Teams record"
+              },
+              "displayFieldIds": [
+                "8b5e8383-af71-41d0-94e5-7c427240b279"
+              ]
+            }
+          },
+          {
+            "kind": "put",
+            "entity": "form",
+            "id": "4da14a59-be63-4fd7-a5cc-a52f9b64f781",
+            "value": {
+              "id": "4da14a59-be63-4fd7-a5cc-a52f9b64f781",
+              "pageId": "03dd08e7-5208-4603-b5bf-752f30ad7f7f",
+              "kind": "Record",
+              "sourceRef": {
+                "kind": "table",
+                "id": "8d727aac-3bcb-4622-afd5-972fe7a71875"
+              },
+              "keyMapping": [
+                {
+                  "targetFieldId": "5445fa1c-7d8d-4976-bb05-5f2bf013261d",
+                  "expression": {
+                    "kind": "field",
+                    "alias": "root",
+                    "fieldId": "5445fa1c-7d8d-4976-bb05-5f2bf013261d"
+                  }
+                }
+              ],
+              "controlIds": [
+                "5bf021ec-cabf-4d7a-b975-32962e9fd89b",
+                "af3ee320-2702-4a02-95df-336ab519e4f8",
+                "809a5bcc-2ed7-4d39-aac7-9f434268f271",
+                "4de6ecfc-2dad-4737-b174-9758281ca571",
+                "d6cdbbb9-b5f3-43a9-a746-2815098eb34d",
+                "635682df-2321-42c4-bce0-870dc1deba46",
+                "cce2e049-e3fe-41b4-8aca-da4b9fa352ce",
+                "2d8a877d-3939-42bd-9efd-d0e3a250dec6",
+                "228f2024-0e83-40fa-9630-49e58346e351"
+              ],
+              "actionIds": [
+                "37ef8bf2-3a64-4692-8883-30bac7a3256b",
+                "423f92e9-cbb7-4684-a33b-3f0f871f8f78",
+                "c6d13dff-d856-436a-9c4f-ec89447b9927",
+                "ce79be5f-26e9-456d-81ac-b3c337913fda"
+              ],
+              "search": [
+                {
+                  "fieldId": "d8a65730-1186-4182-add8-3a9e03411769",
+                  "operator": "eq"
+                }
+              ],
+              "paging": {
+                "pageSize": 20
+              },
+              "sorting": [],
+              "appearance": {
+                "label": "Shifts record"
+              },
+              "displayFieldIds": [
+                "094d5258-3296-4c58-9d8c-ce8f4ac6129e"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "extension_write",
+      "requestId": "ca83ebca-c447-478e-b033-9296989a1bf2",
+      "expectedRevision": 13,
+      "input": {
+        "extensionId": "34427b62-bf81-497b-99af-0f8af9f2a91c",
+        "approvedPath": "output:volunteer-app/authored/shift-validation.ts",
+        "expectedFileHash": "5ef0ab53ae64af4b224fc4c574b23cf813936f868d588f46549cb906940cfd98",
+        "content": "// Authored validator interface v1. Preserved byte-for-byte by regeneration.\nimport type { ValidatorV1 } from '../server/extension-contracts';\nexport const contractVersion = 1 as const;\nexport const validate: ValidatorV1 = (context) => context.values['094d5258-3296-4c58-9d8c-ce8f4ac6129e'] === 'MCP_TEMP_REJECT' ? { '094d5258-3296-4c58-9d8c-ce8f4ac6129e': 'Temporary volunteer title is not allowed.' } : {};\n"
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "3e2fcb42-9525-4e40-93a7-2f58fc391084",
+      "expectedRevision": 13,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+            "value": {
+              "id": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+              "route": "/team-hours",
+              "title": "Team hours report",
+              "document": [
+                {
+                  "kind": "form",
+                  "formId": "0a5aab45-a8e0-491f-a470-c0615448a607"
+                }
+              ],
+              "formIds": [
+                "0a5aab45-a8e0-491f-a470-c0615448a607"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "project_batch",
+      "requestId": "0bfe524a-8ec1-4f7f-89eb-188460134fe0",
+      "expectedRevision": 14,
+      "input": {
+        "operations": [
+          {
+            "kind": "put",
+            "entity": "page",
+            "id": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+            "value": {
+              "id": "07fd8fe5-7aa1-4f7e-bb08-503ee7d5d6c5",
+              "route": "/team-hours",
+              "title": "Volunteer team hours",
+              "document": [
+                {
+                  "kind": "form",
+                  "formId": "0a5aab45-a8e0-491f-a470-c0615448a607"
+                }
+              ],
+              "formIds": [
+                "0a5aab45-a8e0-491f-a470-c0615448a607"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

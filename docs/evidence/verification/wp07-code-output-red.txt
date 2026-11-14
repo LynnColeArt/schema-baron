@@ -1,0 +1,10 @@
+Observation: WP07-T031 initial product failure
+Product source revision: efbb544febe5d87b86a353299d3e44b7b8a33987
+Mode: ordinary Studio UI journey, fresh isolated Workshop wizard project
+Browser outcome: FAILED after 32.0 seconds; zero retries
+Expected: Code Source output matches the wizard project's configured approved-root locator ending :generated/app.
+Actual: Code Source output was output:app.
+Assertion: expect(getByLabel('Source output', { exact: true })).toHaveValue(configuredOutput)
+Repair: initialize from project.outputConfig and isolate editor state by project/output identity.
+Retest: recorded separately at the frozen implementation revision; the initial failure remains retained.
+Sanitization: private temporary roots and generated fixture IDs are omitted. No source, model or business rows were patched to obtain this failure.

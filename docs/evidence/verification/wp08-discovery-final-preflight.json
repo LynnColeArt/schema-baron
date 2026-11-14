@@ -1,0 +1,249 @@
+{
+  "schema": "browser-discovery-preflight/v1",
+  "scope": "Discovery only, no acceptance test executions. Exact final corrected runner argv before source freeze.",
+  "runnerSha256": "ba40f6b31024e76d61888a4a04deedf2e3cfd8c467e04ad0ae6104ac6f9a5f33",
+  "results": [
+    {
+      "name": "regeneration",
+      "expected": 2,
+      "actual": 2,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/regeneration.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/regeneration-output",
+        "--list"
+      ],
+      "rawSha256": "fd0ec44bc6089c518b1bedd8b1fb368b546a3c6241f0d9b668eb2f813d41e022"
+    },
+    {
+      "name": "independence",
+      "expected": 2,
+      "actual": 2,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/independence.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/independence-output",
+        "--list"
+      ],
+      "rawSha256": "f4a8ea27bf46278213c9376e295d5b5a428ed327ccd85926b6b2164b1036db94"
+    },
+    {
+      "name": "access",
+      "expected": 1,
+      "actual": 1,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/access.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/access-output",
+        "--list"
+      ],
+      "rawSha256": "11fa10359e3435e7bdf924894e4b02147ecd47046c507e04421ba424d8013c46"
+    },
+    {
+      "name": "variant",
+      "expected": 1,
+      "actual": 1,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/library.spec.ts",
+        "--grep",
+        "declared raw existing-db",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/variant-output",
+        "--list"
+      ],
+      "rawSha256": "3c9f74a96c28af7f02a73b30264794313eaeb9a0b9f1ab709ee88ecabbc346f0"
+    },
+    {
+      "name": "drafts",
+      "expected": 5,
+      "actual": 5,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/drafts.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/drafts-output",
+        "--list"
+      ],
+      "rawSha256": "a35d09a91a08f77b1d7869650b738bab024f39a78afe34ffdfc06a2ff705b74e"
+    },
+    {
+      "name": "recovery",
+      "expected": 1,
+      "actual": 1,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/recovery.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/recovery-output",
+        "--list"
+      ],
+      "rawSha256": "fd4e160ea6439165dbc019258eb9fda122798ca39d97fe33d2609f357c79d49d"
+    },
+    {
+      "name": "parity",
+      "expected": 2,
+      "actual": 2,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/parity.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/parity-output",
+        "--list"
+      ],
+      "rawSha256": "ce04ef18d4a6cb89a92e08ceacb300c363936ff009cfde06846e493f99df2b4f"
+    },
+    {
+      "name": "performance",
+      "expected": 2,
+      "actual": 2,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/performance.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/performance-output",
+        "--list"
+      ],
+      "rawSha256": "cd2c1b4569427529c8699a8f1e0375e99202be66252a0108fa8f288fc8647863"
+    },
+    {
+      "name": "library-unfiltered-control",
+      "expected": 2,
+      "actual": 2,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/acceptance/library.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/library-unfiltered-control-output",
+        "--list"
+      ],
+      "rawSha256": "f29b0762dc67968c1d7e76ac36d84069ebbe578ab8970e5f3d217b3e45ee944e"
+    },
+    {
+      "name": "legacy-equipment",
+      "expected": 1,
+      "actual": 1,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/equipment",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/legacy-equipment-output",
+        "--list"
+      ],
+      "rawSha256": "47f6f6840afefe75dfdae2bf4bd1dbbd769c70758ccee96fc093e3615bbd0bb0"
+    },
+    {
+      "name": "legacy-publication",
+      "expected": 1,
+      "actual": 1,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/publication/workflow.spec.ts",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/legacy-publication-output",
+        "--list"
+      ],
+      "rawSha256": "3e5452075da8d6f71d41783b3977ae89c9c25cc97bc83364853273925ff4aac6"
+    },
+    {
+      "name": "legacy-other",
+      "expected": 38,
+      "actual": 38,
+      "matched": true,
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "tests/e2e/(?!acceptance/|equipment/|publication/)",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-discovery>/legacy-other-output",
+        "--list"
+      ],
+      "rawSha256": "2a5f93db75a9b5c7a2bdc65a6bb3c9202f2e0370a42f8438c7ede065a45f8c06"
+    }
+  ]
+}

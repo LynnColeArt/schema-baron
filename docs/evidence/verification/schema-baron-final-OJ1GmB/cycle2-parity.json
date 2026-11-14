@@ -1,0 +1,185 @@
+{
+  "name": "cycle2-parity",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/parity.spec.ts",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle2-parity-output"
+  ],
+  "started": "2026-11-02T19:50:17.895Z",
+  "finished": "2026-11-02T19:50:20.706Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "parity",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 2,
+    "count": 2,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "workshop: bounded real MCP/direct canonical command parity (separate from UI and full MCP workflow)",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "library: bounded real MCP/direct canonical command parity (separate from UI and full MCP workflow)",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": [
+    {
+      "kind": "parity-summary.json",
+      "privateSourceSha256": "e7f7b1385a32b453e3677f0cd3bb8b7587fff29b7ea650f89ce472583135b2ec",
+      "data": {
+        "mode": "parity",
+        "application": "library",
+        "scope": "Bounded smoke only; full MCP workflow and cold UI proof are separate",
+        "observations": [
+          {
+            "operation": "project.create",
+            "requestId": "create",
+            "expected": "success",
+            "actual": "success",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "write",
+            "expected": "success",
+            "actual": "success",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "write",
+            "expected": "success",
+            "actual": "success",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "stale",
+            "expected": "REVISION_CONFLICT",
+            "actual": "REVISION_CONFLICT",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "write",
+            "expected": "IDEMPOTENCY_CONFLICT",
+            "actual": "IDEMPOTENCY_CONFLICT",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "invalid",
+            "expected": "VALIDATION_FAILED",
+            "actual": "VALIDATION_FAILED",
+            "identical": true
+          },
+          {
+            "operation": "project.export",
+            "requestId": "path",
+            "expected": "PATH_OUTSIDE_ROOT",
+            "actual": "PATH_OUTSIDE_ROOT",
+            "identical": true
+          }
+        ],
+        "authorization": {
+          "mcp": "AUTH_REQUIRED",
+          "http": "AUTH_REQUIRED",
+          "wrongOwner": "ACCESS_DENIED",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "kind": "parity-summary.json",
+      "privateSourceSha256": "9cf8c26b951aaf8f58e341313db93bc38ab27957babc611110850a5678b7210e",
+      "data": {
+        "mode": "parity",
+        "application": "workshop",
+        "scope": "Bounded smoke only; full MCP workflow and cold UI proof are separate",
+        "observations": [
+          {
+            "operation": "project.create",
+            "requestId": "create",
+            "expected": "success",
+            "actual": "success",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "write",
+            "expected": "success",
+            "actual": "success",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "write",
+            "expected": "success",
+            "actual": "success",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "stale",
+            "expected": "REVISION_CONFLICT",
+            "actual": "REVISION_CONFLICT",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "write",
+            "expected": "IDEMPOTENCY_CONFLICT",
+            "actual": "IDEMPOTENCY_CONFLICT",
+            "identical": true
+          },
+          {
+            "operation": "project.batch",
+            "requestId": "invalid",
+            "expected": "VALIDATION_FAILED",
+            "actual": "VALIDATION_FAILED",
+            "identical": true
+          },
+          {
+            "operation": "project.export",
+            "requestId": "path",
+            "expected": "PATH_OUTSIDE_ROOT",
+            "actual": "PATH_OUTSIDE_ROOT",
+            "identical": true
+          }
+        ],
+        "authorization": {
+          "mcp": "AUTH_REQUIRED",
+          "http": "AUTH_REQUIRED",
+          "wrongOwner": "ACCESS_DENIED",
+          "unchanged": true
+        }
+      }
+    }
+  ]
+}

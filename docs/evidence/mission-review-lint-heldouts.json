@@ -1,0 +1,238 @@
+{
+  "sourceSha256": "6180488ec7d2f0aa0466514d2e029fd8047703e773e5f3ab8ade54da2c61193d",
+  "checks": [
+    {
+      "name": "raw_git_detects_capture_whitespace",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "m  \ndocs/evidence/nested/real.trace:2: new blank line at EOF.\ndocs/evidence/real.log:1: trailing whitespace.\n+verbatim  \ndocs/evidence/real.log:2: new blank line at EOF.\npackages/z/tests/evidence/raw.log:1: trailing whitespace.\n+verbatim  \npackages/z/tests/evidence/raw.log:2: new blank line at EOF.\npackages/z/tests/nested/evidence/raw.trace:1: trailing whitespace.\n+verbatim  \npackages/z/tests/nested/evidence/raw.trace:2: new blank line at EOF.\nscripts/release/evidence/raw.trace:1: trailing whitespace.\n+verbatim  \nscripts/release/evidence/raw.trace:2: new blank line at EOF.\ntests/e2e/z/evidence/raw.log:1: trailing whitespace.\n+verbatim  \ntests/e2e/z/evidence/raw.log:2: new blank line at EOF.\n"
+    },
+    {
+      "name": "all_four_capture_root_classes_pass",
+      "pass": true,
+      "exit": 0,
+      "diagnostic": "Diff-scoped syntax/JSON/whitespace lint checked 6 files; documented verbatim evidence .log/.trace whitespace excluded; TypeScript semantic validation is separate\n"
+    },
+    {
+      "name": "authored_whitespace_refused:docs/evidence/note.ts",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "docs/evidence/note.ts:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:docs/evidence/note.md",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "docs/evidence/note.md:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:docs/evidence/note.txt",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "docs/evidence/note.txt:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:packages/z/tests/evidence/note.ts",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "packages/z/tests/evidence/note.ts:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:tests/e2e/z/evidence/note.md",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "tests/e2e/z/evidence/note.md:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:scripts/release/evidence/note.md",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "scripts/release/evidence/note.md:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:outside.log",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "outside.log:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:docs/evidence-ish/raw.log",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "docs/evidence-ish/raw.log:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:packages/z/tests/evidence-ish/raw.log",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "packages/z/tests/evidence-ish/raw.log:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:tests/e2e/z/evidence-ish/raw.log",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "tests/e2e/z/evidence-ish/raw.log:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:scripts/release/evidence-ish/raw.log",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "scripts/release/evidence-ish/raw.log:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:docs/evidence/note with spaces.md",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "docs/evidence/note with spaces.md:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "authored_whitespace_refused:docs/evidence/note\nline.md",
+      "pass": true,
+      "exit": 2,
+      "diagnostic": "docs/evidence/note\nline.md:1: trailing whitespace.\n+authored  \ngit failed (2)\n"
+    },
+    {
+      "name": "syntax_refused:docs/evidence/source with spaces.mjs",
+      "pass": true,
+      "exit": 1,
+      "diagnostic": "/tmp/mission-renata-lint-qa59havr/docs/evidence/source with spaces.mjs:1\nexport const = ;\n             ^\n\nSyntaxError: Unexpected token '='\n    at checkSyntax (node:internal/main/check_syntax:84:5)\n\nNode.js v24.22.1\n/home/lynn/.nvm/versions/node/v24.22.1/bin/node failed (1)\n"
+    },
+    {
+      "name": "syntax_refused:docs/evidence/source\nline.mjs",
+      "pass": true,
+      "exit": 1,
+      "diagnostic": "/tmp/mission-renata-lint-qa59havr/docs/evidence/source\nline.mjs:1\nexport const = ;\n             ^\n\nSyntaxError: Unexpected token '='\n    at checkSyntax (node:internal/main/check_syntax:84:5)\n\nNode.js v24.22.1\n/home/lynn/.nvm/versions/node/v24.22.1/bin/node failed (1)\n"
+    },
+    {
+      "name": "syntax_refused:docs/evidence/data with spaces.json",
+      "pass": true,
+      "exit": 1,
+      "diagnostic": "Expected property name or '}' in JSON at position 2 (line 1 column 3)\n"
+    },
+    {
+      "name": "syntax_refused:docs/evidence/data\nline.json",
+      "pass": true,
+      "exit": 1,
+      "diagnostic": "Expected property name or '}' in JSON at position 2 (line 1 column 3)\n"
+    },
+    {
+      "name": "untracked_syntax_refused:docs/evidence/new\nuntracked.mjs",
+      "pass": true,
+      "exit": 1,
+      "diagnostic": "/tmp/mission-renata-lint-qa59havr/docs/evidence/new\nuntracked.mjs:1\nexport const = ;\n             ^\n\nSyntaxError: Unexpected token '='\n    at checkSyntax (node:internal/main/check_syntax:84:5)\n\nNode.js v24.22.1\n/home/lynn/.nvm/versions/node/v24.22.1/bin/node failed (1)\n"
+    },
+    {
+      "name": "untracked_syntax_refused:docs/evidence/new\nuntracked.json",
+      "pass": true,
+      "exit": 1,
+      "diagnostic": "Expected property name or '}' in JSON at position 2 (line 1 column 3)\n"
+    },
+    {
+      "name": "corrected_fixture_passes",
+      "pass": true,
+      "exit": 0,
+      "diagnostic": "Diff-scoped syntax/JSON/whitespace lint checked 6 files; documented verbatim evidence .log/.trace whitespace excluded; TypeScript semantic validation is separate\n"
+    },
+    {
+      "name": "raw_captures_unchanged",
+      "pass": true,
+      "exit": 0,
+      "diagnostic": "Diff-scoped syntax/JSON/whitespace lint checked 6 files; documented verbatim evidence .log/.trace whitespace excluded; TypeScript semantic validation is separate\n"
+    }
+  ],
+  "historicalCaptures": [
+    {
+      "path": "docs/evidence/generality/review-cycle-2/reviewer-concurrent.log",
+      "sha256": "e0a9c1625180a5fdb2a505a0e85a8bd49db781bdfb3314d49d22b56128965596",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "docs/evidence/generality/review-cycle-2/reviewer-heldout.log",
+      "sha256": "0e29342b984c6049dabb1f5dc69d2a7227ce99b0321986919996729710e8cc47",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-blocking-warm.log",
+      "sha256": "030ba6aceff8fb50cd478da4d7bd90c20c6dbe7a0145dec25f615a1c76bc1a00",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-diagnostic.log",
+      "sha256": "f8f93c14981f9c7628fb9988fde60e460588b35a16c006d9f5b37a5a5da0cd86",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-heldout-fixed.log",
+      "sha256": "82e027cec5321daac0d106866bb0600bd9bb65ebfef0fccb340438eeef2d35f3",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "docs/evidence/generality/review-renata-parity.log",
+      "sha256": "b20e5ba2c918f062c5a53c3706cc83922ec05e7a9c2a281b237ace39a4bc755e",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/cycle1/desired-runtime-red.log",
+      "sha256": "703294c43e65462683f422fae274b89f2602aed71a6ca321efc3d23afcc623b0",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/generator-boundaries.log",
+      "sha256": "87602274c1553aff6ec146f5b0f020a066287b46411c64c2e370492d490c0e30",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/isolated-instruments.log",
+      "sha256": "aaaf7b4603548367a50e9e1d393e9ab51fb9e274491b3714ef6f030997b0207d",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/generator/tests/public-list/evidence/isolated-publications.log",
+      "sha256": "a44d404bfa7b8e8dd52e9127aee0e272490af5e56b1199a67501a8c542ba41cd",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/desired-red.log",
+      "sha256": "c0379df6f5d54b4ebe0d14571f585ab4be8e3cc11f70adb8ce00469a7eb522c5",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/focused-green.log",
+      "sha256": "1f4e09dca1ae97c610112af810078947452e382fd278d53715d596d3a82a6075",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/original-red.log",
+      "sha256": "dea41c22c4da34752dbc92070525b54da2237724c87e3a8e93da4d119673d814",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/cycle1/tests.log",
+      "sha256": "009b39a521b3b4eab37143d010ac82326ffd567fb7495b55891375e9fb79c9ef",
+      "matchesConsolidatedBlob": true
+    },
+    {
+      "path": "packages/sqlite/tests/migrations/evidence/tests.log",
+      "sha256": "4eea5086d75560e696974c5eb8259ae68ab5b19c16e4a1661f1b8c9acf4d353c",
+      "matchesConsolidatedBlob": true
+    }
+  ],
+  "reviewedCommit": "1691e3e167b0bb2ffa32d7dd86f488475bb752ba",
+  "reviewer": "independent Codex / reviewer-renata",
+  "date": "2026-10-27",
+  "command": "Node24.22.1 scripts/workspace/verify.mjs lint in disposable real Git repo with SCHEMA_BARON_LINT_BASE set to actual fixture baseline",
+  "verificationReceipt": {
+    "sourceCommit": "1691e3e167b0bb2ffa32d7dd86f488475bb752ba",
+    "command": "SCHEMA_BARON_LINT_BASE=0690035de82e68e068e4f94690a51081413f1030 npm run verify",
+    "exit": 0,
+    "executionOwner": "coordinator; receipt independently inspected",
+    "log": ".local/final-verification/verify-after-lint-fix.log",
+    "logSha256": "44f3070a24bf197e37c5723e5e2a14bdcbd1f48afdfae28152201c135fbc1430",
+    "passedTests": 483,
+    "passedFiles": 74,
+    "durationSeconds": 211.36,
+    "maxWorkers": 2,
+    "strictAcceptCommit": "4759c1041f570de212201eb04ab8e7467c27ce25",
+    "headAtFinalReview": "7f36d7c79e7a621404ce8b2117716cda9b222350"
+  }
+}

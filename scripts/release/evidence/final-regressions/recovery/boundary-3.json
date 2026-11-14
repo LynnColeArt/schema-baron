@@ -1,0 +1,348 @@
+{
+  "status": "succeeded",
+  "elapsedMs": 3847.6666760000026,
+  "context": {
+    "save": "cleanup",
+    "migration": "before-db-commit",
+    "generation": "before-old-rename",
+    "node": "v24.22.1",
+    "platform": "linux"
+  },
+  "events": [
+    {
+      "elapsedMs": 0.5903000000016618,
+      "save": "cleanup",
+      "migration": "before-db-commit",
+      "generation": "before-old-rename",
+      "node": "v24.22.1",
+      "platform": "linux",
+      "state": "started"
+    },
+    {
+      "elapsedMs": 909.9269980000008,
+      "save": "cleanup",
+      "migration": "before-db-commit",
+      "generation": "before-old-rename",
+      "node": "v24.22.1",
+      "platform": "linux",
+      "phase": "prepared",
+      "tree": {
+        ".gitignore": "43b5f3078c9643b3150788da07b74095706a42b51149368cecfac2ee36c459cb",
+        ".npmrc": "761cc7e82f2d05f95362ccc199df79af276e8d4885bf1244eb012c43a763c17c",
+        ".nvmrc": "d9f318747a126ce2247661af67852b185def7789492eabfad7bba322be087c33",
+        ".schema-baron-generation.json": "c40451548dcc15a8e84c0da4b7d3fb0bba3750b49361b34af33ff22a39b9998e",
+        "app/layout.tsx": "bb84dc288582cb9cde02b8b4e2f3a66f05ddd5a05c85af12c42673596dc21d41",
+        "app/page.tsx": "f6c035ab9fe976e9e726266ac02e17db9a4088d61be92778720453c77cc83fbc",
+        "app/runtime/auth/csrf/route.ts": "56e788273ef671d9596cdcd5fbd8146be0590599964c06017b814c2e1a058dbc",
+        "app/runtime/auth/route.ts": "444c68688bc63676104ed76fcd55c92a208cca26af4ba340951f4b52dbfb8e8d",
+        "app/runtime/navigation-0/route.ts": "397c39ae9ff218a68dafa806b0eff3e0c5d8825ee830d95518cc3e1400790ddd",
+        "app/styles.css": "1d03d772fce95f85166e96e9f86c258546a7e53415dd0ef5c46c7b24dd3ce8dd",
+        "AUTH.md": "00542d1842470cd933087ed14adf8ce2b01fc4e8a7c44efb581946e1e04b52ba",
+        "authored/rules.ts": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+        "components/csrf.tsx": "8d3d162d5174ed92fdcffdf11a8d95f51aa62b9e2bebd4123cf1041e84c30a06",
+        "components/grid-0.tsx": "5f60206a5e9b8a56e1e1e29717c9af5647737609273f09c98e751f12b0b9fcdb",
+        "components/identity-header.tsx": "930d2d7744b5f7074aa26cb0fa5e0364835481235ac9e33bf1de1f438e874965",
+        "components/login.tsx": "8c1bac29b3479a9c5ff48a2d9b53ffea94a1d3f73ccb3e69f2b72a489eaf034f",
+        "components/saved-notice.tsx": "15eb6bfa8d5d8181dec70b98a64d18215bf10496bd2bbc8ac47895be0d361ba4",
+        "components/sign-out.tsx": "ba5bbbf5c4f18a968ef7760d75a9c235541975b11cfd094467e0e64fba28a8c7",
+        "next-env.d.ts": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+        "next.config.ts": "ba531564169b2063ef6eef8eb15425e5fbb3ea403dee8816b3cd2b8ae6231cb1",
+        "package-lock.json": "56e223a6783b51849aa1f31026a2e1bedecec56ca9cc5dec06685e98ac080c2e",
+        "package.json": "076d40f315f2ca79af3aabeb1b00d95de7b0745728d6314aa5f685e4ba56d3ec",
+        "README.md": "d5a612b9d0e94fdf1a33643731d6a9048665dc603a7c6e9690c6bc8cfdc4dc66",
+        "server/auth-config.ts": "8f477dfc4c2168d2c4282f3174270ab76e601cc1a4708e4fbde5a2ffb733dc56",
+        "server/auth.ts": "936aaac274c5b6eabfbfcf7a43855df22a75db1f90101e0ccbd23740f117f585",
+        "server/connection.ts": "32414227c75fff5254f9aacff712091374861dba504a420458d98e49b17bf14a",
+        "server/extension-contracts.ts": "d6cf38a21bcdc14c24f4eec0593a98058961c709425a453724fbf420a89e3ad7",
+        "server/extensions.ts": "7f2c3e24b8a4a05c3a6aa49767c8fa77101b4aeb501cf86fc8795ce99f295bd2",
+        "server/format.ts": "e5ff9a3e3c677f28e0388e251343774c734f8074255906708ba602a123b8bba2",
+        "server/grid-0.ts": "6ede2a775e8833d1e222cbf118a83bfbc79780783f5a2e97fc1af895a000629d",
+        "server/identity-store.ts": "13a1cc16fae631f19d0c353205dd081967daf56ae22717931a121bfe8d5f9344",
+        "server/navigation.ts": "9aaac7a8fd82966be24a9f50733ecb9de03fd86e89f46e11dcc6e1eaa5117a39",
+        "server/query-scalar.js": "014a80fe8f9a1b4fa9a9a015cc4691b6ff3682bbf26a466cd25728d0877b2370",
+        "server/record-repository.ts": "eb89ce02b477a9091f98373a92502f0f4c63b5e7cba0e3fa03bfb9e5afe843f0",
+        "server/record-service.ts": "b25acc0d0f670e34a87cb8ce4f0928211428f79829164eeca0e0af378fc42b3a",
+        "server/record-validation.ts": "0359b45c11e38aa01f500b74a27a40c213eb468f2a579eb9c26dfd1f47608dab",
+        "server/repository.ts": "77ea30a8825f321fbededd03c6caf79ea4a6de7f12bb61f18cc360d9ba97c829",
+        "tests/identity.test.mjs": "8709237da1e04238e463cf4fcbe78607b1f37d5c3bbb24a9ea822e1715c62eaf",
+        "tests/output.test.mjs": "435cfe5f00281d8f407751a9b3534b43022068112ebd239ba1df21f6d4d64323",
+        "tsconfig.json": "a270296f627f7cf4edf08044b15f8d4fd3796d4225a5a9e231cc4a8d456cb65e"
+      },
+      "databaseHash": "0d5b0ab10da01be437a80e7a98021f7f26cca17ddf8e42db7df135e8fef83cb1",
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 1071.7795930000011,
+      "save": "cleanup",
+      "migration": "before-db-commit",
+      "generation": "before-old-rename",
+      "node": "v24.22.1",
+      "platform": "linux",
+      "phase": "save-before-restart",
+      "journalEntries": 1,
+      "targetRevision": 6,
+      "definitionHash": "6ec35fda090e32f728252f6cea0a0bb0404fded692586ffd8aabbae2d7db9b29",
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 1833.4168310000005,
+      "save": "cleanup",
+      "migration": "before-db-commit",
+      "generation": "before-old-rename",
+      "node": "v24.22.1",
+      "platform": "linux",
+      "phase": "worker-termination",
+      "workerExitCode": 86,
+      "trace": "worker-before-db-commit.trace",
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 2018.7196730000014,
+      "save": "cleanup",
+      "migration": "before-db-commit",
+      "generation": "before-old-rename",
+      "node": "v24.22.1",
+      "platform": "linux",
+      "phase": "migration-reconciled",
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "title": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX title_lookup ON parent(title)"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": false,
+        "history": [
+          {
+            "outcome": "rolled-back",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 3465.4085250000007,
+      "save": "cleanup",
+      "migration": "before-db-commit",
+      "generation": "before-old-rename",
+      "node": "v24.22.1",
+      "platform": "linux",
+      "phase": "restarted",
+      "exit": {
+        "save": 73,
+        "migration": 0,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "title": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX title_lookup ON parent(title)"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": false,
+        "history": [
+          {
+            "outcome": "rolled-back",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "activeTree": {
+        ".gitignore": "43b5f3078c9643b3150788da07b74095706a42b51149368cecfac2ee36c459cb",
+        ".npmrc": "761cc7e82f2d05f95362ccc199df79af276e8d4885bf1244eb012c43a763c17c",
+        ".nvmrc": "d9f318747a126ce2247661af67852b185def7789492eabfad7bba322be087c33",
+        ".schema-baron-generation.json": "a23d71c30067cee2496529b14e374d69c92e5ffe0db3d0db5d1e00218cf8cb57",
+        "app/layout.tsx": "bb84dc288582cb9cde02b8b4e2f3a66f05ddd5a05c85af12c42673596dc21d41",
+        "app/page.tsx": "d96b62e0f6d81d63b5e92f67ec53072ed4da024d6147fceaaf30b879caef89f2",
+        "app/runtime/auth/csrf/route.ts": "56e788273ef671d9596cdcd5fbd8146be0590599964c06017b814c2e1a058dbc",
+        "app/runtime/auth/route.ts": "444c68688bc63676104ed76fcd55c92a208cca26af4ba340951f4b52dbfb8e8d",
+        "app/runtime/navigation-0/route.ts": "397c39ae9ff218a68dafa806b0eff3e0c5d8825ee830d95518cc3e1400790ddd",
+        "app/styles.css": "1d03d772fce95f85166e96e9f86c258546a7e53415dd0ef5c46c7b24dd3ce8dd",
+        "AUTH.md": "00542d1842470cd933087ed14adf8ce2b01fc4e8a7c44efb581946e1e04b52ba",
+        "authored/rules.ts": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+        "components/csrf.tsx": "8d3d162d5174ed92fdcffdf11a8d95f51aa62b9e2bebd4123cf1041e84c30a06",
+        "components/grid-0.tsx": "0b4e1c0b5a45bfb1d58b776c812ed0bd7ba2c45fdedad29644fec1e6fec8f8fc",
+        "components/identity-header.tsx": "930d2d7744b5f7074aa26cb0fa5e0364835481235ac9e33bf1de1f438e874965",
+        "components/login.tsx": "8c1bac29b3479a9c5ff48a2d9b53ffea94a1d3f73ccb3e69f2b72a489eaf034f",
+        "components/saved-notice.tsx": "15eb6bfa8d5d8181dec70b98a64d18215bf10496bd2bbc8ac47895be0d361ba4",
+        "components/sign-out.tsx": "ba5bbbf5c4f18a968ef7760d75a9c235541975b11cfd094467e0e64fba28a8c7",
+        "next-env.d.ts": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+        "next.config.ts": "ba531564169b2063ef6eef8eb15425e5fbb3ea403dee8816b3cd2b8ae6231cb1",
+        "package-lock.json": "56e223a6783b51849aa1f31026a2e1bedecec56ca9cc5dec06685e98ac080c2e",
+        "package.json": "076d40f315f2ca79af3aabeb1b00d95de7b0745728d6314aa5f685e4ba56d3ec",
+        "README.md": "d5a612b9d0e94fdf1a33643731d6a9048665dc603a7c6e9690c6bc8cfdc4dc66",
+        "server/auth-config.ts": "8f477dfc4c2168d2c4282f3174270ab76e601cc1a4708e4fbde5a2ffb733dc56",
+        "server/auth.ts": "936aaac274c5b6eabfbfcf7a43855df22a75db1f90101e0ccbd23740f117f585",
+        "server/connection.ts": "32414227c75fff5254f9aacff712091374861dba504a420458d98e49b17bf14a",
+        "server/extension-contracts.ts": "d6cf38a21bcdc14c24f4eec0593a98058961c709425a453724fbf420a89e3ad7",
+        "server/extensions.ts": "7f2c3e24b8a4a05c3a6aa49767c8fa77101b4aeb501cf86fc8795ce99f295bd2",
+        "server/format.ts": "e5ff9a3e3c677f28e0388e251343774c734f8074255906708ba602a123b8bba2",
+        "server/grid-0.ts": "0fcc795936ae4a2971a414e656638a275065a22141fa438600f7af255e1374a6",
+        "server/identity-store.ts": "13a1cc16fae631f19d0c353205dd081967daf56ae22717931a121bfe8d5f9344",
+        "server/navigation.ts": "9aaac7a8fd82966be24a9f50733ecb9de03fd86e89f46e11dcc6e1eaa5117a39",
+        "server/query-scalar.js": "014a80fe8f9a1b4fa9a9a015cc4691b6ff3682bbf26a466cd25728d0877b2370",
+        "server/record-repository.ts": "eb89ce02b477a9091f98373a92502f0f4c63b5e7cba0e3fa03bfb9e5afe843f0",
+        "server/record-service.ts": "b25acc0d0f670e34a87cb8ce4f0928211428f79829164eeca0e0af378fc42b3a",
+        "server/record-validation.ts": "0359b45c11e38aa01f500b74a27a40c213eb468f2a579eb9c26dfd1f47608dab",
+        "server/repository.ts": "77ea30a8825f321fbededd03c6caf79ea4a6de7f12bb61f18cc360d9ba97c829",
+        "tests/identity.test.mjs": "8709237da1e04238e463cf4fcbe78607b1f37d5c3bbb24a9ea822e1715c62eaf",
+        "tests/output.test.mjs": "435cfe5f00281d8f407751a9b3534b43022068112ebd239ba1df21f6d4d64323",
+        "tsconfig.json": "a270296f627f7cf4edf08044b15f8d4fd3796d4225a5a9e231cc4a8d456cb65e"
+      },
+      "oldTree": {
+        ".gitignore": "43b5f3078c9643b3150788da07b74095706a42b51149368cecfac2ee36c459cb",
+        ".npmrc": "761cc7e82f2d05f95362ccc199df79af276e8d4885bf1244eb012c43a763c17c",
+        ".nvmrc": "d9f318747a126ce2247661af67852b185def7789492eabfad7bba322be087c33",
+        ".schema-baron-generation.json": "c40451548dcc15a8e84c0da4b7d3fb0bba3750b49361b34af33ff22a39b9998e",
+        "app/layout.tsx": "bb84dc288582cb9cde02b8b4e2f3a66f05ddd5a05c85af12c42673596dc21d41",
+        "app/page.tsx": "f6c035ab9fe976e9e726266ac02e17db9a4088d61be92778720453c77cc83fbc",
+        "app/runtime/auth/csrf/route.ts": "56e788273ef671d9596cdcd5fbd8146be0590599964c06017b814c2e1a058dbc",
+        "app/runtime/auth/route.ts": "444c68688bc63676104ed76fcd55c92a208cca26af4ba340951f4b52dbfb8e8d",
+        "app/runtime/navigation-0/route.ts": "397c39ae9ff218a68dafa806b0eff3e0c5d8825ee830d95518cc3e1400790ddd",
+        "app/styles.css": "1d03d772fce95f85166e96e9f86c258546a7e53415dd0ef5c46c7b24dd3ce8dd",
+        "AUTH.md": "00542d1842470cd933087ed14adf8ce2b01fc4e8a7c44efb581946e1e04b52ba",
+        "authored/rules.ts": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+        "components/csrf.tsx": "8d3d162d5174ed92fdcffdf11a8d95f51aa62b9e2bebd4123cf1041e84c30a06",
+        "components/grid-0.tsx": "5f60206a5e9b8a56e1e1e29717c9af5647737609273f09c98e751f12b0b9fcdb",
+        "components/identity-header.tsx": "930d2d7744b5f7074aa26cb0fa5e0364835481235ac9e33bf1de1f438e874965",
+        "components/login.tsx": "8c1bac29b3479a9c5ff48a2d9b53ffea94a1d3f73ccb3e69f2b72a489eaf034f",
+        "components/saved-notice.tsx": "15eb6bfa8d5d8181dec70b98a64d18215bf10496bd2bbc8ac47895be0d361ba4",
+        "components/sign-out.tsx": "ba5bbbf5c4f18a968ef7760d75a9c235541975b11cfd094467e0e64fba28a8c7",
+        "next-env.d.ts": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+        "next.config.ts": "ba531564169b2063ef6eef8eb15425e5fbb3ea403dee8816b3cd2b8ae6231cb1",
+        "package-lock.json": "56e223a6783b51849aa1f31026a2e1bedecec56ca9cc5dec06685e98ac080c2e",
+        "package.json": "076d40f315f2ca79af3aabeb1b00d95de7b0745728d6314aa5f685e4ba56d3ec",
+        "README.md": "d5a612b9d0e94fdf1a33643731d6a9048665dc603a7c6e9690c6bc8cfdc4dc66",
+        "server/auth-config.ts": "8f477dfc4c2168d2c4282f3174270ab76e601cc1a4708e4fbde5a2ffb733dc56",
+        "server/auth.ts": "936aaac274c5b6eabfbfcf7a43855df22a75db1f90101e0ccbd23740f117f585",
+        "server/connection.ts": "32414227c75fff5254f9aacff712091374861dba504a420458d98e49b17bf14a",
+        "server/extension-contracts.ts": "d6cf38a21bcdc14c24f4eec0593a98058961c709425a453724fbf420a89e3ad7",
+        "server/extensions.ts": "7f2c3e24b8a4a05c3a6aa49767c8fa77101b4aeb501cf86fc8795ce99f295bd2",
+        "server/format.ts": "e5ff9a3e3c677f28e0388e251343774c734f8074255906708ba602a123b8bba2",
+        "server/grid-0.ts": "6ede2a775e8833d1e222cbf118a83bfbc79780783f5a2e97fc1af895a000629d",
+        "server/identity-store.ts": "13a1cc16fae631f19d0c353205dd081967daf56ae22717931a121bfe8d5f9344",
+        "server/navigation.ts": "9aaac7a8fd82966be24a9f50733ecb9de03fd86e89f46e11dcc6e1eaa5117a39",
+        "server/query-scalar.js": "014a80fe8f9a1b4fa9a9a015cc4691b6ff3682bbf26a466cd25728d0877b2370",
+        "server/record-repository.ts": "eb89ce02b477a9091f98373a92502f0f4c63b5e7cba0e3fa03bfb9e5afe843f0",
+        "server/record-service.ts": "b25acc0d0f670e34a87cb8ce4f0928211428f79829164eeca0e0af378fc42b3a",
+        "server/record-validation.ts": "0359b45c11e38aa01f500b74a27a40c213eb468f2a579eb9c26dfd1f47608dab",
+        "server/repository.ts": "77ea30a8825f321fbededd03c6caf79ea4a6de7f12bb61f18cc360d9ba97c829",
+        "tests/identity.test.mjs": "8709237da1e04238e463cf4fcbe78607b1f37d5c3bbb24a9ea822e1715c62eaf",
+        "tests/output.test.mjs": "435cfe5f00281d8f407751a9b3534b43022068112ebd239ba1df21f6d4d64323",
+        "tsconfig.json": "a270296f627f7cf4edf08044b15f8d4fd3796d4225a5a9e231cc4a8d456cb65e"
+      },
+      "externalSecretPreserved": true,
+      "databaseBefore": "50d5ca2cf8a6b3e086e75749e20e3cd347adb1b262999294989e9e91b2105590",
+      "databaseAfter": "50d5ca2cf8a6b3e086e75749e20e3cd347adb1b262999294989e9e91b2105590",
+      "state": "observed"
+    },
+    {
+      "elapsedMs": 3847.6557059999996,
+      "phase": "cleanup",
+      "disposableRootRemoved": true
+    }
+  ]
+}

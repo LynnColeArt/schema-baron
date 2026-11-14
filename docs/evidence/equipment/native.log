@@ -1,0 +1,5 @@
+
+> schema-baron@0.0.0 native:smoke
+> node scripts/workspace/verify.mjs sqlite
+
+SQLite 3.53.4: native insert, transaction and online backup passed

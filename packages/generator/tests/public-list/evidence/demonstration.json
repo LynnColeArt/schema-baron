@@ -1,0 +1,19 @@
+{
+  "studioStopped": true,
+  "applications": [
+    {
+      "projectId": "5d0c33a3-9165-4280-beca-5103f04f3ff5",
+      "route": "/inventory",
+      "path": "/tmp/wp10-browser-yUgdqS/output/instruments",
+      "database": "/tmp/wp10-browser-yUgdqS/definitions/instruments.sqlite",
+      "revision": 5
+    },
+    {
+      "projectId": "e7503564-e2b9-43b3-8c28-a26b4fca6305",
+      "route": "/catalog",
+      "path": "/tmp/wp10-browser-yUgdqS/output/publications",
+      "database": "/tmp/wp10-browser-yUgdqS/definitions/publications.sqlite",
+      "revision": 5
+    }
+  ]
+}

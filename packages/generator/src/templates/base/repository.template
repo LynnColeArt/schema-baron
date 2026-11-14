@@ -1,0 +1,124 @@
+import 'server-only';
+import Database from 'better-sqlite3';
+import Decimal from 'decimal.js';
+import { z } from 'zod';
+import { value as parseValue } from './record-validation.ts';
+import { databasePath } from './connection.ts';
+
+type Field = {
+  readonly id: string;
+  readonly name: string;
+  readonly type: { readonly kind: string; readonly scale?: number; readonly encoding?: string };
+  readonly nullable: boolean;
+};
+type Config = {
+  readonly table: string;
+  readonly fields: readonly Field[];
+  readonly keys?:readonly string[];
+  readonly sortFieldIds?:readonly string[];
+  readonly search: readonly { readonly fieldId: string; readonly operator: 'eq' | 'contains' | 'gte' | 'lte' }[];
+  readonly sorting: readonly { readonly fieldId: string; readonly direction: 'asc' | 'desc' }[];
+  readonly pageSize: number;
+  readonly parents?:readonly {readonly fieldId:string;readonly parameter:string}[];
+};
+type Parameters = Record<string, string | string[] | undefined>;
+type Binding = string | number | bigint;
+
+const quote = (name: string) => '"' + name.replaceAll('"', '""') + '"';
+
+function one(parameters: Parameters, key: string) {
+  const value = parameters[key];
+  if (Array.isArray(value)) throw new Error('Use one value per parameter.');
+  return value;
+}
+
+function filterValue(field: Field, text: string): Binding {
+  if (text.length > 1000) throw new Error('Filter is too long.');
+  const parsed=parseValue(field,text);
+  if(parsed===null) throw new Error('Enter a parent key value.');
+  return parsed;
+}
+
+export function readGrid(config: Config, parameters: Parameters, prefix: string): {
+  rows: Record<string, unknown>[];
+  page: number;
+  error?: string;
+} {
+  let database: Database.Database | undefined;
+  try {
+    const page = z.coerce.number().int().min(1).max(100000).parse(one(parameters, prefix + ':page') ?? '1');
+    const requested = one(parameters, prefix + ':sort');
+    const direction = z.enum(['asc', 'desc']).parse(one(parameters, prefix + ':direction') ?? 'asc');
+    if (requested && !(config.sortFieldIds??config.fields.map(f=>f.id)).includes(requested)) throw new Error('Choose an available sort field.');
+    const allowed = ['page', 'sort', 'direction', ...config.search.map(s => 'filter:' + s.fieldId),...(config.parents??[]).map(p=>p.parameter.startsWith(prefix+':')?p.parameter.slice(prefix.length+1):p.parameter)];
+    for (const key of Object.keys(parameters)) {
+      if (key.startsWith(prefix + ':') && !allowed.includes(key.slice(prefix.length + 1))) {
+        throw new Error('Unknown list parameter.');
+      }
+    }
+
+    const clauses: string[] = [];
+    const bindings: Binding[] = [];
+    for(const parent of config.parents??[]) {
+      const field=config.fields.find(f=>f.id===parent.fieldId);const text=one(parameters,parent.parameter);
+      if(!field) throw Error('A parent field is unavailable.');
+      // A declared key can identify rows on the unfiltered list too. When its
+      // parameter is present, it is always validated and bound as a predicate.
+      if(text===undefined) continue;
+      const name=quote(field.name);
+      clauses.push(field.type.kind==='decimal'&&field.type.encoding==='text' ? 'decimal_compare('+name+', ?) = 0' : name+' = ?');
+      bindings.push(filterValue(field,text));
+    }
+    for (const search of config.search) {
+      const text = one(parameters, prefix + ':filter:' + search.fieldId);
+      if (text === undefined || text === '') continue;
+      if (text.length > 1000) throw new Error('Filter is too long.');
+      const field = config.fields.find(f => f.id === search.fieldId);
+      if (!field) throw new Error('Search field is unavailable.');
+      const name = quote(field.name);
+      if (search.operator === 'contains') {
+        clauses.push(name + " LIKE ? ESCAPE '\\'");
+        bindings.push('%' + text.replace(/[\\%_]/g, '\\$&') + '%');
+      } else {
+        const operator = { eq: '=', gte: '>=', lte: '<=' }[search.operator];
+        clauses.push(field.type.kind === 'decimal' && field.type.encoding === 'text'
+          ? `decimal_compare(${name}, ?) ${operator} 0`
+          : `${name} ${operator} ?`);
+        bindings.push(filterValue(field, text));
+      }
+    }
+
+    const ordering = requested ? [{ fieldId: requested, direction }] : config.sorting;
+    const stableOrdering=[...ordering,...(config.keys??[]).filter(id=>!ordering.some(sort=>sort.fieldId===id)).map(fieldId=>({fieldId,direction:'asc' as const}))];
+    const orderSql = stableOrdering.map(sort => {
+      const field = config.fields.find(f => f.id === sort.fieldId);
+      if (!field) throw new Error('Sort field is unavailable.');
+      // Exact decimal text is sorted using a registered deterministic collation seam.
+      if (field.type.kind === 'decimal' && field.type.encoding === 'text') {
+        throw new Error('Exact decimal text sorting is not available in this output slice.');
+      }
+      return quote(field.name) + ' ' + sort.direction.toUpperCase();
+    }).join(', ');
+    const sql = 'SELECT ' + config.fields.map(f => quote(f.name) + ' AS ' + quote(f.id)).join(', ')
+      + ' FROM ' + quote(config.table)
+      + (clauses.length ? ' WHERE ' + clauses.join(' AND ') : '')
+      + (orderSql ? ' ORDER BY ' + orderSql : '')
+      + ' LIMIT ? OFFSET ?';
+
+    database = new Database(databasePath, { readonly: true, fileMustExist: true });
+    database.defaultSafeIntegers(true);
+    database.pragma('query_only = ON');
+    database.pragma('busy_timeout = 1000');
+    database.function('decimal_compare', { deterministic: true }, (left, right) => {
+      // SQL comparisons involving NULL are unknown; WHERE excludes those rows.
+      if (left === null || right === null) return null;
+      return new Decimal(String(left)).comparedTo(String(right));
+    });
+    const rows = database.prepare(sql).all(...bindings, config.pageSize, (page - 1) * config.pageSize) as Record<string, unknown>[];
+    return { rows, page };
+  } catch {
+    return { rows: [], page: 1, error: 'The list could not be read. Check the filters and the configured external database.' };
+  } finally {
+    database?.close();
+  }
+}

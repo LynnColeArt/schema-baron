@@ -1,0 +1,86 @@
+{
+  "name": "cycle2-fault",
+  "revision": "b9d5aca4ad2addee29a5de90bbbcbefa146532cf",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "tests/integration/recovery-matrix",
+    "--reporter=json",
+    "--outputFile=<private-run>/cycle2-fault.json"
+  ],
+  "started": "2026-11-02T19:53:08.016Z",
+  "finished": "2026-11-02T19:53:40.385Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "census": {
+    "count": 15,
+    "expected": 15,
+    "passed": true,
+    "tests": [
+      {
+        "title": "save → WAL migration → promotion hard restart stage-complete",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart before-journal-write",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart after-journal-write",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart before-old-rename",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart after-old-rename",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart before-new-rename",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart after-new-rename",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart before-journal-clear",
+        "status": "passed"
+      },
+      {
+        "title": "save → WAL migration → promotion hard restart after-journal-clear",
+        "status": "passed"
+      },
+      {
+        "title": "external schema changes after committed owner exit block recovery and preserve both states",
+        "status": "passed"
+      },
+      {
+        "title": "actual migration cancellation at before-ddl reports durable truth",
+        "status": "passed"
+      },
+      {
+        "title": "actual migration cancellation at before-reconcile reports durable truth",
+        "status": "passed"
+      },
+      {
+        "title": "busy WAL writer and external data/schema invalidate reviewed plans without overwriting external state",
+        "status": "passed"
+      },
+      {
+        "title": "recovery output conflicts and transport challenges preserve authored bytes and secrets",
+        "status": "passed"
+      },
+      {
+        "title": "explicit replay, stale revision, invalid parent/default/context and replaced reviewed DB identity never partially write",
+        "status": "passed"
+      }
+    ]
+  },
+  "mode": "fault",
+  "scope": "Shared application-independent contract bridge: real hard-exit parent/child restart and negative boundaries; not two schema-specific interrupted UI journeys."
+}

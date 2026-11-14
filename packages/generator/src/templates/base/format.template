@@ -1,0 +1,36 @@
+import 'server-only';
+import Decimal from 'decimal.js';
+
+type FieldType = {
+  kind: string;
+  scale?: number;
+  precision?: number;
+  encoding?: string;
+  rounding?: 'half-up' | 'half-even' | 'down';
+};
+
+export function formatValue(value: unknown, type: FieldType | undefined, format: string): string {
+  if (value === null || value === undefined) return '—';
+  if (type?.kind === 'boolean') return value === 1 || value === 1n || value === true ? 'Yes' : 'No';
+  if (type?.kind === 'blob') return '[Binary data]';
+
+  if (type?.kind === 'decimal') {
+    try {
+      const decimal = new Decimal(String(value));
+      const amount = type.encoding === 'scaled-integer'
+        ? decimal.div(new Decimal(10).pow(type.scale ?? 0))
+        : decimal;
+      return (format === 'currency' ? '$' : '') + amount.toFixed(type.scale ?? 0);
+    } catch {
+      return 'Invalid decimal';
+    }
+  }
+
+  if (format === 'date' || format === 'datetime' || type?.kind === 'date' || type?.kind === 'datetime') {
+    const date = new Date(String(value));
+    if (Number.isNaN(date.getTime())) return 'Invalid date';
+    return format === 'datetime' || type?.kind === 'datetime' ? date.toISOString() : date.toISOString().slice(0, 10);
+  }
+
+  return String(value);
+}

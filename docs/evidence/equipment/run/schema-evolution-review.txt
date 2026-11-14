@@ -1,0 +1,41 @@
+Review migration
+
+4 SQL steps · source revision 72 · expires 2026-10-27T13:28:53.805Z
+
+Exact proposal identity
+Reviewed SQL
+CREATE TABLE "__baron_b47cf0a467a24ae79c11ceb864581a46" ("id" INTEGER NOT NULL, "caption" TEXT NOT NULL, "daily_rate" TEXT NOT NULL, "notes" TEXT, "condition" TEXT NOT NULL, PRIMARY KEY ("id" ASC))
+INSERT INTO "__baron_b47cf0a467a24ae79c11ceb864581a46" ("id", "caption", "daily_rate", "notes", "condition") SELECT "id" AS "id", "label" AS "caption", "daily_rate" AS "daily_rate", NULL AS "notes", 'ready' AS "condition" FROM main."assets"
+DROP TABLE "assets"
+ALTER TABLE "__baron_b47cf0a467a24ae79c11ceb864581a46" RENAME TO "assets"
+Impact and dependencies
+Replace values in assets.condition with the reviewed expression
+backfill · 1 affected rows · object 1157262c-1fd2-47ed-b8e9-b060c81f72ed · impact efe622d9-b7e5-4dff-8c00-d95220aa102f
+
+Rename column label to caption; preserve values
+
+change · 1 affected rows · object 2d3bf5d8-4e8b-4dba-be6b-1f70baf49431 · impact 2af2f4fa-97e7-4596-9211-00a0df46f946
+
+Add column notes
+
+create · 1 affected rows · object 77232a5b-c0c0-4c37-b39c-e7566047e3d1 · impact c2e0dd0f-f014-4628-9751-52cd1845778f
+
+Add column condition
+
+create · 1 affected rows · object 1157262c-1fd2-47ed-b8e9-b060c81f72ed · impact c6761a66-92ed-40c2-be16-554507d866b7
+Backup and recovery
+
+Required SQLite online backup in approved root projects. The executor allocates the exact backup location during apply; no backup has been made by preview.
+
+Acquire the migration lease and recheck schema/data fingerprints under a write transaction before changing data.
+
+Create and verify an SQLite online backup in the disclosed owner-approved root before DDL.
+
+Set foreign_keys OFF before BEGIN for a rebuild; execute all reviewed steps in one transaction and reject failed foreign_key_check or integrity_check before commit. Restore the original connection settings.
+
+On failure roll back the transaction. Inspect the durable migration journal and database marker to distinguish rollback from a committed migration before retrying.
+
+Restoring a backup requires a separately reviewed restore plan and exact acknowledgements; preview never performs a restore.
+
+Cancel review
+Apply reviewed migration

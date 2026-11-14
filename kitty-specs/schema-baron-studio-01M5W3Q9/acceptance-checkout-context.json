@@ -1,0 +1,47 @@
+{
+  "mission_slug": "schema-baron-studio-01M5W3Q9",
+  "runtime_version": "3.2.7",
+  "candidate_checkout": "/home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z",
+  "candidate_source_sha": "42c8dda615be024bdb05e13e23dabfe6b230d6e8",
+  "canonical_records_sha": "e7be8cb8d8ac1dd9dbcafcb002ac686f42dcc19f",
+  "project_path_conventions": {
+    "workspace": "apps/",
+    "tests": "tests/"
+  },
+  "strict_candidate_layout": {
+    "valid": true,
+    "required_paths": {
+      "workspace": "apps/",
+      "tests": "tests/",
+      "deliverables": "contracts/",
+      "documentation": "docs/"
+    },
+    "existing_paths": [
+      "apps/",
+      "tests/",
+      "contracts/",
+      "docs/"
+    ],
+    "missing_paths": []
+  },
+  "strict_primary_metadata": {
+    "metadata_issues": [],
+    "activity_issues": [],
+    "unchecked_tasks": [],
+    "needs_clarification": [],
+    "missing_artifacts": [],
+    "all_done": true
+  },
+  "primary_preconsolidation_path_violations": [
+    "Path Convention Errors:\n  - Software Dev Kitty expects workspace path: apps/ (not found)\n  - Software Dev Kitty expects tests path: tests/ (not found)\n\nRun `accept --lenient` to treat these as warnings instead of blocking errors for this mission run - or, if you want to adopt the convention, see the commands below:\n\nRequired Actions:\n  - Create directories in one go: mkdir -p apps/ tests/\n  - mkdir -p apps/\n  - mkdir -p tests/"
+  ],
+  "limitation": "Installed accept resolves primary root for coordination topology even when invoked inside lane-z; owned-checkout supports single_branch only. Primary product paths do not exist before approved lane consolidation.",
+  "bounded_sequence": [
+    "Record strict candidate layout and strict metadata evidence.",
+    "Run intermediate supported accept --lenient only for documented primary checkout layout limitation; retain matrix and review guards.",
+    "Consolidate through canonical merge into feat/schema-baron-studio, keeping main unchanged.",
+    "MANDATORY: rerun strict accept on fully consolidated primary; intermediate mode is not final strict acceptance."
+  ],
+  "auxiliary_python_architecture_gate": "unverified; not claimed passed",
+  "product_test_results": "No product tests run by this context verification; canonical matrix contains separate product proof."
+}

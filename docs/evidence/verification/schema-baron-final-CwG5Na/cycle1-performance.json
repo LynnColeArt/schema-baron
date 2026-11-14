@@ -1,0 +1,808 @@
+{
+  "name": "cycle1-performance",
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "command": [
+    "npm",
+    "exec",
+    "--",
+    "playwright",
+    "test",
+    "tests/e2e/acceptance/performance.spec.ts",
+    "--workers=1",
+    "--retries=0",
+    "--reporter=line,json,junit",
+    "--output=<private-run>/cycle1-performance-output"
+  ],
+  "started": "2026-11-02T20:25:17.895Z",
+  "finished": "2026-11-02T20:28:05.582Z",
+  "exitCode": 0,
+  "signal": null,
+  "passed": true,
+  "mode": "ui_journey",
+  "census": {
+    "passed": true,
+    "exitCode": 0,
+    "expected": 2,
+    "count": 2,
+    "errors": 0,
+    "tests": [
+      {
+        "title": "workshop thirty measured UI edits and durable Saves preserve active draft and exact fixture",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "library thirty measured UI edits and durable Saves preserve active draft and exact fixture",
+        "status": "expected",
+        "attempts": [
+          {
+            "status": "passed",
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "details": [
+    {
+      "kind": "performance-summary.json",
+      "privateSourceSha256": "d7ee560c39da693260a7fc8d97aab541b7fa2dfffcca21c0408f84098cd94146",
+      "data": {
+        "application": "library",
+        "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+        "reference": {
+          "node": "v24.22.1",
+          "browser": "156.0.8078.4",
+          "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
+          "cores": 12,
+          "totalMemory": 67299139584,
+          "platform": "linux",
+          "release": "7.0.0-42-generic",
+          "load": "Recorded for every sample; sequential workers=1, no other owned pipeline"
+        },
+        "dataset": {
+          "tables": 5,
+          "rows": {
+            "authors": 3,
+            "books": 3,
+            "book_authors": 3,
+            "copies": 3,
+            "loans": 2
+          }
+        },
+        "method": "feedback: fill through visible tree; Save: visible acknowledgement plus exact durable title; receipt: drafting tab sees revision; no dependency/build timing included",
+        "samples": [
+          {
+            "sample": 1,
+            "feedbackMs": 18.00148099999933,
+            "saveMs": 185.2660109999997,
+            "receiptMs": 997.6504229999991,
+            "load": [
+              2.29,
+              2.95,
+              3.11
+            ]
+          },
+          {
+            "sample": 2,
+            "feedbackMs": 14.052730000010342,
+            "saveMs": 182.37122600000293,
+            "receiptMs": 1487.3508750000037,
+            "load": [
+              2.29,
+              2.95,
+              3.11
+            ]
+          },
+          {
+            "sample": 3,
+            "feedbackMs": 11.477503000001889,
+            "saveMs": 155.65010800000164,
+            "receiptMs": 1456.1254190000036,
+            "load": [
+              2.29,
+              2.95,
+              3.11
+            ]
+          },
+          {
+            "sample": 4,
+            "feedbackMs": 13.50965300000098,
+            "saveMs": 145.52498800000467,
+            "receiptMs": 1445.1070130000007,
+            "load": [
+              2.19,
+              2.92,
+              3.1
+            ]
+          },
+          {
+            "sample": 5,
+            "feedbackMs": 13.487022999994224,
+            "saveMs": 145.85218699999677,
+            "receiptMs": 1450.5715259999997,
+            "load": [
+              2.19,
+              2.92,
+              3.1
+            ]
+          },
+          {
+            "sample": 6,
+            "feedbackMs": 13.199504000003799,
+            "saveMs": 161.42872900000657,
+            "receiptMs": 1471.3431330000021,
+            "load": [
+              2.19,
+              2.92,
+              3.1
+            ]
+          },
+          {
+            "sample": 7,
+            "feedbackMs": 14.767076999996789,
+            "saveMs": 149.29103900000337,
+            "receiptMs": 1448.2389660000044,
+            "load": [
+              2.01,
+              2.87,
+              3.08
+            ]
+          },
+          {
+            "sample": 8,
+            "feedbackMs": 13.032545000009122,
+            "saveMs": 148.82174200000009,
+            "receiptMs": 1448.9472229999956,
+            "load": [
+              2.01,
+              2.87,
+              3.08
+            ]
+          },
+          {
+            "sample": 9,
+            "feedbackMs": 12.460898000004818,
+            "saveMs": 147.0619810000062,
+            "receiptMs": 1452.719333999994,
+            "load": [
+              2.01,
+              2.87,
+              3.08
+            ]
+          },
+          {
+            "sample": 10,
+            "feedbackMs": 13.594392999992124,
+            "saveMs": 158.86998199998925,
+            "receiptMs": 1467.837388,
+            "load": [
+              2.01,
+              2.87,
+              3.08
+            ]
+          },
+          {
+            "sample": 11,
+            "feedbackMs": 11.820692000008421,
+            "saveMs": 157.42358899999817,
+            "receiptMs": 1473.5853389999975,
+            "load": [
+              1.85,
+              2.82,
+              3.07
+            ]
+          },
+          {
+            "sample": 12,
+            "feedbackMs": 13.215255000002799,
+            "saveMs": 144.22521499999857,
+            "receiptMs": 1445.1736399999936,
+            "load": [
+              1.85,
+              2.82,
+              3.07
+            ]
+          },
+          {
+            "sample": 13,
+            "feedbackMs": 15.140344999992521,
+            "saveMs": 146.5699420000019,
+            "receiptMs": 1947.4905169999984,
+            "load": [
+              1.85,
+              2.82,
+              3.07
+            ]
+          },
+          {
+            "sample": 14,
+            "feedbackMs": 12.177659000008134,
+            "saveMs": 103.32054799998878,
+            "receiptMs": 1404.4821109999903,
+            "load": [
+              1.95,
+              2.82,
+              3.07
+            ]
+          },
+          {
+            "sample": 15,
+            "feedbackMs": 12.449267999996664,
+            "saveMs": 153.44571900001029,
+            "receiptMs": 1453.6460680000018,
+            "load": [
+              1.95,
+              2.82,
+              3.07
+            ]
+          },
+          {
+            "sample": 16,
+            "feedbackMs": 13.560682000010274,
+            "saveMs": 176.97697200000403,
+            "receiptMs": 1478.8801919999823,
+            "load": [
+              1.95,
+              2.82,
+              3.07
+            ]
+          },
+          {
+            "sample": 17,
+            "feedbackMs": 12.60874799999874,
+            "saveMs": 151.87985600001412,
+            "receiptMs": 1451.5867260000086,
+            "load": [
+              1.79,
+              2.78,
+              3.05
+            ]
+          },
+          {
+            "sample": 18,
+            "feedbackMs": 11.759262000006856,
+            "saveMs": 143.79539600000135,
+            "receiptMs": 1447.3964369999885,
+            "load": [
+              1.79,
+              2.78,
+              3.05
+            ]
+          },
+          {
+            "sample": 19,
+            "feedbackMs": 17.901470999990124,
+            "saveMs": 164.25544400000945,
+            "receiptMs": 1467.0502789999882,
+            "load": [
+              1.79,
+              2.78,
+              3.05
+            ]
+          },
+          {
+            "sample": 20,
+            "feedbackMs": 11.844681000016863,
+            "saveMs": 151.6804370000027,
+            "receiptMs": 1453.151417999994,
+            "load": [
+              1.79,
+              2.78,
+              3.05
+            ]
+          },
+          {
+            "sample": 21,
+            "feedbackMs": 11.957660999993095,
+            "saveMs": 150.3712130000058,
+            "receiptMs": 1451.5446850000008,
+            "load": [
+              1.97,
+              2.8,
+              3.06
+            ]
+          },
+          {
+            "sample": 22,
+            "feedbackMs": 12.38317799998913,
+            "saveMs": 141.05608999999822,
+            "receiptMs": 1444.484460000007,
+            "load": [
+              1.97,
+              2.8,
+              3.06
+            ]
+          },
+          {
+            "sample": 23,
+            "feedbackMs": 11.453892999998061,
+            "saveMs": 150.78538200000185,
+            "receiptMs": 1456.8690080000088,
+            "load": [
+              1.97,
+              2.8,
+              3.06
+            ]
+          },
+          {
+            "sample": 24,
+            "feedbackMs": 13.12397499999497,
+            "saveMs": 161.81638599999133,
+            "receiptMs": 1460.4181000000099,
+            "load": [
+              2.05,
+              2.8,
+              3.06
+            ]
+          },
+          {
+            "sample": 25,
+            "feedbackMs": 13.640283000015188,
+            "saveMs": 142.9662299999909,
+            "receiptMs": 1442.0406209999928,
+            "load": [
+              2.05,
+              2.8,
+              3.06
+            ]
+          },
+          {
+            "sample": 26,
+            "feedbackMs": 11.996871000010287,
+            "saveMs": 151.41044800000964,
+            "receiptMs": 1453.469563999999,
+            "load": [
+              2.05,
+              2.8,
+              3.06
+            ]
+          },
+          {
+            "sample": 27,
+            "feedbackMs": 11.241223999997601,
+            "saveMs": 139.0878789999988,
+            "receiptMs": 1443.4514829999825,
+            "load": [
+              2.37,
+              2.85,
+              3.07
+            ]
+          },
+          {
+            "sample": 28,
+            "feedbackMs": 12.904685999994399,
+            "saveMs": 162.98334999999497,
+            "receiptMs": 1466.0702999999921,
+            "load": [
+              2.37,
+              2.85,
+              3.07
+            ]
+          },
+          {
+            "sample": 29,
+            "feedbackMs": 12.05647000001045,
+            "saveMs": 145.90476599999238,
+            "receiptMs": 1449.516242999991,
+            "load": [
+              2.37,
+              2.85,
+              3.07
+            ]
+          },
+          {
+            "sample": 30,
+            "feedbackMs": 12.157700000010664,
+            "saveMs": 141.73313599999528,
+            "receiptMs": 1942.829551999981,
+            "load": [
+              2.18,
+              2.81,
+              3.06
+            ]
+          }
+        ],
+        "p95FeedbackMs": 17.901470999990124,
+        "p95SaveMs": 182.37122600000293,
+        "thresholds": {
+          "feedbackMs": 2000,
+          "validSaveMs": 5000
+        },
+        "preservation": {
+          "text": true,
+          "selection": true,
+          "focus": true,
+          "ownership": true,
+          "singleControl": true,
+          "rowsHash": "3e0c698737e8cf073eb92efa96d9b95087c3853db6077ab195d61f828215f45f",
+          "modelExceptIntentionalUnrelatedTitle": true,
+          "authoredHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "authoredFileCount": 0
+        },
+        "zeroRetries": true
+      }
+    },
+    {
+      "kind": "performance-summary.json",
+      "privateSourceSha256": "8361c95c6d456f46ec466fabd99aa717028f1717442b207ac23a2994a243d818",
+      "data": {
+        "application": "workshop",
+        "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+        "reference": {
+          "node": "v24.22.1",
+          "browser": "156.0.8078.4",
+          "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
+          "cores": 12,
+          "totalMemory": 67299139584,
+          "platform": "linux",
+          "release": "7.0.0-42-generic",
+          "load": "Recorded for every sample; sequential workers=1, no other owned pipeline"
+        },
+        "dataset": {
+          "tables": 2,
+          "rows": {
+            "workshops": 2,
+            "sessions": 3
+          }
+        },
+        "method": "feedback: fill through visible tree; Save: visible acknowledgement plus exact durable title; receipt: drafting tab sees revision; no dependency/build timing included",
+        "samples": [
+          {
+            "sample": 1,
+            "feedbackMs": 12.255169000000024,
+            "saveMs": 81.76581599999918,
+            "receiptMs": 1883.5328799999988,
+            "load": [
+              3.17,
+              3.37,
+              3.26
+            ]
+          },
+          {
+            "sample": 2,
+            "feedbackMs": 9.982280000000173,
+            "saveMs": 75.51791700000103,
+            "receiptMs": 1372.3653169999998,
+            "load": [
+              3.17,
+              3.37,
+              3.26
+            ]
+          },
+          {
+            "sample": 3,
+            "feedbackMs": 9.884461000001465,
+            "saveMs": 71.94203500000003,
+            "receiptMs": 1387.1732929999998,
+            "load": [
+              3.17,
+              3.37,
+              3.26
+            ]
+          },
+          {
+            "sample": 4,
+            "feedbackMs": 9.430874000001495,
+            "saveMs": 84.4199520000002,
+            "receiptMs": 1379.3566009999995,
+            "load": [
+              3.17,
+              3.37,
+              3.26
+            ]
+          },
+          {
+            "sample": 5,
+            "feedbackMs": 9.44658299999719,
+            "saveMs": 113.49592899999698,
+            "receiptMs": 1911.1012120000014,
+            "load": [
+              3,
+              3.33,
+              3.25
+            ]
+          },
+          {
+            "sample": 6,
+            "feedbackMs": 9.59251299999596,
+            "saveMs": 80.42249300000549,
+            "receiptMs": 1380.3134060000011,
+            "load": [
+              3,
+              3.33,
+              3.25
+            ]
+          },
+          {
+            "sample": 7,
+            "feedbackMs": 11.427833000001556,
+            "saveMs": 121.18925100000342,
+            "receiptMs": 1421.9371600000013,
+            "load": [
+              3,
+              3.33,
+              3.25
+            ]
+          },
+          {
+            "sample": 8,
+            "feedbackMs": 10.44853900000453,
+            "saveMs": 74.37744199999725,
+            "receiptMs": 1377.9033659999986,
+            "load": [
+              2.84,
+              3.29,
+              3.24
+            ]
+          },
+          {
+            "sample": 9,
+            "feedbackMs": 9.465564000005543,
+            "saveMs": 80.09238400000322,
+            "receiptMs": 1378.3715440000014,
+            "load": [
+              2.84,
+              3.29,
+              3.24
+            ]
+          },
+          {
+            "sample": 10,
+            "feedbackMs": 9.974269999998796,
+            "saveMs": 102.11508499999763,
+            "receiptMs": 1900.7580610000005,
+            "load": [
+              2.84,
+              3.29,
+              3.24
+            ]
+          },
+          {
+            "sample": 11,
+            "feedbackMs": 10.85984599999938,
+            "saveMs": 86.12520400000358,
+            "receiptMs": 1380.7008920000007,
+            "load": [
+              2.69,
+              3.25,
+              3.22
+            ]
+          },
+          {
+            "sample": 12,
+            "feedbackMs": 10.439417999994475,
+            "saveMs": 101.99143600000389,
+            "receiptMs": 1397.033801000005,
+            "load": [
+              2.69,
+              3.25,
+              3.22
+            ]
+          },
+          {
+            "sample": 13,
+            "feedbackMs": 11.055445999998483,
+            "saveMs": 74.36923199999728,
+            "receiptMs": 1370.601069999997,
+            "load": [
+              2.69,
+              3.25,
+              3.22
+            ]
+          },
+          {
+            "sample": 14,
+            "feedbackMs": 8.871836000005715,
+            "saveMs": 110.65402300000278,
+            "receiptMs": 1404.6663719999997,
+            "load": [
+              2.69,
+              3.25,
+              3.22
+            ]
+          },
+          {
+            "sample": 15,
+            "feedbackMs": 9.652162000005774,
+            "saveMs": 84.10226400000101,
+            "receiptMs": 1382.9206889999987,
+            "load": [
+              2.55,
+              3.22,
+              3.21
+            ]
+          },
+          {
+            "sample": 16,
+            "feedbackMs": 11.47822399999859,
+            "saveMs": 82.5903510000062,
+            "receiptMs": 1881.4219620000003,
+            "load": [
+              2.55,
+              3.22,
+              3.21
+            ]
+          },
+          {
+            "sample": 17,
+            "feedbackMs": 8.627887000002374,
+            "saveMs": 102.62507300000289,
+            "receiptMs": 1397.0305290000033,
+            "load": [
+              2.55,
+              3.22,
+              3.21
+            ]
+          },
+          {
+            "sample": 18,
+            "feedbackMs": 9.045624999998836,
+            "saveMs": 76.46038200000476,
+            "receiptMs": 1373.6761840000036,
+            "load": [
+              2.35,
+              3.16,
+              3.19
+            ]
+          },
+          {
+            "sample": 19,
+            "feedbackMs": 9.443122999997286,
+            "saveMs": 103.44074900000123,
+            "receiptMs": 1398.7935789999974,
+            "load": [
+              2.35,
+              3.16,
+              3.19
+            ]
+          },
+          {
+            "sample": 20,
+            "feedbackMs": 9.625621999999566,
+            "saveMs": 73.25056799999584,
+            "receiptMs": 1381.1235659999948,
+            "load": [
+              2.35,
+              3.16,
+              3.19
+            ]
+          },
+          {
+            "sample": 21,
+            "feedbackMs": 10.307208999998693,
+            "saveMs": 108.79152199999953,
+            "receiptMs": 1904.8829039999982,
+            "load": [
+              2.24,
+              3.13,
+              3.18
+            ]
+          },
+          {
+            "sample": 22,
+            "feedbackMs": 8.777116000004753,
+            "saveMs": 104.45186299999477,
+            "receiptMs": 1397.4269849999982,
+            "load": [
+              2.24,
+              3.13,
+              3.18
+            ]
+          },
+          {
+            "sample": 23,
+            "feedbackMs": 8.907286000001477,
+            "saveMs": 74.61967100000038,
+            "receiptMs": 1369.289303000005,
+            "load": [
+              2.24,
+              3.13,
+              3.18
+            ]
+          },
+          {
+            "sample": 24,
+            "feedbackMs": 10.423888000004808,
+            "saveMs": 75.81259500000306,
+            "receiptMs": 1367.9065800000026,
+            "load": [
+              2.24,
+              3.13,
+              3.18
+            ]
+          },
+          {
+            "sample": 25,
+            "feedbackMs": 9.63436200000433,
+            "saveMs": 109.69366700000683,
+            "receiptMs": 1403.9061110000039,
+            "load": [
+              2.06,
+              3.08,
+              3.16
+            ]
+          },
+          {
+            "sample": 26,
+            "feedbackMs": 8.639277999995102,
+            "saveMs": 101.74626600000192,
+            "receiptMs": 1899.1868690000047,
+            "load": [
+              2.06,
+              3.08,
+              3.16
+            ]
+          },
+          {
+            "sample": 27,
+            "feedbackMs": 8.796436000004178,
+            "saveMs": 103.53312799999549,
+            "receiptMs": 1396.4091380000027,
+            "load": [
+              2.06,
+              3.08,
+              3.16
+            ]
+          },
+          {
+            "sample": 28,
+            "feedbackMs": 9.93224100000225,
+            "saveMs": 75.47442600000068,
+            "receiptMs": 1372.0051870000025,
+            "load": [
+              1.98,
+              3.04,
+              3.15
+            ]
+          },
+          {
+            "sample": 29,
+            "feedbackMs": 9.24115499999607,
+            "saveMs": 75.43667599999753,
+            "receiptMs": 1370.5339049999893,
+            "load": [
+              1.98,
+              3.04,
+              3.15
+            ]
+          },
+          {
+            "sample": 30,
+            "feedbackMs": 10.566057999996701,
+            "saveMs": 100.3220430000074,
+            "receiptMs": 1392.6767249999975,
+            "load": [
+              1.98,
+              3.04,
+              3.15
+            ]
+          }
+        ],
+        "p95FeedbackMs": 11.47822399999859,
+        "p95SaveMs": 113.49592899999698,
+        "thresholds": {
+          "feedbackMs": 2000,
+          "validSaveMs": 5000
+        },
+        "preservation": {
+          "text": true,
+          "selection": true,
+          "focus": true,
+          "ownership": true,
+          "singleControl": true,
+          "rowsHash": "98673825044bf3fedec7e49e0a4daca1663a7363a924464f41cee73af4309a5c",
+          "modelExceptIntentionalUnrelatedTitle": true,
+          "authoredHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "authoredFileCount": 0
+        },
+        "zeroRetries": true
+      }
+    }
+  ]
+}

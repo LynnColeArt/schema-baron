@@ -1,0 +1,12 @@
+
+> schema-baron@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-w
+
+
+ Test Files  69 passed (69)
+      Tests  457 passed (457)
+   Start at  09:12:48
+   Duration  110.76s (tests 97%, import 2%, transform 1%)

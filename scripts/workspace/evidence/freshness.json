@@ -1,0 +1,192 @@
+{
+  "clientDate": "2026-10-26",
+  "window": "published in seven days preceding 2026-10-27T00:00:00Z",
+  "packages": [
+    {
+      "name": "@modelcontextprotocol/sdk",
+      "version": "1.32.2",
+      "published": "2026-10-23T18:11:38.362Z"
+    },
+    {
+      "name": "@next/env",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:28:24.925Z"
+    },
+    {
+      "name": "@next/swc-darwin-arm64",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:28:27.602Z"
+    },
+    {
+      "name": "@next/swc-darwin-x64",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:28:30.354Z"
+    },
+    {
+      "name": "@next/swc-linux-arm64-gnu",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:27:43.529Z"
+    },
+    {
+      "name": "@next/swc-linux-arm64-musl",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:27:17.999Z"
+    },
+    {
+      "name": "@next/swc-linux-x64-gnu",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:28:21.884Z"
+    },
+    {
+      "name": "@next/swc-linux-x64-musl",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:37:40.117Z"
+    },
+    {
+      "name": "@next/swc-win32-arm64-msvc",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:28:37.181Z"
+    },
+    {
+      "name": "@next/swc-win32-x64-msvc",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:28:17.836Z"
+    },
+    {
+      "name": "@rolldown/binding-android-arm-eabi",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:00:19.768Z"
+    },
+    {
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:06:13.914Z"
+    },
+    {
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.2.15",
+      "published": "2026-10-21T12:59:22.386Z"
+    },
+    {
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:01:06.575Z"
+    },
+    {
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:01:42.301Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:00:09.322Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.2.15",
+      "published": "2026-10-21T12:59:38.024Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.2.15",
+      "published": "2026-10-21T12:59:52.371Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:01:04.242Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:05:45.436Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:02:05.003Z"
+    },
+    {
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:06:47.340Z"
+    },
+    {
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:00:55.814Z"
+    },
+    {
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:01:15.215Z"
+    },
+    {
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:01:16.798Z"
+    },
+    {
+      "name": "baseline-browser-mapping",
+      "version": "2.11.33",
+      "published": "2026-10-25T17:29:32.531Z"
+    },
+    {
+      "name": "body-parser",
+      "version": "2.4.0",
+      "published": "2026-10-22T11:39:38.614Z"
+    },
+    {
+      "name": "caniuse-lite",
+      "version": "1.0.30001819",
+      "published": "2026-10-22T08:00:40.232Z"
+    },
+    {
+      "name": "hono",
+      "version": "4.13.14",
+      "published": "2026-10-25T07:19:30.732Z"
+    },
+    {
+      "name": "ip-address",
+      "version": "10.7.5",
+      "published": "2026-10-25T01:32:24.393Z"
+    },
+    {
+      "name": "jose",
+      "version": "6.2.13",
+      "published": "2026-10-20T06:21:48.616Z"
+    },
+    {
+      "name": "magic-string",
+      "version": "1.4.4",
+      "published": "2026-10-26T02:33:38.463Z"
+    },
+    {
+      "name": "next",
+      "version": "16.4.3",
+      "published": "2026-10-23T13:40:24.922Z"
+    },
+    {
+      "name": "on-finished",
+      "version": "2.4.2",
+      "published": "2026-10-22T13:21:19.221Z"
+    },
+    {
+      "name": "postcss",
+      "version": "8.5.32",
+      "published": "2026-10-26T20:36:42.832Z"
+    },
+    {
+      "name": "rolldown",
+      "version": "1.2.15",
+      "published": "2026-10-21T13:10:11.254Z"
+    },
+    {
+      "name": "vite",
+      "version": "8.3.5",
+      "published": "2026-10-21T06:38:54.907Z"
+    }
+  ],
+  "disposition": "accepted for locked bootstrap: exact official registry artifacts, npm signature audit succeeded, zero advisory findings and bounded known-incident overlap; all lifecycle scripts denied. Same-day magic-string/postcss and recent Next/MCP patches receive explicit acceptance, not a quiet cooldown bypass. Freshness is a risk signal, not evidence of compromise or safety. Keep lockfile unchanged; repeat review before additions/upgrades. No arbitrary minimum-age policy was adopted."
+}

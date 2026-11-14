@@ -1,0 +1,73 @@
+/** Reproduce a release from tracked source in a new private directory. Linux x64. */
+import { spawn } from 'node:child_process';
+import { mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { resolve, join, dirname, isAbsolute } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+const source = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const destination = resolve(process.argv[2] ?? '');
+if (!process.argv[2] || !isAbsolute(process.argv[2]) || destination.startsWith(source + '/') || destination === source || existsSync(destination)) throw Error('Supply a new absolute directory outside the checkout; existing directories are refused.');
+mkdirSync(destination, {mode:0o700});
+const logRoot=join(destination,'logs'); mkdirSync(logRoot);
+let environment={...process.env,NEXT_TELEMETRY_DISABLED:'1'};
+const observations=[];
+async function run(name, command, args, cwd=destination, env=environment) {
+  const child=spawn(command,args,{cwd,env,stdio:['ignore','pipe','pipe']});
+  let log='';child.stdout.on('data',c=>{log+=c;});child.stderr.on('data',c=>{log+=c;});
+  const code=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('exit',resolve);});
+  writeFileSync(join(logRoot,name+'.log'),log);
+  observations.push({name,command,args,code});writeFileSync(join(logRoot,'commands.json'),JSON.stringify(observations,null,2));
+  if(code!==0)throw Error(name+' failed; inspect '+join(logRoot,name+'.log'));
+  console.log(name+' passed');return log;
+}
+const sourceRevision=(await run('source-revision','git',['rev-parse','HEAD'],source)).trim();
+await run('archive','git',['archive','--format=tar','-o',join(destination,'source.tar'),sourceRevision],source);
+const checkout=join(destination,'source');mkdirSync(checkout);
+await run('extract-source','tar',['-xf',join(destination,'source.tar'),'-C',checkout]);
+await run('source-git-init','git',['init','-q'],checkout);
+await run('source-git-add','git',['add','.'],checkout);
+await run('source-git-commit','git',['-c','user.name=Clean install verifier','-c','user.email=clean-install@localhost','-c','commit.gpgsign=false','commit','-qm','Tracked source release verification'],checkout);
+// Initial acquisition is online and uses the official archive and recorded SHA256.
+const runtime=JSON.parse(readFileSync(join(checkout,'scripts/workspace/evidence/runtime.json'),'utf8'));
+const response=await fetch('https://nodejs.org/dist/v'+runtime.node+'/'+runtime.archive);
+if(!response.ok)throw Error('Runtime acquisition failed');
+const archive=Buffer.from(await response.arrayBuffer());
+if(createHash('sha256').update(archive).digest('hex')!==runtime.expectedSha256)throw Error('Runtime checksum mismatch');
+writeFileSync(join(destination,'node.tar.xz'),archive);
+await run('extract-runtime','tar',['-xf',join(destination,'node.tar.xz'),'-C',destination]);
+const runtimeRoot=join(destination,'node-v'+runtime.node+'-linux-x64');
+const node=join(runtimeRoot,'bin/node'),npm=join(runtimeRoot,'lib/node_modules/npm/bin/npm-cli.js');
+const home=join(destination,'home'),cache=join(home,'.npm');mkdirSync(home);mkdirSync(cache);
+environment={HOME:home,PATH:join(runtimeRoot,'bin')+':/usr/bin:/bin',LANG:'C.UTF-8',NEXT_TELEMETRY_DISABLED:'1',npm_config_cache:cache,npm_config_userconfig:join(home,'.npmrc'),npm_config_ignore_scripts:'true',PLAYWRIGHT_BROWSERS_PATH:join(destination,'browsers'),SCHEMA_BARON_EQUIPMENT_STUDY:join(destination,'equipment.json'),SCHEMA_BARON_PUBLICATION_STUDY:join(destination,'publication.json')};
+writeFileSync(environment.npm_config_userconfig,'');
+await run('npm-pin',node,[npm,'install','--global','npm@11.19.1','--ignore-scripts','--prefix',runtimeRoot],checkout);
+await run('runtime',node,['--version'],checkout);
+await run('npm',node,[npm,'--version'],checkout);
+await run('cold-ci',node,[npm,'ci','--ignore-scripts'],checkout);
+const outputAcquisition=join(destination,'output-dependencies');mkdirSync(outputAcquisition);
+const outputLock=JSON.parse(readFileSync(join(checkout,'packages/generator/src/templates/base/package-lock.template'),'utf8'));
+writeFileSync(join(outputAcquisition,'package-lock.json'),JSON.stringify(outputLock));
+writeFileSync(join(outputAcquisition,'package.json'),JSON.stringify({...outputLock.packages[''],private:true}));
+await run('cold-output-dependencies',node,[npm,'ci','--ignore-scripts'],outputAcquisition);
+await run('native',node,[npm,'run','native:verify'],checkout);
+await run('typecheck',node,[npm,'run','typecheck'],checkout);
+await run('build',node,[npm,'run','build'],checkout);
+await run('browser-acquisition',node,['node_modules/@playwright/test/cli.js','install','chromium'],checkout);
+// Observe actual network calls after acquisition; offline npm is independently explicit.
+const offlinePrefix=['-Urn','/bin/sh','-c','/usr/sbin/ip link set lo up && exec "$@"','offline'];
+await run('disconnected-network-probe','unshare',[...offlinePrefix,'/bin/sh','-c','cat /proc/net/route; if curl --noproxy \"*\" --max-time 3 --fail https://registry.npmjs.org/; then exit 1; else echo external-network-unreachable; fi'],checkout);
+const trace=async(name,args)=>run(name,'unshare',[...offlinePrefix,'strace','-f','-e','trace=connect','-o',join(logRoot,name+'-connect.trace'),node,...args],checkout);
+await trace('warm-offline-ci',[npm,'ci','--ignore-scripts','--offline']);
+await trace('equipment',['node_modules/@playwright/test/cli.js','test','tests/e2e/equipment','--workers=1','--retries=0','--output='+join(destination,'equipment-evidence')]);
+await trace('publication',['node_modules/@playwright/test/cli.js','test','tests/e2e/publication/workflow.spec.ts','--workers=1','--retries=0','--output='+join(destination,'publication-evidence')]);
+const publicationTest=readdirSync(join(destination,'publication-evidence')).find(name=>existsSync(join(destination,'publication-evidence',name,'expected-authored.json')));
+if(!publicationTest)throw Error('Fresh Publication evidence missing');
+environment.SCHEMA_BARON_PUBLICATION_EVIDENCE=join(destination,'publication-evidence',publicationTest);
+await trace('publication-portable',['tests/e2e/publication/portable.mjs']);
+for(const name of ['equipment','publication']){const study=JSON.parse(readFileSync(join(destination,name+'.json'),'utf8'));
+ await trace(name+'-provision',['--conditions=react-server','tests/integration/clean-install/provision.mjs',join(study.root,'outputs/portable/app'),join(study.root,'outputs/portable/data/application.sqlite'),join(logRoot,name+'-provision.json')]);}
+await run('behavior',node,['node_modules/vitest/vitest.mjs','run','--maxWorkers=2'],checkout);
+await run('usability',node,['node_modules/@playwright/test/cli.js','test','tests/e2e/usability','--workers=1','--retries=0','--output='+join(destination,'usability-evidence')],checkout);
+await run('dependency-check',node,[npm,'run','check:dependencies'],checkout);
+writeFileSync(join(logRoot,'result.json'),JSON.stringify({completed:true,sourceRevision,runtimeArchiveSha256:runtime.expectedSha256,coldAcquisition:'online',warmInstall:'npm ci --offline',networkEvidence:'unshare -Urn with loopback only; failed external probe and connect syscall traces retained',source:checkout,home,cache,environmentKeys:Object.keys(environment)},null,2));
+console.log('Release proof retained at '+destination);

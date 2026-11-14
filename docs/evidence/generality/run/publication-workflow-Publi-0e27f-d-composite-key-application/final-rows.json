@@ -1,0 +1,47 @@
+{
+  "authors": [
+    {
+      "id": 1,
+      "pen_name": "Octavia",
+      "email": "octavia@example.test"
+    },
+    {
+      "id": 2,
+      "pen_name": "Silent",
+      "email": "silent@example.test"
+    }
+  ],
+  "publications": [
+    {
+      "id": 1,
+      "author_id": 1,
+      "title": "Dawn studies",
+      "royalty": "0.10",
+      "editor_note": null
+    },
+    {
+      "id": 2,
+      "author_id": 1,
+      "title": "Evening studies",
+      "royalty": "1.25",
+      "editor_note": null
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "caption": "Fiction"
+    },
+    {
+      "id": 2,
+      "caption": "Essays"
+    }
+  ],
+  "memberships": [
+    {
+      "publication_id": 1,
+      "category_id": 1,
+      "annotation": "Primary shelf"
+    }
+  ]
+}

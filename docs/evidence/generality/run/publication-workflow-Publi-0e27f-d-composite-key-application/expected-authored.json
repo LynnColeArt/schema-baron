@@ -1,0 +1,3 @@
+{
+  "authored/catalog-validation.ts": "// Authored validator interface v1. Preserved byte-for-byte by regeneration.\nimport type { ValidatorV1 } from '../server/extension-contracts';\nexport const contractVersion = 1 as const;\nexport const validate: ValidatorV1 = (context) => context.values[\"f11ff507-51e8-41ca-801b-e7b81f10c8b2\"] === 'forbidden' ? {[\"f11ff507-51e8-41ca-801b-e7b81f10c8b2\"]:'Catalog annotation is reserved.'} : ({});\n\n// Publication Catalog authored preservation marker.\n\n// Regeneration cycle 1.\n\n// Regeneration cycle 2.\n"
+}

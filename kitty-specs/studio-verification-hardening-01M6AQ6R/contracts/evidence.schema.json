@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Studio acceptance observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "case_id",
+    "requirements",
+    "application",
+    "mode",
+    "revision",
+    "status",
+    "expected",
+    "actual",
+    "evidence"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^AC-[0-9]{3}$"
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(FR|NFR|C)-[0-9]{3}$"
+      },
+      "uniqueItems": true
+    },
+    "application": {
+      "enum": [
+        "workshop",
+        "library",
+        "both"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "ui_journey",
+        "parity",
+        "fault",
+        "review"
+      ]
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "status": {
+      "enum": [
+        "not_run",
+        "passed",
+        "failed",
+        "blocked",
+        "skipped",
+        "unverified"
+      ]
+    },
+    "expected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actual": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "defect_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retests_observation": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "passed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "actual": {
+            "minLength": 1
+          },
+          "evidence": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,792 @@
+{
+  "schema": "acceptance-candidate/v1",
+  "author": "codex-wp08",
+  "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+  "proofCommit": "Commit containing this immutable proof is recorded separately in runs.md; source revision above remains authoritative.",
+  "runId": "schema-baron-final-Or4wLn",
+  "checks": [
+    {
+      "name": "install",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "started": "2026-11-02T17:26:35.351Z",
+      "finished": "2026-11-02T17:26:40.876Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/install.json",
+        "sha256": "7112d2ce6fcc4675d1b4b9fe4e0c59daea20a02da7b3e8c38fd896e5401dd851"
+      }
+    },
+    {
+      "name": "native-acquisition",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "native:verify"
+      ],
+      "started": "2026-11-02T17:26:40.883Z",
+      "finished": "2026-11-02T17:26:41.064Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/native-acquisition.json",
+        "sha256": "98097b25070bc9d99c497bd4d5d85cd47712dc78bfc9300215bbedd3a6434f06"
+      }
+    },
+    {
+      "name": "output-acquisition",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "node",
+        "scripts/release/acquire-output.mjs"
+      ],
+      "started": "2026-11-02T17:26:41.071Z",
+      "finished": "2026-11-02T17:26:44.759Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/output-acquisition.json",
+        "sha256": "cb7c662445fac571385ebc6a80405412de78790d8d4a67f03c76c5ed26490476"
+      }
+    },
+    {
+      "name": "chromium-acquisition",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "exec",
+        "playwright",
+        "install",
+        "chromium"
+      ],
+      "started": "2026-11-02T17:26:44.766Z",
+      "finished": "2026-11-02T17:26:45.355Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/chromium-acquisition.json",
+        "sha256": "9c5b641ca259f452156b8c3529632565d793c9a66c9df0cc5db43371b57c118c"
+      }
+    },
+    {
+      "name": "preconsumer-build",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "started": "2026-11-02T17:26:45.363Z",
+      "finished": "2026-11-02T17:27:03.933Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/preconsumer-build.json",
+        "sha256": "9bfeb83dbe964246b01f3e992c39e346e170f75e7c6241466b1098261a2bb5c1"
+      }
+    },
+    {
+      "name": "check-native-verify",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "native:verify"
+      ],
+      "started": "2026-11-02T17:27:03.940Z",
+      "finished": "2026-11-02T17:27:04.112Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-native-verify.json",
+        "sha256": "006976ad3a2b22804064b5e2125762250f3334ce13ac206c0e55b2ebd8451151"
+      }
+    },
+    {
+      "name": "check-native-smoke",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "native:smoke"
+      ],
+      "started": "2026-11-02T17:27:04.119Z",
+      "finished": "2026-11-02T17:27:04.248Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-native-smoke.json",
+        "sha256": "4e2009082f2ce2fab605e0a926b95027f1ab0ba8f80fe0026d97738a852800ce"
+      }
+    },
+    {
+      "name": "check-typecheck",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "started": "2026-11-02T17:27:04.255Z",
+      "finished": "2026-11-02T17:27:07.939Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-typecheck.json",
+        "sha256": "877997055ab2f809d04debf5d53104db1da11422feeb402aa0045f36aac8c5ec"
+      }
+    },
+    {
+      "name": "check-lint",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "started": "2026-11-02T17:27:07.948Z",
+      "finished": "2026-11-02T17:27:08.091Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-lint.json",
+        "sha256": "09745d5ec206847a7fc9df1aa1579ef3eabc50cb09f0dbbacb3936d7f8b204fb"
+      }
+    },
+    {
+      "name": "check-build",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "started": "2026-11-02T17:27:08.100Z",
+      "finished": "2026-11-02T17:27:26.843Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-build.json",
+        "sha256": "12904940aab1634070d346c79f2e70885766de3e3474f3c5ae573019dfd57f6d"
+      }
+    },
+    {
+      "name": "check-check-credentials",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "check:credentials"
+      ],
+      "started": "2026-11-02T17:27:26.851Z",
+      "finished": "2026-11-02T17:27:27.816Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-check-credentials.json",
+        "sha256": "9a97fc6e31ecc4d76c4f5539b8912bce2477314eba40e5eebf4e3e2b1c6dbd37"
+      }
+    },
+    {
+      "name": "check-check-dependencies",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "run",
+        "check:dependencies"
+      ],
+      "started": "2026-11-02T17:27:27.824Z",
+      "finished": "2026-11-02T17:27:27.972Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-check-dependencies.json",
+        "sha256": "6efc9edf65503698e3e3d8026fd6c5ccd20d9ad34db795475149d78f0b6f150b"
+      }
+    },
+    {
+      "name": "unit-integration",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--reporter=json",
+        "--outputFile=<private-run>/unit-results.json"
+      ],
+      "started": "2026-11-02T17:27:27.979Z",
+      "finished": "2026-11-02T17:30:43.090Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/unit-integration.json",
+        "sha256": "c8240bd2005979747a95a1bcd0034fa2e13c17f032125f82ca9d3f39a103c6a6"
+      }
+    },
+    {
+      "name": "check-harness-types",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--strict",
+        "--noUncheckedIndexedAccess",
+        "--exactOptionalPropertyTypes",
+        "--target",
+        "ES2023",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--noEmit",
+        "--skipLibCheck",
+        "--allowJs",
+        "tests/e2e/acceptance/performance.spec.ts",
+        "tests/e2e/equipment/workflow.spec.ts"
+      ],
+      "started": "2026-11-02T17:30:43.098Z",
+      "finished": "2026-11-02T17:30:43.474Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/check-harness-types.json",
+        "sha256": "94129d1ad9d8e0f4eb507cb95d6cee129e4083b10716f3b81217d061a2146b97"
+      }
+    },
+    {
+      "name": "foundation-report-tests",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "node",
+        "--test",
+        "scripts/acceptance/evidence.test.ts",
+        "scripts/acceptance/report.test.ts"
+      ],
+      "started": "2026-11-02T17:30:43.481Z",
+      "finished": "2026-11-02T17:30:44.001Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/foundation-report-tests.json",
+        "sha256": "4b880e359eec64d1d26e1cf877b8294630bb7d0dfeabaa00dfb36c7f6c8108d1"
+      }
+    },
+    {
+      "name": "audit",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "audit",
+        "--audit-level=low"
+      ],
+      "started": "2026-11-02T17:30:44.009Z",
+      "finished": "2026-11-02T17:30:44.504Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/audit.json",
+        "sha256": "9b3b8df4feef50f776c3101d69bf2b053e6140bc25c34c59237e83e1d472326d"
+      }
+    },
+    {
+      "name": "legacy-equipment",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "exec",
+        "playwright",
+        "test",
+        "tests/e2e/equipment",
+        "--",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-run>/legacy-equipment-output"
+      ],
+      "started": "2026-11-02T17:30:45.143Z",
+      "finished": "2026-11-02T17:32:32.321Z",
+      "exitCode": 0,
+      "signal": null,
+      "passed": true,
+      "mode": "ui_journey",
+      "census": {
+        "passed": true,
+        "exitCode": 0,
+        "expected": 1,
+        "count": 1,
+        "errors": 0,
+        "tests": [
+          {
+            "title": "Equipment Desk starts blank and authors schema and forms through supported controls",
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "retry": 0
+              }
+            ]
+          }
+        ]
+      },
+      "details": [],
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/legacy-equipment.json",
+        "sha256": "b6aedb27f45a0f63b7953efd90214f1f6772924145bccb3f8e68abe0f31b0d41"
+      }
+    },
+    {
+      "name": "legacy-publication",
+      "revision": "8a3001f58c0d18c5cf27b10ea9fcc3cc4ba5f904",
+      "command": [
+        "npm",
+        "exec",
+        "playwright",
+        "test",
+        "tests/e2e/publication/workflow.spec.ts",
+        "--",
+        "--workers=1",
+        "--retries=0",
+        "--reporter=line,json,junit",
+        "--output=<private-run>/legacy-publication-output"
+      ],
+      "started": "2026-11-02T17:32:33.311Z",
+      "finished": "2026-11-02T17:33:02.146Z",
+      "exitCode": 1,
+      "signal": null,
+      "passed": false,
+      "mode": "ui_journey",
+      "census": {
+        "passed": false,
+        "exitCode": 1,
+        "expected": 1,
+        "count": 1,
+        "errors": 0,
+        "tests": [
+          {
+            "title": "Publication Catalog visibly authors an unrelated composite-key application",
+            "status": "unexpected",
+            "attempts": [
+              {
+                "status": "failed",
+                "retry": 0
+              }
+            ]
+          }
+        ]
+      },
+      "details": [],
+      "evidence": {
+        "path": "docs/evidence/verification/schema-baron-final-Or4wLn/legacy-publication.json",
+        "sha256": "dda746084872cb0640e1e8d1812b59c1a7299ff0c03aee16c0e0fac3b5c67845"
+      }
+    }
+  ],
+  "cycles": [],
+  "cases": [
+    {
+      "case_id": "AC-001",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-002",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-003",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-004",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-005",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-006",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-007",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-008",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-009",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-010",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-011",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-012",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-013",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-014",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-015",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-016",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-017",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-018",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-019",
+      "status": "not_run"
+    },
+    {
+      "case_id": "AC-020",
+      "status": "not_run"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement": "FR-001",
+      "text": "A reviewer can trace every requirement and checklist case to a run, source revision, fixture, expected result, observed result and retained evidence; pending/skipped/failed never count as passed.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-002",
+      "text": "An author can create, configure, generate, run and reopen Workshop Planner through Studio from an empty workspace and a missing chosen folder.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-003",
+      "text": "An author can create Library Catalog through Studio and connect an existing-database variant without inspection/Cancel changing that database.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-004",
+      "text": "An author can create tables, scalar types, primary/foreign/unique keys in the reusable editor, revisit it later, review a safe schema change and observe only its declared effects.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-005",
+      "text": "The proposed pages, access and flow preview correspond to the completed editable Page → Form → Control objects; edits and flow/settings shortcuts reopen the correct project.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-006",
+      "text": "Names resolve to stable keys, parent links filter the correct children, and Add/login/Save/Cancel preserve typed parent context while preselecting only new-record fields.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-007",
+      "text": "Create/edit/delete support clear validation, uniqueness and related-record errors, confirmations naming the record, Cancel without writes and no partial rows after failed actions.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-008",
+      "text": "Public browsing remains public; protected pages and direct write handlers reject anonymous use; login/logout and validated return targets behave consistently across sessions/tabs.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-009",
+      "text": "Authors can build the declared joins, counts, exact totals, zero-child handling and runtime thresholds through the query/report UI, with independently checked results before and after data changes.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-010",
+      "text": "Two regenerations per application preserve all business rows, schema/query/report/access/navigation settings, and declared authored module bytes; source conflicts block safe promotion until explicitly resolved.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-011",
+      "text": "An author can inspect generated source and declare/edit one supported authored extension through Studio, observe its behavior, and retain it through regeneration.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-012",
+      "text": "A reviewer can install, build, test and run the generated/exported app with Studio stopped, explicit private configuration, intact data and visitor identity, and no embedded author capability.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-013",
+      "text": "Schema/query/page/control drafts survive the documented switch/reload recovery paths and unrelated revision notifications without silent value, focus, caret or project-ownership changes.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-014",
+      "text": "Stale revisions, duplicate requests, changed database identity, invalid paths/context, failed runtime starts and interrupted reviewed operations yield actionable status and recover without unrelated writes or false success.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-015",
+      "text": "A bounded MCP/direct-command smoke uses the same validation, revision, idempotency and authorization semantics as Studio; it cannot substitute for UI acceptance or bypass boundaries.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-016",
+      "text": "Both complete journeys run twice consecutively from fresh private workspaces without hidden repairs, retries masking failures, application-specific generator branches or manual test-data corrections.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "FR-017",
+      "text": "Each observed blocker is reproduced, fixed generically where appropriate, regression-tested and rerun; the final verdict lists passing requirements and any explicitly justified nonblocking deferrals.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "NFR-001",
+      "text": "Before/after comparisons show zero unintended changes to business rows, declared authored bytes and unrelated project/draft state after success, rejection and recovery cases.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "NFR-002",
+      "text": "Every anonymous direct-write and invalid-origin/return/path case in the checklist is rejected; retained public artifacts contain zero real secrets or private user-study data.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "NFR-003",
+      "text": "Both fresh complete journeys pass twice consecutively with zero retries and zero forced expected-failure conversions; any infrastructure failure is reported separately and rerun explicitly.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "NFR-004",
+      "text": "At the bounded fixture sizes (at most 200 rows/table and 12 tables/project), p95 local editing/navigation feedback is within 2 seconds over 30 interactions; valid Save completes within 5 seconds on the recorded reference machine, excluding external dependency acquisition and builds.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "NFR-005",
+      "text": "Across 30 unrelated-notification/view-switch interactions with an active draft, zero unintended text replacements, caret resets, lost edits, duplicate controls or wrong-project saves occur.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "NFR-006",
+      "text": "Every mandatory acceptance case and every FR/NFR/C has a disposition and source-linked evidence in the final report; no unresolved critical/high defect is present.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "C-001",
+      "text": "Retain the existing SQLite and TypeScript/Next.js target, supported Linux environment and pinned tooling; no framework, dependency or Spec Kitty upgrades are required by this mission.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "C-002",
+      "text": "PR #1 and existing Workshop Planner/other private studies are baselines; destructive testing uses fresh isolated copies, never the user's working studies.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "C-003",
+      "text": "Normal application definitions, schemas, queries, access, navigation and authored source are configured in Studio. Documented install/build/run/environment preparation and supplied raw existing-database fixtures are allowed; direct API/model edits cannot repair a UI journey and still count as its pass.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "C-004",
+      "text": "Repair issues needed for the declared checklist; keep unsupported features explicit. No new targets, hosted service, deployment, complete visual redesign, arbitrary control runtime, large-lookup browser or composite lookup widget is included.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "C-005",
+      "text": "Lifecycle scripts stay disabled; private configuration, databases, identity stores and unredacted browser traces stay outside tracked evidence; historical reports remain intact.",
+      "status": "not_run"
+    },
+    {
+      "requirement": "C-006",
+      "text": "Prior test counts and approved packages are context, not proof of this mission. Evaluate the exact final revision; distinguish local checks, hosted checks and unverified external conditions.",
+      "status": "not_run"
+    }
+  ],
+  "defects": [
+    {
+      "id": "LIB-LOOKUP-LABEL",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/library.red.json",
+      "retests": [
+        "variant",
+        "regeneration"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "LIB-LOOKUP-LIMIT",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/library.red.json",
+      "retests": [
+        "variant"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "ACCESS-001",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/access.red.json",
+      "retests": [
+        "access"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "ACCESS-002",
+      "severity": "medium",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/access.red.json",
+      "retests": [
+        "access"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "DRAFT-01",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/drafts.failures.json",
+      "retests": [
+        "drafts"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "DRAFT-02",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/drafts.failures.json",
+      "retests": [
+        "drafts"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "DRAFT-03",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/drafts.failures.json",
+      "retests": [
+        "drafts"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "DRAFT-04",
+      "severity": "medium",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/drafts.failures.json",
+      "retests": [
+        "drafts"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "DRAFT-R1-obsolete-buffer",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/drafts.cycle2.failures.json",
+      "retests": [
+        "drafts"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "WP08-report-heldout",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/runs.md",
+      "retests": [
+        "performance"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "WP08-legacy-select",
+      "severity": "medium",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/runs.md",
+      "retests": [],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "CODE-configured-output",
+      "severity": "high",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/wp07-code-output-red.json",
+      "retests": [
+        "regeneration"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    },
+    {
+      "id": "WP08-clean-draft-save",
+      "severity": "medium",
+      "status": "open",
+      "historicalSource": "docs/evidence/verification/runs.md",
+      "retests": [
+        "performance"
+      ],
+      "qualification": "Fixed only after both current cycles pass all named retest phases; prior scoped reports remain historical."
+    }
+  ],
+  "sourceArtifacts": {
+    "fixtures/acceptance/cases.json": "9dfa3abb694a7fb6cf9cb2fd4a834b284b95b619d674cf00f2955b0368b9cb84",
+    "fixtures/acceptance/workshop.json": "c9f017a8a46f5e54ccf07d4e4fa9f0c71650cd0a52ddb8d708e3da154984d8ac",
+    "fixtures/acceptance/library.json": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7",
+    "scripts/acceptance/run.mjs": "86309106fdabeda697e2aa1e81d4cfc73bfe4c93799d9ef3ae061ae27ba8b00d",
+    "scripts/acceptance/report.mjs": "2cc62593378d016e1696278407dc44eea3d19163769e959573bc474215ae9264",
+    "tests/e2e/acceptance/performance.spec.ts": "3485c27c7f22fc3daa8a9d23ace3f4d1698520eb28a8d9a8c93b448f093e7727",
+    "tests/e2e/equipment/workflow.spec.ts": "8a5ba2ba883f1889c551d0fd96c368c73ccce9eb2832df699d965cac6fe1ced5"
+  },
+  "hosted": {
+    "status": "unverified",
+    "note": "Hosted CI must be read from its actual fresh run; local execution is not hosted success."
+  },
+  "failure": "legacy-publication failed",
+  "verdict": "INCOMPLETE",
+  "accepted": false,
+  "reasons": [
+    "Current automated checks incomplete",
+    "Two consecutive fresh final-code cycles with actual phase proof required",
+    "Mandatory case disposition incomplete",
+    "Mandatory requirement disposition incomplete",
+    "Unresolved mandatory/high defect",
+    "Passed AC-020 requires independent WP09 proof"
+  ],
+  "note": "AC-020 requires independent WP09 review and canonical check-ledger; author evidence cannot approve itself."
+}

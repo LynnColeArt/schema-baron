@@ -1,0 +1,30 @@
+{
+  "schema": "historical-capture-restoration/v1",
+  "scope": "Only owned legacy test PNG writes; new images retained privately, historical bytes restored exactly",
+  "records": [
+    {
+      "path": "tests/e2e/generated-records/evidence/standalone-search.png",
+      "developmentCaptureSha256": "5182d9e837d60c6145bcb0b58731a464305d00fc0af215b81e35abf246a630a5",
+      "historicalSha256": "0665a0e5de70cc57aaf350f24e3202ec32d02e6edec19f8f38b1d91bfc61313b",
+      "restoredByteExact": true
+    },
+    {
+      "path": "tests/e2e/generated-records/evidence/wizard-preview.png",
+      "developmentCaptureSha256": "0141526440b235d047a95fe33793e000c216666ce70f3694dcc8e09c6e6fc9e3",
+      "historicalSha256": "90cbded876b37b4c6ec51a0e5a637b6367c441570d1a526b82e2e1ae0580bee7",
+      "restoredByteExact": true
+    },
+    {
+      "path": "tests/e2e/regeneration/code-readonly.png",
+      "developmentCaptureSha256": "309df9e0db0f25dbae95b124ee681950f6caddd9647f37851d5abb0b6a17f25f",
+      "historicalSha256": "63ca8dcefe64bcca437937a628ec53db7fa4f21f931e9552be0c38899d6c2503",
+      "restoredByteExact": true
+    },
+    {
+      "path": "tests/e2e/regeneration/standalone-search.png",
+      "developmentCaptureSha256": "5182d9e837d60c6145bcb0b58731a464305d00fc0af215b81e35abf246a630a5",
+      "historicalSha256": "0665a0e5de70cc57aaf350f24e3202ec32d02e6edec19f8f38b1d91bfc61313b",
+      "restoredByteExact": true
+    }
+  ]
+}

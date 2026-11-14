@@ -1,0 +1,273 @@
+{
+  "id": "project-id",
+  "formatVersion": 1,
+  "revision": 1,
+  "name": "project",
+  "target": "next-typescript-sqlite",
+  "targetVersion": "1.0.0",
+  "connectionRefs": [
+    "project-connection"
+  ],
+  "connections": [
+    {
+      "id": "project-connection",
+      "name": "Local SQLite",
+      "locator": {
+        "approvedRootId": "project-root",
+        "relativePath": "data/app.sqlite"
+      },
+      "fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "capabilities": {
+        "sqliteVersion": "3.51.2",
+        "foreignKeys": true,
+        "returning": true,
+        "strictTables": true,
+        "unsupportedObjects": []
+      }
+    }
+  ],
+  "schema": {
+    "id": "project-schema",
+    "revision": 1,
+    "tables": [
+      {
+        "id": "project-parent",
+        "physicalName": "select",
+        "columns": [
+          {
+            "id": "project-tenant",
+            "physicalName": "tenant key",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "project-key",
+            "physicalName": "key",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          },
+          {
+            "id": "project-title",
+            "physicalName": "display \"name\"",
+            "type": {
+              "kind": "text"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "project-tenant",
+          "project-key"
+        ],
+        "foreignKeys": [],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      },
+      {
+        "id": "project-child",
+        "physicalName": "loan entries",
+        "columns": [
+          {
+            "id": "project-ref-tenant",
+            "physicalName": "tenant reference",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": true
+          },
+          {
+            "id": "project-ref-key",
+            "physicalName": "item reference",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": true
+          },
+          {
+            "id": "project-child-key",
+            "physicalName": "sequence",
+            "type": {
+              "kind": "integer"
+            },
+            "nullable": false
+          }
+        ],
+        "primaryKey": [
+          "project-child-key"
+        ],
+        "foreignKeys": [
+          {
+            "id": "project-fk",
+            "columnIds": [
+              "project-ref-tenant",
+              "project-ref-key"
+            ],
+            "referencedTableId": "project-parent",
+            "referencedColumnIds": [
+              "project-tenant",
+              "project-key"
+            ],
+            "onUpdate": "cascade",
+            "onDelete": "set-null",
+            "deferrable": true
+          }
+        ],
+        "uniqueConstraints": [],
+        "checks": [],
+        "indexes": []
+      }
+    ],
+    "opaqueObjects": []
+  },
+  "queries": [
+    {
+      "id": "project-query",
+      "name": "Index",
+      "sources": [
+        {
+          "alias": "root",
+          "source": {
+            "kind": "table",
+            "id": "project-parent"
+          }
+        }
+      ],
+      "joins": [],
+      "projections": [
+        {
+          "id": "project-output-key",
+          "name": "key",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "project-key"
+          },
+          "type": {
+            "kind": "integer"
+          },
+          "nullable": false
+        }
+      ],
+      "parameters": [],
+      "groupBy": [],
+      "orderBy": [],
+      "grain": {
+        "strategy": "rows",
+        "keys": [
+          "project-output-key"
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "id": "project-page",
+      "route": "/project",
+      "title": "Index",
+      "document": [
+        {
+          "kind": "text",
+          "text": "Project index"
+        },
+        {
+          "kind": "form",
+          "formId": "project-form"
+        }
+      ],
+      "formIds": [
+        "project-form"
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "id": "project-form",
+      "pageId": "project-page",
+      "kind": "Record",
+      "sourceRef": {
+        "kind": "table",
+        "id": "project-parent"
+      },
+      "keyMapping": [
+        {
+          "targetFieldId": "project-tenant",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "project-tenant"
+          }
+        },
+        {
+          "targetFieldId": "project-key",
+          "expression": {
+            "kind": "field",
+            "alias": "root",
+            "fieldId": "project-key"
+          }
+        }
+      ],
+      "controlIds": [
+        "project-control"
+      ],
+      "actionIds": [
+        "project-action"
+      ],
+      "search": [],
+      "sorting": [],
+      "paging": {
+        "pageSize": 25
+      },
+      "appearance": {}
+    }
+  ],
+  "controls": [
+    {
+      "id": "project-control",
+      "formId": "project-form",
+      "kind": "number",
+      "binding": {
+        "kind": "stored",
+        "fieldId": "project-key"
+      },
+      "readOnly": false,
+      "appearance": {
+        "label": "Key"
+      },
+      "validation": {
+        "required": true
+      },
+      "events": [
+        {
+          "event": "submit",
+          "actionId": "project-action"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "project-action",
+      "formId": "project-form",
+      "operation": "update"
+    }
+  ],
+  "policies": [
+    {
+      "id": "project-global-policy",
+      "scope": "global",
+      "ownerId": "project-id",
+      "access": "public"
+    }
+  ],
+  "globalPolicyId": "project-global-policy",
+  "outputConfig": {
+    "approvedRootId": "project-output-root",
+    "relativePath": "generated"
+  },
+  "extensionContracts": []
+}

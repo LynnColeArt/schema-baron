@@ -1,0 +1,124 @@
+{
+  "actor": "independent MCP workflow tester; not formal Spec Kitty mission approval",
+  "overall": "SUPPORTED_WORKFLOW_PASS_WITH_LIMITATIONS",
+  "observedHead": "9ff74079a9903264eaf496f4a7abb6946b0d51f4",
+  "qualifiedCode": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "qualifiedAppsPackagesEqual": true,
+  "node": "24.22.1",
+  "npm": "11.19.1",
+  "discoveredTools": 31,
+  "authorizedToolCallsRecorded": 85,
+  "authorizedDistinctToolsExercised": 25,
+  "forgedCapabilityReadProbeAdditional": true,
+  "retainedVisitorChecks": 30,
+  "negativeAndResourceChecks": 10,
+  "schemaMigration": {
+    "committed": true,
+    "recoveryRequired": false,
+    "backupValidated": true
+  },
+  "generation": {
+    "initialProjectRevision": 13,
+    "regenerationProjectRevisions": [
+      14,
+      15
+    ],
+    "outputTreeRevisions": [
+      1,
+      2,
+      3
+    ],
+    "actualBuildExitCodes": [
+      0,
+      0,
+      0
+    ],
+    "actualRunsReachedReady": 3,
+    "authoredHash": "53e63efe10fac2f786843446b8e55206a23e0c39f2195beb76d80226e7224d44",
+    "originalProvisionedUserIdRetained": true,
+    "accountCredentialRowFingerprintStableAcrossSecondRegeneration": true,
+    "sameCredentialLoginAfterBothRegenerations": true
+  },
+  "finalOracle": {
+    "teams": [
+      {
+        "id": 1,
+        "name": "Outreach"
+      },
+      {
+        "id": 2,
+        "name": "Logistics"
+      }
+    ],
+    "shifts": [
+      {
+        "id": 1,
+        "team_id": 1,
+        "title": "Welcome desk",
+        "hours": "1.50",
+        "starts_on": "2026-11-03"
+      },
+      {
+        "id": 2,
+        "team_id": 1,
+        "title": "Community calls",
+        "hours": "2.25",
+        "starts_on": null
+      },
+      {
+        "id": 3,
+        "team_id": 2,
+        "title": "Supply setup",
+        "hours": "4.50",
+        "starts_on": null
+      }
+    ],
+    "report": [
+      [
+        1,
+        "Outreach",
+        "3.75"
+      ],
+      [
+        2,
+        "Logistics",
+        "4.50"
+      ]
+    ]
+  },
+  "limitations": [
+    {
+      "status": "FAIL",
+      "capability": "advertised flow_inspect projection schema",
+      "observed": "INVALID_INPUT: supports application and endpoint only"
+    },
+    {
+      "status": "MANUAL_TRUSTED_BOOTSTRAP",
+      "capability": "owner private config/root IDs",
+      "observed": "not discoverable through registered MCP tools"
+    },
+    {
+      "status": "TERMINAL_STEP",
+      "capability": "dependency acquisition",
+      "observed": "npm ci --ignore-scripts; no dependency install tool"
+    },
+    {
+      "status": "GENERATED_VISITOR_UI_STEP",
+      "capability": "business data CRUD",
+      "observed": "no business CRUD/raw SQL MCP command; all writes through generated visitor UI"
+    },
+    {
+      "status": "AGENT_UX_GAP",
+      "capability": "complex entity construction and Record Delete prerequisites",
+      "observed": "Used source-contract preflight recipes plus discovered schemas; generic operation descriptions and generator-required displayFieldIds needed explicit design completion."
+    }
+  ],
+  "productionSourceChanges": false,
+  "cleanup": {
+    "ownedRuntimeStoppedViaMCP": true,
+    "ownedOwnerExactHandleStopped": true,
+    "portsClosed": true
+  },
+  "sourceContractRecipesUsed": true,
+  "pureBlackBoxDiscoveryClaim": false
+}

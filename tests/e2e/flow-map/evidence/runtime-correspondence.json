@@ -1,0 +1,115 @@
+{
+  "projectId": "7e7f896b-ba8f-4f62-a6d8-9707bd71a337",
+  "navigationId": "eac992b7-e568-4f36-abc7-91f4227fe96d",
+  "recordPageId": "913bc419-e12b-43fc-89a9-b04a96f89079",
+  "loginPageId": "ed0b8cc7-d6bd-4339-87d9-11e88c07a296",
+  "endpoints": [
+    {
+      "id": "bc3cb84b-a00b-434d-bccf-14c5da7ec2ec:GET",
+      "sourceObjectId": "bc3cb84b-a00b-434d-bccf-14c5da7ec2ec",
+      "method": "GET",
+      "path": "/",
+      "handler": "app/page.tsx",
+      "access": "public",
+      "actionIds": []
+    },
+    {
+      "id": "913bc419-e12b-43fc-89a9-b04a96f89079:GET",
+      "sourceObjectId": "913bc419-e12b-43fc-89a9-b04a96f89079",
+      "method": "GET",
+      "path": "/edit",
+      "handler": "app/edit/page.tsx",
+      "access": "authenticated",
+      "actionIds": []
+    },
+    {
+      "id": "ed0b8cc7-d6bd-4339-87d9-11e88c07a296:GET",
+      "sourceObjectId": "ed0b8cc7-d6bd-4339-87d9-11e88c07a296",
+      "method": "GET",
+      "path": "/login",
+      "handler": "app/login/page.tsx",
+      "access": "public",
+      "actionIds": []
+    },
+    {
+      "id": "0a895f1a-f964-4f25-8523-14151e5acdab:navigation",
+      "sourceObjectId": "0a895f1a-f964-4f25-8523-14151e5acdab",
+      "method": "GET",
+      "path": "/runtime/navigation-0",
+      "handler": "app/runtime/navigation-0/route.ts",
+      "access": "public",
+      "actionIds": [
+        "eac992b7-e568-4f36-abc7-91f4227fe96d",
+        "0c2155f2-f4f3-4b79-b15b-9fddd12813da"
+      ]
+    },
+    {
+      "id": "ab97cf39-fd0a-4cfb-9d7b-8d64ade93023:GET",
+      "sourceObjectId": "ab97cf39-fd0a-4cfb-9d7b-8d64ade93023",
+      "method": "GET",
+      "path": "/runtime/record-1",
+      "handler": "app/runtime/record-1/route.ts",
+      "access": "authenticated",
+      "actionIds": []
+    },
+    {
+      "id": "ab97cf39-fd0a-4cfb-9d7b-8d64ade93023:POST",
+      "sourceObjectId": "ab97cf39-fd0a-4cfb-9d7b-8d64ade93023",
+      "method": "POST",
+      "path": "/runtime/record-1",
+      "handler": "app/runtime/record-1/route.ts",
+      "access": "authenticated",
+      "actionIds": [
+        "5ad98907-70f2-4746-a4e7-3ed5d4d3372d",
+        "6e4f3bcb-92fd-4b43-ae29-959806ce44ac",
+        "c818c15f-b467-4b86-ba74-8f1633934630",
+        "d6484625-6b28-4822-84fd-746d59367207"
+      ]
+    },
+    {
+      "id": "ab97cf39-fd0a-4cfb-9d7b-8d64ade93023:server-action",
+      "sourceObjectId": "ab97cf39-fd0a-4cfb-9d7b-8d64ade93023",
+      "method": "server action",
+      "path": "/edit",
+      "handler": "server/record-action-1.ts",
+      "access": "authenticated",
+      "actionIds": [
+        "5ad98907-70f2-4746-a4e7-3ed5d4d3372d",
+        "6e4f3bcb-92fd-4b43-ae29-959806ce44ac",
+        "c818c15f-b467-4b86-ba74-8f1633934630",
+        "d6484625-6b28-4822-84fd-746d59367207"
+      ]
+    },
+    {
+      "id": "7e7f896b-ba8f-4f62-a6d8-9707bd71a337:auth",
+      "sourceObjectId": "ed0b8cc7-d6bd-4339-87d9-11e88c07a296",
+      "method": "POST",
+      "path": "/runtime/auth",
+      "handler": "app/runtime/auth/route.ts",
+      "access": "public",
+      "actionIds": [
+        "0abbddd8-8ada-4d34-9aa5-79aff1fea26e",
+        "64a2297a-8288-4e8c-bb7a-71471c5a2aff"
+      ]
+    },
+    {
+      "id": "7e7f896b-ba8f-4f62-a6d8-9707bd71a337:csrf",
+      "sourceObjectId": "ed0b8cc7-d6bd-4339-87d9-11e88c07a296",
+      "method": "GET",
+      "path": "/runtime/auth/csrf",
+      "handler": "app/runtime/auth/csrf/route.ts",
+      "access": "public",
+      "actionIds": []
+    }
+  ],
+  "typedFilter": "0a895f1a-f964-4f25-8523-14151e5acdab%3Afilter%3A8b90b265-fe45-4688-91b3-748b528c8e55=r",
+  "observed": [
+    "public list",
+    "keyed Record redirects Login",
+    "Login Cancel retains filter",
+    "Login returns selected key and filter",
+    "Record Cancel does not write",
+    "Save updates SQLite and returns filter",
+    "revoked action handlers return 401"
+  ]
+}

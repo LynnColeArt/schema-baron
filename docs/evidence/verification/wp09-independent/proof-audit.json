@@ -1,0 +1,76 @@
+{
+  "schema": "independent-source-proof-audit/v1",
+  "reviewer": "verification_acceptance_audit",
+  "qualifiedRevision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "documentationRevision": "a3dbca55738e804e525b93f3fddbb51903e7621b",
+  "candidateReportSha256": "3ad3b3e91ff177faf562d1e8defab0d767d8f333b0cf8f934f59a886fc6c184d",
+  "artifactReferences": 37,
+  "sourceArtifacts": 20,
+  "assertions": 98,
+  "passed": true,
+  "timings": [
+    {
+      "cycle": 1,
+      "application": "library",
+      "samples": 30,
+      "p95FeedbackMs": 17.901470999990124,
+      "p95SaveMs": 182.37122600000293,
+      "maxSaveMs": 185.2660109999997
+    },
+    {
+      "cycle": 1,
+      "application": "workshop",
+      "samples": 30,
+      "p95FeedbackMs": 11.47822399999859,
+      "p95SaveMs": 113.49592899999698,
+      "maxSaveMs": 121.18925100000342
+    },
+    {
+      "cycle": 2,
+      "application": "library",
+      "samples": 30,
+      "p95FeedbackMs": 14.619151999999303,
+      "p95SaveMs": 181.36925899999915,
+      "maxSaveMs": 197.52062500000466
+    },
+    {
+      "cycle": 2,
+      "application": "workshop",
+      "samples": 30,
+      "p95FeedbackMs": 13.170129999998608,
+      "p95SaveMs": 119.70227700000032,
+      "maxSaveMs": 241.05350200000248
+    }
+  ],
+  "limits": [
+    "Performance fixture contains zero declared authored files; nonempty authored bytes and behavior are separately proved in regeneration/independence.",
+    "Fault suite is shared engine bridge, not two literal interrupted UI fixtures.",
+    "AC017 is bounded parity, not full MCP workflow."
+  ],
+  "independentOracle": {
+    "method": "Python Decimal over declared synthetic input tuples; distinct sets for authors; no product SQL reused",
+    "workshopCounts": [
+      3,
+      0
+    ],
+    "authorDistinctBooks": [
+      2,
+      1,
+      0
+    ],
+    "bookCopyTotals": [
+      "19.75",
+      "10.00",
+      "0.00"
+    ],
+    "copyMutationTotals": [
+      "16.25",
+      "20.00",
+      "10.00"
+    ],
+    "orderedCompositeKey": [
+      "book_id",
+      "author_id"
+    ]
+  }
+}

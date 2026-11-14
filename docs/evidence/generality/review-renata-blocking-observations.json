@@ -1,0 +1,11 @@
+[
+  {
+    "blocking": false,
+    "status": 200
+  },
+  {
+    "blocking": true,
+    "error": "TypeError: fetch failed",
+    "cause": "Error: read ECONNRESET"
+  }
+]

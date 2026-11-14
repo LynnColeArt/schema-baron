@@ -1,0 +1,13 @@
+{
+  "wp_id": "WP09",
+  "captured_at": "2026-11-02T21:06:22Z",
+  "base_branch": "feat/studio-verification-hardening",
+  "base_commit": "e285b59f9a2ac87af8b2cb0cc311e0f69636004b",
+  "test_runner": "custom",
+  "total": 0,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "failures": [],
+  "source_identity": "DeclaredCommandScopeSource/junit_xml"
+}

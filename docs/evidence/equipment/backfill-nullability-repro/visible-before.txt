@@ -1,0 +1,148 @@
+▦
+Schema Baron
+/
+Equipment Desk
+● Studio service connected
+New project…
+Open / Switch…
+Project settings
+Login and access…
+Connections…
+Migration history…
+Generate…
+Flow map
+Schema
+Queries
+Explorer
+Inspector
+Disconnect service
+Database schema
+＋ Table
+＋ Relationship
+Save schema
+Review migration…
+Undo schema
+Redo schema
+0 drafts · r74
+Schema Explorer
+Find table or column
+assets
+5 columns
+borrowers
+3 columns
+loans
+5 columns
+loan_lines
+5 columns
+
+4 tables · 18 columns
+
+Relationships / assets
+Diagram
+Table list
+1 column
+1 column
+1 column
+assets
+◆ id
+integer
+caption
+text
+daily_rate
+decimal
+notes
+integer
+condition
+text
+borrowers
+◆ id
+integer
+name
+text
+email
+text
+loans
+◆ id
+integer
+borrower_id
+integer
+asset_id
+integer
+starts_on
+date
+status
+text
+React Flow
+Messages
+
+Result type/nullability must match expression including outer joins.
+
+TYPE_MISMATCH Result type/nullability must match expression including outer joins.
+Schema Toolbox
+
+Author stable definitions, then review migration SQL. Drag between column handles or use Relationship for keyboard authoring.
+
+Layout positions are view preferences and never change database semantics.
+
+Properties · Column
+Table name
+Columns
+Keys
+Constraints
+Indexes
+Relationships
+id · integer
+caption · text
+daily_rate · decimal
+notes · integer
+condition · text
+＋ Column
+Column name
+Logical type
+integer
+real
+text
+blob
+boolean
+date
+datetime
+decimal
+Physical storage
+INTEGER · imported TEXT (preserved when unchanged)
+Allow NULLDefault present
+Default literal
+
+Defaults are typed literals; use NULL for null. Clear Default present to remove a default. Arbitrary SQL is unsupported.
+
+Result type/nullability must match expression including outer joins.
+
+Delete columnDelete table draft
+Backfill rules (1)
+
+Preview requires a typed value for newly required columns with existing rows. Rules are explicit proposal inputs.
+
+Choose target column
+assets.id
+assets.caption
+assets.daily_rate
+assets.notes
+assets.condition
+borrowers.id
+borrowers.name
+borrowers.email
+loans.id
+loans.borrower_id
+loans.asset_id
+loans.starts_on
+loans.status
+loan_lines.id
+loan_lines.loan_id
+loan_lines.description
+loan_lines.quantity
+loan_lines.unit_price
+Set backfill rule
+
+assets.notes = 0Remove rule
+
+Saved · revision 71
+Ctrl+S Save · Ctrl+Z Undo

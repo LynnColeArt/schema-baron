@@ -1,0 +1,3 @@
+Command: /home/lynn/.nvm/versions/node/v24.22.1/bin/node scripts/workspace/verify.mjs module tests/integration/clean-install
+Exit: 0
+No diagnostics.

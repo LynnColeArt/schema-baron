@@ -1,0 +1,84 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-u
+
+stdout | ../../../../../../tmp/wp21-review-heldout.test.ts > concurrent distinct runtime starts cannot replace owned process authority
+{"fulfilled":2,"pids":[582338,582344],"liveAfterClose":[582338]}
+
+stdout | ../../../../../../tmp/wp21-review-heldout.test.ts > project mutation while includeData awaits must not publish stale export
+{"exportStatus":"rejected","published":true,"currentRevision":5}
+
+ ❯ ../../../../../../tmp/wp21-review-heldout.test.ts (2 tests | 2 failed) 1759ms
+   × concurrent distinct runtime starts cannot replace owned process authority 886ms
+   × project mutation while includeData awaits must not publish stale export 871ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  ../../../../../../tmp/wp21-review-heldout.test.ts > concurrent distinct runtime starts cannot replace owned process authority
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ ../../../../../../tmp/wp21-review-heldout.test.ts:16:26
+     14|   const live=pids.filter(pid=>existsSync(`/proc/${pid}/stat`)&&!readFi…
+     15|   console.log(JSON.stringify({fulfilled:results.length,pids,liveAfterC…
+     16|   expect(results.length).toBe(1);expect(live).toEqual([]);
+       |                          ^
+     17|  }finally{await f.core.close();for(const pid of pids){try{process.kill…
+     18| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  ../../../../../../tmp/wp21-review-heldout.test.ts > project mutation while includeData awaits must not publish stale export
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ ../../../../../../tmp/wp21-review-heldout.test.ts:29:21
+     27|   const published=existsSync(join(f.output,'review-stale'));
+     28|   console.log(JSON.stringify({exportStatus:result[0].status,published,…
+     29|   expect(published).toBe(false);
+       |                     ^
+     30|  }finally{await f.core.close();}
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯ Uncaught Exception ⎯⎯⎯⎯⎯
+TypeError: The database connection is not open
+ ❯ Database.prepare node_modules/better-sqlite3/lib/methods/wrappers.js:5:21
+ ❯ ProjectStorage.snapshot packages/storage/dist/index.js:193:60
+
+ ❯ ProjectStorage.putJob packages/storage/dist/index.js:310:55
+ ❯ RuntimeManager.save packages/core/src/runtime/index.ts:95:18
+ ❯ ChildProcess.<anonymous> packages/core/src/runtime/index.ts:235:12
+ ❯ ChildProcess.wrapper node:events:639:12
+ ❯ ChildProcess.emit node:events:514:28
+ ❯ maybeClose node:internal/child_process:1172:16
+ ❯ Socket.<anonymous> node:internal/child_process:527:11
+ ❯ Socket.emit node:events:514:28
+
+This error originated in "../../../../../../tmp/wp21-review-heldout.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The last test to run before this error was "project mutation while includeData awaits must not publish stale export". This means either:
+- the error was thrown while Vitest was running this test, or
+- the error was thrown after the test completed, and this was the most recent test at that point.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+     Errors  1 error
+   Start at  06:55:55
+   Duration  2.00s (tests 92%, import 6%, transform 2%)

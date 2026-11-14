@@ -1,0 +1,386 @@
+{
+  "schema": "acceptance-fixture/v1",
+  "application": "library",
+  "purpose": "UI authoring inputs and independent exact oracle; IDs are integers, not A1/B1 aliases",
+  "tables": [
+    {
+      "name": "authors",
+      "columns": [
+        [
+          "id",
+          "integer",
+          "required"
+        ],
+        [
+          "name",
+          "text",
+          "required"
+        ]
+      ],
+      "primary_key": [
+        "id"
+      ]
+    },
+    {
+      "name": "books",
+      "columns": [
+        [
+          "id",
+          "integer",
+          "required"
+        ],
+        [
+          "catalog_code",
+          "text",
+          "required"
+        ],
+        [
+          "title",
+          "text",
+          "required"
+        ],
+        [
+          "publication_date",
+          "date",
+          "nullable"
+        ]
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "unique": [
+        [
+          "catalog_code"
+        ]
+      ]
+    },
+    {
+      "name": "book_authors",
+      "columns": [
+        [
+          "book_id",
+          "integer",
+          "required"
+        ],
+        [
+          "author_id",
+          "integer",
+          "required"
+        ]
+      ],
+      "primary_key": [
+        "book_id",
+        "author_id"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "book_id"
+          ],
+          "references": [
+            "books",
+            "id"
+          ],
+          "on_delete": "restrict"
+        },
+        {
+          "columns": [
+            "author_id"
+          ],
+          "references": [
+            "authors",
+            "id"
+          ],
+          "on_delete": "restrict"
+        }
+      ]
+    },
+    {
+      "name": "copies",
+      "columns": [
+        [
+          "id",
+          "integer",
+          "required"
+        ],
+        [
+          "barcode",
+          "text",
+          "required"
+        ],
+        [
+          "book_id",
+          "integer",
+          "required"
+        ],
+        [
+          "replacement_cost",
+          "decimal(12,2)",
+          "nullable"
+        ],
+        [
+          "note",
+          "text",
+          "nullable"
+        ]
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "unique": [
+        [
+          "barcode"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "book_id"
+          ],
+          "references": [
+            "books",
+            "id"
+          ],
+          "on_delete": "restrict"
+        }
+      ]
+    },
+    {
+      "name": "loans",
+      "columns": [
+        [
+          "id",
+          "integer",
+          "required"
+        ],
+        [
+          "copy_id",
+          "integer",
+          "required"
+        ],
+        [
+          "checked_out",
+          "date",
+          "required"
+        ],
+        [
+          "returned_at",
+          "date",
+          "nullable"
+        ]
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "copy_id"
+          ],
+          "references": [
+            "copies",
+            "id"
+          ],
+          "on_delete": "restrict"
+        }
+      ]
+    }
+  ],
+  "rows": {
+    "authors": [
+      {
+        "id": 1,
+        "name": "Mara Vale"
+      },
+      {
+        "id": 2,
+        "name": "Jules Wren"
+      },
+      {
+        "id": 3,
+        "name": "Unassigned Author"
+      }
+    ],
+    "books": [
+      {
+        "id": 1,
+        "catalog_code": "CAT-001",
+        "title": "The Glass Orchard",
+        "publication_date": null
+      },
+      {
+        "id": 2,
+        "catalog_code": "CAT-002",
+        "title": "North Sea",
+        "publication_date": null
+      },
+      {
+        "id": 3,
+        "catalog_code": "CAT-003",
+        "title": "Uncatalogued Stories",
+        "publication_date": null
+      }
+    ],
+    "book_authors": [
+      {
+        "book_id": 1,
+        "author_id": 1
+      },
+      {
+        "book_id": 1,
+        "author_id": 2
+      },
+      {
+        "book_id": 2,
+        "author_id": 1
+      }
+    ],
+    "copies": [
+      {
+        "id": 1,
+        "barcode": "COPY-001",
+        "book_id": 1,
+        "replacement_cost": "12.50",
+        "note": null
+      },
+      {
+        "id": 2,
+        "barcode": "COPY-002",
+        "book_id": 1,
+        "replacement_cost": "7.25",
+        "note": null
+      },
+      {
+        "id": 3,
+        "barcode": "COPY-003",
+        "book_id": 2,
+        "replacement_cost": "10.00",
+        "note": null
+      }
+    ],
+    "loans": [
+      {
+        "id": 1,
+        "copy_id": 1,
+        "checked_out": "2026-01-10",
+        "returned_at": null
+      },
+      {
+        "id": 2,
+        "copy_id": 2,
+        "checked_out": "2026-01-11",
+        "returned_at": "2026-01-18"
+      }
+    ]
+  },
+  "expected": {
+    "author_book_counts": [
+      {
+        "id": 1,
+        "count": 2
+      },
+      {
+        "id": 2,
+        "count": 1
+      },
+      {
+        "id": 3,
+        "count": 0
+      }
+    ],
+    "book_copy_totals": [
+      {
+        "id": 1,
+        "total": "19.75"
+      },
+      {
+        "id": 2,
+        "total": "10.00"
+      },
+      {
+        "id": 3,
+        "total": "0.00"
+      }
+    ],
+    "minimum_total_15": [
+      1
+    ]
+  },
+  "variants": {
+    "copy_lifecycle": {
+      "input": {
+        "id": 4,
+        "barcode": "COPY-004",
+        "book_id": 2,
+        "replacement_cost": "6.25",
+        "note": null
+      },
+      "after_add_total": "16.25",
+      "after_add_minimum_15": [
+        1,
+        2
+      ],
+      "edit_cost": "10.00",
+      "after_edit_total": "20.00",
+      "after_edit_minimum_15": [
+        1,
+        2
+      ],
+      "after_delete_total": "10.00",
+      "after_delete_minimum_15": [
+        1
+      ]
+    },
+    "nullable_cost": {
+      "input": {
+        "id": 5,
+        "barcode": "COPY-005",
+        "book_id": 3,
+        "replacement_cost": null,
+        "note": null
+      },
+      "expected_book_3_total": "0.00"
+    },
+    "duplicate_names": {
+      "input": {
+        "id": 4,
+        "name": "Mara Vale"
+      },
+      "expected_keys": [
+        1,
+        4
+      ],
+      "expected_book_counts": [
+        {
+          "id": 1,
+          "count": 2
+        },
+        {
+          "id": 4,
+          "count": 0
+        }
+      ]
+    },
+    "quoted_identifiers": {
+      "table": "book \"notes\"",
+      "column": "copy title",
+      "expected": "round-trip exact identifiers"
+    },
+    "lookup_bounds": {
+      "supported": 200,
+      "exceeded": 201,
+      "expected": "truthful complete choices or explicit exceeded-bound diagnostic"
+    },
+    "restricted_delete": {
+      "copy_id": 1,
+      "expected": "copies and loans unchanged"
+    },
+    "duplicate_association": {
+      "input": {
+        "book_id": 1,
+        "author_id": 1
+      },
+      "expected": "no additional or modified rows"
+    }
+  }
+}

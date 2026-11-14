@@ -1,0 +1,162 @@
+{
+  "revision": "ca1a03910d7ab72f874d0e22829068d3f09e30a2",
+  "cycles": [
+    {
+      "cycle": 1,
+      "passed": true,
+      "phases": [
+        {
+          "phase": "regeneration",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-regeneration.json",
+            "sha256": "87562ffc5f1a2fb78239740b1de887e6abb07a831e129ecce133acfd1273f6a5"
+          }
+        },
+        {
+          "phase": "independence",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-independence.json",
+            "sha256": "dd23cbb7e90a188d188323d4fbeb88461be78091b942b2ab1670a29d1cf2cf28"
+          }
+        },
+        {
+          "phase": "access",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-access.json",
+            "sha256": "c2f4413b9637dc06a97d9dd7f90ce94b26090d50834bde0652ff8447d595401c"
+          }
+        },
+        {
+          "phase": "variant",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-variant.json",
+            "sha256": "172770fb618761b5d91dab42f63b38c7b879a5c39aa70b024e3b41ceccce0526"
+          }
+        },
+        {
+          "phase": "drafts",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-drafts.json",
+            "sha256": "66565207c057d422428ac2277a92883345e24d4d58f7fb182be8e5758cb17239"
+          }
+        },
+        {
+          "phase": "recovery",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-recovery.json",
+            "sha256": "4b64eac085be51a4e0574cf35d77079638f028868d02c3ef9fcca7cec91e1a8d"
+          }
+        },
+        {
+          "phase": "parity",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-parity.json",
+            "sha256": "2a7c768e60baed8181df7214ed04a677e765f2b1b401e86aedca2ce6a7510120"
+          }
+        },
+        {
+          "phase": "performance",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-performance.json",
+            "sha256": "ea83342c3fd15ff439b02544abf77e78d567192ff367ea9ffbb738e4e5e72342"
+          }
+        },
+        {
+          "phase": "fault",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle1-fault.json",
+            "sha256": "820092dc576ea25dae2dc5c5ccdc59184a904cada5f93751f423f984a0922b8a"
+          }
+        }
+      ]
+    },
+    {
+      "cycle": 2,
+      "passed": true,
+      "phases": [
+        {
+          "phase": "regeneration",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-regeneration.json",
+            "sha256": "5cfc449d9d14cd5cc92f22a7874c95dfb7dc502876037f4ec94f389b84d810e2"
+          }
+        },
+        {
+          "phase": "independence",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-independence.json",
+            "sha256": "05bb0e833aedcf58dd670b0a62d573cf8906582c2ac2ad98048d30bee808839c"
+          }
+        },
+        {
+          "phase": "access",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-access.json",
+            "sha256": "bad7c329f1fbbea953569395e82c55f10607b47a3b04e0ed87a2f263fb7864f3"
+          }
+        },
+        {
+          "phase": "variant",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-variant.json",
+            "sha256": "9742205bb85e4b97d18a09c2245f057adc4a21240921949b9cca361d0b757d68"
+          }
+        },
+        {
+          "phase": "drafts",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-drafts.json",
+            "sha256": "27982cb94f3dd5c4c1c5e538494d9ba4ae1a816b1e836dbf67c4c97d8dc17ab7"
+          }
+        },
+        {
+          "phase": "recovery",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-recovery.json",
+            "sha256": "128a97b2f7d6f7e71668b31d6624bbf21d68cbd91bcba0d502bd452f53325d74"
+          }
+        },
+        {
+          "phase": "parity",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-parity.json",
+            "sha256": "8442cb902ef5f66d3a59b91eddd7f470c88c94afcbcad2b03e9b9a6d878fe8fa"
+          }
+        },
+        {
+          "phase": "performance",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-performance.json",
+            "sha256": "a9fa222f4ba3e9964a10e9a2a4aaf3a431778c587a608b699b0c953c5aaea3ec"
+          }
+        },
+        {
+          "phase": "fault",
+          "passed": true,
+          "evidence": {
+            "path": "docs/evidence/verification/schema-baron-final-CwG5Na/cycle2-fault.json",
+            "sha256": "1f49d54573e5fd461b9bab3f0a1e0c1f6ea39940da85dc33c8e9cbc850cd5175"
+          }
+        }
+      ]
+    }
+  ],
+  "review": "Pending independent WP09"
+}

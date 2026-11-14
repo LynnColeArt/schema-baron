@@ -1,0 +1,4 @@
+{
+  "scripts/release/provision-managed.mjs": "c29973722f505282cdff2a3af2013b4d4ddb6bd5fad61db2ef04204a3cf9eb46",
+  "tests/integration/clean-install/provision.mjs": "26c434313b0f8e5698c9228721f6ff93919d1a47e5c6c2bfcab79713d5571558"
+}

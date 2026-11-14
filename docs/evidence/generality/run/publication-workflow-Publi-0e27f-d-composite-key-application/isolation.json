@@ -1,0 +1,105 @@
+{
+  "equipmentUnchanged": [
+    [
+      {
+        "id": 1,
+        "caption": "Camera",
+        "daily_rate": "12.34",
+        "notes": null,
+        "condition": "ready"
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "name": "Ada",
+        "email": "ada@example.test"
+      },
+      {
+        "id": 2,
+        "name": "Zero",
+        "email": "zero@example.test"
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "borrower_id": 1,
+        "asset_id": 1,
+        "starts_on": "2026-10-27",
+        "status": "Open"
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "loan_id": 1,
+        "description": "Lens revised",
+        "quantity": 3,
+        "unit_price": "0.20"
+      },
+      {
+        "id": 2,
+        "loan_id": 1,
+        "description": "Stand",
+        "quantity": 2,
+        "unit_price": "1.25"
+      }
+    ]
+  ],
+  "publicationUnchanged": {
+    "authors": [
+      {
+        "id": 1,
+        "pen_name": "Octavia",
+        "email": "octavia@example.test"
+      },
+      {
+        "id": 2,
+        "pen_name": "Silent",
+        "email": "silent@example.test"
+      }
+    ],
+    "publications": [
+      {
+        "id": 1,
+        "author_id": 1,
+        "title": "Dawn studies",
+        "royalty": "0.10",
+        "editor_note": null
+      },
+      {
+        "id": 2,
+        "author_id": 1,
+        "title": "Evening studies",
+        "royalty": "1.25",
+        "editor_note": null
+      }
+    ],
+    "categories": [
+      {
+        "id": 1,
+        "caption": "Fiction"
+      },
+      {
+        "id": 2,
+        "caption": "Essays"
+      }
+    ],
+    "memberships": [
+      {
+        "publication_id": 1,
+        "category_id": 1,
+        "annotation": "Primary shelf"
+      }
+    ]
+  },
+  "eventGapObserved": true,
+  "bothRuntimeGroupsStopped": true,
+  "distinctSessionCookieNames": [
+    "visitor_e8280f0cb07f7830a024",
+    "visitor_c3969a7b76aaf7ef17fa"
+  ],
+  "conflictRevision": 78,
+  "reconciledRevision": 79
+}

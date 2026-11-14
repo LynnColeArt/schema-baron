@@ -1,0 +1,6 @@
+Checkout: /tmp/schema-baron-full-lint-s9jpxx__
+Approved source: f455d796bcd1c1d65e97f58f795474c875283838
+Baseline: 0690035de82e68e068e4f94690a51081413f1030
+Command: /home/lynn/.nvm/versions/node/v24.22.1/bin/node /tmp/schema-baron-full-lint-s9jpxx__/scripts/workspace/verify.mjs lint
+Exit: 0
+Diff-scoped syntax/JSON/whitespace lint checked 1056 files; documented verbatim evidence .log/.trace whitespace excluded; TypeScript semantic validation is separate

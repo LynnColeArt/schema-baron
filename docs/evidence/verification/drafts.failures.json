@@ -1,0 +1,70 @@
+{
+  "parentRevision": "5f10082ed4d3496f2415db3e924e332c66b1b750",
+  "retention": "Distinct private logs/screenshots retained; these are sanitized observations, not raw credential-bearing captures",
+  "observations": [
+    {
+      "run": "red-initial",
+      "mode": "ui_journey",
+      "sourceState": "unmodified parent production code; new draft tests",
+      "status": "failed",
+      "defect": "DRAFT-01",
+      "expected": "Page title remains active on same-tab reload",
+      "actual": "Text retained; toBeFocused expected focused, received inactive"
+    },
+    {
+      "run": "red-schema",
+      "mode": "ui_journey",
+      "sourceState": "unmodified parent production code; corrected schema selector",
+      "status": "failed",
+      "defect": "DRAFT-02",
+      "expected": "Decimal scale text remains minus sign",
+      "actual": "Expected minus sign; received numeric zero"
+    },
+    {
+      "run": "attempt3",
+      "mode": "ui_journey",
+      "sourceState": "intermediate uncommitted repair",
+      "status": "failed",
+      "defect": "DRAFT-01",
+      "expected": "Return to opened page retains active title",
+      "actual": "Text retained; second tree click stole focus"
+    },
+    {
+      "run": "attempt3",
+      "mode": "ui_journey",
+      "sourceState": "intermediate uncommitted repair",
+      "status": "failed",
+      "defect": "DRAFT-03",
+      "expected": "Query scalar selection remains [0,1] after project switch/reload",
+      "actual": "Selection [1,1]"
+    },
+    {
+      "run": "attempt3",
+      "mode": "ui_journey",
+      "sourceState": "intermediate uncommitted repair",
+      "status": "failed",
+      "defect": "DRAFT-04",
+      "expected": "Invalid page title yields a field-linked actionable message",
+      "actual": "Draft and persisted model retained; generic Command does not match the operation schema"
+    },
+    {
+      "run": "state-replacement-fault",
+      "mode": "fault",
+      "sourceState": "temporary mutation; restored before build",
+      "status": "expected fault detected",
+      "mutation": "reconcile current drafts replaced with empty object",
+      "actual": "4 failed / 2 passed state tests; process exit 1; source restore checksum matched"
+    },
+    {
+      "run": "harness-retained",
+      "mode": "test_harness",
+      "status": "failed then corrected explicitly",
+      "actual": [
+        "Schema selector omitted type suffix",
+        "Programmatic selection omitted keyboard selection events",
+        "First-run workspace-settings helper reused an already configured owner",
+        "Project button matcher omitted accessible-name whitespace"
+      ]
+    }
+  ]
+}

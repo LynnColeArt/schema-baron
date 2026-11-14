@@ -1,0 +1,168 @@
+{
+  "schema": "acceptance-fixture/v1",
+  "application": "workshop",
+  "purpose": "UI authoring inputs and independent oracle; never a Studio model seed",
+  "tables": [
+    {
+      "name": "workshops",
+      "columns": [
+        [
+          "id",
+          "integer",
+          "required"
+        ],
+        [
+          "name",
+          "text",
+          "required"
+        ]
+      ],
+      "primary_key": [
+        "id"
+      ]
+    },
+    {
+      "name": "sessions",
+      "columns": [
+        [
+          "id",
+          "integer",
+          "required"
+        ],
+        [
+          "workshop_id",
+          "integer",
+          "required"
+        ],
+        [
+          "title",
+          "text",
+          "required"
+        ]
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "workshop_id"
+          ],
+          "references": [
+            "workshops",
+            "id"
+          ],
+          "on_delete": "restrict"
+        }
+      ]
+    }
+  ],
+  "rows": {
+    "workshops": [
+      {
+        "id": 1,
+        "name": "Introduction to Woodworking"
+      },
+      {
+        "id": 2,
+        "name": "Garden Design"
+      }
+    ],
+    "sessions": [
+      {
+        "id": 1,
+        "workshop_id": 1,
+        "title": "Safety and basic tools"
+      },
+      {
+        "id": 2,
+        "workshop_id": 1,
+        "title": "Joinery practice"
+      },
+      {
+        "id": 3,
+        "workshop_id": 1,
+        "title": "Measuring and layout"
+      }
+    ]
+  },
+  "expected": {
+    "session_counts": [
+      {
+        "id": 1,
+        "count": 3
+      },
+      {
+        "id": 2,
+        "count": 0
+      }
+    ],
+    "minimum_count_1": [
+      1
+    ]
+  },
+  "variants": {
+    "garden_session": {
+      "input": {
+        "id": 4,
+        "workshop_id": 2,
+        "title": "Seasonal planting"
+      },
+      "expected_counts": [
+        {
+          "id": 1,
+          "count": 3
+        },
+        {
+          "id": 2,
+          "count": 1
+        }
+      ],
+      "minimum_count_1": [
+        1,
+        2
+      ],
+      "after_delete_counts": [
+        {
+          "id": 1,
+          "count": 3
+        },
+        {
+          "id": 2,
+          "count": 0
+        }
+      ]
+    },
+    "migration": {
+      "add_column": [
+        "sessions",
+        "duration_minutes",
+        "integer",
+        "nullable"
+      ],
+      "existing_values": null
+    },
+    "duplicate_names": {
+      "inputs": [
+        {
+          "id": 3,
+          "name": "Garden Design"
+        }
+      ],
+      "expected_keys": [
+        2,
+        3
+      ]
+    },
+    "lookup_bounds": {
+      "supported": 200,
+      "exceeded": 201,
+      "expected": "truthful complete choices or explicit exceeded-bound diagnostic"
+    },
+    "quoted_identifiers": {
+      "table": "workshop \"notes\"",
+      "column": "session title",
+      "expected": "round-trip identifiers without SQL syntax/data loss"
+    }
+  }
+}

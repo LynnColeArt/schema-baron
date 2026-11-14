@@ -1,0 +1,105 @@
+{
+  "revision": "8e1546e101dfb3cd6160999f189fff3c41f0d515",
+  "fixtureHash": "c9f017a8a46f5e54ccf07d4e4fa9f0c71650cd0a52ddb8d708e3da154984d8ac",
+  "testHash": "501cc58776b4f9ad61e100baa097b75f22dc110ff21b5445ebfcd73b2442215b",
+  "scope": "WP02 Workshop UI journey only; not final mission acceptance",
+  "browser": "156.0.8078.4",
+  "node": "v24.22.1",
+  "retries": 0,
+  "sourceMutations": "None during journey; action-label source fix built before owner startup",
+  "report": {
+    "initial": [
+      [
+        "1",
+        "Introduction to Woodworking",
+        "3"
+      ],
+      [
+        "2",
+        "Garden Design",
+        "0"
+      ]
+    ],
+    "minimumOne": [
+      [
+        "1",
+        "Introduction to Woodworking",
+        "3"
+      ]
+    ],
+    "temporaryGardenCount": 1,
+    "finalGardenCount": 0
+  },
+  "businessRows": {
+    "workshops": [
+      {
+        "id": 1,
+        "name": "Introduction to Woodworking"
+      },
+      {
+        "id": 2,
+        "name": "Garden Design"
+      }
+    ],
+    "sessions": [
+      {
+        "id": 1,
+        "workshop_id": 1,
+        "title": "Safety and basic tools",
+        "duration_minutes": null
+      },
+      {
+        "id": 2,
+        "workshop_id": 1,
+        "title": "Joinery practice",
+        "duration_minutes": null
+      },
+      {
+        "id": 3,
+        "workshop_id": 1,
+        "title": "Measuring and layout",
+        "duration_minutes": null
+      }
+    ]
+  },
+  "checks": [
+    "Cancel creates no project/database",
+    "Wizard creates missing named folder, related SQLite tables, keys, 5pages/5forms and Mermaid preview",
+    "Flow/settings shortcuts and Page/Form/Control properties reopen correctly",
+    "Unique visible action label selects filtered navigation with stable ID",
+    "Public lists/report and protected Record prompt",
+    "Login returns selected Garden Add and default2",
+    "Add/edit/delete/validation/duplicate/restrict errors preserve expected rows",
+    "Save/Cancel retain filtered parent context",
+    "Counts and minimum input respond to row changes",
+    "Nullable migration preserves rows",
+    "Canceled destructive preview leaves database unchanged and desired declaration pending",
+    "Visible reviewed declaration restoration ends coherent",
+    "Project reload preserves schema/data"
+  ],
+  "notCovered": [
+    "Library Catalog",
+    "Direct anonymous write-handler matrix",
+    "Draft/recovery/performance matrix",
+    "Regeneration/source/export independence",
+    "Final two clean cycles and independent mission verdict"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/evidence/verification/workshop.wizard.png",
+      "sha256": "d8b3a8fc8756048c1a7f3e2799d698cc33986f3dab1b40a789f66742550b7aa7"
+    },
+    {
+      "path": "docs/evidence/verification/workshop.report.png",
+      "sha256": "7ef11c08070ece0df8e1e98e98b378b86c21121148c4aa077bfea8b2b9bdcf4c"
+    },
+    {
+      "path": "docs/evidence/verification/workshop.sessions.png",
+      "sha256": "5a39c10a00087665551e563d233172fa4b5c34a6e425989d82885d4909d3f238"
+    },
+    {
+      "path": "docs/evidence/verification/workshop.migration.png",
+      "sha256": "2cf34173d9117db0f3badf15b3ffc7cbc04d6788fd437d8e71f283b56f689918"
+    }
+  ]
+}

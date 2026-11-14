@@ -1,0 +1,24 @@
+
+> schema-baron@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-w
+
+ ❯ tests/contracts/parity/behavior.test.ts (1 test | 1 failed) 134272ms
+   × independent real MCP-first and HTTP-first corpora cover implemented commands and atomic refusals 134271ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/contracts/parity/behavior.test.ts > independent real MCP-first and HTTP-first corpora cover implemented commands and atomic refusals
+TypeError: fetch failed
+Caused by: Error: read ECONNRESET
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -104, code: 'ECONNRESET', syscall: 'read' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 69 passed (70)
+      Tests  1 failed | 461 passed (462)
+   Start at  09:17:43
+   Duration  174.32s (tests 97%, import 2%)

@@ -1,0 +1,57 @@
+{
+  "sourceSHA": "865bcc3559410426cffdefb96f02fbae91ca91a5",
+  "sourceHashes": {
+    "tests/e2e/acceptance/recovery.spec.ts": "58aa01144e8f3348e353741f9f05c3c65cd6b57f513382ae515ab92abc4d5f75",
+    "tests/e2e/acceptance/parity.spec.ts": "a7d14ee7226e1145addc3cece2da14065bbdbee3d2491c5d6574cdebe828ba28",
+    "tests/integration/recovery-matrix/behavior.test.ts": "d880db20fce2c0d06dcc4328a43e3776fe18fc29a2704dc9e4f4e014846ed820",
+    "tests/integration/recovery-matrix/challenges.test.ts": "e65422123e1bffd100cea7e13a7a9e117df99444b13906c3bd01d4c82c03899a",
+    "tests/integration/recovery-matrix/owner.mjs": "c8a158d5541abb61decec9feebf01b5ba44b9e6c8f2c91a05ca98bdb488830ef"
+  },
+  "node": "v24.22.1",
+  "npm": "11.19.1",
+  "browser": "156.0.8078.4",
+  "retries": 0,
+  "fixtureHashes": {
+    "fixtures/acceptance/library.json": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7",
+    "fixtures/recovery/project.json": "b051ed069c05cafad24c7b0989f43d5d5f41643eb74f80ef6f17157e71905a80"
+  },
+  "checks": {
+    "acceptance": {
+      "tests": 3,
+      "failures": 0,
+      "skipped": 0
+    },
+    "focused": {
+      "tests": 23,
+      "failures": 0,
+      "skipped": 0
+    },
+    "workspaceTypes": "passed; empty UI workspace reports NOT IMPLEMENTED",
+    "scopedHarnessTypes": "passed",
+    "lint": "passed",
+    "credentials": "passed",
+    "dependencies": "passed",
+    "auditVulnerabilities": 0
+  },
+  "limits": [
+    "WP06 bounded evidence; final two clean full journeys and mission review remain later packages",
+    "Shared fault fixture is separate from normal Studio authoring",
+    "Full MCP workflow is not claimed"
+  ],
+  "privateJUnit": {
+    "acceptance": {
+      "path": "/tmp/wp06-browser-final.xml",
+      "sha256": "f726969272710027f882dd7d589e4f87e1400a3c4bddc878ba07b49df22146ec",
+      "actualTestcases": 3,
+      "failures": 0,
+      "skips": 0
+    },
+    "focused": {
+      "path": "/tmp/wp06-focused-final.xml",
+      "sha256": "0a2124c0eff78869e2fef979cb4b8fa4a1e10fdf69c53c50b7f3e2665dd261e2",
+      "actualTestcases": 23,
+      "failures": 0,
+      "skips": 0
+    }
+  }
+}

@@ -1,0 +1,327 @@
+{
+  "scope": "WP03 Library proof only; final mission/two full clean cycles/independent review pending",
+  "validatedCode": "9ef6b1781e12da82bf00e89f6d7dd6c6b0580298",
+  "environment": {
+    "node": "v24.22.1",
+    "browser": "156.0.8078.4",
+    "retries": 0,
+    "fixtureHash": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7",
+    "testHash": "726f5ddaf74a3253ced3e03837b500493b3b4aaa81618984fec6c00049516ad8"
+  },
+  "junit": {
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 70.576093
+  },
+  "library": {
+    "revision": "9ef6b1781e12da82bf00e89f6d7dd6c6b0580298",
+    "fixtureHash": "1fa8dc605ce2ed5b5cb6250bc2561eea33104c0e2d080020ecb9f5e71d7940a7",
+    "testHash": "726f5ddaf74a3253ced3e03837b500493b3b4aaa81618984fec6c00049516ad8",
+    "oracleHash": "2df1e620fffcd8adcb2a75fd0a16eba91f757e7e17e87c1fc75b873ab9611435",
+    "scope": "WP03 Library UI only; supplied-DB variant separately recorded; final mission acceptance pending",
+    "reports": {
+      "authorCounts": [
+        [
+          "1",
+          "Mara Vale",
+          "2"
+        ],
+        [
+          "2",
+          "Jules Wren",
+          "1"
+        ],
+        [
+          "3",
+          "Unassigned Author",
+          "0"
+        ]
+      ],
+      "bookTotals": [
+        [
+          "1",
+          "The Glass Orchard",
+          "19.75"
+        ],
+        [
+          "2",
+          "North Sea",
+          "10.00"
+        ],
+        [
+          "3",
+          "Uncatalogued Stories",
+          "0.00"
+        ]
+      ],
+      "mutationTotals": [
+        "16.25",
+        "20.00",
+        "10.00"
+      ]
+    },
+    "existingDatabase": {
+      "hashBefore": "2d816ca8a6b198541c511497953c08fc7849bf610298d183af718ab81ac402e5",
+      "hashAfter": "2d816ca8a6b198541c511497953c08fc7849bf610298d183af718ab81ac402e5"
+    },
+    "businessRows": {
+      "authors": [
+        {
+          "id": 1,
+          "name": "Mara Vale"
+        },
+        {
+          "id": 2,
+          "name": "Jules Wren"
+        },
+        {
+          "id": 3,
+          "name": "Unassigned Author"
+        }
+      ],
+      "books": [
+        {
+          "id": 1,
+          "catalog_code": "CAT-001",
+          "title": "The Glass Orchard",
+          "publication_date": null
+        },
+        {
+          "id": 2,
+          "catalog_code": "CAT-002",
+          "title": "North Sea",
+          "publication_date": null
+        },
+        {
+          "id": 3,
+          "catalog_code": "CAT-003",
+          "title": "Uncatalogued Stories",
+          "publication_date": null
+        }
+      ],
+      "book_authors": [
+        {
+          "book_id": 1,
+          "author_id": 1
+        },
+        {
+          "book_id": 1,
+          "author_id": 2
+        },
+        {
+          "book_id": 2,
+          "author_id": 1
+        }
+      ],
+      "copies": [
+        {
+          "id": 1,
+          "barcode": "COPY-001",
+          "book_id": 1,
+          "replacement_cost": "12.50",
+          "note": null
+        },
+        {
+          "id": 2,
+          "barcode": "COPY-002",
+          "book_id": 1,
+          "replacement_cost": "7.25",
+          "note": null
+        },
+        {
+          "id": 3,
+          "barcode": "COPY-003",
+          "book_id": 2,
+          "replacement_cost": "10.00",
+          "note": null
+        }
+      ],
+      "loans": [
+        {
+          "id": 1,
+          "copy_id": 1,
+          "checked_out": "2026-01-10",
+          "returned_at": null
+        },
+        {
+          "id": 2,
+          "copy_id": 2,
+          "checked_out": "2026-01-11",
+          "returned_at": "2026-01-18"
+        }
+      ]
+    },
+    "retries": 0
+  },
+  "suppliedRawVariant": {
+    "inputHash": "3d2695fa812d793e50a56431bcfaae40313d9e43078a8da7a52be1299c852b0b",
+    "supportedOptions": 200,
+    "exceededOptions": 201,
+    "firstNames": [
+      "Same label (id: 1)",
+      "Same label (id: 2)"
+    ],
+    "quotedIdentifiers": [
+      "shelf \"labels\"",
+      "book \"notes\"",
+      "copy title"
+    ],
+    "expectedStoredParent": 2,
+    "exceededDiagnostic": "Lookup exceeds the supported limit of 200 options. This form needs a smaller lookup source.",
+    "mode": "supplied raw existing-db variant"
+  },
+  "focusedValidation": {
+    "generatedRecordRuntime": {
+      "tests": 1,
+      "failures": 0,
+      "seconds": 18.328616334
+    },
+    "reviewGateGuards": {
+      "tests": 7,
+      "failures": 0
+    },
+    "workspaceBuild": "passed",
+    "workspaceTypecheck": "passed",
+    "strictAcceptanceTypecheck": "passed",
+    "diffScopedLint": "passed",
+    "credentials": "passed",
+    "fullHeadGate": "Actual retained JUnit505/0fail/0errors/0skips,220.83s wall; baseline comparison unverified."
+  },
+  "observations": [
+    {
+      "run_id": "wp03-library-final14",
+      "case_id": "AC-003",
+      "requirements": [
+        "FR-003",
+        "FR-004"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "9ef6b1781e12da82bf00e89f6d7dd6c6b0580298",
+      "status": "passed",
+      "expected": "UI-authored Library schema with ordered composite key, exact types, unique/restrict rules; supplied snapshot inspect/Cancel unchanged.",
+      "actual": "Schema/SQLite assertions passed; supplied snapshot hashes before/after equal; original business rows unchanged.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
+        },
+        {
+          "path": "docs/evidence/verification/library.report.png",
+          "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
+        }
+      ]
+    },
+    {
+      "run_id": "wp03-library-final14",
+      "case_id": "AC-006",
+      "requirements": [
+        "FR-007",
+        "NFR-001"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "9ef6b1781e12da82bf00e89f6d7dd6c6b0580298",
+      "status": "passed",
+      "expected": "Composite update targets one tuple; rejected uniqueness/validation/restrict operations and Cancel preserve every row.",
+      "actual": "Tuple(1,2) moved to(3,2), conflicting(1,1) update rejected atomically, original tuples restored; duplicate/catalog/barcode, amount/date, restrict and Cancel checks passed.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
+        },
+        {
+          "path": "docs/evidence/verification/library.report.png",
+          "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
+        }
+      ]
+    },
+    {
+      "run_id": "wp03-library-final14",
+      "case_id": "AC-009",
+      "requirements": [
+        "FR-009"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "9ef6b1781e12da82bf00e89f6d7dd6c6b0580298",
+      "status": "passed",
+      "expected": "Distinct book counts2/1/0; exact copy totals19.75/10.00/0.00; minimum15 and copy/NULL mutations preserve expected grain.",
+      "actual": "Reports matched literal row sets; book2 totals16.25/20.00/10.00 and threshold changes passed; NULL-cost copy did not change zero total.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
+        },
+        {
+          "path": "docs/evidence/verification/library.report.png",
+          "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
+        }
+      ]
+    },
+    {
+      "run_id": "wp03-library-final14",
+      "case_id": "AC-019",
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-017"
+      ],
+      "application": "library",
+      "mode": "ui_journey",
+      "revision": "9ef6b1781e12da82bf00e89f6d7dd6c6b0580298",
+      "status": "passed",
+      "expected": "Duplicate names preserve selectable stable identity; quoted identifiers round-trip;200 lookup complete and201 diagnostic explicit without writes.",
+      "actual": "UI author4 association persisted to key4 and preserved author1; raw quoted child stored parent2 and exact text;200 options usable,201 typed diagnostic displayed and rows unchanged.",
+      "evidence": [
+        {
+          "path": "docs/evidence/verification/library.results.json",
+          "sha256": "d1b560b1f004990b004751759c135521c36cbb5f48c209df55b30b26e97d3ac3"
+        },
+        {
+          "path": "docs/evidence/verification/library.report.png",
+          "sha256": "16c4a97b90d4498dad85f7834164d31682d80a4a0e303148001d7de7f005d4db"
+        },
+        {
+          "path": "docs/evidence/verification/library.red.json",
+          "sha256": "0a4a5732caf82afaca06335a903ab2bb0cf68a99a3802573c5146b7dfe078935"
+        }
+      ]
+    }
+  ],
+  "defects": {
+    "LIB-LOOKUP-LABEL": "repaired; final UI stores author4; generated regression includes literal suffix collision",
+    "LIB-LOOKUP-LIMIT": "repaired;200 usable/201 explicit; unknown errors remain generic"
+  },
+  "priorAttempts": {
+    "01-09": "Retained harness development failures; base09 passed before new duplicate-author variant; no final-code claim.",
+    "10-11": "Retained mandatory duplicate-label/masked-limit red observations at3d58ea6.",
+    "12": "Both initial repair UI scenarios passed; superseded by final collision-safe code.",
+    "13": "Base passed; second owner startup infrastructure-invalidated by overlapping shared build; not a clean replay.",
+    "14": "Final committed source9ef6b17;both tests passed zero retries; all owned processes awaited before handoff."
+  },
+  "capturedHead": {
+    "revision": "b133849a7158bedb3f152a7f3280d636e1f6cf99",
+    "tests": 505,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "wallSeconds": 220.82901954300002,
+    "comparison": "source_mismatch: invalid baseline text versus JUnit head; actual positive head JUnit inspected"
+  },
+  "proofCorrection": "Documentation-only: source/test/fixture hashes remain provenance; evidence references point only to sanitized public result/image/red artifacts. Validated code and captured head are unchanged."
+}

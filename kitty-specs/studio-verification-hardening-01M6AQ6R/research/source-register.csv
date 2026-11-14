@@ -1,0 +1,6 @@
+source_id,location,kind,provenance
+S1,fe22d9b06be0967b1dec89c352d2979787330f34,repository baseline,"historical milestone, not fresh proof"
+S2,data-model.md,fixture contract,user-delegated bounded Workshop/Library examples
+S3,apps/studio/src/source-editor/index.tsx,source inspection,candidate output mismatch; reproduction pending
+S4,tests/e2e/project-wizard/workflow.spec.ts,existing browser test,"reuse real-control approach, not captured result"
+S5,contracts/acceptance-run.md,mission decision,explicit allowed preparation and evidence boundaries

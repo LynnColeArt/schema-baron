@@ -1,0 +1,26 @@
+{
+  "entries": [
+    {
+      "created_at": "2026-11-01T04:53:12.097456Z",
+      "decision_id": "01M6AQ8NS1KBBKDQHYA1VZGMQK",
+      "final_answer": "User confirmed: Yes, create a Spec Kitty mission for verification and hardening; use Workshop Planner and a second unrelated app, define the acceptance checklist and finish line, and proceed with best judgment. Delegated planning choices: Library Catalog as the second fixture; clean UI-only authoring, explicit supported maintenance commands, preserved user studies, and no acceptance credit for hidden repairs or historical evidence.",
+      "input_key": "acceptance_scope",
+      "mission_id": "01M6AQ6RP4PE10SYK4Z9596CGH",
+      "mission_slug": "studio-verification-hardening-01M6AQ6R",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Record the user-confirmed two-application verification and hardening scope, with delegated fixture and acceptance choices.",
+      "rationale": null,
+      "resolved_at": "2026-11-01T04:54:14.712189Z",
+      "resolved_by": null,
+      "slot_key": "specify.intent.delegated-scope",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    }
+  ],
+  "mission_id": "01M6AQ6RP4PE10SYK4Z9596CGH",
+  "version": 1
+}

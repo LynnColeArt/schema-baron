@@ -1,0 +1,33 @@
+# WP03 independent review cycle 2
+
+Reviewer: codex / reviewer-renata. Repair reviewed: `34c54a6`; bookkeeping merge: `54175b0`. Fresh generated review prompt: invocation `dacbc122d1f14fa0b50cd4bbe11722bb`, read in full. The generated mission-base diff was inspected with inherited approved WP01/WP02 treated as dependency code; cycle-2 source attribution is `34c54a6^..34c54a6`. Review scope is the exported callable core/storage package; HTTP/MCP/UI/generation integration remains later work.
+
+## Fresh observed verification
+
+- Pinned Node 24.22.1 / npm 11.19.1: `npm run verify` passed native SQLite 3.53.4 insert/transaction/backup, implemented-package typing/build, credentials, dependency evidence and all 110 tests in seven files. Later packages explicitly report NOT IMPLEMENTED. This includes 36 WP03 tests, 20 storage boundary regressions and four real subprocess hard-exit/restart boundaries. No dependency installation or upgrade was run.
+- Independently executed the original parent/child-root public-package reproduction in both directions, keeping the metadata-stage callback as a scheduling hook only. Second opens now return PROJECT_BUSY; the scheduled second batch fails; the first batch commits revision 2 and independent JSON contains only its acknowledged page. After first-store close, second-store open sees revision 2 and its next batch produces revision 3 with both acknowledged edits retained. Different root IDs and normalized `nested/../nested` / `./` locators share the same actual-file exclusion boundary.
+- Independently exercised ten outside-file cases: symbolic and hard links at `metadata.sqlite`, `writer.sqlite`, `metadata.sqlite-wal`, `writer.sqlite-journal`, and `.schema-baron-writer.sqlite-shm`. Every constructor refused PATH_OUTSIDE_ROOT. Independent before/after bytes matched and a separate read-only SQLite oracle saw only the original sentinel table. The committed boundary suite additionally checks every native SQLite main/journal/WAL/SHM leaf and all definition-lease companion symlinks.
+- Independently verified the valid counterpart: two stores with parent/child approved roots can create and mutate different definition files concurrently, preserving project isolation.
+- Independently interrupted A after durable intent, closed it, then held the same definition through B's child-root locator. A's recovery constructor refused PROJECT_BUSY before altering the JSON or metadata revision; an independent SQLite oracle retained journal count 1 / revision 1. After B closed, A reopened successfully, rolled forward once to revision 2, and the original edit retry returned success. This also verified failed-constructor lease cleanup.
+
+These are 14 independent disposable-data scenarios beyond the committed suite. All used the built public `@schema-baron/core` entry point, real temporary JSON/SQLite, and strict Node assertions. No implementation, task metadata, canonical review-cycle render or legacy feedback file was edited during review.
+
+## Original findings resolved
+
+1. **Overlapping roots / lost acknowledged edits:** actual-definition leases are keyed by a normalized resolved file path and stable sidecar, acquired before open/read, save freshness checks, export replacement and recovery. They remain held until close, independent of atomic JSON replacement. Hard-linked definition aliases are refused. Both exact root directions and post-release behavior pass.
+2. **Metadata SQLite symlink escape:** every metadata/root/definition SQLite leaf and its `-journal`, `-wal`, `-shm` companions pass the same path/link checks before native open. Symbolic and hard links are refused while outside bytes/tables remain intact. Constructor cleanup releases any acquired leases after recovery failure.
+
+The stated trusted-directory/root-configuration assumption still applies; no new untrusted-directory race guarantee is invented.
+
+## Required anti-pattern checklist
+
+1. **Dead code — PASS.** Targeted production call-site searches show project instantiates storage, registry and plan repository; registered handlers invoke batch/storage; plans invoke canonical model validators/storage. Root exports provide the callable staged API. Repair helpers `databasePath`, `exclusiveLease`, and `acquireDefinition` all have live constructor/read/write/recovery callers. The event interface is exported type support.
+2. **Synthetic-fixture test — PASS.** Boundary tests call the built exported package; revision/lifecycle tests call production core; subprocess crash tests terminate native Node and independently query file/SQLite state. Inputs are fixtures, outcomes are observed.
+3. **Silent empty return — PASS.** Optional missing lookups and empty diagnostics/collections have intentional meanings. Interrupted saves block mutations and report recovery; path/lease failures fail loudly. No new silent-failure return was introduced.
+4. **FR coverage — PASS for WP03's scoped responsibilities.** C-003 uses approved model schemas; FR-001 lifecycle and secret-free definitions, FR-029 stale/invalid atomicity, NFR-003 preservation/recovery and NFR-007 shared-command semantics have real assertions. FR-005 committed revision isolation and FR-025 immutable plan freshness/hash/fingerprint/acknowledgement foundations are exercised; later UI drafts/undo and actual generation preview/apply are not claimed complete by this package.
+5. **Frozen surface — PASS.** Repair changes only owned storage source/tests and project README/EVIDENCE. No canonical model, contract, doctrine, or reference asset changes. Prior minimal package integration was already reviewed.
+6. **Locked decision — PASS.** Original no-lost-acknowledged-update and no-outside-write violations are closed by executable tests and independent probes. No new transport, credential persistence, alternate model, arbitrary SQL endpoint or implicit generated-application claim was introduced.
+7. **Shared-file ownership — PASS.** Repair stays in owned surfaces. Existing manifest/export/build/lock/evidence integration remains documented in project README/EVIDENCE; no new shared bootstrap edits or dependencies occur in the repair.
+8. **Production fragility — PASS.** New throws enforce explicit path/link/lease constraints and preserve data. Busy recovery preserves durable journal and permits retry after lease release. Failed constructor releases acquired locks. No transient error is represented as successful persistence.
+
+Verdict: **APPROVE**. Both cycle-1 blockers are resolved, the original package behaviors remain verified, and no additional blocking finding was observed within WP03 scope.

@@ -1,0 +1,48 @@
+{
+  "retainedRoot": "/tmp/wp20-browser-IZ8Pyx",
+  "oracle": "Python sqlite3 separate connection, read-only, after browser CRUD",
+  "finalRows": [
+    [
+      "A",
+      1,
+      "Edited"
+    ],
+    [
+      "B",
+      1,
+      "Other"
+    ]
+  ],
+  "twoRegenerationsAuthoredHashesIdentical": true,
+  "trees": [
+    {
+      "tree": "app",
+      "authoredHashes": {
+        "authored/action.ts": "894750c1b50fbfdd15188711a5a083e5ef82a0180054bf871e3c567949749c08",
+        "authored/event.ts": "ee3b7d86b11df96fdb6196ee4cac601717b32db0c78a1a03167cf7c3a113aea8",
+        "authored/service.ts": "bf2ec51051670b955227ed6dbde6fdd49578dada87ac6d47591a0711b613be9d",
+        "authored/validator.ts": "d79837ee77a43e22147a6c99d9e9eb5b213b9c593ec529d3d33d2affbfe0cb2f"
+      }
+    },
+    {
+      "tree": ".schema-baron-backup-4279e9fa-4f52-4881-811c-2194a260ede4",
+      "authoredHashes": {
+        "authored/action.ts": "894750c1b50fbfdd15188711a5a083e5ef82a0180054bf871e3c567949749c08",
+        "authored/event.ts": "ee3b7d86b11df96fdb6196ee4cac601717b32db0c78a1a03167cf7c3a113aea8",
+        "authored/service.ts": "bf2ec51051670b955227ed6dbde6fdd49578dada87ac6d47591a0711b613be9d",
+        "authored/validator.ts": "d79837ee77a43e22147a6c99d9e9eb5b213b9c593ec529d3d33d2affbfe0cb2f"
+      }
+    },
+    {
+      "tree": ".schema-baron-backup-e93116d3-b4d2-4814-bfc2-c26203259026",
+      "authoredHashes": {
+        "authored/action.ts": "894750c1b50fbfdd15188711a5a083e5ef82a0180054bf871e3c567949749c08",
+        "authored/event.ts": "ee3b7d86b11df96fdb6196ee4cac601717b32db0c78a1a03167cf7c3a113aea8",
+        "authored/service.ts": "bf2ec51051670b955227ed6dbde6fdd49578dada87ac6d47591a0711b613be9d",
+        "authored/validator.ts": "d79837ee77a43e22147a6c99d9e9eb5b213b9c593ec529d3d33d2affbfe0cb2f"
+      }
+    }
+  ],
+  "strictStandaloneLog": "/tmp/wp20-browser-IZ8Pyx/strict-output.log",
+  "managedWP21StopProof": "pending provider; focused port refusal test only"
+}

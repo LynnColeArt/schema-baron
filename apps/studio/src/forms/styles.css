@@ -1,0 +1,113 @@
+.form-wizard {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: calc(100dvh - 90px);
+  width: min(620px, calc(100vw - 64px));
+}
+.form-wizard nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 0 10px;
+}
+.form-wizard nav button {
+  font-size: 12px;
+}
+.form-wizard [aria-current="step"] {
+  font-weight: bold;
+  background: #dce7f5;
+}
+.wizard-body {
+  overflow: auto;
+  min-height: 0;
+  padding: 0 6px 8px 0;
+}
+.form-wizard .dialog-actions {
+  flex-shrink: 0;
+  border-top: 1px solid #b7bec8;
+  padding-top: 10px;
+  background: #f3f3f3;
+}
+.wizard-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.form-wizard fieldset {
+  margin: 10px 0;
+  padding: 8px;
+}
+.form-wizard .form-summary {
+  display: block;
+  padding: 8px;
+}
+.wizard-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 10px 0;
+}
+.wizard-options > span {
+  min-width: 100px;
+}
+.wizard-options label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.form-properties fieldset {
+  margin: 8px;
+  padding: 6px;
+  min-width: 0;
+}
+.form-properties select,
+.form-properties input {
+  max-width: 100%;
+  min-width: 0;
+}
+.form-properties .property-row {
+  align-items: center;
+}
+.form-properties .mapping {
+  display: grid;
+  gap: 6px;
+  padding: 6px;
+}
+.form-properties .mapping label {
+  display: grid;
+  gap: 3px;
+}
+.form-properties .form-summary {
+  overflow-wrap: anywhere;
+}
+dialog:has(.form-wizard) {
+  width: min(690px, calc(100vw - 32px));
+  overflow: hidden;
+}
+dialog[open]:has(.form-wizard) {
+  display: flex;
+  flex-direction: column;
+}
+.form-wizard {
+  width: 100%;
+  max-height: none;
+  flex: 1;
+}
+.form-wizard nav {
+  flex-shrink: 0;
+}
+.form-wizard h3 {
+  font-size: 15px;
+  margin: 6px 0;
+}
+
+.scalar-error {
+  display: block;
+  color: #9f2525;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 3px 0;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,13 @@
+import { cookies } from 'next/headers';
+import { authConfig } from '../server/auth-config';
+import { sessionCookie, store } from '../server/auth';
+import { SignOut } from './sign-out';
+export async function IdentityHeader({caption,returnTo}:{caption:string;returnTo:string|undefined}) {
+ const login=authConfig.logins.find(l=>authConfig.routes.find(r=>r.id===l.pageId)?.access==='public'&&l.actions.some(a=>a.operation==='login'&&a.access==='public'));
+ if(!login)return <header><p role="alert">Configure a public Login form.</p></header>;
+ const route=authConfig.routes.find(r=>r.id===login.pageId)!;
+ const action=login.actions.find(a=>a.operation==='login'&&a.access==='public')!;
+ const logout=login.actions.find(a=>a.operation==='logout');
+ const token=(await cookies()).get(sessionCookie)?.value;let username:string|undefined;if(token){const identity=store();try{username=identity.username(token);}finally{identity.close();}}
+ return <header role="banner" aria-label="Visitor identity">{username?<><span>{caption} {username}</span>{logout&&<SignOut actionId={logout.id} label={logout.label??'Sign out'}/>}</>:<a href={route.path+(returnTo?'?returnTo='+encodeURIComponent(returnTo):'')}>{action.label??'Sign in'}</a>}</header>;
+}

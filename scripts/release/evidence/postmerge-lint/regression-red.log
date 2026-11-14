@@ -1,0 +1,58 @@
+
+ RUN  v5.0.5 /home/lynn/projects/schema-baron/.worktrees/schema-baron-studio-01M5W3Q9-lane-z
+
+ ❯ scripts/workspace/verify.test.ts (12 tests | 1 failed | 11 skipped) 67ms
+   × real Git lint preserves verbatim evidence captures while rejecting authored whitespace 66ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/workspace/verify.test.ts > real Git lint preserves verbatim evidence captures while rejecting authored whitespace
+AssertionError: docs/evidence/legacy/output.log:1: trailing whitespace.
++verbatim result 
+docs/evidence/legacy/output.log:2: new blank line at EOF.
+docs/evidence/legacy/worker.trace:1: trailing whitespace.
++verbatim result 
+docs/evidence/legacy/worker.trace:2: new blank line at EOF.
+packages/example/tests/roundtrip/evidence/nested/output.log:1: trailing whitespace.
++verbatim result 
+packages/example/tests/roundtrip/evidence/nested/output.log:2: new blank line at EOF.
+packages/example/tests/roundtrip/evidence/worker.trace:1: trailing whitespace.
++verbatim result 
+packages/example/tests/roundtrip/evidence/worker.trace:2: new blank line at EOF.
+scripts/release/evidence/output.log:1: trailing whitespace.
++verbatim result 
+scripts/release/evidence/output.log:2: new blank line at EOF.
+scripts/release/evidence/worker.trace:1: trailing whitespace.
++verbatim result 
+scripts/release/evidence/worker.trace:2: new blank line at EOF.
+tests/e2e/roundtrip/evidence/output.log:1: trailing whitespace.
++verbatim result 
+tests/e2e/roundtrip/evidence/output.log:2: new blank line at EOF.
+tests/e2e/roundtrip/evidence/worker.trace:1: trailing whitespace.
++verbatim result 
+tests/e2e/roundtrip/evidence/worker.trace:2: new blank line at EOF.
+git failed (2)
+: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ scripts/workspace/verify.test.ts:144:62
+    142|   const lint = () => spawnSync(process.execPath, [script, 'lint'], { c…
+    143|   const captured = lint();
+    144|   expect(captured.status, captured.stdout + captured.stderr).toBe(0);
+       |                                                              ^
+    145|   for (const path of captures) expect(readFileSync(join(fixture, path)…
+    146|   for (const path of authored) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  12:36:28
+   Duration  209ms (tests 56%, transform 34%, import 7%, worker 3%)
+

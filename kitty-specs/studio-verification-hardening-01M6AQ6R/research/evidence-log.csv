@@ -1,0 +1,6 @@
+finding_id,source_id,finding,disposition
+R1,S1,Historical milestone checks do not establish this mission acceptance,Require fresh final-revision runs
+R2,S2,Composite association and exact totals challenge schema assumptions,Library second fixture
+R3,S3,Code source output initializes to output:app,AC-011 reproduce before repair
+R4,S4,Wizard browser tests exercise real controls but do not prove the entire journey,WP02/03 cold UI paths
+R5,S5,Parity/fault or hidden model edits cannot supply UI authoring proof,Separate modes; fail-closed ledger

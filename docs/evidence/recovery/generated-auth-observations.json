@@ -1,0 +1,22 @@
+{
+  "directCases": [
+    "public list/read",
+    "protected read before DB",
+    "protected Search direct GET",
+    "protected navigation GET",
+    "anonymous write",
+    "owner capability rejected",
+    "cross origin",
+    "CSRF",
+    "consistent missing/wrong login",
+    "external/undeclared/duplicate return rejected",
+    "typed selected key retained",
+    "forged action/key rejected",
+    "authenticated write oracle",
+    "rotation",
+    "expiry",
+    "logout revocation",
+    "rate limit",
+    "source/client secret scan"
+  ]
+}

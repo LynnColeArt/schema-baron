@@ -1,0 +1,16 @@
+import {mkdtempSync,rmSync} from 'node:fs';
+import {join} from 'node:path';
+import assert from 'node:assert/strict';
+import Database from '/tmp/wp10-browser-bn2O50/output/instruments/node_modules/better-sqlite3/lib/index.js';
+const root=mkdtempSync('/tmp/wp10-review-reads-');process.env.APPLICATION_DATABASE_PATH=join(root,'read.sqlite');
+const db=new Database(process.env.APPLICATION_DATABASE_PATH);db.exec('CREATE TABLE "odd "" select"("key" INTEGER PRIMARY KEY, "amount" TEXT, "scaled" INTEGER, "active" INTEGER)');
+const insert=db.prepare('INSERT INTO "odd "" select" VALUES(?,?,?,?)');insert.run(1,'1000000000000000000.25',100000000000000025n,1);insert.run(2,'9.75',975n,0);insert.run(3,null,null,null);db.close();
+const {readGrid}=await import('/tmp/wp10-browser-bn2O50/output/instruments/server/repository.ts');const {formatValue}=await import('/tmp/wp10-browser-bn2O50/output/instruments/server/format.ts');
+const fields=[{id:'id',name:'key',type:{kind:'integer'},nullable:false},{id:'amount',name:'amount',type:{kind:'decimal',scale:2,encoding:'text'},nullable:true},{id:'scaled',name:'scaled',type:{kind:'decimal',scale:2,encoding:'scaled-integer'},nullable:true},{id:'active',name:'active',type:{kind:'boolean'},nullable:true}];
+const base={table:'odd " select',fields,search:[],sorting:[{fieldId:'scaled',direction:'asc'}],pageSize:20};
+assert.equal(formatValue(100000000000000025n,fields[2].type,'currency'),'$1000000000000000.25');assert.equal(formatValue(null,fields[1].type,'plain'),'—');
+const ordered=readGrid(base,{},'g');assert.deepEqual(ordered.rows.map(r=>r.id),[3n,2n,1n]);
+const scaled=readGrid({...base,search:[{fieldId:'scaled',operator:'gte'}]},{'g:filter:scaled':'10.00'},'g');assert.deepEqual(scaled.rows.map(r=>r.id),[1n]);
+const text=readGrid({...base,search:[{fieldId:'amount',operator:'gte'}]},{'g:filter:amount':'10.00'},'g');
+console.log(JSON.stringify({largeScaledFormatting:'passed',quotedIdentifiers:'passed',scaledOrdering:'passed',scaledFilter:'passed',nullableTextDecimalFilter:{rows:text.rows,error:text.error}},(_,v)=>typeof v==='bigint'?String(v):v));
+rmSync(root,{recursive:true,force:true});

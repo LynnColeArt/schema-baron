@@ -1,0 +1,31 @@
+Review migration
+
+4 SQL steps · source revision 74 · expires 2026-10-27T14:43:24.483Z
+
+Exact proposal identity
+Reviewed SQL
+CREATE TABLE "__baron_409005998559405a80777a72363d8768" ("id" INTEGER NOT NULL, "author_id" INTEGER NOT NULL, "title" TEXT NOT NULL, "royalty" TEXT NOT NULL, "editor_note" TEXT, PRIMARY KEY ("id" ASC), CONSTRAINT "d45a597d-8eab-4105-9f91-59905c15f732" FOREIGN KEY ("author_id") REFERENCES "authors" ("id") ON UPDATE RESTRICT ON DELETE RESTRICT)
+INSERT INTO "__baron_409005998559405a80777a72363d8768" ("id", "author_id", "title", "royalty", "editor_note") SELECT "id" AS "id", "author_id" AS "author_id", "title" AS "title", "royalty" AS "royalty", NULL AS "editor_note" FROM main."publications"
+DROP TABLE "publications"
+ALTER TABLE "__baron_409005998559405a80777a72363d8768" RENAME TO "publications"
+Impact and dependencies
+
+Add column editor_note
+
+create · 2 affected rows · object f52a6dc4-34a6-4477-ae0f-e96d3238bd25 · impact 3beec6b6-1fcb-4340-bb55-e26eec651a42
+Backup and recovery
+
+Required SQLite online backup in approved root catalog-6MrH23. The executor allocates the exact backup location during apply; no backup has been made by preview.
+
+Acquire the migration lease and recheck schema/data fingerprints under a write transaction before changing data.
+
+Create and verify an SQLite online backup in the disclosed owner-approved root before DDL.
+
+Set foreign_keys OFF before BEGIN for a rebuild; execute all reviewed steps in one transaction and reject failed foreign_key_check or integrity_check before commit. Restore the original connection settings.
+
+On failure roll back the transaction. Inspect the durable migration journal and database marker to distinguish rollback from a committed migration before retrying.
+
+Restoring a backup requires a separately reviewed restore plan and exact acknowledgements; preview never performs a restore.
+
+Cancel review
+Apply reviewed migration

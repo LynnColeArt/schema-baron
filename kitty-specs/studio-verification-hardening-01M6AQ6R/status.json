@@ -1,0 +1,315 @@
+{
+  "event_count": 73,
+  "last_event_id": "01M6FSDHGGPEYQZ4TCN49J4GWW",
+  "materialized_at": "2026-11-03T04:07:00.880984+00:00",
+  "mission_number": "2",
+  "mission_slug": "studio-verification-hardening-01M6AQ6R",
+  "mission_type": "software-dev",
+  "summary": {
+    "approved": 0,
+    "blocked": 0,
+    "canceled": 0,
+    "claimed": 0,
+    "done": 9,
+    "for_review": 0,
+    "in_progress": 0,
+    "in_review": 0,
+    "planned": 0
+  },
+  "work_packages": {
+    "WP01": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 1,
+      "lane": "done",
+      "last_event_id": "01M6FSD515BDAGY2849PNQV3ED",
+      "last_transition_at": "2026-11-03T04:06:48.101036+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: 14 Node-native foundation tests, strict scoped TS, lint and credential checks passed; all acceptance remains Not run. Preserved original incompatible pytest/JUnit baseline; real head Vitest gate required.",
+        "Independent review rejected: arbitrary lexical observation IDs can hide a later failure; lane-local broad verification remains blocked",
+        "Cycle2: fixed R1 ordering with persisted sequence/explicit retest;19 harness tests, strict lane-local TS, lint, credentials passed. Pinned lane-local npm ci --ignore-scripts/native verify/build passed; workspace links resolve lane. Original pytest baseline and first496/32failed head retained. Run actual provisioned head gate; no product acceptance claim.",
+        "Independent cycle2 review approved WP01 foundation only: R1 global immutable ordering/retest regressions and original red repro now correct;19 focused tests pass. R2 lane-local links/build/native verified and actual head JUnit496/0failures/0errors; first496/32failure retained. Original pytest baseline comparison remains unverified/source_mismatch. All application acceptance remains Not run. Reviewer /root/verification_foundation_review differs from implementation author."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review": null,
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP01-acceptance-foundation/review-cycle-2.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP01-acceptance-foundation/review-cycle-2.md",
+        "reviewer": "verification_foundation_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 818252,
+      "shell_pid_created_at": "1793625153.73",
+      "subtasks": {
+        "T001": "done",
+        "T002": "done",
+        "T003": "done",
+        "T004": "done",
+        "T005": "done"
+      }
+    },
+    "WP02": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSD6N51XW9ET9Y0J5DCMRA",
+      "last_transition_at": "2026-11-03T04:06:49.765465+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Workshop UI journey passes on committed8e1546e with zero retries; 2 action-label tests/type/build/lint/credentials pass. Scoped sanitized proof3d58ea6; final mission acceptance remains pending. Await real broad gate; original hostNode26 baseline invalid/unverified.",
+        "Independent review: 2 formatter tests pass; fresh Workshop browser 1 pass/zero retries (33.6s total). No blocking findings. Anti-pattern checklist 1-8 PASS within WP02 scope; no hidden writes; read-only observers; evidence hashes/privacy verified. Approved dependency base79f533b. Parent-approved nonoverlap docs/evidence/verification/workshop.* exception recorded. Actual head JUnit498/0/0 verified; original Node26/text baseline invalid, regression comparison UNVERIFIED/source_mismatch, not PASS. Full direct-handler AC007/AC019 edge matrix, Library and final cycles remain later mission work. Detailed review .local/wp02/independent-review/verdict.md."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP02-workshop-ui-journey/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP02-workshop-ui-journey/review-cycle-1.md",
+        "reviewer": "verification_workshop_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 1359317,
+      "shell_pid_created_at": "1793627272.98",
+      "subtasks": {
+        "T006": "done",
+        "T007": "done",
+        "T008": "done",
+        "T009": "done",
+        "T010": "done"
+      }
+    },
+    "WP03": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSD8650FZAW0WHZSF57SVH",
+      "last_transition_at": "2026-11-03T04:06:51.333321+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: final source9ef6b17 Library UI2/2 zero retries; generated lookup label/limit/collision repairs with red records and runtime regression; scoped proofb133849; generator/docs/tooling exceptions coordinated. Capture and inspect actual head JUnit; baseline missing Vitest remains unverified.",
+        "Independent Reviewer Renata approval at 5f10082 (application/test code unchanged since 9ef6b17). Reviewed WP03 diff relative approved WP02 3d58ea6, including coordinated WP07 generator and root-approved review-gate/documentation exceptions. Fresh isolated Library UI replay: 2 passed, zero retries (40.8s/21.5s); evidence /tmp/wp03-independent-library-ui.xml and /tmp/wp03-independent-library-ui. Independent emitted Record runtime plus real FS/process review guards: 8 passed in 17.92s. Canonical validator accepted all four scoped observations and real artifact hashes/privacy heuristic. Actual retained head JUnit census 505/0fail/0error/0skip verified; SOURCE_MISMATCH baseline comparison remains unverified; latest-source cold full run not claimed. Anti-pattern checks: dead code PASS (emitted live callers); synthetic-fixture PASS (real Studio/generated app and emitted SQLite runtime); silent empty return PASS; FR coverage PASS for WP03 portions; frozen surface PASS; locked decision PASS; shared ownership PASS with explicit exceptions; production fragility PASS (typed safe bound diagnostic, unknown errors generic). No source edits, private model/SQL rescue, live-study mutation, dependency change or hosted claim. Approval is WP03-only; later parent navigation, migrations/recovery/auth matrices and final two-cycle mission verdict remain separate work."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP03-library-generality/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP03-library-generality/review-cycle-1.md",
+        "reviewer": "verification_library_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 2441072,
+      "shell_pid_created_at": "1793629632.53",
+      "subtasks": {
+        "T011": "done",
+        "T012": "done",
+        "T013": "done",
+        "T014": "done",
+        "T015": "done"
+      }
+    },
+    "WP04": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSD9PWQWJEB5FP4GZFZN7M",
+      "last_transition_at": "2026-11-03T04:06:52.892814+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "WP04 access proof ready: exact code92e9246, proof3a30922; fresh two-app UI plus JSON/RSC validCRUD, anonymous/origin, expiry/revocation, selected-parent and cross-project matrix passed without retries. Diff-scoped lint exit0; strict TS/build/typecheck/credentials/dependencies/audit pass; AC015 broader recovery remains unverified.",
+        "Independent Reviewer Renata: WP04 passed at source 92e9246 / evidence fde8642. Five emitted-action tests and fresh two-app real HTTP/UI matrix pass (actual JUnit 1, zero failures/errors/skips/retries, 83.116667s); retained canonical actual JUnit verified 79 suites/510 testcases, zero failures/errors/skips. All eight anti-pattern checks PASS; schema/reference/privacy/source/artifact hashes validated. Root-approved journey extraction, ordinary Library copies navigation and narrow WP07 Record catch diagnostic exception documented in access.md. AC005/006/007 per app pass; AC015 aggregate remains unverified for WP06/WP08, no final mission/two-cycle claim. Private review /tmp/wp04-independent-review-20261102.md."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP04-access-boundaries/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP04-access-boundaries/review-cycle-1.md",
+        "reviewer": "verification_access_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 3781976,
+      "shell_pid_created_at": "1793632568.88",
+      "subtasks": {
+        "T016": "done",
+        "T017": "done",
+        "T018": "done",
+        "T019": "done",
+        "T020": "done"
+      }
+    },
+    "WP05": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 1,
+      "lane": "done",
+      "last_event_id": "01M6FSDB7M8JA7EGDNNVGR28FA",
+      "last_transition_at": "2026-11-03T04:06:54.452859+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for independent review: exact-source owner UI recovery 4/4, 30 real received UI revisions and timings, explicit conflict and project/business preservation; focused tests 44/44; diff lint exit 0; production 5870c0c, UI source 659f224; final NFR verdict remains WP08.",
+        "Independent review: hidden obsolete decimal scale/precision buffer blocks valid logical-type change Save; fresh 4-case UI and 44 focused tests otherwise pass.",
+        "Cycle2 R1 repaired at schema buffer lifecycle; source5164a11 and exact UI sourcef6ecb1d. Five UI cases pass with original30 actual received revisions, all editor recovery and keyboard negatives, simultaneous other-decimal preservation, undo/redo and business/project comparisons. Focused46/46, type/build pass, diff lint exit0, credentials exit0. Ready for independent re-review; final aggregate verdict remains WP08.",
+        "Independent cycle-2 review passed at 48ba82773fdd031846a5d9fafe1152a526af51c8: R1 obsolete decimal-buffer Save regression fixed generically; other active unselected decimal buffers retained/rejected, undo/redo model semantics explicit. Fresh UI 5/0/0/0, zero retries, 74.389s; focused 46/46. Actual retained canonical JUnit 507/0/0/0 hash verified; historical/current evidence hashes and canonical observation shape/privacy validated. Anti-patterns: dead code PASS (live helper/hook callers); synthetic fixture PASS (real UI/SSE/read-only independent oracle); silent empty return PASS (documented focus metadata fallback); FR coverage PASS within WP scope; frozen surface PASS; locked decisions PASS; shared ownership PASS (coordinated Schema index/state/tests, Query index and drafts.* exceptions); production fragility PASS (handled actionable validation). Mixed Workshop page/30-notification and Library Schema/Control/Query owner proof only; full Both-app journeys/aggregation/final NFR verdict remain WP08. Independent author/reviewer; no source edits or self-review fallback."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review": null,
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP05-draft-render-stability/review-cycle-2.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP05-draft-render-stability/review-cycle-2.md",
+        "reviewer": "verification_drafts_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 246427,
+      "shell_pid_created_at": "1793634136.53",
+      "subtasks": {
+        "T021": "done",
+        "T022": "done",
+        "T023": "done",
+        "T024": "done",
+        "T025": "done"
+      }
+    },
+    "WP06": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSDCTQR8DT5C0VFW3GTPGF",
+      "last_transition_at": "2026-11-03T04:06:56.087583+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Source865bcc3; clean scoped acceptance3 and focused23 pass; sanitized recovery/parity observations validated; ready for independent review",
+        "Independent reviewer-renata approval: source865bcc3559410426cffdefb96f02fbae91ca91a5, evidenceefbb544; independently24 focused and3 browser tests passed plus distinct-ID fresh MCP/direct adversarial probes. Structured review commit3e0eb9b. Shared app-independent fault proof explicitly distinguished from schema-specific UI journeys. Narrow recovery evidence ownership exception authorized by coordinator; no product edits, waiver or self-review fallback."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP06-recovery-and-parity/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP06-recovery-and-parity/review-cycle-1.md",
+        "reviewer": "verification_recovery_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 1125041,
+      "shell_pid_created_at": "1793635562.24",
+      "subtasks": {
+        "T026": "done",
+        "T027": "done",
+        "T028": "done",
+        "T029": "done",
+        "T030": "done"
+      }
+    },
+    "WP07": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSDECZ7QKTHY4JVM4FMR8R",
+      "last_transition_at": "2026-11-03T04:06:57.695082+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Validated source 60ad843; both UI regeneration and independent exported app phases passed 2/2 with zero failures/skips; sanitized evidence 9156a56; independent review requested.",
+        "Independent Reviewer Renata approved scoped HEAD 9156a5619ffa14ec84cf01c2af09c3c1bcac796b (product 53bc410, test fix60ad843). Fresh separate pinned regeneration2/2 and independence2/2, zero failures/errors/skips; complete original journeys and two preservation cycles each, Code-authored validator behavior, separate owned-source conflict/restoration, default/snapshot inventories, cross-project source reads, external private DB/identity, owner unavailable and owned runtime exit verified. Private review proof: /tmp/schema-baron-wp07-review.kaQqqu/review-summary.json. Missing/stale/consumed handoffs all reject2/2 before deployment. Supplementary runtime-ui/export/recovery4 files15 tests pass. Seven canonical observations and linked hashes validated; author2+2 clean XML hashes verified; retained timeout attempt correctly has0failure/2error. Canonical gate XML verified513 cases0failure/error/skip SHA03ddda14746936b734c73eced9925346b642d26ec046cac31f36485ae864f6f5. Anti-pattern checklist: dead code PASS (SourceEditor workspace caller; helper test-only); synthetic-fixture PASS; silent-empty-return N/A (none new); FR coverage PASS scoped T031-T035/AC011-013 and predecessor AC016 fault proof; frozen surface PASS; locked decision PASS; shared-file ownership PASS (approved portability helper/docs exceptions); production fragility N/A (no new production throws). No source edits; only reviewer-generated recovery evidence restored to initial clean baseline after private preservation. This scoped approval is not final two-cycle mission readiness; WP08 CI Chromium ordering and explicit regeneration-to-independence runner wiring remain separately tracked."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP07-regeneration-and-independence/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP07-regeneration-and-independence/review-cycle-1.md",
+        "reviewer": "verification_independence_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 2028866,
+      "shell_pid_created_at": "1793638224.37",
+      "subtasks": {
+        "T031": "done",
+        "T032": "done",
+        "T033": "done",
+        "T034": "done",
+        "T035": "done"
+      }
+    },
+    "WP08": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSDFYYSHPQCFY97YCM5B64",
+      "last_transition_at": "2026-11-03T04:06:59.294443+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Candidate ready: qualified code ca1a039; two complete fresh cycles, current automated and legacy checks; AC-020 remains pending independent WP09. Evidence: docs/evidence/verification/schema-baron-final-CwG5Na/report.json",
+        "Independent Reviewer Renata (verification_final_review): WP08 approved at qualified ca1a03910d7ab72f874d0e22829068d3f09e30a2; proof aa41854e0ecb716f480b858b6597ba81c48abb89; later provenance/admission docs only. Independent Node 28/28 passed; prior separate real-ledger finalization probe confirmed actual canonical CLI pending/partial rejection and two-linked-review completion without manual matrix promotion. Verified 37 public check/phase hashes, 20 source hashes against qualified git blobs, exact private 70-observation candidate matrix, both zero-retry nine-phase clean cycles, and actual admission JUnit 513 cases/79 suites/0 failures/errors/skips. Anti-pattern checklist: dead code PASS (runner/CI callers); synthetic fixture PASS (real UI/protocol boundaries, synthetic report tests not application proof); silent empty return PASS (fail-closed rejection); FR coverage PASS; frozen surface PASS (historical captures unchanged); locked decision PASS; shared ownership PASS (coordinated narrow frontend/legacy exceptions documented in runs.md); production fragility PASS (explicit fail-loud qualification guards). Source-linked candidate remains CANDIDATE_READY/accepted false; AC020 and final mission acceptance reserved for WP09. Hosted exact-ca1 success separately supplied by coordinator; local proof never substitutes hosted status. No unresolved actionable WP08 issue."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP08-clean-replay/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP08-clean-replay/review-cycle-1.md",
+        "reviewer": "verification_final_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 1455160,
+      "shell_pid_created_at": "1793457455.46",
+      "subtasks": {
+        "T036": "done",
+        "T037": "done",
+        "T038": "done",
+        "T039": "done",
+        "T040": "done"
+      }
+    },
+    "WP09": {
+      "actor": "merge",
+      "agent": "codex",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 0,
+      "lane": "done",
+      "last_event_id": "01M6FSDHGGPEYQZ4TCN49J4GWW",
+      "last_transition_at": "2026-11-03T04:07:00.880984+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Independent fresh two-app UI authoring/regeneration and stopped-owner export walkthrough passed; actual canonical ledger and final report PASS with all20AC/29requirements; distinct package review still required.",
+        "Independent package review by verification_final_review of WP09 author verification_acceptance_audit: approved review/verdict docs b1da439 and f45e71b, immutable sanitized proof9ff74079a9903264eaf496f4a7abb6946b0d51f4, qualified ca1a03910d7ab72f874d0e22829068d3f09e30a2 unchanged. Final report SHA2566baf1f35fcc3214593682c747110b695da860e67961c48eddfcf9ceffacdd0f7 independently qualifies PASS accepted true. Actual72-record private ledger recomputes all20cases29requirements passed; actual canonical inventory CLI exit0 exactly matches public ledger; both AC020 records match actual independently linked observations. Verified formal29 criterion passes with independent actor/proof refs and29 canonical verdict commits. Fresh independent raw JSON hashes/census verify regeneration2/2 at251.507s and stopped-owner exports2/2 at38.469s once each zero retries; rawNode log hash matches. Independently reran28Node tests green. Actual planning admission JUnit503cases77suites0failures/errors/skips SHA0558b0cff51c895d6c04b3cfde9c9bbd334ccd82d0f2aa740e2e813acd5487d6; distinct qualified513 census maintained. Checklist: dead code N/A (documentation/proof only); synthetic-fixture PASS (real independent UI and canonical protocol evidence); silent empty return N/A (no code); FR coverage PASS; frozen surface PASS; locked decision PASS; shared-file ownership PASS (six explicitly authorized sanitized proof paths, immutable candidate/source preserved); production fragility N/A (no production change). Limits, exact-ca1 hosted success and separate older-planning Chromium CI failure remain explicit. No unresolved mandatory/high issue. No source edit, own AC020 append, merge, deployment or self-approval."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "/home/lynn/projects/schema-baron/kitty-specs/studio-verification-hardening-01M6AQ6R/tasks/WP09-independent-verdict/review-cycle-1.md",
+        "reference": "review-cycle://studio-verification-hardening-01M6AQ6R/WP09-independent-verdict/review-cycle-1.md",
+        "reviewer": "verification_final_review",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 1455160,
+      "shell_pid_created_at": "1793457455.46",
+      "subtasks": {
+        "T041": "done",
+        "T042": "done",
+        "T043": "done",
+        "T044": "done",
+        "T045": "done"
+      }
+    }
+  }
+}

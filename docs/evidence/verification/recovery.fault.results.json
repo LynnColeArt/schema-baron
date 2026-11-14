@@ -1,0 +1,1794 @@
+{
+  "mode": "fault",
+  "fixture": "Separate disposable parent/child SQLite WAL fixture, independently authored validator, metadata and external witness; never a UI-authoring seed",
+  "matrix": [
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "intent",
+        "migration": "before-backup",
+        "generation": "stage-complete",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 0,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "title": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX title_lookup ON parent(title)"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": false,
+        "history": [
+          {
+            "outcome": "rolled-back",
+            "backupValidated": false
+          }
+        ]
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "metadata",
+        "migration": "after-backup",
+        "generation": "before-journal-write",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 0,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "title": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX title_lookup ON parent(title)"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": false,
+        "history": [
+          {
+            "outcome": "rolled-back",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "replacement",
+        "migration": "during-rebuild",
+        "generation": "after-journal-write",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 0,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "title": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX title_lookup ON parent(title)"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": false,
+        "history": [
+          {
+            "outcome": "rolled-back",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "cleanup",
+        "migration": "before-db-commit",
+        "generation": "before-old-rename",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 0,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "title": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX title_lookup ON parent(title)"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": false,
+        "history": [
+          {
+            "outcome": "rolled-back",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "intent",
+        "migration": "after-db-commit",
+        "generation": "after-old-rename",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 0,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": true,
+        "history": [
+          {
+            "outcome": "committed",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "metadata",
+        "migration": "before-reconcile",
+        "generation": "before-new-rename",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 87,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": true,
+        "history": [
+          {
+            "outcome": "committed",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "replacement",
+        "migration": "after-reconcile",
+        "generation": "after-new-rename",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 87,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": true,
+        "history": [
+          {
+            "outcome": "committed",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "cleanup",
+        "migration": "metadata-save",
+        "generation": "before-journal-clear",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 88,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": true,
+        "history": [
+          {
+            "outcome": "committed",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    },
+    {
+      "status": "succeeded",
+      "points": {
+        "save": "intent",
+        "migration": "before-reconcile",
+        "generation": "after-journal-clear",
+        "node": "v24.22.1",
+        "platform": "linux"
+      },
+      "exit": {
+        "save": 73,
+        "migration": 87,
+        "generation": 91
+      },
+      "revision": 8,
+      "oracle": {
+        "rows": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "children": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "indexes": [
+          {
+            "name": "title_lookup",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          }
+        ],
+        "constraintRejections": [
+          "foreign-key",
+          "check",
+          "not-null"
+        ],
+        "foreignKeyDefinition": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "parent",
+            "from": "parent_id",
+            "to": "id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ],
+        "markerPresent": true,
+        "history": [
+          {
+            "outcome": "committed",
+            "backupValidated": true
+          }
+        ],
+        "backup": {
+          "hash": "4fccbe12037fce180f629a86d85cf0d7339cdbc2510b1cc2d01c09995c7ab295",
+          "parentRows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "childRows": [
+            {
+              "id": 9,
+              "parent_id": 1
+            }
+          ]
+        }
+      },
+      "durableBefore": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "durableAfter": {
+        "parent": [
+          {
+            "id": 1,
+            "caption": "original"
+          }
+        ],
+        "child": [
+          {
+            "id": 9,
+            "parent_id": 1
+          }
+        ],
+        "schema": [
+          {
+            "type": "index",
+            "name": "title_lookup",
+            "tbl_name": "parent",
+            "sql": "CREATE INDEX \"title_lookup\" ON \"parent\" (\"caption\")"
+          },
+          {
+            "type": "table",
+            "name": "__schema_baron_migrations",
+            "tbl_name": "__schema_baron_migrations",
+            "sql": "CREATE TABLE \"__schema_baron_migrations\" (id TEXT PRIMARY KEY NOT NULL, plan_hash TEXT NOT NULL, committed_at TEXT NOT NULL, schema_hash TEXT NOT NULL)"
+          },
+          {
+            "type": "table",
+            "name": "child",
+            "tbl_name": "child",
+            "sql": "CREATE TABLE child(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES parent(id),CHECK(id>0))"
+          },
+          {
+            "type": "table",
+            "name": "parent",
+            "tbl_name": "parent",
+            "sql": "CREATE TABLE \"parent\" (\"id\" INTEGER, \"caption\" TEXT NOT NULL, PRIMARY KEY (\"id\" ASC))"
+          }
+        ],
+        "foreignKeys": [],
+        "integrity": [
+          {
+            "integrity_check": "ok"
+          }
+        ]
+      },
+      "authoredHashBefore": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "authoredHashAfter": "0f2835e9b5f542dd5655d365ab255237656a0fc20550e668e00efae8923bd125",
+      "externalSecretPreserved": true,
+      "secondRecovery": "same exact model, active tree, business tuples and schema asserted; no changes"
+    }
+  ],
+  "challenges": [
+    {
+      "name": "cancel-before-ddl",
+      "status": "succeeded",
+      "events": [
+        {
+          "point": "before-ddl",
+          "revision": 6
+        },
+        {
+          "point": "before-ddl",
+          "revision": 6,
+          "committed": false,
+          "rows": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "initialOutcome": "success",
+          "cancelStatus": "canceled"
+        }
+      ]
+    },
+    {
+      "name": "cancel-before-reconcile",
+      "status": "succeeded",
+      "events": [
+        {
+          "point": "before-reconcile",
+          "revision": 6
+        },
+        {
+          "point": "before-reconcile",
+          "revision": 6,
+          "committed": true,
+          "rows": [
+            {
+              "id": 1,
+              "caption": "original"
+            }
+          ],
+          "initialOutcome": "REVISION_CONFLICT",
+          "cancelStatus": "succeeded"
+        }
+      ]
+    },
+    {
+      "name": "external-wal",
+      "status": "succeeded",
+      "events": [
+        {
+          "scenario": "wal-busy-external"
+        },
+        {
+          "scenario": "wal-busy-external",
+          "busyCode": "PROJECT_BUSY",
+          "rows": [
+            {
+              "id": 1,
+              "title": "original"
+            },
+            {
+              "id": 2,
+              "title": "external"
+            }
+          ],
+          "external": [
+            {
+              "id": 42
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "security-conflicts",
+      "status": "succeeded",
+      "events": [
+        {
+          "scenario": "output-and-security"
+        },
+        {
+          "scenario": "output-and-security",
+          "conflicts": [
+            "modified-owned",
+            "unknown",
+            "symlink"
+          ],
+          "security": [
+            "forged-capability",
+            "cross-origin",
+            "csrf",
+            "oversize",
+            "traversal",
+            "symlink-export",
+            "secret-redaction"
+          ],
+          "authoredPreserved": true
+        }
+      ]
+    },
+    {
+      "name": "rejected-contexts",
+      "status": "succeeded",
+      "events": [
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity"
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "stale",
+          "expected": "REVISION_CONFLICT",
+          "actual": "REVISION_CONFLICT",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "idempotency",
+          "expected": "IDEMPOTENCY_CONFLICT",
+          "actual": "IDEMPOTENCY_CONFLICT",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "invalid-parent",
+          "expected": "VALIDATION_FAILED",
+          "actual": "VALIDATION_FAILED",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "invalid-path",
+          "expected": "PATH_OUTSIDE_ROOT",
+          "actual": "PATH_OUTSIDE_ROOT",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "mismatched-context",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "stale-generated-context",
+          "expected": "REVISION_CONFLICT",
+          "actual": "REVISION_CONFLICT",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "invalid-default",
+          "expected": "VALIDATION_FAILED",
+          "actual": "VALIDATION_FAILED",
+          "modelUnchanged": true
+        },
+        {
+          "mode": "fault",
+          "scenario": "request-validation-and-identity",
+          "name": "replaced-identity",
+          "rejected": "DATABASE_CHANGED",
+          "recovery": "explicit fresh inspect then bind",
+          "tuples": [
+            {
+              "id": 1,
+              "title": "original"
+            }
+          ],
+          "foreignKeys": [],
+          "integrity": "ok"
+        }
+      ]
+    },
+    {
+      "name": "external-after-crash",
+      "status": "succeeded",
+      "events": [
+        {
+          "point": "before-reconcile",
+          "externalMutation": true
+        },
+        {
+          "point": "before-reconcile",
+          "externalMutation": true,
+          "history": "recovery-pending",
+          "committedRows": [
+            {
+              "id": 1,
+              "caption": "original"
+            }
+          ],
+          "externalRows": [
+            {
+              "id": 42
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+.document-mode-surface { min-width: 0; }
+.document-mode-surface [hidden] { display: none; }
+.document-actions, .placement-row { display: flex; gap: 4px; align-items: center; }
+.document-actions { padding: 5px 8px; flex-wrap: wrap; border-bottom: 1px solid #c4cdd4; }
+.placement-row > :first-child { flex: 1; min-width: 0; }
+.placement-row > button:not(:first-child) { flex: 0 0 auto; }
+.static-content { width: 100%; min-height: 32px; resize: vertical; font: inherit; color: inherit; background: #fff; border: 1px dashed #bbc4ca; }
+.html-mode { padding: 8px; min-width: 0; }
+.mode-notice { font-size: 12px; line-height: 1.45; padding: 6px 8px; margin: 0; overflow-wrap: anywhere; }
+.html-mode details { font-size: 12px; padding: 4px 0; }
+.html-mode summary { cursor: pointer; }
+.html-mode p { overflow-wrap: anywhere; }
+.source-label { display: block; font-weight: 600; margin-top: 6px; }
+#page-html-source { display: block; width: 100%; min-width: 0; min-height: 240px; height: 40vh; resize: vertical; font: 13px/1.5 monospace; white-space: pre; overflow: auto; tab-size: 2; }
+.html-diagnostic { display: block; text-align: left; width: 100%; white-space: normal; overflow-wrap: anywhere; color: #841c21; padding: 6px; }
+.html-conflict { padding: 8px; border: 1px solid #b56d28; background: #fff6e8; }
+.html-conflict pre, .mode-capability pre { max-height: 300px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.mode-capability { padding: 14px; font-size: 13px; }
+.mode-capability h3 { font-size: 14px; }
+.modebar { flex-wrap: wrap; min-height: 30px; height: auto; overflow: auto; flex-shrink: 0; }
+.modebar button { border: 0; border-right: 1px solid #b8c2ca; border-radius: 0; font-size: 12px; min-height: 28px; padding: 4px 10px; }
+.modebar button[aria-selected=true] { background: white; box-shadow: inset 0 -2px var(--accent); font-weight: 600; }
+.draft-preview iframe { display: block; width: 100%; height: 55vh; min-height: 200px; background: white; border: 0; }
+
+.document-mode-surface textarea:focus-visible { outline: 2px solid #236ea9; outline-offset: -2px; }
+
+.modebar [role=tablist] { display: flex; flex-wrap: wrap; min-width: 0; }

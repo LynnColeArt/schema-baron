@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-10-27T16:54:34.290074+00:00",
+  "vendorUrl": "https://www.stepsecurity.io/blog/binding-gyp-npm-supply-chain-attack-spreads-like-worm",
+  "vendorHtmlSha256": "6f3220968d56408415b4448a36fc0784f6ac34b9742b1175a3a84e47fbfb5e25",
+  "affectedNamesParsed": 57,
+  "axeCoreNameOverlap": false,
+  "scope": "current vendor table membership plus new installed axe-core files against retained bounded known indicators; not exhaustive malware or incident coverage",
+  "newPackageFilesScanned": 28,
+  "retainedIndicatorMatches": [],
+  "bindingGypPresent": false,
+  "lifecycleExecution": "denied",
+  "completePrivateVendorLists": "unavailable/unverified"
+}

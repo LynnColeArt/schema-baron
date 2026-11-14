@@ -1,0 +1,24 @@
+{
+  "run_id": "schema-baron-wp07-qualified_XyVMUu-library-AC-013",
+  "case_id": "AC-013",
+  "requirements": [
+    "FR-012",
+    "NFR-001",
+    "NFR-002",
+    "C-001",
+    "C-003",
+    "C-005"
+  ],
+  "application": "library",
+  "mode": "ui_journey",
+  "revision": "60ad8437789f1b0654871fe7a3bdfdea9c31bebb",
+  "status": "passed",
+  "expected": "Data-free default export, explicit business snapshot, independent real runtime with owner unavailable and explicit private database/identity.",
+  "actual": "Both export inventories and snapshot rows passed; independent offline install/typecheck/test/build/real Next start, public browsing, fresh login, authored rejection, filtered CRUD/returns and reports passed with its original Studio owner stopped and unavailable.",
+  "evidence": [
+    {
+      "path": "docs/evidence/verification/wp07-qualified-results.json",
+      "sha256": "0d2e0577b0ec33fe3b69b2b231dd490b6eed94b5a70084b3afc1a8eaf9e90c3c"
+    }
+  ]
+}
