@@ -1,23 +1,45 @@
 # Schema Baron
 
-Schema Baron is a local application builder for SQLite-backed TypeScript/Next.js applications. Use a compact Studio to design a database, compose pages, configure login, build queries and reports, inspect application flow, and generate an application that runs independently of Studio.
+**A local-first TypeScript RAD Studio for building data-driven applications you can run and maintain yourself.**
 
-The working model is **Project → Page → Form → Control**. Grid, Record, Search and Login builders create ordinary editable objects. The schema editor and application map remain available after the new-project wizard finishes.
+Schema Baron is an independently developed rapid application development environment. Design a database, compose an interface, connect actions and access rules, and generate a working TypeScript/Next.js application. The Studio brings those decisions together so you can spend more time on what your application does and less on repetitive plumbing.
 
-**Current milestone:** Studio verification and hardening is accepted, with all 20 acceptance cases and 29 requirements passed. Workshop Planner and the unrelated Library Catalog were authored and exercised through Studio; Volunteer Scheduler exercised the MCP workflow. This is a source milestone, not a packaged or hosted release. See [verification evidence](docs/evidence/verification/wp09-independent/report.json) and the [MCP walkthrough](docs/evidence/mcp-workflow/README.md) for exact revisions, observed results and limits.
+Build an equipment register, a searchable catalog, a case-management tool or a reporting application. Start from a new SQLite database or inspect an existing one. Use builders to get the first screens in place, then keep refining the pages, forms, queries and behavior as ordinary editable objects.
 
-## What you can do now
+The result is source code and an independently runnable application. Studio is an authoring tool, not a service your generated app needs to stay connected to. No hosted account or AI-provider API key is required.
 
-- Create a project with a new SQLite database or connect an existing one.
-- Create tables, columns, primary/foreign/unique keys, relationships and indexes; review migrations and backups before applying changes.
-- Generate public lists and protected record forms with validation, named Delete confirmation, Save/Cancel destinations and related-record navigation.
-- Configure simple visitor login, account provisioning, global/page/action access rules, and return to a selected record or parent after login.
-- Build joined/grouped queries, exact-decimal totals, zero-child results and parameterized reports.
-- Work in Design, HTML, Code, Preview and Live Page; inspect application and endpoint flow.
-- Declare and edit supported authored extensions, regenerate while preserving data and authored code, and export independently runnable output.
-- Use MCP to author the same underlying project through the local owner service.
+## Design the application, not just its tables
 
-The exercised platform is **Linux x64 with glibc**. There is one SQLite connection per project and one output target: **TypeScript + Next.js on Node.js**. Other operating systems and targets are not verified. Python and Spec Kitty are not required to install or use Studio. No hosted account, AI-provider API key or browser access key is required.
+The working model is **Project → Page → Form → Control**. A page can combine content and multiple forms; a form gives controls a data source and a purpose. Builders accelerate setup without becoming the only way to edit the result.
+
+- **Model your data.** Create tables, typed columns, primary and unique keys, relationships and indexes. Inspect existing databases, then review SQL migrations, impacts and backups before applying changes.
+- **Build useful screens.** Compose Grid, Record, Search and Login forms with search, sorting, paging, relationship lookups, validation, named Delete confirmation and explicit Save/Cancel destinations.
+- **Turn data into answers.** Build joined and grouped queries, parameterized reports and exact-decimal totals, including parents with no child records.
+- **Make behavior visible.** The application map shows project pages, navigation, access gates and parameters. Inspect the corresponding object rather than maintaining a separate flow diagram.
+- **Control visitor access.** Configure visitor login, provision accounts, and apply public or authenticated policies at global, page and action scopes. Protected navigation can return visitors to their selected record after login.
+
+## Build, inspect and keep control
+
+Move between Design, HTML, Code, Preview and Live Page. Preview shows the draft; Live Page opens the generated application. Saved design, generated output and running application revisions remain distinct so you can see what is current.
+
+Generation is a reviewed operation. Inspect the proposed files and conflicts before applying, and keep the business database outside replaceable output. Supported declared authored modules survive regeneration; arbitrary edits to generator-owned files do not silently become part of the design.
+
+The same canonical model and commands serve the Studio UI and its local MCP interface. An agent can inspect and author the project without maintaining a second representation. Revision checks and diagnostics help humans and agents work with the same saved state. The demonstrated agent workflow still needs local bootstrap and source-contract guidance; see the [MCP walkthrough](docs/evidence/mcp-workflow/README.md) for observed limits.
+
+Export independently runnable output, with explicit configuration of receiving databases and identity. Default exports omit private visitor accounts, sessions and secrets.
+
+## Current scope and status
+
+The current target is **TypeScript + Next.js on Node.js, with one SQLite connection per project**. **Linux x64 with glibc** is the exercised platform; other operating systems are unverified. This repository provides source, not a packaged desktop installer or hosted release. Python and Spec Kitty are not required to install or use Studio.
+
+The Studio verification milestone is now available on `main`. Its retained [independent verification report](docs/evidence/verification/wp09-independent/report.json) records 20 acceptance cases and 29 requirements at the report's exact revision. Workshop Planner and the unrelated Library Catalog were authored and exercised through Studio; Volunteer Scheduler exercised the MCP workflow. These are historical observations of that milestone, not a fresh verification of your checkout or production deployment certification. Read the [current limits](#current-limits) before choosing it for a project.
+
+## Start here
+
+- **Install Studio:** follow the pinned toolchain and build steps below.
+- **Make your first app:** follow [Build your first application](#build-your-first-application), then explore the [author guide](docs/user-guide/index.md).
+- **Use an agent:** see [Owner and MCP operations](docs/development/operations.md) and the [MCP walkthrough](docs/evidence/mcp-workflow/README.md).
+- **Run without Studio:** see [portable output](docs/user-guide/portable-output.md).
 
 ## Installation for humans and AI agents
 
@@ -312,6 +334,10 @@ Stop only services and children owned by your run, using their recorded process 
 - MCP root/setup discovery and authoring guidance need improvement. Local bootstrap and source-contract examples remain necessary for the demonstrated workflow.
 - Mapped-identity include-data export is refused. Default exports omit private identity; standalone account administration currently uses the documented operator adapter rather than a polished management CLI.
 - Generation preserves declared authored modules, not arbitrary edits to generator-owned files. It is not a general round-trip source editor.
+
+## Design heritage
+
+CodeCharge Studio's visual RAD workflow is an inspiration: connected views of data, pages and behavior, with builders that leave developers in control of the result. Schema Baron is an independent implementation with its own model, architecture and scope. Historical feature parity is not its goal. The [reference notes](docs/references/README.md) distinguish that workflow inspiration from Schema Baron's design decisions; the original manual and its derivatives are not distributed with the repository.
 
 ## Further reading
 
