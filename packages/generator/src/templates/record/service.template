@@ -6,7 +6,7 @@ import { value, entered, one, message, type Parameters, type Input, type Binding
 import { destination, context, type ContextField, type Destination } from './navigation.ts';
 export type Control = { readonly kind?:string; readonly fieldId?:string; readonly label:string; readonly readOnly:boolean; readonly validation:{readonly required:boolean;readonly min?:number;readonly max?:number;readonly maxLength?:number}; readonly lookup?:{ readonly source:Source;readonly valueFieldId:string;readonly labelFieldId:string } };
 export type Action = {readonly id:string;readonly operation:string;readonly extensionHookRef?:string;readonly destination?:Destination;readonly success?:Destination;readonly cancel?:Destination};
-export type Config = {readonly prefills?:readonly {readonly fieldId:string;readonly parameter:string}[];readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
+export type Config = {readonly imageFields?:readonly {readonly fieldId:string;readonly folder:string}[];readonly prefills?:readonly {readonly fieldId:string;readonly parameter:string}[];readonly id:string;readonly source:Source;readonly keyParameters:readonly string[];readonly displayFields:readonly string[];readonly controls:readonly Control[];readonly actions:readonly Action[];readonly context:readonly ContextField[]};
 // Only this deliberate user-facing load error may cross the page boundary.
 export class LookupLimitError extends Error {
  constructor() { super('Lookup exceeds the supported limit of 200 options. This form needs a smaller lookup source.'); }
@@ -53,11 +53,14 @@ export function load(config:Config,parameters:Parameters) {
   return {isNew,values,options,name:config.displayFields.map(id=>values[id]).filter(Boolean).join(' · '),impacts:isNew?[]:impacts(db,config.source,keys(config,parameters))};
  } finally {db.close();}
 }
-export function execute(config:Config,actionId:string,parameters:Parameters,input:Input,confirmed=false):State {
+export function execute(config:Config,actionId:string,parameters:Parameters,input:Input,confirmed=false,trustedImages:Readonly<Record<string,string>>={}):State {
  const state:State={values:{...input},errors:{},summary:''};
  const action=config.actions.find(a=>a.id===actionId); if(!action) return {...state,summary:'This action is unavailable.'};
  let db:ReturnType<typeof connect>|undefined;
  try {
+  if((config.imageFields??[]).some(f=>f.fieldId in input)) throw Error('Image references cannot be submitted as text.');
+  for(const id of Object.keys(trustedImages)) if(!(config.imageFields??[]).some(f=>f.fieldId===id)) throw Error('Unknown image field.');
+  input={...input,...trustedImages};
   context(parameters,config.context);
   const allowed=[...config.context.map(c=>c.parameter),...config.keyParameters,config.id+':mode'];
   if(Object.keys(parameters).some(key=>!allowed.includes(key))) throw Error('An undeclared record parameter was submitted.');
@@ -90,6 +93,7 @@ export function execute(config:Config,actionId:string,parameters:Parameters,inpu
      const control=editable.find(c=>c.fieldId===field.id);
      if(!control) {if(isNew&&field.id!==auto&&!field.nullable&&!field.hasDefault) state.errors[field.id]='Add an editable control for this required field.';continue;}
      if(isNew&&field.hasDefault&&!(field.id in input)) continue;
+     if(!isNew&&(config.imageFields??[]).some(f=>f.fieldId===field.id)&&!(field.id in trustedImages)) continue;
      const text=input[field.id]??'';
      if(field.id===auto&&text==='') continue;
      try {

@@ -1,0 +1,35 @@
+
+> generated-application@1.0.0 build
+> next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+✓ Running next.config.ts took 23ms
+- Experiments (use with caution):
+  · serverActions
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.1s
+  Running TypeScript ...
+  Finished TypeScript in 284ms ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/3) ...
+✓ Generating static pages using 11 workers (3/3) in 114ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /_not-found
+├ ƒ /list
+├ ƒ /login
+├ ƒ /private-record
+├ ƒ /record
+├ ƒ /runtime/auth
+├ ƒ /runtime/auth/csrf
+├ ƒ /runtime/record-0
+├ ƒ /runtime/record-0/image
+├ ƒ /runtime/record-1
+└ ƒ /runtime/record-1/image
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

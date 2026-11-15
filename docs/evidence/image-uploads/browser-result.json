@@ -1,0 +1,5 @@
+{
+  "passed": true,
+  "scope": "real built Next server, sandboxed Chrome, multipart action, record image read, no-file save, CSRF and JSON forgery denial",
+  "url": "http://127.0.0.1:37165"
+}
