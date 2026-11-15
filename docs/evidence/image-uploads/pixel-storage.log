@@ -1,0 +1,1 @@
+Image pixel normalization, orientation, bounds, metadata stripping, real SQLite insert/read/replace/no-file/forgery/failed replacement and symlink rejection passed.

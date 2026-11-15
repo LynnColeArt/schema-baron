@@ -1,0 +1,91 @@
+import 'server-only';
+import sharp from 'sharp';
+import { constants, openSync, closeSync, fstatSync, mkdirSync, writeFileSync, readFileSync, fsyncSync, unlinkSync, realpathSync } from 'node:fs';
+import { isAbsolute, resolve, relative, sep } from 'node:path';
+import { createHash, randomBytes } from 'node:crypto';
+import { execute, load, type Config, type State } from './record-service.ts';
+import type { Input, Parameters } from './record-validation.ts';
+export const maxImageBytes=5*1024*1024;
+const maxPixels=16_000_000;
+export async function normalizeImage(file:File):Promise<Buffer> {
+ if(file.size<=0||file.size>maxImageBytes)throw Error('Choose one PNG, JPEG or WebP image up to 5 MiB.');
+ const bytes=Buffer.from(await file.arrayBuffer());
+ if(bytes.length!==file.size||bytes.length>maxImageBytes)throw Error('Invalid image size.');
+ const kind=bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'png':bytes[0]===255&&bytes[1]===216&&bytes[2]===255?'jpeg':bytes.toString('ascii',0,4)==='RIFF'&&bytes.toString('ascii',8,12)==='WEBP'?'webp':undefined;
+ if(!kind)throw Error('Only PNG, JPEG and WebP images are supported.');
+ if(kind==='png')for(let offset=8;offset+12<=bytes.length;){const size=bytes.readUInt32BE(offset);if(size>bytes.length-offset-12)throw Error('Truncated PNG.');const name=bytes.toString('ascii',offset+4,offset+8);if(name==='acTL'||name==='fcTL'||name==='fdAT')throw Error('Animated images are not supported.');offset+=12+size;}
+ if(kind==='webp')for(let offset=12;offset+8<=bytes.length;){const size=bytes.readUInt32LE(offset+4);if(size>bytes.length-offset-8)throw Error('Truncated WebP.');const name=bytes.toString('ascii',offset,offset+4);if(name==='ANIM'||name==='ANMF')throw Error('Animated images are not supported.');offset+=8+size+(size%2);}
+ const decoder=sharp(bytes,{limitInputPixels:maxPixels,failOn:'warning',animated:true});
+ const meta=await decoder.metadata();
+ if(meta.format!==kind||!meta.width||!meta.height||meta.width>8192||meta.height>8192||meta.width*meta.height>maxPixels||(meta.pages??1)!==1)throw Error('Use one still image, at most 16 megapixels and 8192 pixels per side.');
+ // Pixels cross the trust boundary, never source bytes or metadata. Orientation
+ // is applied before fresh encoding; no withMetadata/keepMetadata/profile copy.
+ const {data,info}=await decoder.rotate().resize({width:2048,height:2048,fit:'inside',withoutEnlargement:true}).toColourspace('srgb').raw().toBuffer({resolveWithObject:true});
+ const normalized=await sharp(data,{raw:{width:info.width,height:info.height,channels:info.channels}}).webp({quality:82,effort:4}).toBuffer();
+ if(normalized.length>maxImageBytes)throw Error('The normalized image is too large.');
+ return normalized;
+}
+function folderFor(config:Config,fieldId:string):string[] {
+ const field=config.imageFields?.find(f=>f.fieldId===fieldId);
+ if(!field||!config.controls.some(c=>c.kind==='image'&&c.fieldId===fieldId))throw Error('Image field is unavailable.');
+ if(!/^(?:[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*)?$/.test(field.folder)||field.folder.length>160)throw Error('Invalid image folder.');
+ return [...(field.folder?field.folder.split('/'):[]),createHash('sha256').update(config.source.table+'\0'+fieldId).digest('hex').slice(0,32)];
+}
+function directory(config:Config,fieldId:string,create:boolean):number {
+ if(process.platform!=='linux')throw Error('Image storage currently requires Linux with /proc mounted.');
+ const root=process.env.SCHEMA_BARON_IMAGE_ROOT;
+ if(!root||!isAbsolute(root)||resolve(root)!==root||root==='/')throw Error('Configure an absolute dedicated SCHEMA_BARON_IMAGE_ROOT outside the application.');
+ const cwd=realpathSync(process.cwd()),rel=relative(cwd,root);
+ if(rel===''||(!rel.startsWith('..'+sep)&&rel!=='..'&&!isAbsolute(rel)))throw Error('Image storage must be outside the application tree.');
+ let fd=openSync('/',constants.O_RDONLY|constants.O_DIRECTORY);
+ try {
+  // Descriptor-relative descent: no trusted path component may be a symlink.
+  for(const part of root.split('/').filter(Boolean)) {
+   const next=openSync('/proc/self/fd/'+fd+'/'+part,constants.O_RDONLY|constants.O_DIRECTORY|constants.O_NOFOLLOW);closeSync(fd);fd=next;
+  }
+  const owner=fstatSync(fd);if(owner.uid!==process.getuid?.()||(owner.mode&0o077)!==0)throw Error('Image root must be owned by the service account with mode 0700.');
+  for(const part of folderFor(config,fieldId)) {
+   const path='/proc/self/fd/'+fd+'/'+part;
+   if(create)try{mkdirSync(path,{mode:0o700});fsyncSync(fd);}catch(error){if((error as NodeJS.ErrnoException).code!=='EEXIST')throw error;}
+   const next=openSync(path,constants.O_RDONLY|constants.O_DIRECTORY|constants.O_NOFOLLOW);closeSync(fd);fd=next;const info=fstatSync(fd);if(info.uid!==process.getuid?.()||(info.mode&0o077)!==0)throw Error('Image folders must be private to the service account.');
+  }
+  return fd;
+ } catch(error) {closeSync(fd);throw error;}
+}
+function put(config:Config,fieldId:string,bytes:Buffer):{key:string;close:()=>void} {
+ const dir=directory(config,fieldId,true),key=randomBytes(24).toString('hex')+'.webp',path='/proc/self/fd/'+dir+'/'+key;
+ let file:number|undefined;let created=false;
+ try {file=openSync(path,constants.O_WRONLY|constants.O_CREAT|constants.O_EXCL|constants.O_NOFOLLOW,0o600);created=true;writeFileSync(file,bytes);fsyncSync(file);closeSync(file);file=undefined;fsyncSync(dir);}
+ catch(error){if(file!==undefined)closeSync(file);if(created)try{unlinkSync(path);}catch{}closeSync(dir);throw error;}
+ return {key,close:()=>closeSync(dir)};
+}
+export async function executeImages(config:Config,action:string,parameters:Parameters,input:Input,files:ReadonlyMap<string,File>,confirmed=false):Promise<State> {
+ const selected=[...files].filter(([,f])=>f.size>0);
+ if(selected.length>1)throw Error('Upload one image per save.');
+ if(!selected.length)return execute(config,action,parameters,input,confirmed);
+ const entry=selected[0]!,fieldId=entry[0];
+ if(!config.actions.some(a=>a.id===action&&['insert','update'].includes(a.operation)))throw Error('Images can only be uploaded while saving a record.');
+ if(!config.controls.some(c=>c.kind==='image'&&c.fieldId===fieldId&&!c.readOnly))throw Error('Image field is unavailable.');
+ // Invalid input never writes original bytes. Only normalized pixels reach put.
+ const bytes=await normalizeImage(entry[1]);
+ const stored=put(config,fieldId,bytes);
+ try {
+  const result=execute(config,action,parameters,input,confirmed,{[fieldId]:stored.key});
+  // The existing service collapses DB exceptions into State. A missing saved
+  // flag does not prove rollback. Retain normalized assets on all DB outcomes;
+  // offline reconciliation is safer than deleting a possibly committed reference.
+  return result;
+ } finally {stored.close();}
+}
+export function readRecordImage(config:Config,parameters:Parameters,fieldId:string):Buffer {
+ folderFor(config,fieldId);
+ const record=load(config,parameters);
+ if(record.isNew)throw Error('No stored image.');
+ const key=record.values[fieldId];
+ if(!key||!/^\w{48}\.webp$/.test(key)||!/^[0-9a-f]+\.webp$/.test(key))throw Error('No stored image.');
+ const dir=directory(config,fieldId,false);
+ try {
+  const file=openSync('/proc/self/fd/'+dir+'/'+key,constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK);
+  try{const info=fstatSync(file);if(!info.isFile()||info.nlink!==1||info.size<=0||info.size>maxImageBytes)throw Error('Invalid stored image.');return readFileSync(file);}finally{closeSync(file);}
+ } finally {closeSync(dir);}
+}

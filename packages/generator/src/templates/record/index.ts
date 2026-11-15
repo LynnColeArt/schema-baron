@@ -3,6 +3,13 @@ import type { GeneratedFile, RecordIR } from '../../ir/index.js';
 export function recordFiles(record:RecordIR,index:number,flashCookie:string):GeneratedFile[] {
  const config=JSON.stringify(record.config,null,2);
  return [
+ {path:`app${handlerPath('record',index)}/image/route.ts`,content:`import {cookies} from 'next/headers';
+import {authorize,sessionCookie,failure} from '../../../../server/auth';
+import {config} from '../../../../server/record-${index}';
+import {readRecordImage} from '../../../../server/record-images';
+export const dynamic='force-dynamic';
+export async function GET(request:Request){try{const jar=await cookies();authorize(config.pageId,undefined,jar.get(sessionCookie)?.value);const params:Record<string,string>={};let field:string|undefined;for(const [key,value]of new URL(request.url).searchParams){if(key==='_field'){if(field!==undefined)throw Error();field=value;}else{if(key in params)throw Error();params[key]=value;}}if(!field)throw Error();const bytes=readRecordImage(config,params,field);return new Response(new Uint8Array(bytes),{headers:{'content-type':'image/webp','x-content-type-options':'nosniff','cache-control':'private, no-store'}});}catch(error){return failure(error);}}
+`},
  {path:`app${handlerPath('record',index)}/route.ts`,content:`import { cookies } from 'next/headers';
 import { authorize, originCheck, failure, sessionCookie, csrfCookie } from '../../../server/auth';
 import { config } from '../../../server/record-${index}';
@@ -22,7 +29,8 @@ import { guardAction, AccessError } from './auth';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { config } from './record-${index}';
-import { execute, type State, type Control } from './record-service.ts';
+import { type State, type Control } from './record-service.ts';
+import { executeImages } from './record-images.ts';
 import { context, type ContextField } from './navigation';
 import type { Field } from './record-validation';
 export async function submit${index}(_previous:State, data:FormData):Promise<State> {
@@ -37,17 +45,19 @@ export async function submit${index}(_previous:State, data:FormData):Promise<Sta
   const allowed=[...(config.context as readonly ContextField[]).map(c=>c.parameter),...config.keyParameters,config.id+':mode'];
   if(Object.keys(params).some(key=>!allowed.includes(key))) throw Error();
   context(params,config.context);
-  const input:Record<string,string>={};
+  const input:Record<string,string>={};const files=new Map<string,File>();
   for(const [key] of data) if(!['_parameters','_action','_confirmed','_csrf'].includes(key)&&!key.startsWith('field:')&&!key.startsWith('$ACTION_')) throw Error();
   for(const [key,value] of data) if(key.startsWith('field:')) {
-   if(typeof value!=='string'||key.slice(6) in input) throw Error(); input[key.slice(6)]=value;
+   const id=key.slice(6);if(id in input||files.has(id))throw Error();
+   if(value instanceof File){if(!(config.controls as readonly Control[]).some(c=>c.kind==='image'&&c.fieldId===id))throw Error();files.set(id,value);}
+   else {input[id]=value;}
   }
   for(const control of config.controls as readonly Control[]) {
    const field=(config.source.fields as readonly Field[]).find(f=>f.id===control.fieldId);
    if(control.kind==='checkbox'&&field?.type.kind==='boolean'&&!field.nullable&&(!control.readOnly||params[config.id+':mode']==='new'&&(config.source.keys as readonly string[]).includes(field.id))&&!(field.id in input)) input[field.id]='0';
   }
   const action=data.get('_action'); if(typeof action!=='string') throw Error();
-  const state=execute(config,action,params,input,data.get('_confirmed')==='yes');
+  const state=await executeImages(config,action,params,input,files,data.get('_confirmed')==='yes');
   if(state.location) {
    if(state.saved) (await cookies()).set(${JSON.stringify(flashCookie)},'1',{path:'/',sameSite:'lax',maxAge:60});
    redirect(state.location);
@@ -76,7 +86,9 @@ export function Record${index}({parameters,initial,isNew,name,impacts,options}:P
 ${record.controls.filter(c=>c.fieldId).map(c=>{
  const field=record.source.fields.find(f=>f.id===c.fieldId)!,id=JSON.stringify(field.id);
  const readOnly=field.generated?'true':c.readOnly?`!isNew || !${JSON.stringify(record.source.keys)}.includes(${id})`:'false';
- const input=c.lookup
+ const input=c.kind==='image'
+  ? `<><input aria-label={${JSON.stringify(c.label)}} type="file" name={'field:'+${id}} accept="image/png,image/jpeg,image/webp" /><small>PNG, JPEG or WebP, up to 5 MiB; saved as metadata-free WebP. Leave empty to keep the image.</small>{!isNew&&initial[${id}]&&<img alt={${JSON.stringify(c.label)}} src={${JSON.stringify(handlerPath('record',index)+'/image')}+'?'+new URLSearchParams({...parameters,_field:${id}}).toString()} style={{maxWidth:240,maxHeight:240}} />}</>`
+  : c.lookup
   ? `<select aria-label={${JSON.stringify(c.label)}} name={'field:'+${id}} defaultValue={state.values[${id}]??''}><option value="">Choose a value</option>{options[${id}]?.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}</select>`
   : field.type.kind==='boolean'
    ? field.nullable

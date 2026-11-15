@@ -240,6 +240,11 @@ export function validateProject(input: unknown): ValidationResult {
     }
     if (shape && ((control.kind === 'checkbox' && shape.type.kind !== 'boolean') || (control.kind === 'number' && !numeric(shape.type)) || (control.kind === 'date' && !['date', 'datetime'].includes(shape.type.kind)))) error('TYPE_MISMATCH', control.id, 'kind', 'Control kind is incompatible with its field.');
     for (const event of control.events) { const action = ref(p.actions, event.actionId, control.id, 'events.actionId'); if (action && action.formId !== form.id) error('BROKEN_REFERENCE', control.id, 'events', 'Event action must belong to this form.'); }
+    if (control.kind==='image') {
+      const imageFieldId=control.binding?.kind==='stored'?control.binding.fieldId:undefined; const field=p.schema.tables.flatMap(t=>t.columns).find(c=>c.id===imageFieldId);
+      if(form.kind!=='Record'||form.sourceRef?.kind!=='table'||!field||field.type.kind!=='text'||field.generated||control.readOnly||control.lookup||p.schema.tables.some(t=>t.primaryKey.includes(field.id))) error('VALIDATION_FAILED',control.id,'kind','Image uploads require an editable Record stored text field, not a generated field or key.');
+      if(p.controls.filter(c=>c.formId===form.id&&c.kind==='image').length>1) error('VALIDATION_FAILED',control.id,'kind','One image upload per Record form is supported.');
+    } else if(control.image) error('VALIDATION_FAILED',control.id,'image','Image configuration requires an image control.');
     if (control.lookup) { const fields = sourceFields(control.lookup.source, control.id, 'lookup.source'); for (const id of [...control.lookup.valueFieldIds, control.lookup.labelFieldId]) ref(fields, id, control.id, 'lookup'); if (shape && control.lookup.valueFieldIds.length === 1) { const field = fields.find(f => f.id === control.lookup!.valueFieldIds[0]); if (field && !sameType(shape.type, field.type)) error('TYPE_MISMATCH', control.id, 'lookup', 'Lookup value type must match binding.'); } }
   }
   const global = ref(p.policies, p.globalPolicyId, p.id, 'globalPolicyId');

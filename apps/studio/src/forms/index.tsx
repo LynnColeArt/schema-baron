@@ -1060,12 +1060,14 @@ export function FormProperties({
           "number",
           "date",
           "checkbox",
+          "image",
           "select",
           "link",
           "button",
         ].map((v) => ({ value: v, label: v })),
-        (k) => update({ ...control, kind: k as Control["kind"] }),
+        (k) => { const {image,...rest}=control; update({ ...rest, kind: k as Control["kind"], ...(k==="image"?{image:image??{folder:""}}:{}) }); },
       )}
+      {control.kind === "image" && <label>Image folder (relative, optional)<input aria-label="Image folder" value={control.image?.folder??""} onChange={e=>update({...control,image:{folder:e.target.value}})} /></label>}
       {choice(
         "Bound field",
         control.binding?.kind === "stored" ? control.binding.fieldId : "",

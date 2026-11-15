@@ -15,6 +15,10 @@ export function compileProject(input:Project):GenerationIR {
  let mapping;try {mapping=compatibleMapping(project);}catch(error){fail(project.id,error instanceof Error?error.message:'Identity mapping is incompatible.');}
  if(!project.identity&&project.policies.some(p=>p.access==='authenticated'))fail(project.id,'Configure identity before generating authenticated policies.');
  if(project.identity&&project.policies.some(p=>p.access==='authenticated')&&!project.forms.some(f=>f.kind==='Login'&&effectiveAccess(project,f.pageId).access==='public'&&f.actionIds.some(id=>{const a=project.actions.find(a=>a.id===id);return a?.operation==='login'&&effectiveAccess(project,f.pageId,id).access==='public';})))fail(project.id,'Provide a public Login form and login action before generating authenticated policies.');
+ for(const image of project.controls.filter(c=>c.kind==='image')) {
+  if(image.binding?.kind!=='stored')continue; const field=image.binding.fieldId;
+  if(project.controls.some(c=>c.id!==image.id&&c.binding?.kind==='stored'&&c.binding.fieldId===field&&(c.kind!=='image'||(c.image?.folder??'')!==(image.image?.folder??''))))fail(image.id,'An image field must use matching image controls in every form, not text or other controls.');
+ }
  for(const control of project.controls) {
   const form=project.forms.find(f=>f.id===control.formId)!;
   for(const event of control.events){
@@ -86,10 +90,10 @@ export function compileProject(input:Project):GenerationIR {
    if(!form.controlIds.length) fail(form.id,'Select at least one Grid display control before generation.');
    const controls=form.controlIds.filter(id=>project.controls.find(c=>c.id===id)?.kind!=='identity').map(id=>{
     const c=project.controls.find(c=>c.id===id)!;
-    if(!['label','text','number','date','checkbox','select','link','button'].includes(c.kind)||c.binding?.kind==='derived'&&source.kind!=='query') fail(c.id,'This control requires a generator capability that is not available yet.');
+    if(!['label','text','number','date','checkbox','select','link','button','image'].includes(c.kind)||c.binding?.kind==='derived'&&source.kind!=='query') fail(c.id,'This control requires a generator capability that is not available yet.');
     if(c.appearance.className||c.appearance.width) fail(c.id,'Custom control layout generation is not available yet.');
     if(c.lookup&&(c.lookup.source.kind!=='table'||c.lookup.valueFieldIds.length!==1)) fail(c.id,'Lookup requires one table value field.');
-    return {id:c.id,kind:c.kind,readOnly:c.readOnly,validation:c.validation,events:c.events,...(c.lookup?{lookup:c.lookup}:{}),...(c.binding?.kind==='stored'?{fieldId:c.binding.fieldId}:c.binding?.kind==='derived'?{fieldId:c.id}:{}),label:c.appearance.label??(c.binding?.kind==='stored'?source.fields.find(f=>c.binding?.kind==='stored'&&f.id===c.binding.fieldId)?.name:undefined)??c.kind,format:c.appearance.format??'plain' as const};
+    return {id:c.id,kind:c.kind,...(c.image?{image:c.image}:{}),readOnly:c.readOnly,validation:c.validation,events:c.events,...(c.lookup?{lookup:c.lookup}:{}),...(c.binding?.kind==='stored'?{fieldId:c.binding.fieldId}:c.binding?.kind==='derived'?{fieldId:c.id}:{}),label:c.appearance.label??(c.binding?.kind==='stored'?source.fields.find(f=>c.binding?.kind==='stored'&&f.id===c.binding.fieldId)?.name:undefined)??c.kind,format:c.appearance.format??'plain' as const};
    });
    if(!controls.some(c=>c.fieldId)) fail(form.id,'Bind at least one Grid display control to a stored field.');
    if(form.appearance.className||form.appearance.width||form.appearance.format&&form.appearance.format!=='plain') fail(form.id,'Custom Grid layout/format generation is not available yet.');
@@ -101,7 +105,8 @@ export function compileProject(input:Project):GenerationIR {
     const automatic=source.keys.length===1&&table?.columns.find(c=>c.pk===1)?.type.toUpperCase()==='INTEGER'&&!table.indexes.some(i=>i.origin==='pk')&&!/\bWITHOUT\s+ROWID\b/i.test(sql)?source.keys[0]:undefined;
     for(const field of source.fields) if(!field.nullable&&!field.generated&&!field.hasDefault&&field.id!==automatic&&!controls.some(c=>c.fieldId===field.id)) fail(form.id,'Select an editable control for required field '+field.name+'.');
     const prefills=project.forms.filter(f=>(f.kind==='Grid'||f.kind==='Search')&&f.sourceRef?.kind==='table'&&f.sourceRef.id===source.id).flatMap(f=>[...f.search.filter(s=>s.operator==='eq').map(s=>({fieldId:s.fieldId,parameter:f.id+':filter:'+s.fieldId})),...f.keyMapping.map(k=>({fieldId:k.targetFieldId,parameter:keyParameter(f,k.targetFieldId)}))]).filter(p=>!source.keys.includes(p.fieldId)&&!source.fields.find(f=>f.id===p.fieldId)?.generated);
-    const config={prefills,id:form.id,pageId:page.id,source:{...source,table:source.name},keyParameters:source.keys.map(id=>keyParameter(form,id)),displayFields:form.displayFieldIds??[],context:contexts,actions,controls:controls.map(control=>({...control,...(control.lookup?{lookup:{source:{...sources.find(s=>s.id===control.lookup!.source.id)!,table:sources.find(s=>s.id===control.lookup!.source.id)!.name},valueFieldId:control.lookup.valueFieldIds[0],labelFieldId:control.lookup.labelFieldId}}:{})}))};
+    const imageFields=project.controls.filter(c=>c.kind==='image'&&c.binding?.kind==='stored'&&source.fields.some(f=>c.binding?.kind==='stored'&&f.id===c.binding.fieldId)).map(c=>({fieldId:c.binding!.kind==='stored'?c.binding!.fieldId:'',folder:c.image?.folder??''}));
+    const config={imageFields,prefills,id:form.id,pageId:page.id,source:{...source,table:source.name},keyParameters:source.keys.map(id=>keyParameter(form,id)),displayFields:form.displayFieldIds??[],context:contexts,actions,controls:controls.map(control=>({...control,...(control.lookup?{lookup:{source:{...sources.find(s=>s.id===control.lookup!.source.id)!,table:sources.find(s=>s.id===control.lookup!.source.id)!.name},valueFieldId:control.lookup.valueFieldIds[0],labelFieldId:control.lookup.labelFieldId}}:{})}))};
     records.push({id:form.id,label:form.appearance.label??'Record',source,controls,config});return [];
    }
    return [{lookupSources:sources.filter(s=>controls.some(c=>c.lookup?.source.id===s.id)),pageId:page.id,kind:form.kind,actions,context:contexts,id:form.id,label:form.appearance.label??'Records',source,controls,keyMapping:form.keyMapping,search:form.search,sorting:form.sorting,pageSize:form.paging.pageSize,...(source.kind==='query'?{report:{queryId:reportQueryId,parameters:form.queryParameters}}:{})}];

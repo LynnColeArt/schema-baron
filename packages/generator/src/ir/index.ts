@@ -1,7 +1,7 @@
 import type { Action, Control, DocumentNode, Form, LiteralValue, ScalarType, Query }  from '@schema-baron/model';
 import type { IdentityMapping } from '../templates/auth/store.js';
 export interface FieldIR { id:string; name:string; type:ScalarType; nullable:boolean; generated?:boolean; hasDefault?:boolean }
-export interface ControlIR { id:string; kind:Control['kind']; fieldId?:string; label:string; readOnly?:boolean; validation?:Control['validation']; lookup?:Control['lookup']; events?:Control['events']; format:NonNullable<Control['appearance']['format']> }
+export interface ControlIR { id:string; kind:Control['kind']; image?:Control['image']; fieldId?:string; label:string; readOnly?:boolean; validation?:Control['validation']; lookup?:Control['lookup']; events?:Control['events']; format:NonNullable<Control['appearance']['format']> }
 export interface SourceIR { id:string; kind:'table'|'query'; name:string; fields:FieldIR[]; keys:string[] }
 export type NavigationExpressionIR = {kind:'field';fieldId:string}|{kind:'parameter';parameterId:string}|{kind:'literal';value:LiteralValue};
 export interface DestinationIR {path:string;mappings:{parameter:string;field:FieldIR;expression:NavigationExpressionIR}[];newForms:string[]}
