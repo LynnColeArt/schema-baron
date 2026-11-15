@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-10-28T04:02:10.606Z",
-  "clientDate": "2026-10-27",
-  "lockSha256": "3d443184f8187d84251cf3c344700749474c7a52ce3b46db8d98c575261d1663",
+  "observedAt": "2026-11-15T15:25:34.669Z",
+  "clientDate": "2026-10-26",
+  "lockSha256": "cfe210d26084e76e3871aa54a0378cdac195b43b3f3f77c7aa3cc87e2b49cf27",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
     {
@@ -246,7 +246,7 @@
       "version": "1.11.3",
       "firstPublished": "2023-02-14T07:41:41.699Z",
       "published": "2026-07-25T07:00:08.497Z",
-      "packageModified": "2026-10-15T03:31:01.028Z",
+      "packageModified": "2026-11-02T09:47:41.796Z",
       "repository": {
         "url": "git+https://github.com/toyobayashi/emnapi.git",
         "type": "git"
@@ -278,10 +278,10 @@
     {
       "path": "node_modules/@hono/node-server",
       "name": "@hono/node-server",
-      "version": "2.1.5",
+      "version": "2.1.6",
       "firstPublished": "2023-01-07T08:20:36.788Z",
-      "published": "2026-10-13T08:25:17.433Z",
-      "packageModified": "2026-10-13T08:25:17.939Z",
+      "published": "2026-11-02T10:22:05.655Z",
+      "packageModified": "2026-11-12T12:42:49.620Z",
       "repository": {
         "url": "git+https://github.com/honojs/node-server.git",
         "type": "git"
@@ -289,16 +289,16 @@
       "maintainers": [
         "yusukebe"
       ],
-      "integrity": "sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==",
-      "tarball": "https://registry.npmjs.org/@hono/node-server/-/node-server-2.1.5.tgz",
+      "integrity": "sha512-p/KH9MnfNcsm3sR6x4lNgm5j+QN4Et8srKredl9DZfXiyZ1UQ3aQ2YVpFLbqktYN5JI+DB+VZFKM2PqE5hLKjQ==",
+      "tarball": "https://registry.npmjs.org/@hono/node-server/-/node-server-2.1.6.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQDTzd+sg8Qxvw9TtyTB/H60+CqUCVCvlhiibfEYI/HKRwIgJKYppdQ99BAL2svSwSJRLhbaS44YFcQbWGGxqAsW1GY="
+          "sig": "MEQCIHUXKCjjs9Ha/dUbokYcVkR8XBhu4jbE3hk4nDVsjmXkAiBCbydigeOeFWruqmAJFVWlLrLgUaKHF1aKwL9BDYiJbA==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@hono%2fnode-server@2.1.5",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@hono%2fnode-server@2.1.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1337,10 +1337,10 @@
       "version": "3.1.2",
       "firstPublished": "2019-07-14T20:12:33.885Z",
       "published": "2024-02-14T19:32:38.143Z",
-      "packageModified": "2024-02-14T19:32:38.290Z",
+      "packageModified": "2026-11-13T04:00:07.729Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/jridgewell/resolve-uri.git"
+        "url": "git+https://github.com/jridgewell/resolve-uri.git",
+        "type": "git"
       },
       "maintainers": [
         "jridgewell"
@@ -1349,8 +1349,8 @@
       "tarball": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIEXppH+0BsrbWtra1kPPaPPmx9gUaehh6s6zaKjIHAFlAiBmQfkNGAwgSsvu0SsXAVHZi7isPYQkKaLUvLVGXwxCaw=="
+          "sig": "MEQCIEXppH+0BsrbWtra1kPPaPPmx9gUaehh6s6zaKjIHAFlAiBmQfkNGAwgSsvu0SsXAVHZi7isPYQkKaLUvLVGXwxCaw==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -1501,7 +1501,7 @@
       "version": "16.4.3",
       "firstPublished": "2020-09-25T15:11:40.240Z",
       "published": "2026-10-23T13:28:24.925Z",
-      "packageModified": "2026-10-27T23:45:50.674Z",
+      "packageModified": "2026-11-14T23:42:52.387Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1538,7 +1538,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:14:58.884Z",
       "published": "2026-10-23T13:28:27.602Z",
-      "packageModified": "2026-10-27T23:45:25.962Z",
+      "packageModified": "2026-11-14T23:43:54.873Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1575,7 +1575,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:15:06.322Z",
       "published": "2026-10-23T13:28:30.354Z",
-      "packageModified": "2026-10-27T23:46:04.123Z",
+      "packageModified": "2026-11-14T23:43:32.730Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1612,7 +1612,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:20.021Z",
       "published": "2026-10-23T13:27:43.529Z",
-      "packageModified": "2026-10-27T23:48:04.939Z",
+      "packageModified": "2026-11-14T23:46:04.182Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1649,7 +1649,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:25.312Z",
       "published": "2026-10-23T13:27:17.999Z",
-      "packageModified": "2026-10-27T23:45:17.887Z",
+      "packageModified": "2026-11-14T23:44:51.312Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1686,7 +1686,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:15:12.550Z",
       "published": "2026-10-23T13:28:21.884Z",
-      "packageModified": "2026-10-27T23:45:02.659Z",
+      "packageModified": "2026-11-14T23:45:20.905Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1723,7 +1723,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:37.144Z",
       "published": "2026-10-23T13:37:40.117Z",
-      "packageModified": "2026-10-27T23:46:48.887Z",
+      "packageModified": "2026-11-14T23:44:09.562Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1760,7 +1760,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-10-26T03:08:42.493Z",
       "published": "2026-10-23T13:28:37.181Z",
-      "packageModified": "2026-10-27T23:45:51.455Z",
+      "packageModified": "2026-11-14T23:43:41.323Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1797,7 +1797,7 @@
       "version": "16.4.3",
       "firstPublished": "2021-08-13T04:15:18.336Z",
       "published": "2026-10-23T13:28:17.836Z",
-      "packageModified": "2026-10-27T23:46:56.469Z",
+      "packageModified": "2026-11-14T23:43:48.676Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1834,7 +1834,7 @@
       "version": "0.155.0",
       "firstPublished": "2024-10-25T02:54:47.140Z",
       "published": "2026-10-19T14:27:36.193Z",
-      "packageModified": "2026-10-27T03:22:39.792Z",
+      "packageModified": "2026-11-09T11:09:20.170Z",
       "repository": {
         "url": "git+https://github.com/oxc-project/oxc.git",
         "type": "git",
@@ -1870,7 +1870,7 @@
       "version": "1.64.1",
       "firstPublished": "2020-09-24T05:44:34.469Z",
       "published": "2026-10-14T11:58:13.696Z",
-      "packageModified": "2026-10-27T05:25:57.559Z",
+      "packageModified": "2026-11-15T06:44:37.169Z",
       "repository": {
         "url": "git+https://github.com/microsoft/playwright.git",
         "type": "git"
@@ -1909,7 +1909,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:20.056Z",
       "published": "2026-10-21T13:00:19.768Z",
-      "packageModified": "2026-10-21T13:00:20.137Z",
+      "packageModified": "2026-11-11T12:16:47.264Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -1929,8 +1929,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQCbIVQFMtz63YNxj+pdHZZ129unZpV58SGu0XOejPzHJAIgMpYZEhhIyWmqhqotlbXEwsOw5TWWIs+qTHAihAwDvJM="
+          "sig": "MEUCIQCbIVQFMtz63YNxj+pdHZZ129unZpV58SGu0XOejPzHJAIgMpYZEhhIyWmqhqotlbXEwsOw5TWWIs+qTHAihAwDvJM=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -1948,7 +1948,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:23.162Z",
       "published": "2026-10-21T13:06:13.914Z",
-      "packageModified": "2026-10-21T13:06:14.775Z",
+      "packageModified": "2026-11-11T12:16:08.352Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -1968,8 +1968,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQC9PdWT96mu75N60GpcZAOu7yo1ehvNoAEg9JKDIbMsogIhANK5m7MSK0UP04daD5jlQDpsVsdkk0sh1pCC8sbBXWR6"
+          "sig": "MEYCIQC9PdWT96mu75N60GpcZAOu7yo1ehvNoAEg9JKDIbMsogIhANK5m7MSK0UP04daD5jlQDpsVsdkk0sh1pCC8sbBXWR6",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -1987,7 +1987,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:26.136Z",
       "published": "2026-10-21T12:59:22.386Z",
-      "packageModified": "2026-10-21T12:59:22.787Z",
+      "packageModified": "2026-11-11T12:16:00.759Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2007,8 +2007,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIBUCeJCyNV+j/KsSDipCMVsL8p5a+KZSGvikGVjUJC/bAiA1JfPqe5PG32dBpWWGh44UigYdSpEL2Nj9qHMb/C+GWw=="
+          "sig": "MEQCIBUCeJCyNV+j/KsSDipCMVsL8p5a+KZSGvikGVjUJC/bAiA1JfPqe5PG32dBpWWGh44UigYdSpEL2Nj9qHMb/C+GWw==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2026,7 +2026,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:29.168Z",
       "published": "2026-10-21T13:01:06.575Z",
-      "packageModified": "2026-10-21T13:01:07.094Z",
+      "packageModified": "2026-11-11T12:23:37.081Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2046,8 +2046,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQD2lXjEGzrtXy0BHMBnzVbZmotYSB9p9QrVG+bg3x4W5wIhAIz7gC4oWzIMJSnEYCG/X2whnafDmz7SNp+Rvq23J9qC"
+          "sig": "MEYCIQD2lXjEGzrtXy0BHMBnzVbZmotYSB9p9QrVG+bg3x4W5wIhAIz7gC4oWzIMJSnEYCG/X2whnafDmz7SNp+Rvq23J9qC",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2065,7 +2065,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:32.695Z",
       "published": "2026-10-21T13:01:42.301Z",
-      "packageModified": "2026-10-21T13:01:46.119Z",
+      "packageModified": "2026-11-11T12:17:21.074Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2085,8 +2085,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQDU4jVZR0rTA4vMoLnC7qLz1/St6WGTCL6K4gEan+VwugIgQxZlEIy31u6O2DG/g9wIqTLQMrj4dsD8PIIRk8BY+mM="
+          "sig": "MEUCIQDU4jVZR0rTA4vMoLnC7qLz1/St6WGTCL6K4gEan+VwugIgQxZlEIy31u6O2DG/g9wIqTLQMrj4dsD8PIIRk8BY+mM=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2104,7 +2104,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:37.746Z",
       "published": "2026-10-21T13:00:09.322Z",
-      "packageModified": "2026-10-21T13:00:09.905Z",
+      "packageModified": "2026-11-11T12:17:03.478Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2124,8 +2124,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIBsS+crapiFuF1HqZaI8Z+CVCQd/E6NjIMzCN/FOD148AiBsZqNHFZ7OxPKiERMsx/SSvapUGXPkKJd8qYHawqJszQ=="
+          "sig": "MEQCIBsS+crapiFuF1HqZaI8Z+CVCQd/E6NjIMzCN/FOD148AiBsZqNHFZ7OxPKiERMsx/SSvapUGXPkKJd8qYHawqJszQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2143,7 +2143,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:41.617Z",
       "published": "2026-10-21T12:59:38.024Z",
-      "packageModified": "2026-10-21T12:59:38.385Z",
+      "packageModified": "2026-11-11T12:15:52.727Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2163,8 +2163,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQDg/TICc36pqUpaFaItTqDGElLRuGorEtJL3Mgr81oAUAIgCz9q49sjj1Dd5nZGfdZg8J7lL6QYLLcQimEPauXt4JU="
+          "sig": "MEUCIQDg/TICc36pqUpaFaItTqDGElLRuGorEtJL3Mgr81oAUAIgCz9q49sjj1Dd5nZGfdZg8J7lL6QYLLcQimEPauXt4JU=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2182,7 +2182,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:45.906Z",
       "published": "2026-10-21T12:59:52.371Z",
-      "packageModified": "2026-10-21T12:59:52.794Z",
+      "packageModified": "2026-11-11T12:16:31.188Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2202,8 +2202,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQDcPev+OFXoQBGkQhPB7VrEWVp/ZOXcDL/VzrY0LtqvIwIgLZ2N+R/ba3AUMWuaKRgEP4yqjn34O8qXsqNCIoFiTII="
+          "sig": "MEUCIQDcPev+OFXoQBGkQhPB7VrEWVp/ZOXcDL/VzrY0LtqvIwIgLZ2N+R/ba3AUMWuaKRgEP4yqjn34O8qXsqNCIoFiTII=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2221,7 +2221,7 @@
       "version": "1.2.15",
       "firstPublished": "2026-02-28T04:14:27.850Z",
       "published": "2026-10-21T13:01:04.242Z",
-      "packageModified": "2026-10-21T13:01:04.631Z",
+      "packageModified": "2026-11-11T12:17:07.784Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2241,8 +2241,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIHkvDoH6pOBYW9y4HCSLtSko9NnAZ+021gTW/yy48aJhAiAHue7pLh/kcXMTU+8JHuGDhEEre/yxOZHc2s5eLSspBw=="
+          "sig": "MEQCIHkvDoH6pOBYW9y4HCSLtSko9NnAZ+021gTW/yy48aJhAiAHue7pLh/kcXMTU+8JHuGDhEEre/yxOZHc2s5eLSspBw==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2260,7 +2260,7 @@
       "version": "1.2.15",
       "firstPublished": "2026-02-28T04:15:16.898Z",
       "published": "2026-10-21T13:05:45.436Z",
-      "packageModified": "2026-10-21T13:05:45.890Z",
+      "packageModified": "2026-11-11T12:17:17.892Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2280,8 +2280,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIEpbtoZQBV335Jt3FXweyCakraZ1w3NhS4C+8rKhpzGfAiBvtrH0UYYiBcXTLqQZz7NoG669OFRs+zK/jG/qPjWjdA=="
+          "sig": "MEQCIEpbtoZQBV335Jt3FXweyCakraZ1w3NhS4C+8rKhpzGfAiBvtrH0UYYiBcXTLqQZz7NoG669OFRs+zK/jG/qPjWjdA==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2299,7 +2299,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:49.013Z",
       "published": "2026-10-21T13:02:05.003Z",
-      "packageModified": "2026-10-21T13:02:05.443Z",
+      "packageModified": "2026-11-11T12:18:27.694Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2319,8 +2319,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQDr8BkP7BYv8R0YAMn+RFXbmcLI3ZEGyJkX0/mF/k6DUgIhAJtoBHOvGsYFajLdUR9pnTCCCqIwAWaDguHdAA5QGTm9"
+          "sig": "MEYCIQDr8BkP7BYv8R0YAMn+RFXbmcLI3ZEGyJkX0/mF/k6DUgIhAJtoBHOvGsYFajLdUR9pnTCCCqIwAWaDguHdAA5QGTm9",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2338,7 +2338,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:51.854Z",
       "published": "2026-10-21T13:06:47.340Z",
-      "packageModified": "2026-10-21T13:06:47.842Z",
+      "packageModified": "2026-11-11T12:18:05.417Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2358,8 +2358,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIG1j3sD0D7qMJ2CJT/UNrcXf1nkmojpssEnPWhYrg+pbAiEA0VfMYbRp6cwzjvQlj0TpiTv7jDxzl/hZ0Y/TXVvfg8Y="
+          "sig": "MEUCIG1j3sD0D7qMJ2CJT/UNrcXf1nkmojpssEnPWhYrg+pbAiEA0VfMYbRp6cwzjvQlj0TpiTv7jDxzl/hZ0Y/TXVvfg8Y=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2377,7 +2377,7 @@
       "version": "1.2.15",
       "firstPublished": "2025-08-10T03:17:39.213Z",
       "published": "2026-10-21T13:00:55.814Z",
-      "packageModified": "2026-10-21T13:00:56.288Z",
+      "packageModified": "2026-11-11T12:16:37.857Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2397,8 +2397,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQC2WQwuAx1EFbdao8himygqn86nw9qDGYFEL91/M3B9kQIhAIjEWows008Pg6dUmUZ6qhek16mipriyUrh+EvZ6uJYd"
+          "sig": "MEYCIQC2WQwuAx1EFbdao8himygqn86nw9qDGYFEL91/M3B9kQIhAIjEWows008Pg6dUmUZ6qhek16mipriyUrh+EvZ6uJYd",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2416,7 +2416,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:30:55.012Z",
       "published": "2026-10-21T13:01:15.215Z",
-      "packageModified": "2026-10-21T13:01:15.740Z",
+      "packageModified": "2026-11-11T12:16:48.316Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2436,8 +2436,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIHy7PuPRrSEmhTj6mup8ui9o880f/h74/fBn9ZgBlWoQAiEAn1PIe7xFcGYZSowXxlxVgbddwOD/81EwgbfU7p0+6JA="
+          "sig": "MEUCIHy7PuPRrSEmhTj6mup8ui9o880f/h74/fBn9ZgBlWoQAiEAn1PIe7xFcGYZSowXxlxVgbddwOD/81EwgbfU7p0+6JA=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2455,7 +2455,7 @@
       "version": "1.2.15",
       "firstPublished": "2024-03-24T23:31:01.186Z",
       "published": "2026-10-21T13:01:16.798Z",
-      "packageModified": "2026-10-21T13:01:17.440Z",
+      "packageModified": "2026-11-11T12:17:13.376Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -2475,8 +2475,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIAjWEqvS3i/c5NGV60wN9o8HOngrjdhXrTNy3mA9eUjxAiEAl3WGJEszuzjYYxEOcG2PvkytZVHa7JFeYSIDLsXcPZc="
+          "sig": "MEUCIAjWEqvS3i/c5NGV60wN9o8HOngrjdhXrTNy3mA9eUjxAiEAl3WGJEszuzjYYxEOcG2PvkytZVHa7JFeYSIDLsXcPZc=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2494,10 +2494,10 @@
       "version": "1.0.1",
       "firstPublished": "2025-05-09T14:34:07.682Z",
       "published": "2026-05-13T03:52:29.927Z",
-      "packageModified": "2026-05-13T03:52:30.235Z",
+      "packageModified": "2026-11-13T08:49:00.097Z",
       "repository": {
-        "type": "git",
         "url": "git+https://github.com/rolldown/plugins.git",
+        "type": "git",
         "directory": "packages/pluginutils"
       },
       "maintainers": [
@@ -2510,8 +2510,8 @@
       "tarball": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQDQ0Lyya3Z8CcZJxerudS0l4oACvfeThFKatXyuPD7SYAIhAOm4iYf4/oCMfUA0RRHZ/lOAlti+xM+UBtu03aI1Z9k1"
+          "sig": "MEYCIQDQ0Lyya3Z8CcZJxerudS0l4oACvfeThFKatXyuPD7SYAIhAOm4iYf4/oCMfUA0RRHZ/lOAlti+xM+UBtu03aI1Z9k1",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -2529,10 +2529,10 @@
       "version": "0.5.23",
       "firstPublished": "2019-02-16T13:34:40.003Z",
       "published": "2026-05-27T06:48:57.046Z",
-      "packageModified": "2026-05-27T06:48:57.290Z",
+      "packageModified": "2026-11-04T01:35:35.432Z",
       "repository": {
-        "type": "git",
         "url": "git+https://github.com/swc-project/swc.git",
+        "type": "git",
         "directory": "packages/helpers"
       },
       "maintainers": [
@@ -2542,8 +2542,8 @@
       "tarball": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.23.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIAf8B6fsPYqyqKW/BA77VM47uf0armnAMyncBpFmQmn2AiEAxgDYO3cUQCKUoups4KzSOT5Ef0PqdunHIPY4RueGtd4="
+          "sig": "MEUCIAf8B6fsPYqyqKW/BA77VM47uf0armnAMyncBpFmQmn2AiEAxgDYO3cUQCKUoups4KzSOT5Ef0PqdunHIPY4RueGtd4=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -3499,7 +3499,7 @@
       "version": "1.0.9",
       "firstPublished": "2016-05-17T04:52:04.146Z",
       "published": "2026-05-06T21:01:00.975Z",
-      "packageModified": "2026-10-04T08:26:40.799Z",
+      "packageModified": "2026-10-29T04:34:28.168Z",
       "repository": {
         "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
         "type": "git",
@@ -3553,7 +3553,7 @@
       "version": "24.19.2",
       "firstPublished": "2016-05-17T18:26:38.670Z",
       "published": "2026-10-09T18:44:25.189Z",
-      "packageModified": "2026-10-09T18:46:47.862Z",
+      "packageModified": "2026-10-28T18:36:37.419Z",
       "repository": {
         "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
         "type": "git",
@@ -3705,7 +3705,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:42:29.997Z",
       "published": "2026-07-08T15:49:36.897Z",
-      "packageModified": "2026-10-27T08:31:48.528Z",
+      "packageModified": "2026-11-15T08:18:28.024Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3737,7 +3737,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:42:01.557Z",
       "published": "2026-07-08T15:49:40.886Z",
-      "packageModified": "2026-10-27T08:31:54.779Z",
+      "packageModified": "2026-11-15T08:21:36.598Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3833,7 +3833,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:51.251Z",
       "published": "2026-07-08T15:49:53.075Z",
-      "packageModified": "2026-10-27T08:32:28.782Z",
+      "packageModified": "2026-11-15T08:18:40.777Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3865,7 +3865,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:56.270Z",
       "published": "2026-07-08T15:49:57.270Z",
-      "packageModified": "2026-10-27T08:31:45.232Z",
+      "packageModified": "2026-11-15T08:18:43.848Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4057,7 +4057,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:43.375Z",
       "published": "2026-07-08T15:50:21.639Z",
-      "packageModified": "2026-10-27T08:32:11.263Z",
+      "packageModified": "2026-11-15T08:18:49.388Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4249,7 +4249,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:33.545Z",
       "published": "2026-07-08T15:50:45.825Z",
-      "packageModified": "2026-10-27T08:32:16.288Z",
+      "packageModified": "2026-11-15T08:19:01.217Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4281,7 +4281,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:28.460Z",
       "published": "2026-07-08T15:50:50.403Z",
-      "packageModified": "2026-10-27T08:33:23.485Z",
+      "packageModified": "2026-11-15T08:19:38.156Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4339,7 +4339,7 @@
       "version": "5.0.5",
       "firstPublished": "2024-09-09T15:13:17.490Z",
       "published": "2026-10-15T14:27:01.877Z",
-      "packageModified": "2026-10-19T16:52:48.684Z",
+      "packageModified": "2026-11-02T16:12:25.876Z",
       "repository": {
         "url": "git+https://github.com/vitest-dev/vitest.git",
         "type": "git",
@@ -4375,7 +4375,7 @@
       "version": "5.0.5",
       "firstPublished": "2023-01-09T12:33:15.277Z",
       "published": "2026-10-15T14:28:29.575Z",
-      "packageModified": "2026-10-19T16:52:22.530Z",
+      "packageModified": "2026-11-02T16:12:19.886Z",
       "repository": {
         "url": "git+https://github.com/vitest-dev/vitest.git",
         "type": "git",
@@ -4411,7 +4411,7 @@
       "version": "12.12.0",
       "firstPublished": "2024-01-03T15:49:03.812Z",
       "published": "2026-09-24T12:41:36.171Z",
-      "packageModified": "2026-10-11T19:23:57.115Z",
+      "packageModified": "2026-11-08T12:02:03.428Z",
       "repository": {
         "url": "git+https://github.com/xyflow/xyflow.git",
         "type": "git",
@@ -4448,7 +4448,7 @@
       "version": "0.0.83",
       "firstPublished": "2023-06-13T14:58:30.250Z",
       "published": "2026-09-24T12:43:01.347Z",
-      "packageModified": "2026-10-11T19:20:40.530Z",
+      "packageModified": "2026-11-08T12:01:42.449Z",
       "repository": {
         "url": "git+https://github.com/xyflow/xyflow.git",
         "type": "git",
@@ -4594,7 +4594,7 @@
       "version": "4.11.0",
       "firstPublished": "2015-06-08T14:56:56.706Z",
       "published": "2025-10-09T16:39:18.813Z",
-      "packageModified": "2026-10-21T21:13:57.302Z",
+      "packageModified": "2026-11-13T12:46:29.446Z",
       "repository": {
         "url": "git+https://github.com/dequelabs/axe-core.git",
         "type": "git"
@@ -4625,7 +4625,7 @@
       "version": "2.11.33",
       "firstPublished": "2024-11-29T10:34:28.533Z",
       "published": "2026-10-25T17:29:32.531Z",
-      "packageModified": "2026-10-27T19:18:59.632Z",
+      "packageModified": "2026-11-12T21:26:11.918Z",
       "repository": {
         "url": "git+https://github.com/web-platform-dx/baseline-browser-mapping.git",
         "type": "git"
@@ -4660,7 +4660,7 @@
       "version": "13.0.3",
       "firstPublished": "2016-09-07T17:36:24.578Z",
       "published": "2026-08-05T03:47:44.751Z",
-      "packageModified": "2026-08-05T03:47:45.147Z",
+      "packageModified": "2026-11-14T09:20:23.029Z",
       "repository": {
         "url": "git://github.com/WiseLibs/better-sqlite3.git",
         "type": "git"
@@ -4676,8 +4676,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQDZJa2vJ7fVu/paNwf6ir8HSF5rIuSfWn109wRzMP83AAIhAPYcQ9gS9vlRrsDPpJLvTX0X85ftbFW9SDudfKak9Sj4"
+          "sig": "MEYCIQDZJa2vJ7fVu/paNwf6ir8HSF5rIuSfWn109wRzMP83AAIhAPYcQ9gS9vlRrsDPpJLvTX0X85ftbFW9SDudfKak9Sj4",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -4842,7 +4842,7 @@
       "version": "1.0.30001819",
       "firstPublished": "2017-01-27T16:04:02.256Z",
       "published": "2026-10-22T08:00:40.232Z",
-      "packageModified": "2026-10-22T08:00:41.722Z",
+      "packageModified": "2026-11-11T07:09:06.621Z",
       "repository": {
         "url": "git+https://github.com/browserslist/caniuse-lite.git",
         "type": "git"
@@ -4858,8 +4858,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQDVVHRb3+nQmgry1uV89fDKxpv6BBcicUaboI2z7ftZXQIhAITycNa0wlTVndxYHjFQL+x+ctmxnqAc59IfCfI9pDbH"
+          "sig": "MEYCIQDVVHRb3+nQmgry1uV89fDKxpv6BBcicUaboI2z7ftZXQIhAITycNa0wlTVndxYHjFQL+x+ctmxnqAc59IfCfI9pDbH",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -4994,7 +4994,7 @@
       "version": "7.2.0",
       "firstPublished": "2011-08-14T22:17:51.639Z",
       "published": "2021-03-21T21:56:16.053Z",
-      "packageModified": "2026-09-02T19:31:26.165Z",
+      "packageModified": "2026-11-09T04:17:40.171Z",
       "repository": {
         "url": "git+https://github.com/tj/commander.js.git",
         "type": "git"
@@ -5082,7 +5082,7 @@
       "version": "0.7.2",
       "firstPublished": "2012-05-28T23:56:11.938Z",
       "published": "2024-10-07T03:41:28.828Z",
-      "packageModified": "2026-06-30T22:15:14.284Z",
+      "packageModified": "2026-11-05T20:48:21.440Z",
       "repository": {
         "url": "git+https://github.com/jshttp/cookie.git",
         "type": "git"
@@ -5244,7 +5244,7 @@
       "version": "3.34.4",
       "firstPublished": "2012-10-18T20:28:28.001Z",
       "published": "2026-10-15T19:14:50.649Z",
-      "packageModified": "2026-10-15T19:14:51.041Z",
+      "packageModified": "2026-11-10T16:01:37.553Z",
       "repository": {
         "url": "git+https://github.com/cytoscape/cytoscape.js.git",
         "type": "git"
@@ -5265,8 +5265,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQCygSia5TXRV/AdzAKSpwq9bvPiRk3c6lkT1lPkHUeAkAIhAKK+gW4x7yxDfryOMiWShwZeK+o6Wyo+K6RTdX+hN2nf"
+          "sig": "MEYCIQCygSia5TXRV/AdzAKSpwq9bvPiRk3c6lkT1lPkHUeAkAIhAKK+gW4x7yxDfryOMiWShwZeK+o6Wyo+K6RTdX+hN2nf",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -5399,7 +5399,7 @@
       "version": "7.9.0",
       "firstPublished": "2011-08-18T17:05:26.410Z",
       "published": "2024-03-12T22:15:07.703Z",
-      "packageModified": "2025-05-17T15:07:03.565Z",
+      "packageModified": "2026-11-03T19:46:07.932Z",
       "repository": {
         "url": "git+https://github.com/d3/d3.git",
         "type": "git"
@@ -5426,10 +5426,10 @@
       "version": "3.2.4",
       "firstPublished": "2015-12-09T00:05:07.360Z",
       "published": "2023-05-30T21:53:24.048Z",
-      "packageModified": "2023-05-30T21:53:24.152Z",
+      "packageModified": "2026-11-03T05:14:48.491Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-array.git"
+        "url": "git+https://github.com/d3/d3-array.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5439,8 +5439,8 @@
       "tarball": "https://registry.npmjs.org/d3-array/-/d3-array-3.2.4.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIB7J7S5RpXxWrAU6v5ArgA3IWiAR5RPd494w/lmZfrOGAiEAldBrCDSBSbtKq2iWhLwg0tcrsG9J8WnCNhqNbAhR8+s="
+          "sig": "MEUCIB7J7S5RpXxWrAU6v5ArgA3IWiAR5RPd494w/lmZfrOGAiEAldBrCDSBSbtKq2iWhLwg0tcrsG9J8WnCNhqNbAhR8+s=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5453,10 +5453,10 @@
       "version": "3.0.0",
       "firstPublished": "2016-01-08T22:01:40.749Z",
       "published": "2021-06-09T03:35:37.066Z",
-      "packageModified": "2022-06-14T07:35:27.716Z",
+      "packageModified": "2026-11-03T08:19:00.596Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-axis.git"
+        "url": "git+https://github.com/d3/d3-axis.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5466,8 +5466,8 @@
       "tarball": "https://registry.npmjs.org/d3-axis/-/d3-axis-3.0.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQD1xo3eyFgDv5kj/WT9H8Jc6rRH7ZrK1Twv2ebC66w9vAIgN7jiSnjEc8zvvdl8R1Z+Lwd0yFrP+R3/jPsrZpAZTEA="
+          "sig": "MEUCIQD1xo3eyFgDv5kj/WT9H8Jc6rRH7ZrK1Twv2ebC66w9vAIgN7jiSnjEc8zvvdl8R1Z+Lwd0yFrP+R3/jPsrZpAZTEA=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5480,10 +5480,10 @@
       "version": "3.0.0",
       "firstPublished": "2016-02-29T19:57:15.418Z",
       "published": "2021-06-10T00:04:10.328Z",
-      "packageModified": "2022-06-14T07:36:20.256Z",
+      "packageModified": "2026-11-03T07:30:03.298Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-brush.git"
+        "url": "git+https://github.com/d3/d3-brush.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5493,8 +5493,8 @@
       "tarball": "https://registry.npmjs.org/d3-brush/-/d3-brush-3.0.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQCsTth2XOJ7xkALtFlpu9RDpRxhfWccMY0sylVYwYSYQAIgf47O7jXDrK9og/KSGaJJzFzWsV6aV3LpCKIjTw2HHXo="
+          "sig": "MEUCIQCsTth2XOJ7xkALtFlpu9RDpRxhfWccMY0sylVYwYSYQAIgf47O7jXDrK9og/KSGaJJzFzWsV6aV3LpCKIjTw2HHXo=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5507,10 +5507,10 @@
       "version": "3.0.1",
       "firstPublished": "2016-05-02T18:07:18.971Z",
       "published": "2021-06-05T18:26:14.475Z",
-      "packageModified": "2022-06-14T07:37:23.393Z",
+      "packageModified": "2026-11-03T08:22:24.251Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-chord.git"
+        "url": "git+https://github.com/d3/d3-chord.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5520,8 +5520,8 @@
       "tarball": "https://registry.npmjs.org/d3-chord/-/d3-chord-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCID2QljmrhTNkq6PEfgbpt560qd6g52s1YdzN1uJapFSSAiEA8sPN1wrCXcbOwNSNL+2Uamno+GCzEApmFyTEbFTaH9U="
+          "sig": "MEUCID2QljmrhTNkq6PEfgbpt560qd6g52s1YdzN1uJapFSSAiEA8sPN1wrCXcbOwNSNL+2Uamno+GCzEApmFyTEbFTaH9U=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5534,10 +5534,10 @@
       "version": "3.1.0",
       "firstPublished": "2014-03-29T21:29:27.585Z",
       "published": "2022-03-28T22:46:28.202Z",
-      "packageModified": "2022-06-14T07:37:44.312Z",
+      "packageModified": "2026-11-03T05:01:09.825Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-color.git"
+        "url": "git+https://github.com/d3/d3-color.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5547,8 +5547,8 @@
       "tarball": "https://registry.npmjs.org/d3-color/-/d3-color-3.1.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIFz00mTz0dUdKpLV8ciP7YiIVtXigzNtnYvPaGlvYsPCAiEAqNxJQJssNWi8D8HmPlNqPN4esBSsjkYSLs1ziyOvxOc="
+          "sig": "MEUCIFz00mTz0dUdKpLV8ciP7YiIVtXigzNtnYvPaGlvYsPCAiEAqNxJQJssNWi8D8HmPlNqPN4esBSsjkYSLs1ziyOvxOc=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5561,10 +5561,10 @@
       "version": "4.0.2",
       "firstPublished": "2017-04-04T22:42:07.378Z",
       "published": "2023-01-11T16:36:10.656Z",
-      "packageModified": "2023-01-11T16:36:10.739Z",
+      "packageModified": "2026-11-03T05:19:14.723Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-contour.git"
+        "url": "git+https://github.com/d3/d3-contour.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5574,8 +5574,8 @@
       "tarball": "https://registry.npmjs.org/d3-contour/-/d3-contour-4.0.2.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIGXY/YzT0nY6f7YcwadlQJ6upAVuKUUZYBnZkth5um/WAiBsA43gt4kYXq2JJAPJ9mQTt+iJfj+VxEN9SX2Kxwy+ew=="
+          "sig": "MEQCIGXY/YzT0nY6f7YcwadlQJ6upAVuKUUZYBnZkth5um/WAiBsA43gt4kYXq2JJAPJ9mQTt+iJfj+VxEN9SX2Kxwy+ew==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5588,10 +5588,10 @@
       "version": "6.0.4",
       "firstPublished": "2018-03-21T19:05:53.287Z",
       "published": "2023-04-01T02:39:11.886Z",
-      "packageModified": "2023-04-01T02:39:12.037Z",
+      "packageModified": "2026-11-03T19:41:03.781Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-delaunay.git"
+        "url": "git+https://github.com/d3/d3-delaunay.git",
+        "type": "git"
       },
       "maintainers": [
         "mourner",
@@ -5602,8 +5602,8 @@
       "tarball": "https://registry.npmjs.org/d3-delaunay/-/d3-delaunay-6.0.4.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIDGb8k7kl1pt3fbpgoDmGYAouGz7CrlVokoJriOxYdulAiATMRRSa3n4/j3cITLkaXL3L/m/RyZ+Iv2VAGzQI/TVPw=="
+          "sig": "MEQCIDGb8k7kl1pt3fbpgoDmGYAouGz7CrlVokoJriOxYdulAiATMRRSa3n4/j3cITLkaXL3L/m/RyZ+Iv2VAGzQI/TVPw==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5616,10 +5616,10 @@
       "version": "3.0.1",
       "firstPublished": "2014-04-03T15:02:46.737Z",
       "published": "2021-06-05T18:30:49.693Z",
-      "packageModified": "2022-06-14T07:39:01.304Z",
+      "packageModified": "2026-11-03T04:55:56.959Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-dispatch.git"
+        "url": "git+https://github.com/d3/d3-dispatch.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5629,8 +5629,8 @@
       "tarball": "https://registry.npmjs.org/d3-dispatch/-/d3-dispatch-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQCw+1GEEAqkCcBI+R8izt3uB25dSQuUUgLlilu+13KlRwIhAPFDcnbrbsBqPsRl+Zkti1ut5UDneb1ohQpD8EkE4T1h"
+          "sig": "MEYCIQCw+1GEEAqkCcBI+R8izt3uB25dSQuUUgLlilu+13KlRwIhAPFDcnbrbsBqPsRl+Zkti1ut5UDneb1ohQpD8EkE4T1h",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5643,10 +5643,10 @@
       "version": "3.0.0",
       "firstPublished": "2016-05-02T18:14:49.042Z",
       "published": "2021-06-09T16:00:59.516Z",
-      "packageModified": "2022-06-14T07:39:15.385Z",
+      "packageModified": "2026-11-03T07:36:00.230Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-drag.git"
+        "url": "git+https://github.com/d3/d3-drag.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5656,8 +5656,8 @@
       "tarball": "https://registry.npmjs.org/d3-drag/-/d3-drag-3.0.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQCwy8bDaawNRBKunHe0HbrMNtIULiDb8G+W9vsfJlAm7wIhALcih5b8vKEibHL/jIqXcnEN2n2PJrlRHpOvL2w+Cpzu"
+          "sig": "MEYCIQCwy8bDaawNRBKunHe0HbrMNtIULiDb8G+W9vsfJlAm7wIhALcih5b8vKEibHL/jIqXcnEN2n2PJrlRHpOvL2w+Cpzu",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5670,10 +5670,10 @@
       "version": "3.0.1",
       "firstPublished": "2015-06-05T16:28:53.023Z",
       "published": "2021-06-05T18:32:05.522Z",
-      "packageModified": "2022-06-14T07:39:22.380Z",
+      "packageModified": "2026-11-03T05:51:47.763Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-dsv.git"
+        "url": "git+https://github.com/d3/d3-dsv.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5683,8 +5683,8 @@
       "tarball": "https://registry.npmjs.org/d3-dsv/-/d3-dsv-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQCJyPAjEM9G2nXeDXbW71ef4xA8VjQudLb/wFf1joW6nwIgVLFtfYatBe4tCAuQP1TnX/xC75p4qIvuLYNM9C2XWOM="
+          "sig": "MEUCIQCJyPAjEM9G2nXeDXbW71ef4xA8VjQudLb/wFf1joW6nwIgVLFtfYatBe4tCAuQP1TnX/xC75p4qIvuLYNM9C2XWOM=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5697,7 +5697,7 @@
       "version": "0.6.3",
       "firstPublished": "2011-11-09T17:51:01.242Z",
       "published": "2021-05-24T03:00:17.928Z",
-      "packageModified": "2026-10-25T23:42:38.538Z",
+      "packageModified": "2026-11-08T05:29:53.794Z",
       "repository": {
         "url": "git://github.com/ashtuchkin/iconv-lite.git",
         "type": "git"
@@ -5723,10 +5723,10 @@
       "version": "3.0.1",
       "firstPublished": "2014-04-03T15:41:19.121Z",
       "published": "2021-06-05T18:33:15.216Z",
-      "packageModified": "2022-06-14T07:39:29.321Z",
+      "packageModified": "2026-11-03T04:52:25.430Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-ease.git"
+        "url": "git+https://github.com/d3/d3-ease.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5736,8 +5736,8 @@
       "tarball": "https://registry.npmjs.org/d3-ease/-/d3-ease-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIHFhlqXOr7vnirM86vH05AVRIzEf9nSrvnzsL6PXSnP4AiBMTOlJB3Hxv8U3v4e5AaRZcSuP3nux7dy/7yo45YmomQ=="
+          "sig": "MEQCIHFhlqXOr7vnirM86vH05AVRIzEf9nSrvnzsL6PXSnP4AiBMTOlJB3Hxv8U3v4e5AaRZcSuP3nux7dy/7yo45YmomQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5750,10 +5750,10 @@
       "version": "3.0.1",
       "firstPublished": "2016-10-22T15:24:12.022Z",
       "published": "2021-06-05T18:34:14.207Z",
-      "packageModified": "2022-06-14T07:40:18.279Z",
+      "packageModified": "2026-11-03T04:46:20.171Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-fetch.git"
+        "url": "git+https://github.com/d3/d3-fetch.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5763,8 +5763,8 @@
       "tarball": "https://registry.npmjs.org/d3-fetch/-/d3-fetch-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQCDRIIHUUJxWIbvPK7lusu9gLNeAj2PRCPkkWrHhFUziAIgECnLKCsUzGy2tkz7dHNFK+h7CShWSCaEnbYPggYkBK8="
+          "sig": "MEUCIQCDRIIHUUJxWIbvPK7lusu9gLNeAj2PRCPkkWrHhFUziAIgECnLKCsUzGy2tkz7dHNFK+h7CShWSCaEnbYPggYkBK8=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5777,10 +5777,10 @@
       "version": "3.0.0",
       "firstPublished": "2016-04-05T20:53:53.026Z",
       "published": "2021-06-05T19:11:01.836Z",
-      "packageModified": "2022-06-14T07:40:53.381Z",
+      "packageModified": "2026-11-03T05:58:34.818Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-force.git"
+        "url": "git+https://github.com/d3/d3-force.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5790,8 +5790,8 @@
       "tarball": "https://registry.npmjs.org/d3-force/-/d3-force-3.0.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIEaXJpndljZsbLOzkoXMtJv6u9Y+VKyFc/0VrqbaKvbiAiEAizYlMqnPM68IAYCiTxayu0Yf6zsXt4W8weLlb4sWYas="
+          "sig": "MEUCIEaXJpndljZsbLOzkoXMtJv6u9Y+VKyFc/0VrqbaKvbiAiEAizYlMqnPM68IAYCiTxayu0Yf6zsXt4W8weLlb4sWYas=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5804,10 +5804,10 @@
       "version": "3.1.2",
       "firstPublished": "2014-03-29T21:51:01.145Z",
       "published": "2026-01-14T18:36:25.869Z",
-      "packageModified": "2026-01-14T18:36:26.150Z",
+      "packageModified": "2026-11-03T06:33:07.839Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-format.git"
+        "url": "git+https://github.com/d3/d3-format.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5817,8 +5817,8 @@
       "tarball": "https://registry.npmjs.org/d3-format/-/d3-format-3.1.2.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQDsFEKP7I/yi/uRj5CiXWxPYvSMTVuoxdPahYmvoOP8HwIgeavqgFncVj7ibjsyUAB6V1P+c63U6EQmC9nmeyWTXUQ="
+          "sig": "MEUCIQDsFEKP7I/yi/uRj5CiXWxPYvSMTVuoxdPahYmvoOP8HwIgeavqgFncVj7ibjsyUAB6V1P+c63U6EQmC9nmeyWTXUQ=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -5836,10 +5836,10 @@
       "version": "3.1.1",
       "firstPublished": "2014-03-29T21:55:42.660Z",
       "published": "2024-03-12T22:06:03.888Z",
-      "packageModified": "2024-03-12T22:06:04.300Z",
+      "packageModified": "2026-11-03T06:09:32.436Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-geo.git"
+        "url": "git+https://github.com/d3/d3-geo.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5849,8 +5849,8 @@
       "tarball": "https://registry.npmjs.org/d3-geo/-/d3-geo-3.1.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIGq443qm4eIZHUlkUc0sJA2itJozyTNb3c16GMyn+axsAiAN9kmv+84enmUP60esXSwYFCJdb7/SKeJPgnv+7L7aSQ=="
+          "sig": "MEQCIGq443qm4eIZHUlkUc0sJA2itJozyTNb3c16GMyn+axsAiAN9kmv+84enmUP60esXSwYFCJdb7/SKeJPgnv+7L7aSQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5863,10 +5863,10 @@
       "version": "3.1.2",
       "firstPublished": "2015-11-04T07:26:52.169Z",
       "published": "2022-04-02T22:20:25.115Z",
-      "packageModified": "2022-06-14T07:44:58.446Z",
+      "packageModified": "2026-11-03T06:15:17.711Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-hierarchy.git"
+        "url": "git+https://github.com/d3/d3-hierarchy.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5876,8 +5876,8 @@
       "tarball": "https://registry.npmjs.org/d3-hierarchy/-/d3-hierarchy-3.1.2.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIEPPHUHSBzrt0QnY8rmWdf5aLSRE2iTuqWsQ5fUgg8XeAiB9JYOWYa/okaFWd1F1iJIIa3Pjh/SD8AA1etepTPIuOw=="
+          "sig": "MEQCIEPPHUHSBzrt0QnY8rmWdf5aLSRE2iTuqWsQ5fUgg8XeAiB9JYOWYa/okaFWd1F1iJIIa3Pjh/SD8AA1etepTPIuOw==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5890,10 +5890,10 @@
       "version": "3.0.1",
       "firstPublished": "2014-03-29T22:16:04.579Z",
       "published": "2021-06-05T18:38:34.549Z",
-      "packageModified": "2022-06-14T07:45:51.002Z",
+      "packageModified": "2026-11-03T05:26:55.189Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-interpolate.git"
+        "url": "git+https://github.com/d3/d3-interpolate.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5903,8 +5903,8 @@
       "tarball": "https://registry.npmjs.org/d3-interpolate/-/d3-interpolate-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIDRlgx9Tj981Yxo3b+y658H5kA+7SUQgtXjCB54wDSnyAiEA7qxstU+I/DzBPwdZpXgDhFdbVfbCBXBXlOkVXhS5mfk="
+          "sig": "MEUCIDRlgx9Tj981Yxo3b+y658H5kA+7SUQgtXjCB54wDSnyAiEA7qxstU+I/DzBPwdZpXgDhFdbVfbCBXBXlOkVXhS5mfk=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5917,10 +5917,10 @@
       "version": "3.1.0",
       "firstPublished": "2015-11-11T18:39:28.349Z",
       "published": "2022-12-19T21:50:21.362Z",
-      "packageModified": "2022-12-19T21:50:21.476Z",
+      "packageModified": "2026-11-03T03:44:36.359Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-path.git"
+        "url": "git+https://github.com/d3/d3-path.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5930,8 +5930,8 @@
       "tarball": "https://registry.npmjs.org/d3-path/-/d3-path-3.1.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIB0sFa5Jb76PeadU+R6EHHayMdiUVh8p41Av1Dwvb3GOAiEA4zg76bK+ddCr49c4Ej6FYE2wKHBD+MQJuKxvEJFU2ZA="
+          "sig": "MEUCIB0sFa5Jb76PeadU+R6EHHayMdiUVh8p41Av1Dwvb3GOAiEA4zg76bK+ddCr49c4Ej6FYE2wKHBD+MQJuKxvEJFU2ZA=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5944,10 +5944,10 @@
       "version": "3.0.1",
       "firstPublished": "2015-07-07T03:40:17.870Z",
       "published": "2021-06-05T18:39:45.950Z",
-      "packageModified": "2022-06-14T07:49:50.273Z",
+      "packageModified": "2026-11-03T03:33:41.067Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-polygon.git"
+        "url": "git+https://github.com/d3/d3-polygon.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5957,8 +5957,8 @@
       "tarball": "https://registry.npmjs.org/d3-polygon/-/d3-polygon-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIB2mwCputaPVVlRYSNOjYVtJKPkKkWVxy+1RxY30iHOnAiA/RzdIFogbpBBCwiJuj6r5uLjeiVmcGZaAPGPon/GlVg=="
+          "sig": "MEQCIB2mwCputaPVVlRYSNOjYVtJKPkKkWVxy+1RxY30iHOnAiA/RzdIFogbpBBCwiJuj6r5uLjeiVmcGZaAPGPon/GlVg==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5971,10 +5971,10 @@
       "version": "3.0.1",
       "firstPublished": "2015-07-02T18:05:32.874Z",
       "published": "2021-06-05T18:40:52.989Z",
-      "packageModified": "2022-06-14T07:50:14.839Z",
+      "packageModified": "2026-11-03T04:16:58.397Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-quadtree.git"
+        "url": "git+https://github.com/d3/d3-quadtree.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -5984,8 +5984,8 @@
       "tarball": "https://registry.npmjs.org/d3-quadtree/-/d3-quadtree-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQCwzpaMbhsBfSTcfrvXesfMuMqDlQ3Cw2jHbVCeZP3ePgIgVB5kQqdgIPLEcCAw9NltgtGSuryb8503xXVCGrlnaUs="
+          "sig": "MEUCIQCwzpaMbhsBfSTcfrvXesfMuMqDlQ3Cw2jHbVCeZP3ePgIgVB5kQqdgIPLEcCAw9NltgtGSuryb8503xXVCGrlnaUs=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -5998,10 +5998,10 @@
       "version": "3.0.1",
       "firstPublished": "2014-04-03T15:52:16.205Z",
       "published": "2021-06-05T18:41:51.228Z",
-      "packageModified": "2022-06-14T07:50:39.301Z",
+      "packageModified": "2026-11-03T03:56:45.840Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-random.git"
+        "url": "git+https://github.com/d3/d3-random.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6011,8 +6011,8 @@
       "tarball": "https://registry.npmjs.org/d3-random/-/d3-random-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQCFC4Gtu+Y97lcE2Mbx3YT0g+ouLfspx9llvo6drLhCFgIhANAujK9ScRJp9c2IPtPlIU600WS4+uhLCrIEyrBYrXt+"
+          "sig": "MEYCIQCFC4Gtu+Y97lcE2Mbx3YT0g+ouLfspx9llvo6drLhCFgIhANAujK9ScRJp9c2IPtPlIU600WS4+uhLCrIEyrBYrXt+",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6052,10 +6052,10 @@
       "version": "2.12.1",
       "firstPublished": "2015-12-09T00:05:07.360Z",
       "published": "2021-03-24T16:47:25.878Z",
-      "packageModified": "2023-05-30T21:53:24.152Z",
+      "packageModified": "2026-11-03T05:14:48.491Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-array.git"
+        "url": "git+https://github.com/d3/d3-array.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6065,8 +6065,8 @@
       "tarball": "https://registry.npmjs.org/d3-array/-/d3-array-2.12.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQDn5ytYo+hy9SKI8ZaqbtHgVf/bGGj60FOzM7AOE2fvgwIhAKWtWbVACuzPwnYSpgR7WyYd191LfGiRyjd6D5TARz8R"
+          "sig": "MEYCIQDn5ytYo+hy9SKI8ZaqbtHgVf/bGGj60FOzM7AOE2fvgwIhAKWtWbVACuzPwnYSpgR7WyYd191LfGiRyjd6D5TARz8R",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6079,10 +6079,10 @@
       "version": "1.0.9",
       "firstPublished": "2015-11-11T18:39:28.349Z",
       "published": "2019-11-16T18:54:23.025Z",
-      "packageModified": "2022-12-19T21:50:21.476Z",
+      "packageModified": "2026-11-03T03:44:36.359Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-path.git"
+        "url": "git+https://github.com/d3/d3-path.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock"
@@ -6091,8 +6091,8 @@
       "tarball": "https://registry.npmjs.org/d3-path/-/d3-path-1.0.9.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCICZr/ufjpVVjNIoYCTCzjz00rCqM2ivypJ/Bkfv3YTijAiBH3/AAWmGZpLSu6k6GP6cFA4uYvO48vn+42l02b1CQwQ=="
+          "sig": "MEQCICZr/ufjpVVjNIoYCTCzjz00rCqM2ivypJ/Bkfv3YTijAiBH3/AAWmGZpLSu6k6GP6cFA4uYvO48vn+42l02b1CQwQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6105,10 +6105,10 @@
       "version": "1.3.7",
       "firstPublished": "2015-11-11T19:35:32.768Z",
       "published": "2019-11-16T21:52:46.460Z",
-      "packageModified": "2023-04-12T04:39:59.194Z",
+      "packageModified": "2026-11-03T04:29:45.565Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-shape.git"
+        "url": "git+https://github.com/d3/d3-shape.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock"
@@ -6117,8 +6117,8 @@
       "tarball": "https://registry.npmjs.org/d3-shape/-/d3-shape-1.3.7.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIH+/tmQ+RtCjkyfW3/AOLjjtbw02BoA7YmbJj6w85zbXAiEAyqt9ajx7ayJp6dvH51aoIWeSLsp+mdAWvNIvJVWGbY4="
+          "sig": "MEUCIH+/tmQ+RtCjkyfW3/AOLjjtbw02BoA7YmbJj6w85zbXAiEAyqt9ajx7ayJp6dvH51aoIWeSLsp+mdAWvNIvJVWGbY4=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6157,10 +6157,10 @@
       "version": "4.0.2",
       "firstPublished": "2014-03-29T22:21:16.311Z",
       "published": "2021-09-24T17:43:03.930Z",
-      "packageModified": "2023-04-12T04:39:57.280Z",
+      "packageModified": "2026-11-03T06:52:59.193Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-scale.git"
+        "url": "git+https://github.com/d3/d3-scale.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6170,8 +6170,8 @@
       "tarball": "https://registry.npmjs.org/d3-scale/-/d3-scale-4.0.2.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCICTpwtNeJSnXFdWQzBU/6j2bX1dTLmWXNc0ZVUTZQ6WJAiB5lmT4/7u/25EaOMi7T34oTvYqRjV1x5YmOxZTo87GGQ=="
+          "sig": "MEQCICTpwtNeJSnXFdWQzBU/6j2bX1dTLmWXNc0ZVUTZQ6WJAiB5lmT4/7u/25EaOMi7T34oTvYqRjV1x5YmOxZTo87GGQ==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6184,10 +6184,10 @@
       "version": "3.1.0",
       "firstPublished": "2016-06-04T17:55:35.482Z",
       "published": "2024-03-12T21:00:11.077Z",
-      "packageModified": "2024-03-12T21:00:11.524Z",
+      "packageModified": "2026-11-03T06:45:10.046Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-scale-chromatic.git"
+        "url": "git+https://github.com/d3/d3-scale-chromatic.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6197,8 +6197,8 @@
       "tarball": "https://registry.npmjs.org/d3-scale-chromatic/-/d3-scale-chromatic-3.1.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQDWcsfeNMHZidXBCLIuoIe/8SXsifDV8WEuRLdAK4uy8gIga+bh6PXInez1dUiDte5V7L1vok/rElZkhCidLxAg2tA="
+          "sig": "MEUCIQDWcsfeNMHZidXBCLIuoIe/8SXsifDV8WEuRLdAK4uy8gIga+bh6PXInez1dUiDte5V7L1vok/rElZkhCidLxAg2tA=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6211,10 +6211,10 @@
       "version": "3.0.0",
       "firstPublished": "2015-05-26T04:56:49.517Z",
       "published": "2021-06-07T17:40:48.511Z",
-      "packageModified": "2022-06-14T07:52:48.843Z",
+      "packageModified": "2026-11-03T07:09:37.311Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-selection.git"
+        "url": "git+https://github.com/d3/d3-selection.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6224,8 +6224,8 @@
       "tarball": "https://registry.npmjs.org/d3-selection/-/d3-selection-3.0.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQCBBXm03rNYNSj4xem0DT0BbUiPfVBdTExIHXr2lCtWAQIgb/Xld4TyR/Hs0bwz4FDmyb2+ViviaZ37Y9J1VPu++hI="
+          "sig": "MEUCIQCBBXm03rNYNSj4xem0DT0BbUiPfVBdTExIHXr2lCtWAQIgb/Xld4TyR/Hs0bwz4FDmyb2+ViviaZ37Y9J1VPu++hI=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6238,10 +6238,10 @@
       "version": "3.2.0",
       "firstPublished": "2015-11-11T19:35:32.768Z",
       "published": "2022-12-20T23:39:17.478Z",
-      "packageModified": "2023-04-12T04:39:59.194Z",
+      "packageModified": "2026-11-03T04:29:45.565Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-shape.git"
+        "url": "git+https://github.com/d3/d3-shape.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6251,8 +6251,8 @@
       "tarball": "https://registry.npmjs.org/d3-shape/-/d3-shape-3.2.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQDTtyw+AtmH6gd2uChXUEmwt8Hpqd75ntYw4hui9d7GpgIhALz/5Dp746uWIQbsJuFjrAJzwiTZLBXwqqxcipxYdD+w"
+          "sig": "MEYCIQDTtyw+AtmH6gd2uChXUEmwt8Hpqd75ntYw4hui9d7GpgIhALz/5Dp746uWIQbsJuFjrAJzwiTZLBXwqqxcipxYdD+w",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6265,10 +6265,10 @@
       "version": "3.1.0",
       "firstPublished": "2014-03-29T22:22:35.844Z",
       "published": "2022-12-02T23:58:08.483Z",
-      "packageModified": "2022-12-02T23:58:08.574Z",
+      "packageModified": "2026-11-03T06:24:07.582Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-time.git"
+        "url": "git+https://github.com/d3/d3-time.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6278,8 +6278,8 @@
       "tarball": "https://registry.npmjs.org/d3-time/-/d3-time-3.1.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIQCp2H7HdL9HPfkSsdemeLA2cCjiRYE3u5ejtpRIB3jZiwIgFQu39bQjS2Jk2Fohge9VKCABKHgE7HA3A9376CPQJxo="
+          "sig": "MEUCIQCp2H7HdL9HPfkSsdemeLA2cCjiRYE3u5ejtpRIB3jZiwIgFQu39bQjS2Jk2Fohge9VKCABKHgE7HA3A9376CPQJxo=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6292,10 +6292,10 @@
       "version": "4.1.0",
       "firstPublished": "2014-04-03T15:59:27.818Z",
       "published": "2021-12-04T17:02:51.666Z",
-      "packageModified": "2023-04-12T04:40:00.953Z",
+      "packageModified": "2026-11-03T06:29:03.229Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-time-format.git"
+        "url": "git+https://github.com/d3/d3-time-format.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6305,8 +6305,8 @@
       "tarball": "https://registry.npmjs.org/d3-time-format/-/d3-time-format-4.1.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQDgeR9vxyzFyY3MjFJFQaS5GZ5oDjPad91LGj8kXGhY0gIhAM92phjBE+68qa4ppBhywXQs/KhKLyjOnbOD1HsLHvGJ"
+          "sig": "MEYCIQDgeR9vxyzFyY3MjFJFQaS5GZ5oDjPad91LGj8kXGhY0gIhAM92phjBE+68qa4ppBhywXQs/KhKLyjOnbOD1HsLHvGJ",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6319,10 +6319,10 @@
       "version": "3.0.1",
       "firstPublished": "2015-06-08T18:18:03.467Z",
       "published": "2021-06-05T18:43:06.805Z",
-      "packageModified": "2022-06-14T07:55:08.869Z",
+      "packageModified": "2026-11-03T04:36:27.717Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-timer.git"
+        "url": "git+https://github.com/d3/d3-timer.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6332,8 +6332,8 @@
       "tarball": "https://registry.npmjs.org/d3-timer/-/d3-timer-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEYCIQCxGeQ3ICOkDcA9TZViSBJLvmasQf5yiflLZ+R2JCzqLgIhAJ25BSfOJAL8+ervm9Xk4qfxNMBfTX4CVOR8m8O5ugLl"
+          "sig": "MEYCIQCxGeQ3ICOkDcA9TZViSBJLvmasQf5yiflLZ+R2JCzqLgIhAJ25BSfOJAL8+ervm9Xk4qfxNMBfTX4CVOR8m8O5ugLl",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6346,10 +6346,10 @@
       "version": "3.0.1",
       "firstPublished": "2015-05-29T16:55:33.922Z",
       "published": "2021-06-09T23:50:41.294Z",
-      "packageModified": "2022-06-14T07:55:54.399Z",
+      "packageModified": "2026-11-03T07:24:53.303Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-transition.git"
+        "url": "git+https://github.com/d3/d3-transition.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6359,8 +6359,8 @@
       "tarball": "https://registry.npmjs.org/d3-transition/-/d3-transition-3.0.1.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEUCIEeXHmpKANgVZ1JfEvHvNMpxbgI3IGpNPSnTk+i0+uvnAiEA+U4/b2kVfaQ4N5hbOZ1VTVdoVyI9LpvK0kGHF3goWvg="
+          "sig": "MEUCIEeXHmpKANgVZ1JfEvHvNMpxbgI3IGpNPSnTk+i0+uvnAiEA+U4/b2kVfaQ4N5hbOZ1VTVdoVyI9LpvK0kGHF3goWvg=",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6373,10 +6373,10 @@
       "version": "3.0.0",
       "firstPublished": "2016-05-02T18:15:27.707Z",
       "published": "2021-06-10T00:49:18.125Z",
-      "packageModified": "2022-06-14T07:57:51.223Z",
+      "packageModified": "2026-11-03T07:42:48.357Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/d3/d3-zoom.git"
+        "url": "git+https://github.com/d3/d3-zoom.git",
+        "type": "git"
       },
       "maintainers": [
         "mbostock",
@@ -6386,8 +6386,8 @@
       "tarball": "https://registry.npmjs.org/d3-zoom/-/d3-zoom-3.0.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
-          "sig": "MEQCIEXEeRVdyez31T/X9tqSQnwnA76NtUPlG7J7YxKO7FXZAiAkWxlnr/t19NRW//pY9Vw550qyDaEmtMGtbudipn1WJA=="
+          "sig": "MEQCIEXEeRVdyez31T/X9tqSQnwnA76NtUPlG7J7YxKO7FXZAiAkWxlnr/t19NRW//pY9Vw550qyDaEmtMGtbudipn1WJA==",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
         }
       ],
       "provenance": null,
@@ -6625,7 +6625,7 @@
       "version": "3.4.17",
       "firstPublished": "2014-05-21T18:34:38.970Z",
       "published": "2026-10-12T12:41:28.880Z",
-      "packageModified": "2026-10-12T12:41:29.148Z",
+      "packageModified": "2026-11-14T14:18:25.391Z",
       "repository": {
         "url": "git://github.com/cure53/DOMPurify.git",
         "type": "git"
@@ -6641,8 +6641,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIHQd4PfyWERSfyNFXtW8GM7zQouNEl8+gIMKBaoWIgMBAiBjW6IfIXg+RThMtWUn7s+khCbEzZRMhBNZ3bB307BJhQ=="
+          "sig": "MEQCIHQd4PfyWERSfyNFXtW8GM7zQouNEl8+gIMKBaoWIgMBAiBjW6IfIXg+RThMtWUn7s+khCbEzZRMhBNZ3bB307BJhQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": null,
@@ -6710,7 +6710,7 @@
       "version": "0.9.3",
       "firstPublished": "2017-07-18T08:27:43.143Z",
       "published": "2024-04-16T08:28:21.682Z",
-      "packageModified": "2026-07-17T08:07:55.021Z",
+      "packageModified": "2026-10-28T13:35:43.772Z",
       "repository": {
         "url": "git+https://github.com/kieler/elkjs.git",
         "type": "git"
@@ -6739,7 +6739,7 @@
       "version": "2.0.0",
       "firstPublished": "2016-06-08T18:58:44.662Z",
       "published": "2024-03-29T00:03:42.135Z",
-      "packageModified": "2024-05-30T18:11:31.473Z",
+      "packageModified": "2026-11-12T18:19:24.217Z",
       "repository": {
         "url": "git+https://github.com/pillarjs/encodeurl.git",
         "type": "git"
@@ -6874,7 +6874,7 @@
       "version": "1.53.0",
       "firstPublished": "2024-05-23T06:21:14.855Z",
       "published": "2026-10-24T11:53:06.614Z",
-      "packageModified": "2026-10-27T00:36:32.303Z",
+      "packageModified": "2026-11-11T09:42:43.545Z",
       "repository": {
         "url": "git+https://github.com/toss/es-toolkit.git",
         "type": "git"
@@ -6990,7 +6990,7 @@
       "version": "3.0.7",
       "firstPublished": "2012-02-08T12:17:52.893Z",
       "published": "2025-05-09T10:32:51.243Z",
-      "packageModified": "2026-10-14T15:43:34.465Z",
+      "packageModified": "2026-11-08T19:07:06.783Z",
       "repository": {
         "url": "git://git@github.com/EventSource/eventsource.git",
         "type": "git"
@@ -7085,7 +7085,7 @@
       "version": "5.3.0",
       "firstPublished": "2010-12-29T19:38:25.450Z",
       "published": "2026-10-09T12:56:54.505Z",
-      "packageModified": "2026-10-09T12:56:55.078Z",
+      "packageModified": "2026-11-07T17:35:30.254Z",
       "repository": {
         "url": "git+https://github.com/expressjs/express.git",
         "type": "git"
@@ -7101,8 +7101,8 @@
       "tarball": "https://registry.npmjs.org/express/-/express-5.3.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCICHxm5Q3ouMkRSvPzBL4cd1e1inNV4jvmEskclN0pLl5AiAA2D5Tc8x4V1F3mmyvA+cVgJs6yQiGwONT44JG+yX29A=="
+          "sig": "MEQCICHxm5Q3ouMkRSvPzBL4cd1e1inNV4jvmEskclN0pLl5AiAA2D5Tc8x4V1F3mmyvA+cVgJs6yQiGwONT44JG+yX29A==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -7120,7 +7120,7 @@
       "version": "8.7.1",
       "firstPublished": "2014-12-11T01:58:05.543Z",
       "published": "2026-10-06T02:04:46.635Z",
-      "packageModified": "2026-10-06T02:04:46.947Z",
+      "packageModified": "2026-11-09T21:18:58.718Z",
       "repository": {
         "url": "git+https://github.com/express-rate-limit/express-rate-limit.git",
         "type": "git"
@@ -7137,8 +7137,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEYCIQDdmETcvVUGezo8iUFaK7eyTinM58/g+X4ila7/zjUBTwIhAOgoTecAtMKSKRcsYBQpZb73kW1mvV6jQQuz4JqCSdQp"
+          "sig": "MEYCIQDdmETcvVUGezo8iUFaK7eyTinM58/g+X4ila7/zjUBTwIhAOgoTecAtMKSKRcsYBQpZb73kW1mvV6jQQuz4JqCSdQp",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -7551,10 +7551,10 @@
       "version": "2.0.4",
       "firstPublished": "2014-09-03T06:38:13.950Z",
       "published": "2026-05-28T18:11:39.940Z",
-      "packageModified": "2026-05-28T18:11:40.044Z",
+      "packageModified": "2026-11-03T18:05:16.866Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/inspect-js/hasOwn.git"
+        "url": "git+https://github.com/inspect-js/hasOwn.git",
+        "type": "git"
       },
       "maintainers": [
         "ljharb",
@@ -7564,8 +7564,8 @@
       "tarball": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQD7mBP93ajj5PIrtTB7RZYHC5Mt6V5A7Dhx63LsJokNiQIgUwEVtJkPNDCtyRp7uUNxHkynqyzIHP27XsmnyCyZNWk="
+          "sig": "MEUCIQD7mBP93ajj5PIrtTB7RZYHC5Mt6V5A7Dhx63LsJokNiQIgUwEVtJkPNDCtyRp7uUNxHkynqyzIHP27XsmnyCyZNWk=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": null,
@@ -7575,10 +7575,10 @@
     {
       "path": "node_modules/hono",
       "name": "hono",
-      "version": "4.13.14",
+      "version": "4.13.16",
       "firstPublished": "2021-12-14T20:08:48.105Z",
-      "published": "2026-10-25T07:19:30.732Z",
-      "packageModified": "2026-10-25T07:19:31.076Z",
+      "published": "2026-11-01T03:04:37.067Z",
+      "packageModified": "2026-11-11T08:54:02.483Z",
       "repository": {
         "url": "git+https://github.com/honojs/hono.git",
         "type": "git"
@@ -7586,16 +7586,16 @@
       "maintainers": [
         "yusukebe"
       ],
-      "integrity": "sha512-yhRLQ21U6qa9Hsu2N7Qcbh8tE+WKEcoErjIo56LeSGiGXGp9sA7UpE86Ui9uexb61KakiGwuHMn2QdV7w6i6kQ==",
-      "tarball": "https://registry.npmjs.org/hono/-/hono-4.13.14.tgz",
+      "integrity": "sha512-AOLOEhvrV+iH92xXCnFr/5+3KjPKcI3xP63XJtX5spAnkznPdHijlIsUTpi7/9EhWqrTCekw5c5zh1K+YsVw7A==",
+      "tarball": "https://registry.npmjs.org/hono/-/hono-4.13.16.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIEfDwt+J/WVEiAbB+4NmnkX7JDa5zIo0D32kbwGjyuPmAiB2nE9gZYcdMtloTG0FeSbKfvUNtP7rOdlIurcxBWJC8w=="
+          "sig": "MEUCIH64x96zAVG5ypwOTZFtcx8q/hmKRm6qqWUfSpC2OgRIAiEArt4V2wDceGZi+M4O0zsAxi8hM5b0v76rX0VnqmIFN8I=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/hono@4.13.14",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/hono@4.13.16",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -7638,7 +7638,7 @@
       "version": "0.7.3",
       "firstPublished": "2011-11-09T17:51:01.242Z",
       "published": "2026-07-03T17:53:11.119Z",
-      "packageModified": "2026-10-25T23:42:38.538Z",
+      "packageModified": "2026-11-08T05:29:53.794Z",
       "repository": {
         "url": "git+https://github.com/pillarjs/iconv-lite.git",
         "type": "git"
@@ -7744,7 +7744,7 @@
       "version": "10.7.5",
       "firstPublished": "2015-05-05T00:32:26.395Z",
       "published": "2026-10-25T01:32:24.393Z",
-      "packageModified": "2026-10-25T01:32:24.808Z",
+      "packageModified": "2026-11-03T16:58:46.491Z",
       "repository": {
         "url": "git+https://github.com/beaugunderson/ip-address.git",
         "type": "git"
@@ -7760,8 +7760,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQDjv2DMBtrIBkoNvfNqzLFD+S7bsnKI0rpI2qpMHWOesAIgWf6Z1GaZeRHCapMcImWfBCQTC+KefV/pxlKMNg4NfJ0="
+          "sig": "MEUCIQDjv2DMBtrIBkoNvfNqzLFD+S7bsnKI0rpI2qpMHWOesAIgWf6Z1GaZeRHCapMcImWfBCQTC+KefV/pxlKMNg4NfJ0=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -7860,7 +7860,7 @@
       "version": "6.2.13",
       "firstPublished": "2014-02-27T14:47:11.534Z",
       "published": "2026-10-20T06:21:48.616Z",
-      "packageModified": "2026-10-20T06:21:48.940Z",
+      "packageModified": "2026-11-09T18:41:21.972Z",
       "repository": {
         "url": "git+https://github.com/panva/jose.git",
         "type": "git"
@@ -7872,8 +7872,8 @@
       "tarball": "https://registry.npmjs.org/jose/-/jose-6.2.13.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIFkw7FPFTBykaiRdYiZ2v0rq2oL3jfCd0tLenkBebfOcAiBJqQph1Q2RlDJeVwM3Az7FzjN43ckfqzbDE5ByjUDqEQ=="
+          "sig": "MEQCIFkw7FPFTBykaiRdYiZ2v0rq2oL3jfCd0tLenkBebfOcAiBJqQph1Q2RlDJeVwM3Az7FzjN43ckfqzbDE5ByjUDqEQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -7982,7 +7982,7 @@
       "version": "15.0.0",
       "firstPublished": "2011-08-14T22:17:51.639Z",
       "published": "2026-05-29T09:16:23.076Z",
-      "packageModified": "2026-09-02T19:31:26.165Z",
+      "packageModified": "2026-11-09T04:17:40.171Z",
       "repository": {
         "url": "git+https://github.com/tj/commander.js.git",
         "type": "git"
@@ -8446,7 +8446,7 @@
       "version": "16.4.2",
       "firstPublished": "2011-07-24T13:15:09.719Z",
       "published": "2025-11-06T22:29:20.004Z",
-      "packageModified": "2026-10-26T14:54:50.214Z",
+      "packageModified": "2026-11-09T23:05:42.205Z",
       "repository": {
         "url": "git://github.com/markedjs/marked.git",
         "type": "git"
@@ -8565,7 +8565,7 @@
       "version": "12.2.0",
       "firstPublished": "2014-12-02T17:39:42.546Z",
       "published": "2026-10-13T08:42:16.513Z",
-      "packageModified": "2026-10-13T08:42:18.053Z",
+      "packageModified": "2026-11-11T07:21:03.555Z",
       "repository": {
         "url": "git+https://github.com/mermaid-js/mermaid.git",
         "type": "git"
@@ -8585,8 +8585,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIB+cTuhtsuvxD4sGkpu8auBaGb5lkP8Tf3kWoWI5RVt0AiAsETvJNXDq3UxS/2pdDa5GuaFoGTaBtyv+2MFCXjIR7g=="
+          "sig": "MEQCIB+cTuhtsuvxD4sGkpu8auBaGb5lkP8Tf3kWoWI5RVt0AiAsETvJNXDq3UxS/2pdDa5GuaFoGTaBtyv+2MFCXjIR7g==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -8841,7 +8841,7 @@
       "version": "16.4.3",
       "firstPublished": "2011-07-11T11:00:45.416Z",
       "published": "2026-10-23T13:40:24.922Z",
-      "packageModified": "2026-10-27T23:54:12.456Z",
+      "packageModified": "2026-11-14T23:56:06.067Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git"
@@ -8879,7 +8879,7 @@
       "version": "8.5.23",
       "firstPublished": "2013-11-04T19:57:14.218Z",
       "published": "2026-07-24T17:05:13.876Z",
-      "packageModified": "2026-10-26T20:36:45.238Z",
+      "packageModified": "2026-11-13T22:46:13.864Z",
       "repository": {
         "url": "git+https://github.com/postcss/postcss.git",
         "type": "git"
@@ -8979,7 +8979,7 @@
       "version": "1.13.4",
       "firstPublished": "2013-07-26T10:27:13.645Z",
       "published": "2025-02-05T01:26:10.272Z",
-      "packageModified": "2026-07-22T05:49:40.465Z",
+      "packageModified": "2026-11-03T18:02:08.990Z",
       "repository": {
         "url": "git://github.com/inspect-js/object-inspect.git",
         "type": "git"
@@ -9328,7 +9328,7 @@
       "version": "1.64.1",
       "firstPublished": "2015-01-23T20:49:28.632Z",
       "published": "2026-10-14T11:54:49.998Z",
-      "packageModified": "2026-10-27T05:26:51.382Z",
+      "packageModified": "2026-11-15T06:44:30.307Z",
       "repository": {
         "url": "git+https://github.com/microsoft/playwright.git",
         "type": "git"
@@ -9367,7 +9367,7 @@
       "version": "1.64.1",
       "firstPublished": "2020-01-17T16:44:00.542Z",
       "published": "2026-10-14T11:54:58.323Z",
-      "packageModified": "2026-10-27T05:27:32.192Z",
+      "packageModified": "2026-11-15T06:44:19.491Z",
       "repository": {
         "url": "git+https://github.com/microsoft/playwright.git",
         "type": "git"
@@ -9458,7 +9458,7 @@
       "version": "8.5.32",
       "firstPublished": "2013-11-04T19:57:14.218Z",
       "published": "2026-10-26T20:36:42.832Z",
-      "packageModified": "2026-10-26T20:36:45.238Z",
+      "packageModified": "2026-11-13T22:46:13.864Z",
       "repository": {
         "url": "git+https://github.com/postcss/postcss.git",
         "type": "git"
@@ -9470,8 +9470,8 @@
       "tarball": "https://registry.npmjs.org/postcss/-/postcss-8.5.32.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCICaVEVMXfMeYkcOopkG+BDkGhayhn8dTiSZyAFJopbczAiAeq6eqQVd7X6WhLx25iGntEV54VlWv/AA92mxnkaS1Dg=="
+          "sig": "MEQCICaVEVMXfMeYkcOopkG+BDkGhayhn8dTiSZyAFJopbczAiAeq6eqQVd7X6WhLx25iGntEV54VlWv/AA92mxnkaS1Dg==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -9521,7 +9521,7 @@
       "version": "6.16.1",
       "firstPublished": "2011-02-04T04:40:23.617Z",
       "published": "2026-10-14T22:06:17.002Z",
-      "packageModified": "2026-10-27T19:27:00.508Z",
+      "packageModified": "2026-10-28T23:41:47.644Z",
       "repository": {
         "url": "git+https://github.com/ljharb/qs.git",
         "type": "git"
@@ -9608,7 +9608,7 @@
       "version": "19.3.1",
       "firstPublished": "2011-10-26T17:46:21.942Z",
       "published": "2026-10-14T16:47:15.290Z",
-      "packageModified": "2026-10-27T16:27:02.167Z",
+      "packageModified": "2026-11-12T16:22:01.415Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -9645,7 +9645,7 @@
       "version": "19.3.1",
       "firstPublished": "2014-05-06T18:59:36.160Z",
       "published": "2026-10-14T16:49:10.081Z",
-      "packageModified": "2026-10-27T16:25:14.594Z",
+      "packageModified": "2026-11-12T16:22:49.969Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -9734,7 +9734,7 @@
       "version": "1.2.15",
       "firstPublished": "2017-01-01T22:00:15.147Z",
       "published": "2026-10-21T13:10:11.254Z",
-      "packageModified": "2026-10-21T13:10:11.770Z",
+      "packageModified": "2026-11-11T12:27:52.015Z",
       "repository": {
         "url": "git+https://github.com/rolldown/rolldown.git",
         "type": "git",
@@ -9754,8 +9754,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIH46Xex5WZNgQWYAG0Qfph1hFS1wh6DdamLuY7gaZQG5AiEAiZ9zMNv6Kpqx1EmS9n44VI9NhHIZnyBACWKFzOkUR+A="
+          "sig": "MEUCIH46Xex5WZNgQWYAG0Qfph1hFS1wh6DdamLuY7gaZQG5AiEAiZ9zMNv6Kpqx1EmS9n44VI9NhHIZnyBACWKFzOkUR+A=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -9879,7 +9879,7 @@
       "version": "0.28.0",
       "firstPublished": "2011-01-11T11:22:36.888Z",
       "published": "2026-09-09T17:17:30.281Z",
-      "packageModified": "2026-10-27T16:25:15.482Z",
+      "packageModified": "2026-11-12T16:24:17.162Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -9916,7 +9916,7 @@
       "version": "7.8.5",
       "firstPublished": "2011-02-12T00:20:25.690Z",
       "published": "2026-06-19T18:32:48.972Z",
-      "packageModified": "2026-09-09T20:11:27.644Z",
+      "packageModified": "2026-11-02T19:47:44.481Z",
       "repository": {
         "url": "git+https://github.com/npm/node-semver.git",
         "type": "git"
@@ -10370,7 +10370,7 @@
       "version": "6.2.2",
       "firstPublished": "2022-04-29T11:34:05.073Z",
       "published": "2026-10-10T19:50:11.229Z",
-      "packageModified": "2026-10-10T19:50:11.488Z",
+      "packageModified": "2026-11-01T15:14:20.329Z",
       "repository": {
         "url": "tinylibs/tinybench",
         "type": "git"
@@ -10384,8 +10384,8 @@
       "tarball": "https://registry.npmjs.org/tinybench/-/tinybench-6.2.2.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIG2g/UrMi898Exu+NOA25mbtmD/Vp0beRN43bXVnthFaAiEAgMVwRdsVFV0ngFDuNm/PsZyjXPdGSP2bPPRTH9kv/oc="
+          "sig": "MEUCIG2g/UrMi898Exu+NOA25mbtmD/Vp0beRN43bXVnthFaAiEAgMVwRdsVFV0ngFDuNm/PsZyjXPdGSP2bPPRTH9kv/oc=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -10526,7 +10526,7 @@
       "version": "2.8.1",
       "firstPublished": "2014-12-30T09:21:20.138Z",
       "published": "2024-10-31T22:42:48.624Z",
-      "packageModified": "2026-06-17T05:44:47.278Z",
+      "packageModified": "2026-10-30T20:20:28.936Z",
       "repository": {
         "url": "git+https://github.com/Microsoft/tslib.git",
         "type": "git"
@@ -10623,7 +10623,7 @@
       "version": "7.0.2",
       "firstPublished": "2012-10-01T15:35:39.553Z",
       "published": "2026-07-08T15:55:18.431Z",
-      "packageModified": "2026-10-27T08:36:55.189Z",
+      "packageModified": "2026-11-15T08:24:00.369Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -10655,7 +10655,7 @@
       "version": "7.24.6",
       "firstPublished": "2023-09-19T15:09:35.360Z",
       "published": "2026-03-25T16:01:36.357Z",
-      "packageModified": "2026-10-19T14:07:58.576Z",
+      "packageModified": "2026-11-05T09:07:06.941Z",
       "repository": {
         "url": "git+https://github.com/nodejs/undici.git",
         "type": "git"
@@ -10713,7 +10713,7 @@
       "version": "1.7.0",
       "firstPublished": "2021-08-28T16:02:04.800Z",
       "published": "2026-09-09T17:19:07.352Z",
-      "packageModified": "2026-10-27T16:25:01.147Z",
+      "packageModified": "2026-11-12T16:30:10.863Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -10813,7 +10813,7 @@
       "version": "8.3.5",
       "firstPublished": "2020-04-21T05:05:15.476Z",
       "published": "2026-10-21T06:38:54.907Z",
-      "packageModified": "2026-10-21T06:38:55.491Z",
+      "packageModified": "2026-11-11T02:49:46.745Z",
       "repository": {
         "url": "git+https://github.com/vitejs/vite.git",
         "type": "git",
@@ -10831,8 +10831,8 @@
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEQCIBXwoS/AmN2uPnY/afXHZ95+19ukFqZNAU1UXqF3/wZEAiAPd1Qjn/zSliT6hF8t80jMjz9Gjqw324wpmsbW+fGQXQ=="
+          "sig": "MEQCIBXwoS/AmN2uPnY/afXHZ95+19ukFqZNAU1UXqF3/wZEAiAPd1Qjn/zSliT6hF8t80jMjz9Gjqw324wpmsbW+fGQXQ==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
@@ -10850,7 +10850,7 @@
       "version": "5.0.5",
       "firstPublished": "2021-12-03T13:34:59.705Z",
       "published": "2026-10-15T14:29:01.396Z",
-      "packageModified": "2026-10-19T16:53:22.209Z",
+      "packageModified": "2026-11-02T16:12:38.057Z",
       "repository": {
         "url": "git+https://github.com/vitest-dev/vitest.git",
         "type": "git",
@@ -11029,7 +11029,7 @@
       "version": "4.5.7",
       "firstPublished": "2019-04-09T13:47:37.089Z",
       "published": "2025-05-15T02:30:14.093Z",
-      "packageModified": "2026-10-22T04:32:02.721Z",
+      "packageModified": "2026-11-06T14:07:48.696Z",
       "repository": {
         "url": "git+https://github.com/pmndrs/zustand.git",
         "type": "git"
