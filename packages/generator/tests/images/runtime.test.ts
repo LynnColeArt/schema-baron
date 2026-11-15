@@ -10,6 +10,9 @@ function fixture(){return parseProject({id:'images',name:'Image records',formatV
 test('image authoring configuration rejects unsafe folder and nontext bindings',()=>{
  const p=fixture();expect(compileProject(p).routes[0]?.records[0]?.config).toBeDefined();
  expect(()=>parseProject({...p,controls:p.controls.map(c=>c.kind==='image'?{...c,image:{folder:'../public'}}:c)})).toThrow();
+ const emitted=emitApplication(compileProject(p),'/synthetic/records.sqlite');expect(emitted.some(file=>file.path==='IMAGE-UPLOADS.md')).toBe(true);
+ const plain=fixture();plain.controls=plain.controls.map(control=>{if(control.kind!=='image')return control;const {image,...rest}=control;return {...rest,kind:'text' as const};});
+ expect(emitApplication(compileProject(plain),'/synthetic/records.sqlite').some(file=>file.path==='IMAGE-UPLOADS.md')).toBe(false);
  const q=fixture();q.schema.tables[0]!.columns[2]!.type={kind:'integer'};expect(()=>compileProject(q)).toThrow();
 });
 test('real generated app builds and normalizes/stores/replaces images without source bytes',()=>{

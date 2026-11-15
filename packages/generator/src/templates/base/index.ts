@@ -28,7 +28,7 @@ export function emitApplication(ir:GenerationIR,databasePath:string):GeneratedFi
  add('server/connection.ts',`import 'server-only';\n// Stable external data: generation never creates, copies or resets this file.\nexport const databasePath=process.env.APPLICATION_DATABASE_PATH??${JSON.stringify(databasePath)};\n`);
  add('server/repository.ts',readFileSync(new URL('./repository.template',import.meta.url),'utf8'));
  add('server/format.ts',readFileSync(new URL('./format.template',import.meta.url),'utf8'));
- add('IMAGE-UPLOADS.md',readFileSync(new URL('../record/images-guide.template',import.meta.url),'utf8'));
+ if(ir.routes.some(route=>route.records.some(record=>record.controls.some(control=>control.kind==='image')))) add('IMAGE-UPLOADS.md',readFileSync(new URL('../record/images-guide.template',import.meta.url),'utf8'));
  add('server/record-images.ts',readFileSync(new URL('../record/images.template',import.meta.url),'utf8'));
  for(const name of ['validation','repository','service']) add('server/record-'+name+'.ts',readFileSync(new URL('../record/'+name+'.template',import.meta.url),'utf8'));
  add('components/saved-notice.tsx',`'use client';\nimport { useEffect } from 'react';\nexport function SavedNotice({saved,cookieName}:{saved:boolean;cookieName:string}) {\n useEffect(()=>{if(saved) document.cookie=cookieName+'=; Path=/; Max-Age=0; SameSite=Lax';},[saved,cookieName]);\n return saved?<p role="status">Record saved.</p>:null;\n}\n`);

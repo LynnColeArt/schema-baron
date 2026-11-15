@@ -12,7 +12,7 @@ function action(failure: unknown, guardSuppressed = false) {
  const source = recordFiles(record, 0, 'flash').find(file => file.path === 'server/record-action-0.ts')!.content;
  const execute = vi.fn(() => ({ values: {}, errors: {}, summary: '' })), exports: Record<string, (...args: unknown[]) => Promise<unknown>> = {};
  const emitted = stripTypeScriptTypes(source.replace(/^import .*\n/gm, ''), { mode: 'strip' }).replace('export async function submit0', 'exports.submit0 = async function');
- new Function('AccessError', 'guardAction', 'config', 'execute', 'context', 'exports', emitted)(AccessError, async () => { if (!guardSuppressed) throw failure; }, record.config, execute, (parameters: unknown) => parameters, exports);
+ new Function('AccessError', 'guardAction', 'config', 'executeImages', 'context', 'exports', emitted)(AccessError, async () => { if (!guardSuppressed) throw failure; }, record.config, execute, (parameters: unknown) => parameters, exports);
  const data = new FormData(); data.set('_action', 'write'); data.set('_parameters', '{}');
  return { submit: () => exports.submit0!({}, data), execute };
 }
