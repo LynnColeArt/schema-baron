@@ -1,4 +1,6 @@
 "use client";
+import { NavigationEditor } from '../navigation-editor/index.js';
+import { navigationDismissal } from '../navigation-editor/dismissal.js';
 import {reconcileRuntimeMessages} from '../runtime-ui/diagnostics.js';
 import {RuntimeControls} from '../runtime-ui/index.js';
 import {SourceEditor} from '../source-editor/index.js';
@@ -46,6 +48,7 @@ import { restore, retain } from "./session.js";
 import { useDraftFocus } from "./draft-focus.js";
 
 type Modal =
+  | "navigation"
   | "wizard"
   | "workspace"
   | "connect"
@@ -95,6 +98,8 @@ export default function Workspace() {
   const [modal, setModal] = useState<Modal>(null),
     [dialogError, setDialogError] = useState(""),
     [summaries, setSummaries] = useState<Summary[]>([]);
+  const navigationDirtyRef=useRef(false);
+  const [navigationDirty,setNavigationDirtyValue]=useState(false),[navigationConfirmClose,setNavigationConfirmClose]=useState(false);
   const [messages, setMessages] = useState<Message[]>([]),
     [status, setStatus] = useState("Connecting to Studio service…"),
     [help, setHelp] = useState("Select a property to see its description.");
@@ -177,7 +182,18 @@ export default function Workspace() {
     }
     return message;
   }
+  function setNavigationDirty(value:boolean){navigationDirtyRef.current=value;setNavigationDirtyValue(value);}
+  function closeModal(){
+    const dismissal=navigationDismissal({active:modal==='navigation',dirty:navigationDirty,busy,confirming:navigationConfirmClose});
+    if(dismissal==='blocked')return;
+    if(dismissal==='confirm'){setNavigationConfirmClose(true);return;}
+    if(dismissal==='keep-editing'){setNavigationConfirmClose(false);return;}
+    setModal(null);
+  }
   function dialog(next: Modal) {
+    if(modal==='navigation'&&next==='navigation')return;
+    if(modal==='navigation'&&navigationDirty&&next!=='navigation'){setNavigationConfirmClose(true);return;}
+    if(next==='navigation'){setNavigationDirty(false);setNavigationConfirmClose(false);}
     setDialogError("");
     createRequest.current = createId();
     setModal(next);
@@ -217,6 +233,7 @@ export default function Workspace() {
     }
   }
   async function openProject(id: string) {
+    if(navigationDirtyRef.current)throw new OwnerError('UNSAVED_NAVIGATION','Save or discard navigation changes before switching projects.');
     const snapshot = await client.snapshot(id);
     // Never leave a project's newest drafts behind when recovery storage cannot retain them.
     const prior = state.current;
@@ -293,14 +310,14 @@ export default function Workspace() {
   }, [project, editor, view]);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
-      if (dirty) {
+      if (dirty || navigationDirty) {
         event.preventDefault();
         event.returnValue = "";
       }
     };
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
-  }, [dirty]);
+  }, [dirty,navigationDirty]);
   const updateView = (patch: Partial<View>) =>
     setView((current) => ({ ...current, ...patch }));
   function select(id: string, open = true) {
@@ -757,6 +774,7 @@ export default function Workspace() {
             "Document title. This does not change its stable ID.",
             (value) => ({ ...page, title: value }),
           )}
+          <label>Breadcrumb parent<select aria-label="Breadcrumb parent" value={page.breadcrumbParentId??''} onChange={event=>{const {breadcrumbParentId:_previous,...rest}=page;change([{entity:'page',value:{...rest,...(event.target.value?{breadcrumbParentId:event.target.value as Page['id']}:{})}}]);}}><option value="">None</option>{model.pages.filter(candidate=>{const seen=new Set<string>([page.id]);let next:Page|undefined=candidate;while(next){if(seen.has(next.id))return false;seen.add(next.id);next=model.pages.find(p=>p.id===next?.breadcrumbParentId);}return true;}).map(candidate=><option key={candidate.id} value={candidate.id}>{candidate.title}</option>)}</select></label>
           <div className="property-row">
             <span>Object ID</span>
             <code>{page.id}</code>
@@ -1484,7 +1502,7 @@ export default function Workspace() {
         <Dialog
           className={modal === "wizard" ? "project-setup-dialog" : undefined}
           title={
-            modal === "wizard" ? "New project" : modal === "workspace" ? "Workspace settings" : modal === "connect"
+            modal === "navigation" ? "Application navigation" : modal === "wizard" ? "New project" : modal === "workspace" ? "Workspace settings" : modal === "connect"
               ? "Connect to Studio service"
               : modal === "new"
                 ? "New blank project"
@@ -1507,9 +1525,13 @@ export default function Workspace() {
                               : "Connection setup"
           }
           busy={busy}
-          onCancel={() => setModal(null)}
+          onCancel={closeModal}
         >
-          {modal === "wizard" ? (
+          {modal === "navigation" ? <>
+            {project&&<NavigationEditor project={project} client={client} onChanged={acceptSnapshot} onBusy={setBusy} onDirty={setNavigationDirty}/>}
+            {navigationConfirmClose&&<section aria-label="Discard navigation changes"><p>Discard unsaved navigation changes?</p><button disabled={busy} onClick={()=>setNavigationConfirmClose(false)}>Keep editing</button><button disabled={busy} onClick={()=>{setNavigationDirty(false);setNavigationConfirmClose(false);setModal(null);}}>Discard navigation changes</button></section>}
+            <button disabled={busy} onClick={closeModal}>Close</button>
+          </> : modal === "wizard" ? (
             <ProjectWizard client={client} caps={caps} onBusy={setBusy} onCancel={() => setModal(null)} onFinished={async created => {
               setCaps(await client.capabilities());
               await openProject(created.id);
@@ -1787,6 +1809,7 @@ export default function Workspace() {
             project ? <SecurityEditor project={project} client={client} onChanged={acceptSnapshot} onBusy={setBusy} onClose={() => setModal(null)} /> : <p>Open a project first.</p>
           ) : modal === "settings" ? (
             <>
+              <button disabled={!project||busy||dirty||!caps.operations.some(operation=>operation.operation==='navigation.configure')} onClick={()=>dialog('navigation')}>Edit application navigation…</button>
               <dl className="settings">
                 <dt>Project</dt>
                 <dd>{project?.name}</dd>

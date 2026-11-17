@@ -2,23 +2,12 @@ import 'server-only';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { randomBytes } from 'node:crypto';
-import { IdentityStore, managedIdentityPath } from './identity-store.ts';
 import { authConfig } from './auth-config';
-import { databasePath } from './connection';
 import { context } from './navigation';
 import { destination } from './navigation';
 import type { Parameters } from './record-validation';
-export class AccessError extends Error {readonly status:number;constructor(status:number,message:string){super(message);this.status=status;}}
-export const sessionCookie=authConfig.cookie,csrfCookie=authConfig.cookie+'_csrf';
-export function store(){if(!authConfig.enabled)throw new AccessError(403,'Identity is not configured.');return new IdentityStore(managedIdentityPath(databasePath,authConfig.projectId),authConfig.projectId,authConfig.mapping??undefined,databasePath);}
-export function authorize(pageId:string,actionId:string|undefined,token:string|undefined) {
- const page=authConfig.routes.find(p=>p.id===pageId);if(!page)throw new AccessError(404,'Page is not declared.');
- const action=actionId===undefined?undefined:page.actions.find(a=>a.id===actionId);
- if(actionId!==undefined&&!action)throw new AccessError(403,'Action is not declared.');
- if(page.access==='authenticated'||action?.access==='authenticated') {
-  const identity=store();try{if(!identity.session(token))throw new AccessError(401,'Sign in is required.');}finally{identity.close();}
- }
-}
+import {AccessError,sessionCookie,csrfCookie,store,authorize} from './authorization.ts';
+export {AccessError,sessionCookie,csrfCookie,store,authorize} from './authorization.ts';
 export function returnTarget(text:string) {
  if(text.length>16000||!text.startsWith('/')||text.startsWith('//')||text.includes('\\')||text.includes('#'))throw new AccessError(400,'Invalid return target.');
  const target=new URL(text,'http://runtime.invalid'),page=authConfig.routes.find(p=>p.path===target.pathname);

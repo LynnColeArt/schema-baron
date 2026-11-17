@@ -1,0 +1,37 @@
+import 'server-only';
+import { authorize, store } from './authorization.ts';
+import { authConfig } from './auth-config.ts';
+import { menuEntries } from './sidenav-config.ts';
+export type MenuEntry={id:string;label:string;kind:'page';pageId:string;href:string;requiresContext:boolean}|{id:string;label:string;kind:'external';url:string;visibility:'public'|'authenticated'};
+export type VisibleLink={id:string;label:string;href:string;external:boolean;active:boolean};
+function safeHttps(value: string): boolean {
+  if (value.length > 2048 || !value.startsWith('https://') || /[\s\\\u0000-\u001f\u007f]/u.test(value)) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname.length > 0 && !url.username && !url.password;
+  } catch { return false; }
+}
+/** Called server-side before JSX/RSC serialization. No raw menu data crosses to clients. */
+export function visibleMenu(token:string|undefined,currentPageId:string):VisibleLink[] {
+ const links:VisibleLink[]=[];
+ let authenticated:boolean|undefined;
+ const hasSession=()=>{
+  if(authenticated!==undefined)return authenticated;
+  authenticated=false;
+  if(authConfig.enabled){const identity=store();try{authenticated=!!identity.session(token);}finally{identity.close();}}
+  return authenticated;
+ };
+ for(const entry of menuEntries){
+  if(entry.kind==='page'){
+   const route=authConfig.routes.find(route=>route.id===entry.pageId);
+   if(entry.requiresContext||!route||route.path!==entry.href)continue;
+   try{authorize(entry.pageId,undefined,token);}catch{continue;}
+   links.push({id:entry.id,label:entry.label,href:route.path,external:false,active:entry.pageId===currentPageId&&!links.some(link=>link.active)});
+  }else{
+   if(!safeHttps(entry.url))continue;
+   try{if(entry.visibility!=='public'&&!hasSession())continue;}catch{continue;}
+   links.push({id:entry.id,label:entry.label,href:entry.url,external:true,active:false});
+  }
+ }
+ return links;
+}

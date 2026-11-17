@@ -350,3 +350,8 @@ CodeCharge Studio's visual RAD workflow is an inspiration: connected views of da
 - [Manual reading pack](docs/references/README.md): build private reference material locally. The original manual PDF and derivatives are not distributed.
 
 The earlier experiment remains archived and does not supply current product behavior or demo credentials. Spec Kitty files describe the development process; they are not installation dependencies.
+
+## Breadcrumbs and menus
+
+Configure page ancestry in Properties → Format and ordered menus in Project settings.
+See [navigation configuration](docs/navigation.md) for saving, permissions and compatibility.

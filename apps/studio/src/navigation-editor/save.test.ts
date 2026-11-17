@@ -1,0 +1,8 @@
+import {expect,test,vi} from 'vitest';
+import type {Project} from '@schema-baron/model';
+import type {StudioClient} from '../project-ui/api.js';
+import {saveNavigation} from './save.js';
+const baseline={id:'p',revision:12} as Project;
+test('save sends exact typed command with captured revision then returns canonical snapshot',async()=>{const menu={entries:[]},fresh={...baseline,revision:13,navigation:menu};const read=vi.fn().mockResolvedValue({changedIds:['p']}),snapshot=vi.fn().mockResolvedValue(fresh);expect(await saveNavigation({read,snapshot} as unknown as StudioClient,baseline,menu)).toBe(fresh);expect(read).toHaveBeenCalledWith('projects/p/commands',{requestId:expect.any(String),operation:'navigation.configure',input:{menu},expectedRevision:12});expect(snapshot).toHaveBeenCalledWith('p');expect(read.mock.invocationCallOrder[0]).toBeLessThan(snapshot.mock.invocationCallOrder[0]!);expect(baseline.revision).toBe(12);});
+test('revision failure does not refresh overwrite retry or claim success',async()=>{const read=vi.fn().mockRejectedValue(Error('REVISION_CONFLICT')),snapshot=vi.fn();await expect(saveNavigation({read,snapshot} as unknown as StudioClient,baseline,{entries:[]})).rejects.toThrow('REVISION_CONFLICT');expect(read).toHaveBeenCalledTimes(1);expect(snapshot).not.toHaveBeenCalled();});
+test('uncertain readback propagates rather than fabricating saved state',async()=>{const read=vi.fn().mockResolvedValue({changedIds:[]}),snapshot=vi.fn().mockRejectedValue(Error('offline'));await expect(saveNavigation({read,snapshot} as unknown as StudioClient,baseline,{entries:[]})).rejects.toThrow('offline');expect(read).toHaveBeenCalledTimes(1);});

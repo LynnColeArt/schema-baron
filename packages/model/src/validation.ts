@@ -1,3 +1,4 @@
+import { navigationMenuDiagnostics } from './navigation-menu.js';
 import {queryInputs} from './query-inputs.js';
 import { FORMAT_VERSION, projectSchema } from './schemas.js';
 import type { DocumentNode, Expression, Form, Project, Query, ScalarType, StableId } from './schemas.js';
@@ -73,6 +74,20 @@ export function validateProject(input: unknown): ValidationResult {
   const all = [p, p.schema, ...p.connections, ...p.schema.tables, ...p.schema.opaqueObjects, ...p.queries, ...p.pages, ...p.forms, ...p.controls, ...p.actions, ...p.policies, ...p.extensionContracts,
     ...p.schema.tables.flatMap(t => [...t.columns, ...t.foreignKeys, ...t.uniqueConstraints, ...t.checks, ...t.indexes]), ...p.queries.flatMap(q => [...q.parameters, ...q.projections])];
   unique(all.map(o => o.id), p.id, 'id');
+  // A singular explicit parent forms a forest; URL/action ancestry is not inferred.
+  const pageById = new Map(p.pages.map(page => [page.id, page]));
+  for (const page of p.pages) {
+    const seen = new Set<string>([page.id]);
+    let parent = page.breadcrumbParentId;
+    while (parent !== undefined) {
+      if (seen.has(parent)) { error('VALIDATION_FAILED', page.id, 'breadcrumbParentId', 'Breadcrumb parents must not form a self-reference or cycle.'); break; }
+      seen.add(parent);
+      const ancestor = pageById.get(parent);
+      if (!ancestor) { error('BROKEN_REFERENCE', page.id, 'breadcrumbParentId', 'Breadcrumb parent must name a declared page.'); break; }
+      parent = ancestor.breadcrumbParentId;
+    }
+  }
+  if(p.navigation)for(const diagnostic of navigationMenuDiagnostics(p.navigation,p.pages))error('BROKEN_REFERENCE',diagnostic.entryId as StableId,'navigation',diagnostic.message);
   unique(p.connectionRefs, p.id, 'connectionRefs');
   for (const id of p.connectionRefs) ref(p.connections, id, p.id, 'connectionRefs');
   const sourceFields = (source: { kind: 'table' | 'query'; id: StableId }, owner: StableId, field: string): Field[] => source.kind === 'table' ? (ref(p.schema.tables, source.id, owner, field)?.columns ?? []) : (ref(p.queries, source.id, owner, field)?.projections ?? []);

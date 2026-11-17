@@ -1,0 +1,5 @@
+import { parseProject } from '@schema-baron/model';
+/** Owned synthetic Case Desk navigation, no database is opened or business rows read. */
+export function caseDesk() {
+ return parseProject({id:'case-desk',name:'Case Desk',formatVersion:1,revision:1,target:'next-typescript-sqlite',targetVersion:'1',connectionRefs:['connection'],connections:[{id:'connection',name:'Synthetic data',locator:{approvedRootId:'synthetic',relativePath:'cases.sqlite'},fingerprint:'0'.repeat(64),capabilities:{sqliteVersion:'3',foreignKeys:true,returning:true,strictTables:true,unsupportedObjects:[]}}],schema:{id:'schema',revision:1,tables:[],opaqueObjects:[]},queries:[],pages:[{id:'home',route:'/',title:'Case Desk',document:[],formIds:[]},{id:'cases',route:'/work',title:'Cases',breadcrumbParentId:'home',document:[],formIds:[]},{id:'detail',route:'/unrelated-path',title:'Case details',breadcrumbParentId:'cases',document:[],formIds:[]}],forms:[],controls:[],actions:[],policies:[{id:'global',scope:'global',ownerId:'case-desk',access:'public'}],globalPolicyId:'global',extensionContracts:[],outputConfig:{approvedRootId:'output',relativePath:'app'}});
+}

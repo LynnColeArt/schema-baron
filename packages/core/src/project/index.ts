@@ -71,6 +71,12 @@ export class ProjectCore {
   for (const operation of ['project.inspect', 'project.open'] as const) this.registry.register(operation, (c, p) => { return { result: p }; });
   this.registry.register('project.list', c => { if (c.operation !== 'project.list') throw new Error(); return { result: this.storage.list(c.input.approvedRoot) }; });
   this.registry.register('flow.inspect',(c,p)=>{if(c.operation!=='flow.inspect'||!p)throw new Error();if(c.input.projection==='schema')throw new StorageError('INVALID_INPUT','Use the schema editor for schema relationships; flow.inspect supports application and endpoint projections.');return {result:projectBehavior(p)};});
+  this.registry.register('navigation.configure',(c,p)=>{
+   if(c.operation!=='navigation.configure'||!p)throw new Error();
+   const {navigation:_previous,...rest}=p;
+   const candidate=parseProject({...rest,...(c.input.menu===null?{}:{navigation:c.input.menu}),revision:p.revision+1});
+   return {candidate,result:{changedIds:[p.id]},changedIds:[p.id]};
+  });
   this.registry.register('project.validate', (_c, p) => { const result = validateProject(p); return { result: { valid: result.ok, diagnostics: result.diagnostics } }; });
 
  }

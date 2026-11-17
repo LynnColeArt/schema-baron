@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-11-15T15:25:34.669Z",
+  "observedAt": "2026-11-17T20:24:54.038Z",
   "clientDate": "2026-10-26",
-  "lockSha256": "cfe210d26084e76e3871aa54a0378cdac195b43b3f3f77c7aa3cc87e2b49cf27",
+  "lockSha256": "3ea160ba1559624f8a28b44ee2a38b623930d6540d1e5abef795f3da833cf13c",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
     {
@@ -281,7 +281,7 @@
       "version": "2.1.6",
       "firstPublished": "2023-01-07T08:20:36.788Z",
       "published": "2026-11-02T10:22:05.655Z",
-      "packageModified": "2026-11-12T12:42:49.620Z",
+      "packageModified": "2026-11-17T08:20:25.531Z",
       "repository": {
         "url": "git+https://github.com/honojs/node-server.git",
         "type": "git"
@@ -1498,10 +1498,10 @@
     {
       "path": "node_modules/@next/env",
       "name": "@next/env",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2020-09-25T15:11:40.240Z",
-      "published": "2026-10-23T13:28:24.925Z",
-      "packageModified": "2026-11-14T23:42:52.387Z",
+      "published": "2026-11-09T20:22:29.994Z",
+      "packageModified": "2026-11-16T23:43:40.646Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1511,20 +1511,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-a7tz1QCcWWkwC/rPJcPMJk/UNRu9CFhDd3OHYE5hddbJrs8BqRTalxI6GlKCWEGzRLHN+S/B7a4PAHCtm25aBQ==",
-      "tarball": "https://registry.npmjs.org/@next/env/-/env-16.4.3.tgz",
+      "integrity": "sha512-SunBjJ6t+oBtecS3dTjdVuMhUogP5wD/vrGL5EVuQYM1iS4O5ilL51HkiJ3sPjMzRHiCChvr4dbaSJbR7F3lxA==",
+      "tarball": "https://registry.npmjs.org/@next/env/-/env-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEUCIAHt7IGKQaYLC4Swxs90bmGl8hi01KE6A5hk9w1lPPz4AiEA+dFUxcPX79oaXFqxdk542oLnb0qnz+ju2Tf8S1DKs/U=",
+          "sig": "MEQCIE0ubMbP3qy4OZdqCtM90+mFQ2a4Av81Ge67avIRLJ5gAiAZtqw5NKC9bmDOLEdSCXBlTRSDfmolgtgEW1/uXq3bxQ==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEUCIH2TExZR/A1jEPGq64PPR2VhIQbQRrGR5zYXUz0ScYRwAiEA0+/6gigqUY7j8OxEzd9y+7OFWd6wTf9jE0QywnZC59c=",
+          "sig": "MEUCIF45GYBGb6+rTZAbFvbJsHWDsohGuEsghK48UkQ2hqBGAiEA4Br5ECFHQGGW3gQYiUSeH1s8C5zFWKo2W9b/zsJDltc=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fenv@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fenv@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1535,10 +1535,10 @@
     {
       "path": "node_modules/@next/swc-darwin-arm64",
       "name": "@next/swc-darwin-arm64",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-08-13T04:14:58.884Z",
-      "published": "2026-10-23T13:28:27.602Z",
-      "packageModified": "2026-11-14T23:43:54.873Z",
+      "published": "2026-11-09T20:21:39.124Z",
+      "packageModified": "2026-11-16T23:45:37.618Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1548,20 +1548,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-4yq5EXBt+VDtAZwTyfijaFp5D2C5oz3Ikw5a2kiX2K9nw72vrZX2q5UuAlkPtUMO1tQz6JTKpaKWjS7OOefTDQ==",
-      "tarball": "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-16.4.3.tgz",
+      "integrity": "sha512-kJ4VVZkley17xKaJx72QN2IBqjrj7zenCQZaUF0l9ShS/1Mt2kW4+Z5KGG6vgr3L/J562xTOizVyM1iA/u5nlg==",
+      "tarball": "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEUCIFCvODfx+4Ifx9MUf3f+A4UGnpgkq/1ny6p8LbRcIH8jAiEA+XE64/pvcEi1Rj+RLH9GIH1gaaKVC58opLv85c8mY7Y=",
+          "sig": "MEUCIQD6Pu9Ehyu0FabTpMiOd8Hnwg04R6ln0LHPui0I5wLSGQIgH5fpXUK2t+MPGnUKv0EhEiS7OPcJbtSmmsavL9AV+Ss=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEUCICJgcQvh5a/E6CD7LXuB7MMoVIxGIJah+bAW+X5uUkzBAiEA2uC2l2gx5hasWwuer0fGSkH4AiWFrC1OR2QegI4OkIs=",
+          "sig": "MEUCIAwZibO7sPfBEv8lpUAgT0XntvLNhT09UfslYC+dtPr9AiEA2sMrHksMwZEtMsYmf69MvCSKGLHg3iMIOex162nFAWQ=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-darwin-arm64@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-darwin-arm64@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1572,10 +1572,10 @@
     {
       "path": "node_modules/@next/swc-darwin-x64",
       "name": "@next/swc-darwin-x64",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-08-13T04:15:06.322Z",
-      "published": "2026-10-23T13:28:30.354Z",
-      "packageModified": "2026-11-14T23:43:32.730Z",
+      "published": "2026-11-09T20:22:08.694Z",
+      "packageModified": "2026-11-16T23:44:25.733Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1585,20 +1585,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-1Rvkn/LUhnEF8WxnRkOrqGhbwXui1bkWFxONKIbN+r7C+9KHDSZ+iUoj4CzymVMWUyZIyx9szcb9+kbKhD500A==",
-      "tarball": "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-16.4.3.tgz",
+      "integrity": "sha512-eIPGZIqC+8JKaeZmvnCANJQF4xWkkHqSnAAajtFxgwDMAOnCgxNvP52SeWZ41PyVwoe+Le/NQuZSaQ8j7YshSA==",
+      "tarball": "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEQCIFVfqMkMR+ZoVITdHMZWIlBC29pg/A9sAHkbeoZYh6IBAiAOOruOpgTIjF88jC+Jq3Y3HJ48VibNDg6kR0zxlVy0xQ==",
+          "sig": "MEYCIQCDL4kouUCpBNGvMAmMa2I9MbSDq8gSxR+4dWM0bAmEtAIhALXZKxkRMokrZa24SgUwEE4cmwrYgA+nsyOPdYSlxic5",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEUCIAMJ8ip9TwyNA5CbiIrWN0ujjvMggGxdKoEcx7hG+qK3AiEAk6k383QQh6z0O3cWcFyQ2mfc1z8cfiTcRYwee/8Oz6k=",
+          "sig": "MEUCIAKn1FEWOKl5Bnpu55Vhgw9kfEWoi7/yjzmxORUPzqToAiEAxwQgKCVUpWIPI0V5CsiH1WHs8qV0Efb5uXoBCM88zV8=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-darwin-x64@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-darwin-x64@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1609,10 +1609,10 @@
     {
       "path": "node_modules/@next/swc-linux-arm64-gnu",
       "name": "@next/swc-linux-arm64-gnu",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-10-26T03:08:20.021Z",
-      "published": "2026-10-23T13:27:43.529Z",
-      "packageModified": "2026-11-14T23:46:04.182Z",
+      "published": "2026-11-09T20:22:22.360Z",
+      "packageModified": "2026-11-16T23:44:44.639Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1622,20 +1622,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-dCKpXErGg3abUM6t5JTJV/ottVBTStJB5lRJTbgdUdQaQ+jNHiK56Hsc0YAEg/rinSh42hYG3HWiYmEMdilnxg==",
-      "tarball": "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-16.4.3.tgz",
+      "integrity": "sha512-9nI6O8vvczH2D9ZNdMGqb/3NuT15T9ksOZnAmx9/gjF2cOi74+xxyf1Hk96uIMfm14c9y6wHeBq6SH8g6udvcA==",
+      "tarball": "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEUCIQCPjAw+DSDB4jYwfhr903zt2iAVgXf9uNobIQ0VbpHnqgIgTi3n/bwPOrYpboRqcBmlcvYqIX4UbYLjOkqBXErzzT0=",
+          "sig": "MEYCIQDK3XNbafzv99bIPesgn0Et+6cu6U2ZTb+b6rrP70sD7wIhAIyUSlfOZ/a2ETKBsOM7rIyVDn9vP5h3Gn93WgaE3ZiA",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEYCIQDJCAUFNwR4N5DQChPWGJnfyhS6qOXWDoDtw/hbUCAqKAIhAMwugerFjZWzThFctNrwSFTF3aU7bIGwpdBGA5bWalsX",
+          "sig": "MEYCIQD9vhw08NsydLpKLXNLmrvFBqUktmEDXSjJVgYDsnCMDgIhAJXpNsa9PmwHmmAApGOqtlb+TVo3ro5zxxWPaRAArRkT",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-arm64-gnu@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-arm64-gnu@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1646,10 +1646,10 @@
     {
       "path": "node_modules/@next/swc-linux-arm64-musl",
       "name": "@next/swc-linux-arm64-musl",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-10-26T03:08:25.312Z",
-      "published": "2026-10-23T13:27:17.999Z",
-      "packageModified": "2026-11-14T23:44:51.312Z",
+      "published": "2026-11-09T20:22:07.120Z",
+      "packageModified": "2026-11-16T23:44:09.248Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1659,20 +1659,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-WwYbhWkhYBvBtib1K4W0kL8MW2snBD2A5b3SN4vPpqalZbZs5+bQ1yzAdepVoOqrFfEW3dmREy4Zs1MrWcrFbw==",
-      "tarball": "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-16.4.3.tgz",
+      "integrity": "sha512-7/qPhTxDp2ScluOJOhLuhWmlA17o1yZ0SIgpISBCpBxXgtnK4+KGywBpFkfLPiU1rnSM1faFGzYkH6i7JdTrqA==",
+      "tarball": "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEQCIHygBVJzbhyIcEJfOhDHJXw0YQ2KF3VE2VRPG5sDyWrqAiBDNut/BTGhssEhLw5X8Dn9viABrIs0k7uMlcq92E/2WQ==",
+          "sig": "MEUCIQClJMvhN79CT+vG9V9ZKbAJ/n8d0LIX6x27LpLkdvCHiwIgGLo7ldlZ2JLU4zqJY1B56DXTHXHZ1u/heSCOMtMXqcA=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEYCIQCRF4yiUT/P/yG+yTzIiZ3Uvuj3lnsVuVMpeQlbUpEyVgIhAIy7Xj61sF/oEtRxVuwDRJ9NZV8h+hYtdGTzfxeP7BR+",
+          "sig": "MEQCIChecuG7n8msOEn1Wn9Ct/ptuUSVRp0xGiqNaM9pTyxkAiBcSalMURI1A4/e1DQwVvYx1oxcpo5zSDGURNy9HEGGXw==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-arm64-musl@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-arm64-musl@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1683,10 +1683,10 @@
     {
       "path": "node_modules/@next/swc-linux-x64-gnu",
       "name": "@next/swc-linux-x64-gnu",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-08-13T04:15:12.550Z",
-      "published": "2026-10-23T13:28:21.884Z",
-      "packageModified": "2026-11-14T23:45:20.905Z",
+      "published": "2026-11-09T20:24:13.931Z",
+      "packageModified": "2026-11-16T23:44:59.403Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1696,20 +1696,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-QymWvfUwDEC5/lpJOsxX5VAbyoR2D13+2Jsjz4be7gT4LPqEgdpkeLIR/HFfCLgKzoMhpJbp6I/JnogyNZHcaA==",
-      "tarball": "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-16.4.3.tgz",
+      "integrity": "sha512-oOpbNa8XOW1qCGd9VvzC4fbkkRxEls7/WI6tz+YHC0xRA7KpV1U7DrAnCPjzVyOk/karzWEepCOcTIDmwK8FwQ==",
+      "tarball": "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEUCIQDPy0ZIFWzhw3vLxGPGzvr00+71HADi9mRi1Pqy3YbW5wIgPFFhKUSK1u8MxaH1ceeW5YQPVFnp7GqytflcGWsP5to=",
+          "sig": "MEQCIA1E6P8vKvDqKy2l3xbj8hEHm23NA6oZ7DyBZkyS+ojyAiBVhcE8fPB+0F+VuIMWPKKF5k2p712Z+te7QIRK1435Uw==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEQCIEcShDyWyRoClL1jutV3rwvwGnO5WvNk/HitTgd9/TZiAiAkIfDaAlNsYj9KsoZWqoP8acwOpaZuliTTmMn98BPYRA==",
+          "sig": "MEYCIQClarPvS2IogWGQi2/Wzn45zvYqpq72x91UjjlPBjoIAgIhAIKpCPpvU7AhM5sVAZOdFvs9BCcgEEyFI37z0YdtIyg5",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-x64-gnu@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-x64-gnu@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1720,10 +1720,10 @@
     {
       "path": "node_modules/@next/swc-linux-x64-musl",
       "name": "@next/swc-linux-x64-musl",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-10-26T03:08:37.144Z",
-      "published": "2026-10-23T13:37:40.117Z",
-      "packageModified": "2026-11-14T23:44:09.562Z",
+      "published": "2026-11-09T20:21:57.396Z",
+      "packageModified": "2026-11-16T23:45:48.225Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1733,20 +1733,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-Vmjd9D7DpA4Vv3cUlr82QWgJD/BQZmns801vtC5VWHg6jCIA4a5vMKpQnfrM2pyCrp2eV0ENdUg4PlN3bAc2Yw==",
-      "tarball": "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-16.4.3.tgz",
+      "integrity": "sha512-aM8CZ+OR2EwXaAYw7KGkW2GDmNDsLBIRe1MMRZCJPTdw/xhTD0IMUVO4sf3KqrzuRouGzwwLZn34+gFeVXiUQA==",
+      "tarball": "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEYCIQCergtmTW2JFLS8pu4DpYNvo/RUaJsxkmWMS8sNgx14hwIhAOejrpOjJnAdM0NYE6HzRbfp2vf9LG7ddqvfntFEWWrI",
+          "sig": "MEUCIFHkmhDqDfWSL9YyxPs1PxHfNmqgdFtr0fsOZuy7H/xvAiEA6ER4eYeQVDMm1MdwGFXKzoV2JnFSI7Sip7AnPkrMrNE=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEUCIGBg32mxul7neZqMlqst4yBWBc93t2s2hywH6IaWcK7TAiEAo3IK0FnKoMjJJZqqQiVjWLjhp+FtRvbS8Dd9xCnoluw=",
+          "sig": "MEQCIHPVIOCJ8SaEESVm9q2c2x+jJ0BSvn6XtJtQ/3M90FY+AiAezHZCLxoF3/WL2WY0JIflOQGyiTInkPyDfrXWht0/Yw==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-x64-musl@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-linux-x64-musl@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1757,10 +1757,10 @@
     {
       "path": "node_modules/@next/swc-win32-arm64-msvc",
       "name": "@next/swc-win32-arm64-msvc",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-10-26T03:08:42.493Z",
-      "published": "2026-10-23T13:28:37.181Z",
-      "packageModified": "2026-11-14T23:43:41.323Z",
+      "published": "2026-11-09T20:23:48.766Z",
+      "packageModified": "2026-11-16T23:45:04.862Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1770,20 +1770,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-lG1pPdPLk7gTyGb00n5JIMLdBJgjb+UEhSdZvFbhUMg0DyC6z4B7RnpSKF9VCd4imkLObVbXOFA0kFCpw7yFow==",
-      "tarball": "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-16.4.3.tgz",
+      "integrity": "sha512-U0p7/tEtqvHX2crhd841CDwKtp5CFkKXVjOhmfccR3Pvp64sj8KBwRqsvltqLOwVBbj0NtkxwXSDpEHYGbxeXQ==",
+      "tarball": "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEUCIQDcLiow3hT+qXb8vcN9i5UHUIGwHJcw64bCaPUakw8BLQIgeRwcQwMDjEGAiiOeQhUDrGWcAQJKNMZgAEiqCPekzv0=",
+          "sig": "MEUCIQD82l47uwwiBluFSEVJUZidrMpq2+SDzSL0lyeOsx9c1gIgGSs8NNkD2I75YFTqOb2jnqznBzuzGfxY0ZFZ0wX8KXw=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEQCIAk6nuH0pCvaaw5A47e+o6HsCq7N/jDTSDpuLGfRptpRAiBiPXpDydCrQcxGrr60x/Pn6XfttumlX2FjyH3WYL6KiA==",
+          "sig": "MEQCIEL0kNjbOHhfijq69ImBdIWWegTYIaWT8tSbj4UoRqKuAiBbkv6FJF3Tbz8ywWWlEZeKglVgB/6Ga98yLlBQP8xQnA==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-win32-arm64-msvc@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-win32-arm64-msvc@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1794,10 +1794,10 @@
     {
       "path": "node_modules/@next/swc-win32-x64-msvc",
       "name": "@next/swc-win32-x64-msvc",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2021-08-13T04:15:18.336Z",
-      "published": "2026-10-23T13:28:17.836Z",
-      "packageModified": "2026-11-14T23:43:48.676Z",
+      "published": "2026-11-09T20:27:29.464Z",
+      "packageModified": "2026-11-16T23:45:06.692Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git",
@@ -1807,20 +1807,20 @@
         "vercel-release-bot",
         "matt.straka"
       ],
-      "integrity": "sha512-NmQC9RkJdnPXRaMxtkCzobB3teVjqF33oSOnwDfi+XYGWWYpt+xlGK3mtktSKLbdjwaWbJu2OkkMiRFGUUncKg==",
-      "tarball": "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-16.4.3.tgz",
+      "integrity": "sha512-3ZG15/5WIdlTQsIEvc9sPTTSL5XFrlLklIKmfF4fwsDnoAhu6NcBDXsk3mbGxNyo6aVLEGex+fHCv2MahY7a9g==",
+      "tarball": "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEYCIQDzTcOolLZTo+mamMMdJeubzMki9kwlKjI963AHHhY3MAIhAJPbt16wVQYI10yQH/oQaRmdgvX7j8Y/wwZgBMlJQvk1",
+          "sig": "MEYCIQCBveOFoIhfq4t1sh2zxS6fxGTdUeyreEdg2ztdp1id+gIhAMoTzqxBOmhUMH8Kurk3uuZc+nGdH84bs/0s+WT49e3o",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEUCIQCfvkS5w51BfG+WExq/L6srtUCHomSLafTL/p8k7ahpuAIgUFWuM89zQqdbi8SHl0xN/sBSQzPdPFaYAbnGBSABSOs=",
+          "sig": "MEQCIDSIPt7p+K4ztiLVrpc5QvY7zmPlvFdrUMzAGYFEEZt2AiAze/5pakJdZBpMGcsm79m4lyhYxUTM+V4vNln8N74wiw==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-win32-x64-msvc@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@next%2fswc-win32-x64-msvc@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -1834,7 +1834,7 @@
       "version": "0.155.0",
       "firstPublished": "2024-10-25T02:54:47.140Z",
       "published": "2026-10-19T14:27:36.193Z",
-      "packageModified": "2026-11-09T11:09:20.170Z",
+      "packageModified": "2026-11-16T11:32:47.018Z",
       "repository": {
         "url": "git+https://github.com/oxc-project/oxc.git",
         "type": "git",
@@ -1870,7 +1870,7 @@
       "version": "1.64.1",
       "firstPublished": "2020-09-24T05:44:34.469Z",
       "published": "2026-10-14T11:58:13.696Z",
-      "packageModified": "2026-11-15T06:44:37.169Z",
+      "packageModified": "2026-11-17T06:13:07.823Z",
       "repository": {
         "url": "git+https://github.com/microsoft/playwright.git",
         "type": "git"
@@ -3705,7 +3705,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:42:29.997Z",
       "published": "2026-07-08T15:49:36.897Z",
-      "packageModified": "2026-11-15T08:18:28.024Z",
+      "packageModified": "2026-11-17T08:34:05.611Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3737,7 +3737,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:42:01.557Z",
       "published": "2026-07-08T15:49:40.886Z",
-      "packageModified": "2026-11-15T08:21:36.598Z",
+      "packageModified": "2026-11-17T08:33:38.618Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3833,7 +3833,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:51.251Z",
       "published": "2026-07-08T15:49:53.075Z",
-      "packageModified": "2026-11-15T08:18:40.777Z",
+      "packageModified": "2026-11-17T08:35:45.518Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -3865,7 +3865,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:56.270Z",
       "published": "2026-07-08T15:49:57.270Z",
-      "packageModified": "2026-11-15T08:18:43.848Z",
+      "packageModified": "2026-11-17T08:36:54.080Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4057,7 +4057,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:43.375Z",
       "published": "2026-07-08T15:50:21.639Z",
-      "packageModified": "2026-11-15T08:18:49.388Z",
+      "packageModified": "2026-11-17T08:34:02.625Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4249,7 +4249,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:33.545Z",
       "published": "2026-07-08T15:50:45.825Z",
-      "packageModified": "2026-11-15T08:19:01.217Z",
+      "packageModified": "2026-11-17T08:34:43.642Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4281,7 +4281,7 @@
       "version": "7.0.2",
       "firstPublished": "2026-06-18T13:41:28.460Z",
       "published": "2026-07-08T15:50:50.403Z",
-      "packageModified": "2026-11-15T08:19:38.156Z",
+      "packageModified": "2026-11-17T08:34:48.298Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -4411,7 +4411,7 @@
       "version": "12.12.0",
       "firstPublished": "2024-01-03T15:49:03.812Z",
       "published": "2026-09-24T12:41:36.171Z",
-      "packageModified": "2026-11-08T12:02:03.428Z",
+      "packageModified": "2026-11-17T15:51:48.496Z",
       "repository": {
         "url": "git+https://github.com/xyflow/xyflow.git",
         "type": "git",
@@ -4448,7 +4448,7 @@
       "version": "0.0.83",
       "firstPublished": "2023-06-13T14:58:30.250Z",
       "published": "2026-09-24T12:43:01.347Z",
-      "packageModified": "2026-11-08T12:01:42.449Z",
+      "packageModified": "2026-11-16T12:13:55.781Z",
       "repository": {
         "url": "git+https://github.com/xyflow/xyflow.git",
         "type": "git",
@@ -4594,7 +4594,7 @@
       "version": "4.11.0",
       "firstPublished": "2015-06-08T14:56:56.706Z",
       "published": "2025-10-09T16:39:18.813Z",
-      "packageModified": "2026-11-13T12:46:29.446Z",
+      "packageModified": "2026-11-16T18:10:07.638Z",
       "repository": {
         "url": "git+https://github.com/dequelabs/axe-core.git",
         "type": "git"
@@ -4625,7 +4625,7 @@
       "version": "2.11.33",
       "firstPublished": "2024-11-29T10:34:28.533Z",
       "published": "2026-10-25T17:29:32.531Z",
-      "packageModified": "2026-11-12T21:26:11.918Z",
+      "packageModified": "2026-11-16T23:19:38.921Z",
       "repository": {
         "url": "git+https://github.com/web-platform-dx/baseline-browser-mapping.git",
         "type": "git"
@@ -5217,10 +5217,10 @@
       "version": "3.2.3",
       "firstPublished": "2017-09-24T22:14:25.900Z",
       "published": "2025-11-17T11:42:27.045Z",
-      "packageModified": "2025-11-17T11:42:27.229Z",
+      "packageModified": "2026-11-17T09:43:05.795Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/frenic/csstype.git"
+        "url": "git+https://github.com/frenic/csstype.git",
+        "type": "git"
       },
       "maintainers": [
         "anders.ekdahl",
@@ -5230,8 +5230,8 @@
       "tarball": "https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIQCW+CNKJwot6/l093k7h2clXR0Ucofwk9ZTjRiRC02OjwIgAYsOZV+Mfm2Bj8yEH7GbF3VGBDmDxQtNVg0JE6wj8mo="
+          "sig": "MEUCIQCW+CNKJwot6/l093k7h2clXR0Ucofwk9ZTjRiRC02OjwIgAYsOZV+Mfm2Bj8yEH7GbF3VGBDmDxQtNVg0JE6wj8mo=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": null,
@@ -6818,7 +6818,7 @@
       "version": "2.3.2",
       "firstPublished": "2019-08-08T03:48:06.967Z",
       "published": "2026-08-17T01:57:36.160Z",
-      "packageModified": "2026-10-15T04:35:34.211Z",
+      "packageModified": "2026-11-16T07:30:02.766Z",
       "repository": {
         "url": "git+https://github.com/guybedford/es-module-lexer.git",
         "type": "git"
@@ -7578,7 +7578,7 @@
       "version": "4.13.16",
       "firstPublished": "2021-12-14T20:08:48.105Z",
       "published": "2026-11-01T03:04:37.067Z",
-      "packageModified": "2026-11-11T08:54:02.483Z",
+      "packageModified": "2026-11-16T12:57:56.337Z",
       "repository": {
         "url": "git+https://github.com/honojs/hono.git",
         "type": "git"
@@ -8446,7 +8446,7 @@
       "version": "16.4.2",
       "firstPublished": "2011-07-24T13:15:09.719Z",
       "published": "2025-11-06T22:29:20.004Z",
-      "packageModified": "2026-11-09T23:05:42.205Z",
+      "packageModified": "2026-11-16T17:22:22.974Z",
       "repository": {
         "url": "git://github.com/markedjs/marked.git",
         "type": "git"
@@ -8838,10 +8838,10 @@
     {
       "path": "node_modules/next",
       "name": "next",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "firstPublished": "2011-07-11T11:00:45.416Z",
-      "published": "2026-10-23T13:40:24.922Z",
-      "packageModified": "2026-11-14T23:56:06.067Z",
+      "published": "2026-11-09T20:33:38.821Z",
+      "packageModified": "2026-11-16T23:57:37.657Z",
       "repository": {
         "url": "git+https://github.com/vercel/next.js.git",
         "type": "git"
@@ -8852,20 +8852,20 @@
         "matheuss",
         "zeit-bot"
       ],
-      "integrity": "sha512-OqxKTGi9u80FydydsMNYNjnuje9Au+kvHlt2GZ//ftdpDHm1dxKqAaENoOOTX5wKzn+9vaKUNIfZeyZUuLhCnA==",
-      "tarball": "https://registry.npmjs.org/next/-/next-16.4.3.tgz",
+      "integrity": "sha512-QZJiYhaZLJMo2KpkQGQIwvmd79WVsAWeYIU554a8d7zArS3si/IRy3lBNV/rtYhE70oLwdLYhPAXLPx8HwcwtA==",
+      "tarball": "https://registry.npmjs.org/next/-/next-16.4.6.tgz",
       "signatures": [
         {
-          "sig": "MEQCIELOn3KIP/Ap+CYTpkAnrfmYVsLIiMNKaysaxLmG45P0AiAFxzml33gUTixy6dsV9vWWaD7CgKzirQTio7Zo3nhDsg==",
+          "sig": "MEQCIDY9b4uVJi8jkZgejNKJ3b9XnWd8JUmRI/IdMnQ9pkE0AiAvjFNqxE0xgoWWZR9vAnnOG773/CcienJnV0oWcKrZfg==",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         },
         {
-          "sig": "MEYCIQCTkK+nRXDqWlR4FTdEGcduVlwGBSj5bUarRPB1W6vmEwIhANTanL1bFNURwwcWfTN0K+Dc5/BVIaTm0Kb8I0xy8DcF",
+          "sig": "MEUCICS/1/GCCEYt2fveChCmjzZYZ/L6bCPYYnqNd4nlHgIjAiEA1fQ+QjcBJNtnuTTpmDdfV9AjThcdbfMLjLwtS6oATLQ=",
           "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/next@16.4.3",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/next@16.4.6",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
@@ -8879,7 +8879,7 @@
       "version": "8.5.23",
       "firstPublished": "2013-11-04T19:57:14.218Z",
       "published": "2026-07-24T17:05:13.876Z",
-      "packageModified": "2026-11-13T22:46:13.864Z",
+      "packageModified": "2026-11-16T13:52:25.130Z",
       "repository": {
         "url": "git+https://github.com/postcss/postcss.git",
         "type": "git"
@@ -8951,7 +8951,7 @@
       "version": "4.1.1",
       "firstPublished": "2014-02-02T15:47:58.857Z",
       "published": "2017-01-16T15:35:15.282Z",
-      "packageModified": "2025-02-16T08:13:33.616Z",
+      "packageModified": "2026-11-16T13:52:32.873Z",
       "repository": {
         "url": "git+https://github.com/sindresorhus/object-assign.git",
         "type": "git"
@@ -9302,7 +9302,7 @@
       "version": "5.0.1",
       "firstPublished": "2019-01-11T21:37:22.372Z",
       "published": "2025-11-23T03:54:38.460Z",
-      "packageModified": "2026-02-01T18:57:25.833Z",
+      "packageModified": "2026-11-17T05:04:41.059Z",
       "repository": {
         "url": "git+https://github.com/crouchcd/pkce-challenge.git",
         "type": "git"
@@ -9328,7 +9328,7 @@
       "version": "1.64.1",
       "firstPublished": "2015-01-23T20:49:28.632Z",
       "published": "2026-10-14T11:54:49.998Z",
-      "packageModified": "2026-11-15T06:44:30.307Z",
+      "packageModified": "2026-11-17T06:13:00.930Z",
       "repository": {
         "url": "git+https://github.com/microsoft/playwright.git",
         "type": "git"
@@ -9367,7 +9367,7 @@
       "version": "1.64.1",
       "firstPublished": "2020-01-17T16:44:00.542Z",
       "published": "2026-10-14T11:54:58.323Z",
-      "packageModified": "2026-11-15T06:44:19.491Z",
+      "packageModified": "2026-11-17T06:12:52.455Z",
       "repository": {
         "url": "git+https://github.com/microsoft/playwright.git",
         "type": "git"
@@ -9458,7 +9458,7 @@
       "version": "8.5.32",
       "firstPublished": "2013-11-04T19:57:14.218Z",
       "published": "2026-10-26T20:36:42.832Z",
-      "packageModified": "2026-11-13T22:46:13.864Z",
+      "packageModified": "2026-11-16T13:52:25.130Z",
       "repository": {
         "url": "git+https://github.com/postcss/postcss.git",
         "type": "git"
@@ -9608,7 +9608,7 @@
       "version": "19.3.1",
       "firstPublished": "2011-10-26T17:46:21.942Z",
       "published": "2026-10-14T16:47:15.290Z",
-      "packageModified": "2026-11-12T16:22:01.415Z",
+      "packageModified": "2026-11-17T16:22:05.264Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -9645,7 +9645,7 @@
       "version": "19.3.1",
       "firstPublished": "2014-05-06T18:59:36.160Z",
       "published": "2026-10-14T16:49:10.081Z",
-      "packageModified": "2026-11-12T16:22:49.969Z",
+      "packageModified": "2026-11-17T16:24:50.481Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -9799,10 +9799,10 @@
       "version": "2.2.0",
       "firstPublished": "2011-06-23T11:01:08.263Z",
       "published": "2025-03-27T00:38:18.615Z",
-      "packageModified": "2025-03-27T00:38:18.812Z",
+      "packageModified": "2026-11-17T08:30:11.006Z",
       "repository": {
-        "type": "git",
-        "url": "git+https://github.com/pillarjs/router.git"
+        "url": "git+https://github.com/pillarjs/router.git",
+        "type": "git"
       },
       "maintainers": [
         "wesleytodd",
@@ -9813,8 +9813,8 @@
       "tarball": "https://registry.npmjs.org/router/-/router-2.2.0.tgz",
       "signatures": [
         {
-          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
-          "sig": "MEUCIG1z9CfKLZPzyVBKnAK3covJDJ0/O73YnA4SwsesneLYAiEA22tGWJxiFBxRTEU/ot8+oZqloPqUb+g9IoNvUZR6eGM="
+          "sig": "MEUCIG1z9CfKLZPzyVBKnAK3covJDJ0/O73YnA4SwsesneLYAiEA22tGWJxiFBxRTEU/ot8+oZqloPqUb+g9IoNvUZR6eGM=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
         }
       ],
       "provenance": null,
@@ -9879,7 +9879,7 @@
       "version": "0.28.0",
       "firstPublished": "2011-01-11T11:22:36.888Z",
       "published": "2026-09-09T17:17:30.281Z",
-      "packageModified": "2026-11-12T16:24:17.162Z",
+      "packageModified": "2026-11-17T16:23:08.250Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -10623,7 +10623,7 @@
       "version": "7.0.2",
       "firstPublished": "2012-10-01T15:35:39.553Z",
       "published": "2026-07-08T15:55:18.431Z",
-      "packageModified": "2026-11-15T08:24:00.369Z",
+      "packageModified": "2026-11-17T08:39:33.890Z",
       "repository": {
         "url": "git+https://github.com/microsoft/TypeScript.git",
         "type": "git"
@@ -10713,7 +10713,7 @@
       "version": "1.7.0",
       "firstPublished": "2021-08-28T16:02:04.800Z",
       "published": "2026-09-09T17:19:07.352Z",
-      "packageModified": "2026-11-12T16:30:10.863Z",
+      "packageModified": "2026-11-17T16:23:14.255Z",
       "repository": {
         "url": "git+https://github.com/react/react.git",
         "type": "git",
@@ -10813,7 +10813,7 @@
       "version": "8.3.5",
       "firstPublished": "2020-04-21T05:05:15.476Z",
       "published": "2026-10-21T06:38:54.907Z",
-      "packageModified": "2026-11-11T02:49:46.745Z",
+      "packageModified": "2026-11-16T07:22:57.656Z",
       "repository": {
         "url": "git+https://github.com/vitejs/vite.git",
         "type": "git",
