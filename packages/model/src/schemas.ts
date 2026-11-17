@@ -1,8 +1,10 @@
+import { navigationMenuSchema } from './navigation-menu.js';
 import { z } from 'zod';
 
 export const FORMAT_VERSION = 1 as const;
-export const idSchema = z.string().min(1).max(256).brand<'StableId'>();
-export type StableId = z.infer<typeof idSchema>;
+export { idSchema } from './identifiers.js';
+import { idSchema, type StableId } from './identifiers.js';
+export type { StableId } from './identifiers.js';
 /** IDs are allocated by the caller's secure UUID source, never derived from names. */
 export function createId(uuid: () => string = () => globalThis.crypto.randomUUID()): StableId { return idSchema.parse(uuid()); }
 const text = z.string().min(1);
@@ -47,7 +49,7 @@ export const querySchema = z.strictObject({ id: idSchema, name: text, sources: z
 export const policySchema = z.strictObject({ id: idSchema, scope: z.enum(['global', 'page', 'action']), ownerId: idSchema, access: z.enum(['inherit', 'public', 'authenticated']) });
 export type DocumentNode = { kind: 'text'; text: string } | { kind: 'element'; tag: 'div' | 'p' | 'span' | 'h1' | 'h2' | 'header' | 'footer' | 'section'; children: DocumentNode[] } | { kind: 'form'; formId: StableId };
 export const documentNodeSchema: z.ZodType<DocumentNode> = z.lazy(() => z.discriminatedUnion('kind', [z.strictObject({ kind: z.literal('text'), text: z.string() }), z.strictObject({ kind: z.literal('element'), tag: z.enum(['div', 'p', 'span', 'h1', 'h2', 'header', 'footer', 'section']), children: z.array(documentNodeSchema) }), z.strictObject({ kind: z.literal('form'), formId: idSchema })]));
-export const pageSchema = z.strictObject({ id: idSchema, route: text, title: text, document: z.array(documentNodeSchema), formIds: ids, policyId: idSchema.optional() });
+export const pageSchema = z.strictObject({ breadcrumbParentId: idSchema.optional(), id: idSchema, route: text, title: text, document: z.array(documentNodeSchema), formIds: ids, policyId: idSchema.optional() });
 export const keyMappingSchema = z.strictObject({ targetFieldId: idSchema, expression: expressionSchema });
 export const appearanceSchema = z.strictObject({ label: z.string().optional(), className: z.string().optional(), width: z.number().positive().optional(), format: z.enum(['plain', 'decimal', 'currency', 'date', 'datetime']).optional() });
 export const formSchema = z.strictObject({ id: idSchema, pageId: idSchema, kind: z.enum(['Grid', 'Record', 'Search', 'Login']), sourceRef: sourceRefSchema.optional(), keyMapping: z.array(keyMappingSchema), displayFieldIds: ids.optional(), queryParameters: z.array(z.strictObject({ parameterId: idSchema, value: z.union([z.string(), z.number().finite(), z.boolean(), z.null()]).optional(), runtime: z.strictObject({name:z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/)}).optional() }).refine(m => (m.value !== undefined) !== (m.runtime !== undefined), 'Choose one literal or runtime input.')) .optional(), controlIds: ids, actionIds: ids, search: z.array(z.strictObject({ fieldId: idSchema, operator: z.enum(['eq', 'contains', 'gte', 'lte']) })), paging: z.strictObject({ pageSize: z.number().int().min(1).max(200) }), sorting: z.array(z.strictObject({ fieldId: idSchema, direction: z.enum(['asc', 'desc']) })), appearance: appearanceSchema });
@@ -57,7 +59,7 @@ export const destinationSchema = z.strictObject({ pageId: idSchema, keyMapping: 
 export const actionSchema = z.strictObject({ id: idSchema, formId: idSchema, operation: z.enum(['insert', 'update', 'delete', 'navigate', 'search', 'login', 'logout', 'cancel', 'extension']), policyId: idSchema.optional(), destination: destinationSchema.optional(), success: destinationSchema.optional(), cancel: destinationSchema.optional(), extensionHookRef: idSchema.optional() });
 export const extensionContractSchema = z.strictObject({ id: idSchema, relativePath: text, version: revisionSchema, kind: z.enum(['validator', 'action', 'component', 'service', 'event']) });
 export const identitySchema = z.discriminatedUnion('kind', [z.strictObject({ kind: z.literal('managed'), storeRef: idSchema }), z.strictObject({ kind: z.literal('mapped'), tableId: idSchema, userIdColumnId: idSchema, usernameColumnId: idSchema, passwordHashColumnId: idSchema })]);
-export const projectSchema = z.strictObject({ id: idSchema, formatVersion: z.literal(FORMAT_VERSION), revision: revisionSchema, name: text, target: targetSchema, targetVersion: text, connectionRefs: ids, connections: z.array(connectionSchema), schema: schemaSchema, queries: z.array(querySchema), pages: z.array(pageSchema), forms: z.array(formSchema), controls: z.array(controlSchema), actions: z.array(actionSchema), policies: z.array(policySchema), globalPolicyId: idSchema, outputConfig: z.strictObject({ approvedRootId: idSchema, relativePath: text }), extensionContracts: z.array(extensionContractSchema), identity: identitySchema.optional() });
+export const projectSchema = z.strictObject({ navigation: navigationMenuSchema.optional(), id: idSchema, formatVersion: z.literal(FORMAT_VERSION), revision: revisionSchema, name: text, target: targetSchema, targetVersion: text, connectionRefs: ids, connections: z.array(connectionSchema), schema: schemaSchema, queries: z.array(querySchema), pages: z.array(pageSchema), forms: z.array(formSchema), controls: z.array(controlSchema), actions: z.array(actionSchema), policies: z.array(policySchema), globalPolicyId: idSchema, outputConfig: z.strictObject({ approvedRootId: idSchema, relativePath: text }), extensionContracts: z.array(extensionContractSchema), identity: identitySchema.optional() });
 export type Project = z.infer<typeof projectSchema>;
 export type Query = z.infer<typeof querySchema>;
 export type Table = z.infer<typeof tableSchema>;

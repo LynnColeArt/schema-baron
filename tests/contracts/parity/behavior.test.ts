@@ -47,6 +47,7 @@ test('independent real MCP-first and HTTP-first corpora cover implemented comman
  journal.begin({phase:'inventory',transport:'mcp/http'});
  const inventory=await client.listTools();const capabilities=await (await fetch(owner.url+'/api/v1/capabilities',{headers:{cookie,origin:owner.url}})).json();expect(inventory.tools.map(t=>t.name).sort()).toEqual(capabilities.result.operations.map((o:{operation:string})=>o.operation.replaceAll('.','_')).sort());
  p=await good<Project>('project.create',{name:'Transport corpus',approvedRoot:'projects',target:'next-typescript-sqlite'});
+ await good('navigation.configure',{menu:{entries:[]}});await snapshot();
  await run('project.list',{approvedRoot:'projects'},{expected:0});revision=p!.revision;await good('project.open',{locator:'projects:corpus.json'});
  const inspected=await good<{connection:{id:string;fingerprint:string}}>('connection.inspect',{approvedPath:'projects:corpus.sqlite',mode:'read-only',createEmpty:true});await good('connection.bind',{connectionId:inspected.connection.id,fingerprint:inspected.connection.fingerprint});await snapshot();
  const table={id:'entries',physicalName:'corpus_entries',columns:[{id:'entry-id',physicalName:'entry_id',type:{kind:'integer'},nullable:false},{id:'entry-title',physicalName:'heading',type:{kind:'text'},nullable:false}],primaryKey:['entry-id'],foreignKeys:[],uniqueConstraints:[],checks:[],indexes:[]};

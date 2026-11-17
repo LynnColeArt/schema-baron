@@ -1,3 +1,4 @@
+import { compileBreadcrumbs } from './breadcrumbs.js';
 import {compileDerived} from '../templates/derived/index.js';
 import {compileQueries,QueryCompilationError} from '../templates/report/queries.js';
 import { compatibleMapping } from '../templates/auth/store.js';
@@ -114,9 +115,9 @@ export function compileProject(input:Project):GenerationIR {
   const identities=project.controls.filter(c=>c.kind==='identity'&&!c.credentialRole&&project.forms.some(f=>f.id===c.formId&&f.pageId===page.id));
   if(identities.length>1)fail(page.id,'Place at most one identity control in each page header.');
   if(identities.length&&(!project.identity||!project.forms.some(f=>f.kind==='Login'&&effectiveAccess(project,f.pageId).access==='public'&&f.actionIds.some(id=>{const action=project.actions.find(a=>a.id===id);return action?.operation==='login'&&effectiveAccess(project,f.pageId,id).access==='public';}))))fail(page.id,'Configure identity and a public Login form/action before placing a header identity control.');
-  return {...(identities[0]?{identityCaption:identities[0].appearance.label??'Signed in as'}:{}),id:page.id,path:page.route,title:page.title,document:page.document,grids,records,logins,policy:{access:effective.access as 'public'|'authenticated',sourceId:effective.id}};
+  return {...(page.breadcrumbParentId!==undefined?{breadcrumbs:compileBreadcrumbs(project,page.id)}:{}),...(identities[0]?{identityCaption:identities[0].appearance.label??'Signed in as'}:{}),id:page.id,path:page.route,title:page.title,document:page.document,grids,records,logins,policy:{access:effective.access as 'public'|'authenticated',sourceId:effective.id}};
  });
  if(!routes.length) fail(project.id,'Create a page and table-bound Grid before generating.');
  if(diagnostics.length) throw new GenerationError(diagnostics);
- return {projectId:project.id,revision:project.revision,name:project.name,routes,sources,contexts,extensions:project.extensionContracts,...(project.identity?{auth:{...(mapping?{mapping}:{})}}:{}),queries};
+ return {...(project.navigation?{navigation:project.navigation}:{}),projectId:project.id,revision:project.revision,name:project.name,routes,sources,contexts,extensions:project.extensionContracts,...(project.identity?{auth:{...(mapping?{mapping}:{})}}:{}),queries};
 }

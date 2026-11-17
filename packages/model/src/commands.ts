@@ -1,3 +1,4 @@
+import { navigationMenuSchema } from './navigation-menu.js';
 import { z } from 'zod';
 import { identitySchema, actionSchema, connectionSchema, controlSchema, expressionSchema, extensionContractSchema, formSchema, hashSchema, idSchema, pageSchema, policySchema, projectSchema, querySchema, revisionSchema, schemaSchema, scalarTypeSchema, sourceRefSchema, tableSchema, targetSchema } from './schemas.js';
 import { diagnosticSchema, outcomeSchema } from './diagnostics.js';
@@ -14,6 +15,7 @@ export type EntityBatchOperation = { [K in keyof typeof entitySchemas]: { kind: 
 // No raw SQL/filesystem patch operation exists. Adapters consume the same schemas.
 export const operationInputSchemas = {
   'project.create': z.strictObject({ name: text, approvedRoot: text, target: targetSchema, emptyDatabaseLocation: text.optional(), outputConfig: projectSchema.shape.outputConfig.optional(), schema: schemaSchema.optional(), globalPolicyId: idSchema.optional() }),
+  'navigation.configure': z.strictObject({ menu: navigationMenuSchema.nullable() }),
   'project.inspect': z.strictObject({ projection: z.enum(['full', 'summary']).optional() }),
   'project.open': z.strictObject({ locator: text }),
   'project.list': z.strictObject({ approvedRoot: text }),
@@ -103,6 +105,7 @@ export const migrationHistorySchema = z.strictObject({ id: idSchema, planId: idS
 export type MigrationHistory = z.infer<typeof migrationHistorySchema>;
 export const operationResultSchemas = {
   'project.create': projectSchema,
+  'navigation.configure': changedResult,
   'project.inspect': projectSchema,
   'project.open': projectSchema,
   'project.list': z.array(z.strictObject({ id: idSchema, name: text, revision: revisionSchema })),

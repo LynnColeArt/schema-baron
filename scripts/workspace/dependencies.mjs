@@ -30,7 +30,7 @@ async function collect() {
   }));
   records.sort((a,b) => a.path.localeCompare(b.path));
   mkdirSync(join(root, dirname(evidencePath)), { recursive: true });
-  writeFileSync(join(root, evidencePath), JSON.stringify({ observedAt: new Date().toISOString(), clientDate: '2026-10-26', lockSha256: hash(), meaning: 'Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.', records }, null, 2) + '\n');
+  writeFileSync(join(root, evidencePath), JSON.stringify({ observedAt: new Date().toISOString(), clientDate: new Date().toISOString().slice(0, 10), lockSha256: hash(), meaning: 'Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.', records }, null, 2) + '\n');
   console.log(`Retained exact registry evidence for ${records.length} locked artifacts`);
 }
 function verify() {
