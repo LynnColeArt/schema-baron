@@ -1,6 +1,6 @@
 {
-  "observedAt": "2026-11-17T20:24:54.038Z",
-  "clientDate": "2026-10-26",
+  "observedAt": "2026-11-17T20:45:25.581Z",
+  "clientDate": "2026-11-17",
   "lockSha256": "3ea160ba1559624f8a28b44ee2a38b623930d6540d1e5abef795f3da833cf13c",
   "meaning": "Official registry metadata and lock integrity comparison; availability of provenance is not signature verification. All lifecycle execution denied; packaged native prebuilds require no script exception.",
   "records": [
