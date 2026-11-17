@@ -182,7 +182,7 @@ export default function Workspace() {
     }
     return message;
   }
-  function setNavigationDirty(value:boolean){navigationDirtyRef.current=value;setNavigationDirtyValue(value);}
+  function setNavigationDirty(value:boolean){navigationDirtyRef.current=value;setNavigationDirtyValue(value);if(!value)setNavigationConfirmClose(false);}
   function closeModal(){
     const dismissal=navigationDismissal({active:modal==='navigation',dirty:navigationDirty,busy,confirming:navigationConfirmClose});
     if(dismissal==='blocked')return;

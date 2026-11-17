@@ -27,3 +27,15 @@ These optional fields retain the public format-1 model and runtime defaults.
 Older strict readers may reject newly configured fields; preserve a project backup
 before opening a configured project in an older build. Studio and generated output
 use Next.js 16.4.6 so the existing security build blocker is patched.
+
+## Verification — November 17, 2026
+
+Pinned Node 24.22.1/npm 11.19.1: typecheck, Studio/MCP/package builds, native
+SQLite/hash verification, dependency verification, lint and credential checks pass.
+The complete regression suite passes **558 tests in 89 files**. The focused
+feature suite passes **42 tests**, including generated production SSR/RSC checks
+for anonymous, valid, expired and revoked visitor sessions. A real Studio browser
+flow verifies menu save/reopen, draft retention, saving while dismissal is pending,
+and breadcrumb parent persistence. Runtime dependency audit reports zero findings.
+Only feature source/tests were exported; no other distribution's history or runtime
+configuration is included.

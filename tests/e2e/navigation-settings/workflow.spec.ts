@@ -28,7 +28,9 @@ test('public Studio explicitly saves menus, guards draft dismissal and authors b
   await dialog.getByLabel('Entry 1 label',{exact:true}).fill('Public home');
   await page.keyboard.press('Escape');await expect(dialog.getByRole('region',{name:'Discard navigation changes'})).toBeVisible();
   await dialog.getByRole('button',{name:'Keep editing',exact:true}).click();await expect(dialog.getByLabel('Entry 1 label',{exact:true})).toHaveValue('Public home');
+  await page.keyboard.press('Escape');await expect(dialog.getByRole('region',{name:'Discard navigation changes'})).toBeVisible();
   await dialog.getByRole('button',{name:'Save navigation',exact:true}).click();await expect(dialog.getByRole('status')).toHaveText('Navigation saved.');
+  await expect(dialog.getByRole('region',{name:'Discard navigation changes'})).toBeHidden();
   const saved=await command('project.inspect',{},3);expect(saved.result.navigation.entries).toMatchObject([{label:'Public home',pageId:'home'}]);
   await dialog.getByRole('button',{name:'Close',exact:true}).click();
   await page.getByRole('button',{name:'Project settings',exact:true}).click();await page.getByRole('button',{name:'Edit application navigation…',exact:true}).click();
